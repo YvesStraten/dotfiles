@@ -18,3 +18,6 @@ let g:vim_markdown_json_frontmatter = 1
 augroup pandoc_syntax
     au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
 augroup END
+
+autocmd Filetype tex setl updatetime=1
+let g:livepreview_previewer = 'okular'
