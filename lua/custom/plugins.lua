@@ -6,7 +6,16 @@ return function(use)
       end
   })
 
-  use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" },})
+  use({ 
+    "iamcco/markdown-preview.nvim",
+    run = "cd app && npm install",
+    setup = function()
+      vim.g.mkdp_filetypes = { "markdown" } 
+  end,
+  ft = { "markdown" },
+  cmd = { "MarkdownPreview" },
+  requires = { "zhaozg/vim-diagram", "aklt/plantuml-syntax" },
+  })
   
   use({ "SirVer/ultisnips",
   })
@@ -25,5 +34,18 @@ return function(use)
 
   use({ "vim-pandoc/vim-pandoc-syntax"
   })
+
+   
+  use({ "preservim/nerdtree"
+  })
+  
+  use({ "lervag/vimtex"
+  })
+
+  use({ "xuhdev/vim-latex-live-preview"
+  })
+
+
+  
 end
 
