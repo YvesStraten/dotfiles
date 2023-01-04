@@ -25,8 +25,5 @@ return function(use)
 
   use({ "vim-pandoc/vim-pandoc-syntax"
   })
-
-  use({ "previm/previm"
-  })
 end
 
