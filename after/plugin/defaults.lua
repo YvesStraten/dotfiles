@@ -1,23 +1,26 @@
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
 
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+vim.g.UltiSnipsExpandTrigger="<tab>"
+vim.g.UltiSnipsJumpForwardTrigger="<c-j>"
+vim.g.UltiSnipsJumpBackwardTrigger="<c-k>"
 
-let g:vim_markdown_folding_disabled = 1
+vim.g.vim_markdown_folding_disabled = 1
 
-let g:vim_markdown_conceal = 0
+vim.g.vim_markdown_conceal = 0
 
-let g:tex_conceal = ""
-let g:vim_markdown_math = 1
+vim.g.tex_conceal = ""
+vim.g.vim_markdown_math = 1
 
-let g:vim_markdown_frontmatter = 1
-let g:vim_markdown_toml_frontmatter = 1
-let g:vim_markdown_json_frontmatter = 1
+vim.g.vim_markdown_frontmatter = 1
+vim.g.vim_markdown_toml_frontmatter = 1
+vim.g.vim_markdown_json_frontmatter = 1
 
-augroup pandoc_syntax
-    au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
-augroup END
+vim.g.tex_flavor = "latex"
+vim.g.vimtex_view_general_viewer = "okular"
+vim.g.vimtex_view_general_options = "--unique file:@pdf\#src:@line@tex"
+vim.g.vimtex_quickfix_mode = 0
+vim.o.conceallevel = 1
+vim.g.tex_conceal = 'abdmg'
 
-autocmd Filetype tex setl updatetime=1
-let g:livepreview_previewer = 'okular'
+vim.o.spell = 1
+vim.o.spelllang = "en_gb"

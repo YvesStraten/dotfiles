@@ -38,11 +38,8 @@ return function(use)
    
   use({ "preservim/nerdtree"
   })
-  
-  use({ "lervag/vimtex"
-  })
 
-  use({ "xuhdev/vim-latex-live-preview"
+  use({ "lervag/vimtex"
   })
 
 

@@ -252,11 +252,6 @@ _G.packer_plugins = {
     path = "C:\\Users\\yvess\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\vim-snippets",
     url = "https://github.com/honza/vim-snippets"
   },
-  vimtex = {
-    loaded = true,
-    path = "C:\\Users\\yvess\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\vimtex",
-    url = "https://github.com/lervag/vimtex"
-  },
   ["which-key.nvim"] = {
     config = { "\27LJ\2\n;\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\14which-key\frequire\0" },
     loaded = true,
