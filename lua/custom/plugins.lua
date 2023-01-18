@@ -41,9 +41,6 @@ return function(use)
 
   use({ "lervag/vimtex"
   })
-
-  use({ "ckunte/latex-snippets-vim"
-  })
   
   use({ "KeitaNakamura/tex-conceal.vim"
   })
