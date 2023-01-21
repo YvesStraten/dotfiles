@@ -46,7 +46,13 @@ return packer.startup(function(use)
   -- file explorer 
   use("nvim-tree/nvim-tree.lua")
 
-  
+  -- status line  
+  use("nvim-lualine/lualine.nvim")
+
+  -- fuzzy finding
+  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
+  use({ "nvim-telescope/telescope.nvim", tag = "0.1.x" })
+
 
 	if packer_bootstrap then
 		require("packer").sync()

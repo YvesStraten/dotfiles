@@ -84,6 +84,11 @@ _G.packer_plugins = {
     path = "/home/yvess/.local/share/nvim/site/pack/packer/start/ReplaceWithRegister",
     url = "https://github.com/vim-scripts/ReplaceWithRegister"
   },
+  ["lualine.nvim"] = {
+    loaded = true,
+    path = "/home/yvess/.local/share/nvim/site/pack/packer/start/lualine.nvim",
+    url = "https://github.com/nvim-lualine/lualine.nvim"
+  },
   ["nightfox.nvim"] = {
     loaded = true,
     path = "/home/yvess/.local/share/nvim/site/pack/packer/start/nightfox.nvim",
@@ -103,6 +108,16 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/yvess/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
+  },
+  ["telescope-fzf-native.nvim"] = {
+    loaded = true,
+    path = "/home/yvess/.local/share/nvim/site/pack/packer/start/telescope-fzf-native.nvim",
+    url = "https://github.com/nvim-telescope/telescope-fzf-native.nvim"
+  },
+  ["telescope.nvim"] = {
+    loaded = true,
+    path = "/home/yvess/.local/share/nvim/site/pack/packer/start/telescope.nvim",
+    url = "https://github.com/nvim-telescope/telescope.nvim"
   },
   ["vim-maximizer"] = {
     loaded = true,
