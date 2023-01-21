@@ -1,5 +1,2 @@
-# my-nvim-conf
-Just a repository with my neovim config
-- Packer setup
-- Keybinds
-- Plugins!
+# dotfiles
+Just a repository with my configs
