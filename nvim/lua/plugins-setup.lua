@@ -29,14 +29,24 @@ return packer.startup(function(use)
   
 	use("EdenEast/nightfox.nvim") -- color scheme
 
+  -- lua functions
+  use("nvim-lua/plenary.nvim")
+
   -- split windows navigation
   use("christoomey/vim-tmux-navigator")
 
   use("szw/vim-maximizer")
 
+  -- essential plugins
   use("tpope/vim-surround")
   use("vim-scripts/ReplaceWithRegister")
 
+  use("numToStr/Comment.nvim")
+  
+  -- file explorer 
+  use("nvim-tree/nvim-tree.lua")
+
+  
 
 	if packer_bootstrap then
 		require("packer").sync()
