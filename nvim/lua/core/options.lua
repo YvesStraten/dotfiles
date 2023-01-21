@@ -39,12 +39,10 @@ vim.o.timeout = true
 vim.o.timeoutlen = 300
 
 -- spell setup
-vim.api.nvim_create_autocmd({ "BufNew" }, {
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
 	pattern = "*.tex",
 	callback = function()
 		vim.cmd("setlocal spell")
 		vim.cmd("setlocal spelllang=en_gb")
 	end,
 })
-
--- vimtex
