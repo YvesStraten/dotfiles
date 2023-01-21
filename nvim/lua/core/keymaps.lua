@@ -38,3 +38,9 @@ keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>")
 vim.g.UltiSnipsExpandTrigger = "<tab>"
 vim.g.UltiSnipsJumpForwardTrigger = "<c-j>"
 vim.g.UltiSnipsJumpBackwardTrigger = "<c-k>"
+
+-- tex
+keymap.set("n", "<leader>ll", ":VimtexCompile<CR>")
+
+-- whichkey
+keymap.set("n", "<leader>", ":<C-u>WhichKey<cr>")
