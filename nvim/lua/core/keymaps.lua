@@ -1,4 +1,4 @@
-vim.g.mapleader = " " 
+vim.g.mapleader = " "
 
 local keymap = vim.keymap -- concinesess
 
@@ -6,7 +6,6 @@ local keymap = vim.keymap -- concinesess
 keymap.set("i", "jk", "<ESC>")
 
 keymap.set("n", "<leader>nh", ":nohl<CR>")
-
 
 keymap.set("n", "<leader>+", "<C-a>")
 keymap.set("n", "<leader>-", "<C-x>")
@@ -35,4 +34,7 @@ keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>")
 keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>")
 keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>")
 
-
+-- ultisnips
+vim.g.UltiSnipsExpandTrigger = "<tab>"
+vim.g.UltiSnipsJumpForwardTrigger = "<c-j>"
+vim.g.UltiSnipsJumpBackwardTrigger = "<c-k>"

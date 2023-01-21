@@ -13,7 +13,7 @@ opt.autoindent = true
 -- line wrap
 opt.wrap = false
 
--- search settings 
+-- search settings
 opt.ignorecase = true
 opt.smartcase = true
 
@@ -23,13 +23,28 @@ opt.background = "dark"
 opt.signcolumn = "yes"
 
 -- backspace
-opt.backspace = "indent,eol,start" 
+opt.backspace = "indent,eol,start"
 
--- clipboard 
+-- clipboard
 opt.clipboard:append("unnamedplus")
 
 -- split windows
-opt.splitright = true 
-opt.splitbelow = true 
+opt.splitright = true
+opt.splitbelow = true
 
 opt.iskeyword:append("-")
+
+-- time out which key
+vim.o.timeout = true
+vim.o.timeoutlen = 300
+
+-- spell setup
+vim.api.nvim_create_autocmd({ "BufNew" }, {
+	pattern = "*.tex",
+	callback = function()
+		vim.cmd("setlocal spell")
+		vim.cmd("setlocal spelllang=en_gb")
+	end,
+})
+
+-- vimtex
