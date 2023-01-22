@@ -102,6 +102,8 @@ return packer.startup(function(use)
 	-- which key
 	use("folke/which-key.nvim")
 
+	use("ryanoasis/vim-devicons")
+
 	if packer_bootstrap then
 		require("packer").sync()
 	end
