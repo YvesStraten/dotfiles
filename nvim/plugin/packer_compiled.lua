@@ -119,11 +119,6 @@ _G.packer_plugins = {
     path = "/home/yvess/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
     url = "https://github.com/lewis6991/gitsigns.nvim"
   },
-  ["latex-snippets-vim"] = {
-    loaded = true,
-    path = "/home/yvess/.local/share/nvim/site/pack/packer/start/latex-snippets-vim",
-    url = "https://github.com/ckunte/latex-snippets-vim"
-  },
   ["lspkind.nvim"] = {
     loaded = true,
     path = "/home/yvess/.local/share/nvim/site/pack/packer/start/lspkind.nvim",

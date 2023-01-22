@@ -96,7 +96,6 @@ return packer.startup(function(use)
 
 	-- LateX and snippets
 	use("lervag/vimtex")
-	use("ckunte/latex-snippets-vim")
 	use("KeitaNakamura/tex-conceal.vim")
 	use("SirVer/ultisnips")
 

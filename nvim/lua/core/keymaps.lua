@@ -43,4 +43,7 @@ vim.g.UltiSnipsJumpBackwardTrigger = "<c-k>"
 keymap.set("n", "<leader>ll", ":VimtexCompile<CR>")
 
 -- whichkey
-keymap.set("n", "<leader>", ":<C-u>WhichKey<cr>")
+keymap.set("n", "<leader>", ":<C-u>WhichKey<CR>")
+
+-- spell
+keymap.set("n", "<leader>sp", ":set spell<CR> <bar> :set spelllang=en_gb<CR>")

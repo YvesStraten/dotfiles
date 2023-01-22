@@ -22,3 +22,6 @@ require("plugins.vimtex")
 
 -- whichkey
 require("plugins.whichkey")
+
+-- Ultisnips
+require("plugins.ultisnips")
