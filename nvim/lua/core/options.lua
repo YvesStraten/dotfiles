@@ -1,11 +1,10 @@
 local opt = vim.opt -- for conciness
 
 -- line numbers
-opt.relativenumber = true
 opt.number = true
 
 -- tabs and indentation
-opt.tabstop = 2
+opt.tabstop = 4
 opt.shiftwidth = 2
 opt.expandtab = true
 opt.autoindent = true
@@ -37,12 +36,3 @@ opt.iskeyword:append("-")
 -- time out which key
 vim.o.timeout = true
 vim.o.timeoutlen = 300
-
--- spell setup
-vim.api.nvim_create_autocmd({ "BufEnter" }, {
-	pattern = "*.tex",
-	callback = function()
-		vim.cmd("setlocal spell")
-		vim.cmd("setlocal spelllang=en_gb")
-	end,
-})
