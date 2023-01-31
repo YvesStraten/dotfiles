@@ -40,6 +40,13 @@ snippet note "note template" b
 %!TeX ts-program = xelatex
 %!TeX encoding = utf-8 Unicode
 \documentclass[11pt,a4paper]{article}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{placeins}
+\usepackage{float}
+\usepackage{amsmath, amssymb}
+\graphicspath{{images/}}
 
 \title{${1:Title}}
 \author{${2:Author}}

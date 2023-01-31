@@ -24,4 +24,4 @@ require("plugins.vimtex")
 require("plugins.whichkey")
 
 -- Ultisnips
-require("plugins.ultisnips")
+require("plugins.UltiSnips")
