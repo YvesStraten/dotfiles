@@ -1,4 +1,4 @@
-local UltiSnips_setup, UltiSnips = pcall(require, "UltiSnips")
+local UltiSnips_setup, UltiSnips = pcall(require("UltiSnips"))
 if not UltiSnips_setup then
   return
 end 

@@ -79,6 +79,11 @@ _G.packer_plugins = {
     path = "/home/yvess/.local/share/nvim/site/pack/packer/start/Comment.nvim",
     url = "https://github.com/numToStr/Comment.nvim"
   },
+  LuaSnip = {
+    loaded = true,
+    path = "/home/yvess/.local/share/nvim/site/pack/packer/start/LuaSnip",
+    url = "https://github.com/L3MON4D3/LuaSnip"
+  },
   ReplaceWithRegister = {
     loaded = true,
     path = "/home/yvess/.local/share/nvim/site/pack/packer/start/ReplaceWithRegister",
@@ -94,15 +99,20 @@ _G.packer_plugins = {
     path = "/home/yvess/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
     url = "https://github.com/hrsh7th/cmp-nvim-lsp"
   },
-  ["cmp-nvim-ultisnips"] = {
-    loaded = true,
-    path = "/home/yvess/.local/share/nvim/site/pack/packer/start/cmp-nvim-ultisnips",
-    url = "https://github.com/quangnguyen30192/cmp-nvim-ultisnips"
-  },
   ["cmp-path"] = {
     loaded = true,
     path = "/home/yvess/.local/share/nvim/site/pack/packer/start/cmp-path",
     url = "https://github.com/hrsh7th/cmp-path"
+  },
+  cmp_luasnip = {
+    loaded = true,
+    path = "/home/yvess/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
+    url = "https://github.com/saadparwaiz1/cmp_luasnip"
+  },
+  ["friendly-snippets"] = {
+    loaded = true,
+    path = "/home/yvess/.local/share/nvim/site/pack/packer/start/friendly-snippets",
+    url = "https://github.com/rafamadriz/friendly-snippets"
   },
   ["gitsigns.nvim"] = {
     loaded = true,
@@ -205,6 +215,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/yvess/.local/share/nvim/site/pack/packer/start/tex-conceal.vim",
     url = "https://github.com/KeitaNakamura/tex-conceal.vim"
+  },
+  ["typescript.nvim"] = {
+    loaded = true,
+    path = "/home/yvess/.local/share/nvim/site/pack/packer/start/typescript.nvim",
+    url = "https://github.com/jose-elias-alvarez/typescript.nvim"
   },
   ultisnips = {
     loaded = true,
