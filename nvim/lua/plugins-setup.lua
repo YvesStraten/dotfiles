@@ -101,6 +101,8 @@ return packer.startup(function(use)
 
 	use("ryanoasis/vim-devicons")
 
+	use("ItsMindstorm/vim-snippets")
+
 	if packer_bootstrap then
 		require("packer").sync()
 	end
