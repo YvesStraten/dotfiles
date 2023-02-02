@@ -27,7 +27,7 @@ end
 return packer.startup(function(use)
 	use("wbthomason/packer.nvim")
 
-	use("EdenEast/nightfox.nvim") -- color scheme
+	use("rebelot/kanagawa.nvim") -- color scheme
 
 	-- lua functions
 	use("nvim-lua/plenary.nvim")
