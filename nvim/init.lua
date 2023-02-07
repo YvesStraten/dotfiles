@@ -13,7 +13,6 @@ require("plugins.lsp.lspsaga")
 require("plugins.lsp.lspconfig")
 require("plugins.lsp.null-ls")
 require("plugins.lsp.autopairs")
-require("plugins.treesitter")
 require("plugins.gitsigns")
 
 -- tex

@@ -36,3 +36,11 @@ opt.iskeyword:append("-")
 -- time out which key
 vim.o.timeout = true
 vim.o.timeoutlen = 300
+
+vim.cmd([[
+
+let g:tex_flavor = "latex"
+let g:conceallevel = 2
+let g:tex_conceal = "abdgm"  
+
+]])
