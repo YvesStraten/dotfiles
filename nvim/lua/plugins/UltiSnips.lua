@@ -3,9 +3,13 @@ if not UltiSnips_setup then
 	return
 end
 
-vim.g.UltiSnipsEditSplit = "vertical"
-vim.g.UltiSnipsExpandTrigger = "<tab>"
-vim.g.UltiSnipsJumpForwardTrigger = "<c-j>"
-vim.g.UltiSnipsJumpBackwardTrigger = "<c-k>"
+vim.cmd([[
+
+let g:UltiSnipsEditSplit = "vertical"
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<c-j>"
+let g:UltiSnipsJumBackwardTrigger - "<c-k>"
+
+]])
 
 UltiSnips.setup()

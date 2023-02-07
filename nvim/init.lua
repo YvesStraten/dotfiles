@@ -23,3 +23,5 @@ require("plugins.whichkey")
 
 -- Ultisnips
 require("plugins.UltiSnips")
+
+require("plugins.latexlivepreview")

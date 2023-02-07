@@ -92,6 +92,8 @@ return packer.startup(function(use)
 
 	use("ItsMindstorm/vim-snippets")
 
+	use("xuhdev/vim-latex-live-preview")
+
 	if packer_bootstrap then
 		require("packer").sync()
 	end

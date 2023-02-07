@@ -199,6 +199,11 @@ _G.packer_plugins = {
     path = "/home/yvess/.local/share/nvim/site/pack/packer/start/vim-devicons",
     url = "https://github.com/ryanoasis/vim-devicons"
   },
+  ["vim-latex-live-preview"] = {
+    loaded = true,
+    path = "/home/yvess/.local/share/nvim/site/pack/packer/start/vim-latex-live-preview",
+    url = "https://github.com/xuhdev/vim-latex-live-preview"
+  },
   ["vim-maximizer"] = {
     loaded = true,
     path = "/home/yvess/.local/share/nvim/site/pack/packer/start/vim-maximizer",
