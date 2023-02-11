@@ -4,6 +4,7 @@ require("core.keymaps")
 require("core.colorscheme")
 
 -- Plugin imports
+require("plugins.nvim-cmp")
 require("plugins.comment")
 require("plugins.nvim-tree")
 require("plugins.lualine")
