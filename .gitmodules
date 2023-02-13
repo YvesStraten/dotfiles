@@ -1,0 +1,3 @@
+[submodule "hyprland-titus"]
+	path = hyprland-titus
+	url = https://github.com/ChrisTitusTech/hyprland-titus
