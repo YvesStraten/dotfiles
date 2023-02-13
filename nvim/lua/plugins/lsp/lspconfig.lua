@@ -1,18 +1,18 @@
 local status, nvim_lsp = pcall(require, "lspconfig")
 if not status then
-	return
+  return
 end
 
 local protocol = require("vim.lsp.protocol")
 
 local on_attach = function(client, bufnr)
-	if client.server_capabilities.documentFormattingProvider then
-  	  vim.api.nvim_create_autocmd("BufWritePre", {
-		  group = vim.api.nvim_create_augroup( "Format", { clear = true 
-}),       buffer = bufnr,
-		  callback = function() vim.lsp.buf.formatting_seq_sync() end
-		})
-	end
+  if client.server_capabilities.documentFormattingProvider then
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      group = vim.api.nvim_create_augroup("Format", { clear = true
+      }), buffer = bufnr,
+      callback = function() vim.lsp.buf.formatting_seq_sync() end
+    })
+  end
 end
 
 -- Set up completion using nvim_cmp with LSP source
@@ -27,18 +27,37 @@ nvim_lsp.flow.setup {
 
 nvim_lsp.texlab.setup {
   on_attach = on_attach,
-  filetypes = { "tex"},
-  capabilities = capabilities
+  filetypes = { "tex", "bib", "plaintex" },
+  cmd = { "texlab" },
+  capabilities = capabilities,
 }
 
 nvim_lsp.lua_ls.setup {
   on_attach = on_attach,
-  filetypes = { "lua"},
+  filetypes = { "lua" },
+  settings = {
+    Lua = {
+      diagnostics = {
+        -- vim global
+        globals = { "vim" }
+      },
+      workspace = {
+        --Make the server aware of Neovim runtime files
+        library = vim.api.nvim_get_runtime_file("", true),
+        checkThirdParty = false
+      },
+    },
+  },
+}
+
+nvim_lsp.clangd.setup {
+  on_attach = on_attach,
+  filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto", "h" },
+  cmd = { "clangd" },
   capabilities = capabilities
 }
 
-nvim_lsp.clangd.setup{
-  on_attach = on_attach,
-  filetypes = { "cpp", "h"},
-  capabilities = capabilities
-}
+vim.o.updatetime = 250
+vim.cmd [[
+autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})
+]]

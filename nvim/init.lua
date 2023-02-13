@@ -12,7 +12,6 @@ require("plugins.nvim-cmp")
 require("plugins.comment")
 require("plugins.nvim-tree")
 require("plugins.lualine")
-require("plugins.telescope")
 require("plugins.gitsigns")
 
 -- tex
