@@ -16,8 +16,8 @@ vim.opt.completeopt = "menu,menuone,noselect"
 
 cmp.setup({
 	mapping = cmp.mapping.preset.insert({
-		["<C-o>"] = cmp.mapping.select_prev_item(), -- previous suggestion
-		["<C-p>"] = cmp.mapping.select_next_item(), -- next suggestion
+		["<C-p>"] = cmp.mapping.select_prev_item(), -- previous suggestion
+		["<C-o>"] = cmp.mapping.select_next_item(), -- next suggestion
 		["<C-b>"] = cmp.mapping.scroll_docs(-4),
 		["<C-f>"] = cmp.mapping.scroll_docs(4),
 		["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
@@ -27,10 +27,10 @@ cmp.setup({
 	-- sources for autocompletion
 	sources = cmp.config.sources({
 		{ name = "nvim_lsp" }, -- lsp
-		{ name = "luasnip" }, -- snippets
 		{ name = "buffer" }, -- text within current buffer
 		{ name = "path" }, -- file system paths
 		{ name = "ultisnips" },
+		{ name = "cmdline" },
 	}),
 	-- configure lspkind for vs-code like icons
 	formatting = {
