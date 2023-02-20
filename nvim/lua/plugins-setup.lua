@@ -83,6 +83,8 @@ return packer.startup(function(use)
   use("ItsMindstorm/vim-snippets")
   use("onsails/lspkind.nvim")
 
+  use("da-h/AirLatex.vim")
+
   if packer_bootstrap then
     require("packer").sync()
   end

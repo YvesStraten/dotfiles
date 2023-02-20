@@ -46,5 +46,10 @@ let g:updatime = "1000"
 vim.cmd([[
 let g:tex_flavor = "latex"
 let g:conceallevel = 2
-let g:tex_conceal = "abdgm"  
+let g:tex_conceal = "abdgm"
+]])
+
+vim.cmd([[
+let g:AirLatexUsername="yves.straten@gmail.com"
+let g:AirLatexDomain="www.overleaf.com"
 ]])

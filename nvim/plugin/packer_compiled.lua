@@ -74,6 +74,11 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ["AirLatex.vim"] = {
+    loaded = true,
+    path = "/home/yvess/.local/share/nvim/site/pack/packer/start/AirLatex.vim",
+    url = "https://github.com/da-h/AirLatex.vim"
+  },
   ["Comment.nvim"] = {
     loaded = true,
     path = "/home/yvess/.local/share/nvim/site/pack/packer/start/Comment.nvim",
