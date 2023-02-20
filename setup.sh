@@ -2,9 +2,11 @@
 # My own
 rm -r "$HOME/.config/nvim"
 rm -r "$HOME/.config/alacritty"
+rm -r "$HOME/.config/mpv"
 
 ln -s "$(pwd)/nvim" ~/.config/nvim
 ln -s "$(pwd)/alacritty" ~/.config/alacritty
+ln -s "$(pwd)/mpv" ~/.config/mpv
 
 #Other
 rm -r "$HOME/.config/dunst"
