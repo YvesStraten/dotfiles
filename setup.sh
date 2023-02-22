@@ -18,6 +18,7 @@ rm -r "$HOME/.config/swaylock"
 rm -r "$HOME/.config/waybar"
 rm -r "$HOME/.config/wlogout"
 rm "$HOME/.swaybg.sh"
+sudo rm -r "/opt/bg/"
 
 ln -s "$(pwd)/submodules/hyprland-titus/dotconfig/dunst" ~/.config/dunst
 ln -s "$(pwd)/submodules/hyprland-titus/dotconfig/hypr" ~/.config/hypr
@@ -27,4 +28,9 @@ ln -s "$(pwd)/submodules/hyprland-titus/dotconfig/rofi" ~/.config/rofi
 ln -s "$(pwd)/submodules/hyprland-titus/dotconfig/swaylock" ~/.config/swaylock
 ln -s "$(pwd)/submodules/hyprland-titus/dotconfig/waybar" ~/.config/waybar
 ln -s "$(pwd)/submodules/hyprland-titus/dotconfig/wlogout" ~/.config/wlogout 
-cp "$(pwd)/.swaybg.sh" ~/
+
+mkdir /opt/bg/
+sudo chgroup -R homeusers bg
+sudo chmod g+rwx bg
+cp "$(pwd)/.swaybg.sh" /opt/bg/
+sudo cp "$(pwd)/swaybg.desktop" ~/
