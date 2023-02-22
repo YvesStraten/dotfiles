@@ -3,10 +3,12 @@
 rm -r "$HOME/.config/nvim"
 rm -r "$HOME/.config/alacritty"
 rm -r "$HOME/.config/mpv"
+rm -r "$HOME/.config/ranger"
 
 ln -s "$(pwd)/nvim" ~/.config/nvim
 ln -s "$(pwd)/alacritty" ~/.config/alacritty
 ln -s "$(pwd)/mpv" ~/.config/mpv
+ln -s "$(pwd)/ranger" ~/.config/ranger
 
 #Other
 rm -r "$HOME/.config/dunst"
@@ -17,7 +19,6 @@ rm -r "$HOME/.config/rofi"
 rm -r "$HOME/.config/swaylock"
 rm -r "$HOME/.config/waybar"
 rm -r "$HOME/.config/wlogout"
-rm "$HOME/.swaybg.sh"
 sudo rm -r "/opt/bg/"
 
 ln -s "$(pwd)/submodules/hyprland-titus/dotconfig/dunst" ~/.config/dunst
@@ -30,7 +31,7 @@ ln -s "$(pwd)/submodules/hyprland-titus/dotconfig/waybar" ~/.config/waybar
 ln -s "$(pwd)/submodules/hyprland-titus/dotconfig/wlogout" ~/.config/wlogout 
 
 mkdir /opt/bg/
-sudo chgroup -R homeusers bg
-sudo chmod g+rwx bg
+sudo chgrp -R homeusers /opt/bg/
+sudo chmod g+rwx /opt/bg/
 cp "$(pwd)/.swaybg.sh" /opt/bg/
-sudo cp "$(pwd)/swaybg.desktop" ~/
+sudo cp "$(pwd)/swaybg.desktop" /usr/share/applications/
