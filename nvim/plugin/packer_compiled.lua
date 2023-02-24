@@ -114,10 +114,10 @@ _G.packer_plugins = {
     path = "/home/yvess/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
     url = "https://github.com/lewis6991/gitsigns.nvim"
   },
-  ["kanagawa.nvim"] = {
+  ["gruvbox.nvim"] = {
     loaded = true,
-    path = "/home/yvess/.local/share/nvim/site/pack/packer/start/kanagawa.nvim",
-    url = "https://github.com/rebelot/kanagawa.nvim"
+    path = "/home/yvess/.local/share/nvim/site/pack/packer/start/gruvbox.nvim",
+    url = "https://github.com/ellisonleao/gruvbox.nvim"
   },
   ["lspkind.nvim"] = {
     loaded = true,
