@@ -85,6 +85,9 @@ return packer.startup(function(use)
 
   use("da-h/AirLatex.vim")
 
+  use("junegunn/goyo.vim")
+
+
   if packer_bootstrap then
     require("packer").sync()
   end
