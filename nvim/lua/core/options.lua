@@ -39,14 +39,15 @@ vim.o.timeout = true
 vim.o.timeoutlen = 300
 
 vim.cmd([[
-let g:livepreview_previewer = "zathura"
-let g:updatime = "1000"
-]])
-
-vim.cmd([[
 let g:tex_flavor = "latex"
-let g:conceallevel = 2
-let g:tex_conceal = "abdgm"
+let g:vimtex_syntax_conceal_default=1
+let g:vimtex_quickfix_mode=0
+let g:vimtex_fold_enabled=1
+set conceallevel=2
+let g:tex_conceal="abdgm"
+let g:tex_superscripts= "[0-9a-zA-W.,:;+-<>/()=]"
+let g:tex_subscripts= "[0-9aehijklmnoprstuvx,+-/().]"
+let g:tex_conceal_frac=1
 ]])
 
 vim.cmd([[

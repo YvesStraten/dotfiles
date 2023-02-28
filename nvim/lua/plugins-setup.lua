@@ -69,7 +69,7 @@ return packer.startup(function(use)
   use("lewis6991/gitsigns.nvim") -- show line modifications on left hand side
 
   -- LateX and snippets
-  use("lervag/vimtex")
+  use { "lervag/vimtex", tag = "v1.6" }
   use("SirVer/ultisnips")
 
   -- cmp ultisnips
@@ -86,6 +86,8 @@ return packer.startup(function(use)
   use("da-h/AirLatex.vim")
 
   use("junegunn/goyo.vim")
+
+  use("KeitaNakamura/tex-conceal.vim")
 
 
   if packer_bootstrap then
