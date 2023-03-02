@@ -40,9 +40,9 @@ vim.o.timeoutlen = 300
 
 vim.cmd([[
 let g:tex_flavor = "latex"
+let g:tex_fold_enabled=1
 let g:vimtex_syntax_conceal_default=1
 let g:vimtex_quickfix_mode=0
-let g:vimtex_fold_enabled=1
 set conceallevel=2
 let g:tex_conceal="abdgm"
 let g:tex_superscripts= "[0-9a-zA-W.,:;+-<>/()=]"
@@ -51,6 +51,5 @@ let g:tex_conceal_frac=1
 ]])
 
 vim.cmd([[
-let g:AirLatexUsername="yves.straten@gmail.com"
-let g:AirLatexDomain="www.overleaf.com"
+set backupdir=~/nvim/backup//
 ]])
