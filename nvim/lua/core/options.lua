@@ -40,7 +40,6 @@ vim.o.timeoutlen = 300
 
 vim.cmd([[
 let g:vimtex_view_method = "zathura"
-let g:vimtex_fold_enabled=1
 let g:tex_flavor = "latex"
 let g:vimtex_syntax_conceal_default=1
 let g:vimtex_quickfix_mode=0
