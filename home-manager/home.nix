@@ -25,7 +25,6 @@
     fontconfig
     texlive.combined.scheme-full
     zathura
-    linuxKernel.packages.linux_xanmod_stable.nvidia_x11_production
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
