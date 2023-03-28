@@ -25,6 +25,11 @@
     fontconfig
     texlive.combined.scheme-full
     zathura
+    rclone
+    appimage-run
+    gnome.nautilus 
+    nautilus-open-any-terminal
+    gnome.sushi
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
