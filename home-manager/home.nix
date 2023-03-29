@@ -22,6 +22,7 @@
     # # "Hello, world!" when run.
     # pkgs.hello
     neovim 
+    tesseract
     fontconfig
     texlive.combined.scheme-full
     zathura
