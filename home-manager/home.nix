@@ -26,7 +26,6 @@
     texlive.combined.scheme-full
     zathura
     rclone
-    appimage-run
     gnome.nautilus 
     nautilus-open-any-terminal
     rclone-browser
