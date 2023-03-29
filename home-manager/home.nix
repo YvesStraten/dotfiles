@@ -29,6 +29,7 @@
     appimage-run
     gnome.nautilus 
     nautilus-open-any-terminal
+    rclone-browser
     gnome.sushi
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
