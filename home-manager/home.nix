@@ -29,8 +29,10 @@
     rclone
     gnome.nautilus 
     nautilus-open-any-terminal
+    spicetify-cli
     rclone-browser
     gnome.sushi
+    filezilla 
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
