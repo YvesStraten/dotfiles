@@ -89,6 +89,8 @@ return packer.startup(function(use)
 
   use("KeitaNakamura/tex-conceal.vim")
 
+  use("andrewferrier/wrapping.nvim")
+
 
   if packer_bootstrap then
     require("packer").sync()
