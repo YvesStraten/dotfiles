@@ -1,12 +1,10 @@
 #!/bin/bash
 # My own
 rm -r "$HOME/.config/nvim"
-rm -r "$HOME/.config/alacritty"
 rm -r "$HOME/.config/mpv"
 rm -r "$HOME/.config/ranger"
 
 ln -s "$(pwd)/nvim" ~/.config/nvim
-ln -s "$(pwd)/alacritty" ~/.config/alacritty
 ln -s "$(pwd)/mpv" ~/.config/mpv
 ln -s "$(pwd)/ranger" ~/.config/ranger
 
