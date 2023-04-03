@@ -21,14 +21,14 @@ rm -r "$HOME/.config/waybar"
 rm -r "$HOME/.config/wlogout"
 sudo rm -r "/opt/bg/"
 
-ln -s "$(pwd)/submodules/hyprland-titus/dotconfig/dunst" ~/.config/dunst
-ln -s "$(pwd)/submodules/hyprland-titus/dotconfig/hypr" ~/.config/hypr
-ln -s "$(pwd)/submodules/hyprland-titus/dotconfig/kitty" ~/.config/kitty
-ln -s "$(pwd)/submodules/hyprland-titus/dotconfig/pipewire" ~/.config/pipewire 
-ln -s "$(pwd)/submodules/hyprland-titus/dotconfig/rofi" ~/.config/rofi
-ln -s "$(pwd)/submodules/hyprland-titus/dotconfig/swaylock" ~/.config/swaylock
-ln -s "$(pwd)/submodules/hyprland-titus/dotconfig/waybar" ~/.config/waybar
-ln -s "$(pwd)/submodules/hyprland-titus/dotconfig/wlogout" ~/.config/wlogout 
+ln -s "$(pwd)/dunst" ~/.config/dunst
+ln -s "$(pwd)/hypr" ~/.config/hypr
+ln -s "$(pwd)/kitty" ~/.config/kitty
+ln -s "$(pwd)/pipewire" ~/.config/pipewire 
+ln -s "$(pwd)/rofi" ~/.config/rofi
+ln -s "$(pwd)/swaylock" ~/.config/swaylock
+ln -s "$(pwd)/waybar" ~/.config/waybar
+ln -s "$(pwd)/wlogout" ~/.config/wlogout 
 
 mkdir /opt/bg/
 sudo chgrp -R homeusers /opt/bg/
