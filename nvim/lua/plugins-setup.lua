@@ -28,6 +28,7 @@ return packer.startup(function(use)
   use("wbthomason/packer.nvim")
 
   use("ellisonleao/gruvbox.nvim") -- color scheme
+  use("catppuccin/nvim")
 
   -- lua functions
   use("nvim-lua/plenary.nvim")
