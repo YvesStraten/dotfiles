@@ -199,6 +199,11 @@ _G.packer_plugins = {
     path = "/home/yvess/.local/share/nvim/site/pack/packer/start/vim-maximizer",
     url = "https://github.com/szw/vim-maximizer"
   },
+  ["vim-pandoc"] = {
+    loaded = true,
+    path = "/home/yvess/.local/share/nvim/site/pack/packer/start/vim-pandoc",
+    url = "https://github.com/vim-pandoc/vim-pandoc"
+  },
   ["vim-snippets"] = {
     loaded = true,
     path = "/home/yvess/.local/share/nvim/site/pack/packer/start/vim-snippets",

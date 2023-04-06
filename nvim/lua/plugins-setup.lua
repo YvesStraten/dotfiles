@@ -92,6 +92,8 @@ return packer.startup(function(use)
 
   use("andrewferrier/wrapping.nvim")
 
+  use("vim-pandoc/vim-pandoc")
+
 
   if packer_bootstrap then
     require("packer").sync()
