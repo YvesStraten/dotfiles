@@ -17,7 +17,6 @@ rm -r "$HOME/.config/rofi"
 rm -r "$HOME/.config/swaylock"
 rm -r "$HOME/.config/waybar"
 rm -r "$HOME/.config/wlogout"
-sudo rm -r "/opt/bg/"
 
 ln -s "$(pwd)/dunst" ~/.config/dunst
 ln -s "$(pwd)/hypr" ~/.config/hypr
@@ -27,9 +26,3 @@ ln -s "$(pwd)/rofi" ~/.config/rofi
 ln -s "$(pwd)/swaylock" ~/.config/swaylock
 ln -s "$(pwd)/waybar" ~/.config/waybar
 ln -s "$(pwd)/wlogout" ~/.config/wlogout 
-
-mkdir /opt/bg/
-sudo chgrp -R homeusers /opt/bg/
-sudo chmod g+rwx /opt/bg/
-cp "$(pwd)/.swaybg.sh" /opt/bg/
-sudo cp "$(pwd)/swaybg.desktop" /usr/share/applications/
