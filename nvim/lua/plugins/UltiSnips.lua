@@ -8,7 +8,7 @@ vim.cmd([[
 let g:UltiSnipsEditSplit = "vertical"
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<c-j>"
-let g:UltiSnipsJumBackwardTrigger - "<c-k>"
+let g:UltiSnipsJumpBackwardTrigger - "<c-k>"
 
 ]])
 
