@@ -87,6 +87,17 @@
 
   programs.bash = {
 	enable = true; 
-	profileExtra = "export XDG_DATA_DIRS=\"$HOME/.nix-profile/share:$XDG_DATA_DIRS\"";
-};
+	profileExtra = ''
+      exec fish
+      export XDG_DATA_DIRS=\"$HOME/.nix-profile/share:$XDG_DATA_DIRS\
+    '';
+  };
+
+  programs.fish = {
+    enable = true;
+
+    plugins = [
+      { name = "tide"; src = pkgs.fishPlugins.tide.src; } 
+    ];
+  };
 }
