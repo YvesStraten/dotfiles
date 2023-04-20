@@ -5,6 +5,6 @@ The hyprland dotfiles are from [ChrisTitus](https://github.com/ChrisTitusTech/hy
 
 This also uses home-manager in combination with nix package manager, to be able to use fish as default shell, add the shell to the /etc/shells file.
 
-{% codeblock %}
-chsh -s /home/youruse/.nix-profile/bin/fish
-{% endcodeblock %}
+``` 
+chsh -s /home/youruser/.nix-profile/bin/fish
+```
