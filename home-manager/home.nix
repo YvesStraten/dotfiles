@@ -22,6 +22,8 @@
     # # "Hello, world!" when run.
     # pkgs.hello
     neovim 
+    python310Packages.pynvim
+
     tesseract
     fontconfig
     texlive.combined.scheme-full
