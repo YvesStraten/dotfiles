@@ -27,7 +27,8 @@ end
 return packer.startup(function(use)
   use("wbthomason/packer.nvim")
 
-  use("rebelot/kanagawa.nvim") -- color scheme
+  use("ellisonleao/gruvbox.nvim") -- color scheme
+  use("catppuccin/nvim")
 
   -- lua functions
   use("nvim-lua/plenary.nvim")
@@ -69,7 +70,7 @@ return packer.startup(function(use)
   use("lewis6991/gitsigns.nvim") -- show line modifications on left hand side
 
   -- LateX and snippets
-  use("lervag/vimtex")
+  use { "lervag/vimtex", tag = "v1.6" }
   use("SirVer/ultisnips")
 
   -- cmp ultisnips
@@ -82,6 +83,17 @@ return packer.startup(function(use)
 
   use("ItsMindstorm/vim-snippets")
   use("onsails/lspkind.nvim")
+
+  use("da-h/AirLatex.vim")
+
+  use("junegunn/goyo.vim")
+
+  use("KeitaNakamura/tex-conceal.vim")
+
+  use("andrewferrier/wrapping.nvim")
+
+  use("vim-pandoc/vim-pandoc")
+
 
   if packer_bootstrap then
     require("packer").sync()

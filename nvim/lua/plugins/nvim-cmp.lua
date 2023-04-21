@@ -9,7 +9,7 @@ local lspkind = require "lspkind"
 cmp.setup({
   snippet = {
     expand = function(args)
-      require("luasnip").lsp_expand(args.body)
+      vim.fn["UltiSnips#Anon"](args.body)
     end,
   },
   mapping = cmp.mapping.preset.insert({
@@ -27,13 +27,12 @@ cmp.setup({
   -- sources for autocompletion
   sources = cmp.config.sources({
     { name = "nvim_lsp" }, -- lsp
-    { name = "buffer" }, -- text within current buffer
     { name = "path" }, -- file system paths
     { name = "ultisnips" },
   }),
   -- fix up code
   formatting = {
-    format = lspkind.cmp_format({ with_text = false, maxwidth = 50 })
+    format = lspkind.cmp_format({ maxwidth = 50, ellipsis_char = "..." })
   }
 })
 
