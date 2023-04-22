@@ -30,8 +30,17 @@ return {
 
 	{
 		"andrewferrier/wrapping.nvim",
+		event = "VeryLazy",
 		config = function()
 			require("wrapping").setup()
+		end,
+	},
+
+	{
+		"lukas-reineke/indent-blankline.nvim", 
+		event = "BufEnter",
+		config = function()
+			require("indent_blankline").setup()
 		end,
 	},
 
@@ -133,8 +142,8 @@ return {
 		"numToStr/Navigator.nvim",
 		event = "VeryLazy",
 		keys = {
-			{ "<C-j>", "<cmd>NavigatorUp<cr>" },
-			{ "<C-k>", "<cmd>NavigatorDown<cr>" },
+			{ "<C-k>", "<cmd>NavigatorUp<cr>" },
+			{ "<C-j>", "<cmd>NavigatorDown<cr>" },
 			{ "<C-h>", "<cmd>NavigatorLeft<cr>" },
 			{ "<C-l>", "<cmd>NavigatorRight<cr>" },
 		},
@@ -242,6 +251,15 @@ return {
 						ensure_installed = {
 							"lua",
 						},
+					})
+				end,
+			},
+
+			{
+				"onsails/lspkind.nvim", 
+				config = function()
+					require("lspkind").init({
+						mode = "tex_symbol",
 					})
 				end,
 			},
