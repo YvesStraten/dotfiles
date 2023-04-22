@@ -29,6 +29,14 @@ return {
 	},
 
 	{
+		"lewis6991/gitsigns.nvim",
+		event = "BufEnter",
+		config = function()
+			require("gitsigns").setup()
+		end,
+	},
+
+	{
 		"andrewferrier/wrapping.nvim",
 		event = "VeryLazy",
 		config = function()
@@ -37,7 +45,7 @@ return {
 	},
 
 	{
-		"lukas-reineke/indent-blankline.nvim", 
+		"lukas-reineke/indent-blankline.nvim",
 		event = "BufEnter",
 		config = function()
 			require("indent_blankline").setup()
@@ -256,7 +264,7 @@ return {
 			},
 
 			{
-				"onsails/lspkind.nvim", 
+				"onsails/lspkind.nvim",
 				config = function()
 					require("lspkind").init({
 						mode = "tex_symbol",
@@ -310,6 +318,15 @@ return {
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 			lspconfig.lua_ls.setup({
 				capabilities = capabilities,
+				settings = {
+					Lua = {
+						diagnostics = {
+							globals = {
+								"vim",
+							},
+						},
+					},
+				},
 			})
 		end,
 	},

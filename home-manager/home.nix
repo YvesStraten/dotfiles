@@ -25,6 +25,8 @@
     python310Packages.pynvim
     ripgrep
     fd
+    nodejs
+    yarn
 
     tesseract
     fontconfig
