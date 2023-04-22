@@ -27,7 +27,7 @@
     fd
     nodejs
     yarn
-    clang
+    gcc
 
     tesseract
     fontconfig

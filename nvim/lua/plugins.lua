@@ -82,7 +82,8 @@ return {
 		"s1n7ax/nvim-terminal",
 		event = "VeryLazy",
 		config = function()
-			vim.opt.hidden = true, require("nvim-terminal").setup()
+			vim.opt.hidden = true, 
+            require("nvim-terminal").setup()
 		end,
 	},
 
