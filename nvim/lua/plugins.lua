@@ -20,7 +20,7 @@ return {
 			{ "<leader>ll", "<cmd>:VimtexCompile<cr>", desc = "compiles tex to pdf" },
 		},
 		config = function()
-			vim.opts.conceallevel = 2
+			vim.opt.conceallevel = 2
 			vim.g.tex_conceal = "abdgm"
 			vim.g.tex_superscripts = "[0-9a-zA-W.,:;+-<>/()=]"
 			vim.g.tex_subscripts = "[0-9aehijklmnoprstuvx,+-/().]"
