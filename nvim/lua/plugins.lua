@@ -212,6 +212,7 @@ return {
 						ensure_installed = {
 							"lua_ls",
 							"texlab",
+                            "clangd"
 						},
 					})
 				end,
@@ -223,6 +224,7 @@ return {
 					require("mason-null-ls").setup({
 						ensure_installed = {
 							"stylua",
+                            "clang-format"
 						},
 						automatic_setup = true,
 					})
