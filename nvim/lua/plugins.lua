@@ -28,6 +28,14 @@ return {
 	},
 
 	{
+		"s1n7ax/nvim-terminal",
+		event = "VeryLazy",
+		config = function()
+			vim.opt.hidden = true, require("nvim-terminal").setup()
+		end,
+	},
+
+	{
 		"windwp/nvim-autopairs",
 		event = "VeryLazy",
 		config = function()
@@ -40,12 +48,38 @@ return {
 	{
 		"romgrk/barbar.nvim",
 		event = "VeryLazy",
+		keys = {
+			{ "<leader>c", "<cmd>BufferClose<cr>", desc = "Closes current tab" },
+		},
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
 		},
-		opts = {
+		opts = {},
+	},
+
+	{
+		"nvim-telescope/telescope.nvim",
+		event = "VeryLazy",
+		dependencies = {
+			"nvim-lua/plenary.nvim"
+		},
+		keys = {
+			{ "<leader>ff", "<cmd> Telescope find_files<cr>", desc = "Find files"},
+			{ "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Live grep"},
 
 		},
+
+	},
+
+	{
+		"folke/which-key.nvim",
+		config = function()
+			vim.opt.timeout = true
+			vim.opt.timeoutlen = 300 
+			require("which-key").setup({
+
+			})
+		end,
 	},
 
 	{
@@ -56,7 +90,7 @@ return {
 			opt = true,
 		},
 		config = function()
-			local gruvbox = require"lualine.themes.gruvbox"
+			local gruvbox = require("lualine.themes.gruvbox")
 			require("lualine").setup({
 				options = {
 					theme = gruvbox,
