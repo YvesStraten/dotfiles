@@ -23,6 +23,8 @@
     # pkgs.hello
     neovim 
     python310Packages.pynvim
+    ripgrep
+    fd
 
     tesseract
     fontconfig

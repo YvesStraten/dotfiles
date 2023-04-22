@@ -1,11 +1,11 @@
 return {
 
 	{
-		"folke/tokyonight.nvim",
+		"catppuccin/nvim",
 		lazy = false,
 		priority = 1000,
 		config = function()
-			vim.cmd([[colorscheme tokyonight]])
+			vim.cmd([[colorscheme catppuccin-mocha]])
 		end,
 	},
 
@@ -21,9 +21,43 @@ return {
 		},
 		config = function()
 			vim.opt.conceallevel = 2
-			vim.g.tex_conceal = "abdgm"
+			vim.g.tex_conceal = "abdgms"
 			vim.g.tex_superscripts = "[0-9a-zA-W.,:;+-<>/()=]"
 			vim.g.tex_subscripts = "[0-9aehijklmnoprstuvx,+-/().]"
+			vim.g.tex_conceal_frac = 1
+		end,
+	},
+
+	{
+		"andrewferrier/wrapping.nvim",
+		config = function()
+			require("wrapping").setup()
+		end,
+	},
+
+	{
+		"iamcco/markdown-preview.nvim",
+		ft = "markdown",
+		build = {
+			"cd app && yarn install",
+		},
+		config = function()
+		end,
+	},
+
+	{
+		"aspeddro/pandoc.nvim",
+		ft = "markdown",
+		config = function()
+			require("pandoc").setup()
+		end,
+	},
+
+	{
+		"numToStr/Comment.nvim",
+		event = "InsertEnter",
+		config = function()
+			require("Comment").setup()
 		end,
 	},
 
@@ -37,7 +71,7 @@ return {
 
 	{
 		"windwp/nvim-autopairs",
-		event = "VeryLazy",
+		event = "InsertEnter",
 		config = function()
 			require("nvim-autopairs").setup({
 				disable_filetype = { "TelescopePrompt", "vim" },
@@ -61,24 +95,20 @@ return {
 		"nvim-telescope/telescope.nvim",
 		event = "VeryLazy",
 		dependencies = {
-			"nvim-lua/plenary.nvim"
+			"nvim-lua/plenary.nvim",
 		},
 		keys = {
-			{ "<leader>ff", "<cmd> Telescope find_files<cr>", desc = "Find files"},
-			{ "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Live grep"},
-
+			{ "<leader>ff", "<cmd> Telescope find_files<cr>", desc = "Find files" },
+			{ "<leader>fg", "<cmd>Telescope live_grep<cr>",   desc = "Live grep" },
 		},
-
 	},
 
 	{
 		"folke/which-key.nvim",
 		config = function()
 			vim.opt.timeout = true
-			vim.opt.timeoutlen = 300 
-			require("which-key").setup({
-
-			})
+			vim.opt.timeoutlen = 300
+			require("which-key").setup({})
 		end,
 	},
 
@@ -90,10 +120,10 @@ return {
 			opt = true,
 		},
 		config = function()
-			local gruvbox = require("lualine.themes.gruvbox")
+			local theme = require("lualine.themes.ayu_dark")
 			require("lualine").setup({
 				options = {
-					theme = gruvbox,
+					theme = theme,
 				},
 			})
 		end,
@@ -141,7 +171,7 @@ return {
 
 	{
 		"neovim/nvim-lspconfig",
-		event = "VeryLazy",
+		event = "BufEnter",
 		dependencies = {
 			{
 				"williamboman/mason.nvim",
@@ -164,7 +194,20 @@ return {
 					require("mason-lspconfig").setup({
 						ensure_installed = {
 							"lua_ls",
+							"texlab",
 						},
+					})
+				end,
+			},
+
+			{
+				"jayp0521/mason-null-ls.nvim",
+				config = function()
+					require("mason-null-ls").setup({
+						ensure_installed = {
+							"stylua",
+						},
+						automatic_setup = true,
 					})
 				end,
 			},
@@ -191,23 +234,30 @@ return {
 					})
 				end,
 			},
+
+			{
+				"nvim-treesitter/nvim-treesitter",
+				config = function()
+					require("nvim-treesitter.configs").setup({
+						ensure_installed = {
+							"lua",
+						},
+					})
+				end,
+			},
 		},
 		config = function()
-			local lspconfig = require("lspconfig")
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
-			lspconfig.lua_ls.setup({
-				capabilities = capabilities,
-			})
 		end,
 	},
 
 	{
 		"hrsh7th/nvim-cmp",
-		event = "InsertEnter",
+		event = "BufEnter",
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-buffer",
 			"quangnguyen30192/cmp-nvim-ultisnips",
+			"hrsh7th/cmp-path",
 		},
 		config = function()
 			local cmp = require("cmp")
@@ -236,6 +286,12 @@ return {
 				}, {
 					{ name = "buffer" },
 				}),
+			})
+
+			local lspconfig = require("lspconfig")
+			local capabilities = require("cmp_nvim_lsp").default_capabilities()
+			lspconfig.lua_ls.setup({
+				capabilities = capabilities,
 			})
 		end,
 	},
