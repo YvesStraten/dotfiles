@@ -270,7 +270,7 @@ return {
 				"onsails/lspkind.nvim",
 				config = function()
 					require("lspkind").init({
-						mode = "tex_symbol",
+						mode = "text_symbol",
 					})
 				end,
 			},
@@ -331,6 +331,10 @@ return {
 					},
 				},
 			})
+
+            lspconfig.texlab.setup({
+              capabilities = capabilities,
+            })
 		end,
 	},
 }
