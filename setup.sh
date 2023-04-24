@@ -3,10 +3,12 @@
 rm -r "$HOME/.config/nvim"
 rm -r "$HOME/.config/mpv"
 rm -r "$HOME/.config/ranger"
+rm -r "$HOME/.config/zathura/"
 
 ln -s "$(pwd)/nvim" ~/.config/nvim
 ln -s "$(pwd)/mpv" ~/.config/mpv
 ln -s "$(pwd)/ranger" ~/.config/ranger
+ln -s "$(pwd)/zathura" ~/.config/zathura
 
 #Other
 rm -r "$HOME/.config/dunst"
