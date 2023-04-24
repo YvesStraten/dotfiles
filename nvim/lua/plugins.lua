@@ -314,6 +314,7 @@ return {
             name = "path",
             option = {
               trailing_slash = true,
+              label_trailing_slash = false,
             },
           },
         }, {
