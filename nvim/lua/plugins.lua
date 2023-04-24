@@ -265,7 +265,6 @@ return {
         end,
       },
 
-<<<<<<< HEAD
 			{
 				"onsails/lspkind.nvim",
 				config = function()
@@ -278,20 +277,6 @@ return {
 		config = function()
 		end,
 	},
-=======
-      {
-        "onsails/lspkind.nvim",
-        config = function()
-          require("lspkind").init({
-            mode = "tex_symbol",
-          })
-        end,
-      },
-    },
-    config = function()
-    end,
-  },
->>>>>>> 13342dbae7db1862084162893df45395f8623cc8
 
   {
     "hrsh7th/nvim-cmp",
@@ -356,3 +341,4 @@ return {
             })
 		end,
 	},
+  }
