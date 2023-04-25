@@ -152,6 +152,7 @@ thunderbird
 ttf-dejavu
 tumbler
 udiskie
+unityhub
 unzip
 update-grub
 viewnior
