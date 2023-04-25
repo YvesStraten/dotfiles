@@ -79,10 +79,16 @@ return {
   },
 
   {
-    "s1n7ax/nvim-terminal",
+    "akinsho/toggleterm.nvim", 
     event = "VeryLazy",
+    version = "*",
+    keys = {
+      { "<leader>;", "<cmd>ToggleTerm<cr>", desc = "opens a terminal" }
+    },
     config = function()
-      vim.opt.hidden = true, require("nvim-terminal").setup()
+      require("toggleterm").setup{
+        autochdir = true,
+      }
     end,
   },
 
