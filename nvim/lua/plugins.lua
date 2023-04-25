@@ -82,12 +82,10 @@ return {
     "akinsho/toggleterm.nvim", 
     event = "VeryLazy",
     version = "*",
-    keys = {
-      { "<leader>;", "<cmd>ToggleTerm<cr>", desc = "opens a terminal" }
-    },
     config = function()
       require("toggleterm").setup{
         autochdir = true,
+        open_mapping = [[<leader>;]],
       }
     end,
   },
