@@ -28,6 +28,7 @@
     nodejs
     yarn
     gcc
+    omnisharp-roslyn
 
     tesseract
     fontconfig

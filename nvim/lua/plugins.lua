@@ -219,7 +219,7 @@ return {
               "lua_ls",
               "texlab",
               "clangd",
-              "csharp_ls",
+              "omnisharp",
             },
           })
         end,
@@ -350,9 +350,10 @@ return {
         capabilities = capabilities,
       })
 
-      lspconfig.csharp_ls.setup({
+      lspconfig.omnisharp.setup({
         capabilities = capabilities
       })
+
     end,
   },
 }
