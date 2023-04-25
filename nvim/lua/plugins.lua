@@ -79,16 +79,16 @@ return {
   },
 
   {
-    "akinsho/toggleterm.nvim", 
+    "akinsho/toggleterm.nvim",
     event = "VeryLazy",
     version = "*",
     keys = {
-      { "<leader>;", "<cmd>ToggleTerm<cr>", desc="Toggle term"}
+      { "<leader>;", "<cmd>ToggleTerm<cr>", desc = "Toggle term" },
     },
     config = function()
-      require("toggleterm").setup{
+      require("toggleterm").setup({
         autochdir = true,
-      }
+      })
     end,
   },
 
@@ -271,18 +271,18 @@ return {
         end,
       },
 
-			{
-				"onsails/lspkind.nvim",
-				config = function()
-					require("lspkind").init({
-						mode = "text_symbol",
-					})
-				end,
-			},
-		},
-		config = function()
-		end,
-	},
+      {
+        "onsails/lspkind.nvim",
+        config = function()
+          require("lspkind").init({
+            mode = "text_symbol",
+          })
+        end,
+      },
+    },
+    config = function()
+    end,
+  },
 
   {
     "hrsh7th/nvim-cmp",
@@ -328,24 +328,24 @@ return {
         }),
       })
 
-			local lspconfig = require("lspconfig")
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
-			lspconfig.lua_ls.setup({
-				capabilities = capabilities,
-				settings = {
-					Lua = {
-						diagnostics = {
-							globals = {
-								"vim",
-							},
-						},
-					},
-				},
-			})
+      local lspconfig = require("lspconfig")
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+      lspconfig.lua_ls.setup({
+        capabilities = capabilities,
+        settings = {
+          Lua = {
+            diagnostics = {
+              globals = {
+                "vim",
+              },
+            },
+          },
+        },
+      })
 
-            lspconfig.texlab.setup({
-              capabilities = capabilities,
-            })
-		end,
-	},
-  }
+      lspconfig.texlab.setup({
+        capabilities = capabilities,
+      })
+    end,
+  },
+}
