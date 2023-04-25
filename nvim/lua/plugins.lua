@@ -219,6 +219,7 @@ return {
               "lua_ls",
               "texlab",
               "clangd",
+              "csharp_ls",
             },
           })
         end,
@@ -266,6 +267,8 @@ return {
           require("nvim-treesitter.configs").setup({
             ensure_installed = {
               "lua",
+              "c_sharp",
+              "cpp",
             },
           })
         end,
@@ -345,6 +348,10 @@ return {
 
       lspconfig.texlab.setup({
         capabilities = capabilities,
+      })
+
+      lspconfig.csharp_ls.setup({
+        capabilities = capabilities
       })
     end,
   },
