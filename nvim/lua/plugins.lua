@@ -1,11 +1,11 @@
 return {
 
   {
-    "catppuccin/nvim",
+    "Shatur/neovim-ayu",
     lazy = false,
     priority = 1000,
     config = function()
-      vim.cmd([[colorscheme catppuccin-mocha]])
+      vim.cmd([[colorscheme ayu-mirage]])
     end,
   },
 
@@ -143,7 +143,7 @@ return {
       opt = true,
     },
     config = function()
-      local theme = require("lualine.themes.ayu_dark")
+      local theme = require("lualine.themes.ayu_mirage")
       require("lualine").setup({
         options = {
           theme = theme,
