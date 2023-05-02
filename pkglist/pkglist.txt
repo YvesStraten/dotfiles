@@ -2,6 +2,7 @@ alsa-plugins
 ani-cli-git
 appimagelauncher
 ark
+azote
 base
 base-devel
 bash-completion
@@ -153,6 +154,7 @@ ttf-dejavu
 tumbler
 udiskie
 unityhub
+unrar
 unzip
 update-grub
 viewnior
