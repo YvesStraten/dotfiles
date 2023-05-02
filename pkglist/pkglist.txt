@@ -147,7 +147,6 @@ sudo
 swaybg
 swayidle
 swaylock-effects
-swww-git
 system-config-printer
 thunderbird
 ttf-dejavu
