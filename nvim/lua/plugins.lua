@@ -63,10 +63,13 @@ return {
   },
 
   {
-    "aspeddro/pandoc.nvim",
+    "jghauser/auto-pandoc.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
     ft = "markdown",
     config = function()
-      require("pandoc").setup()
+      require("auto-pandoc")
     end,
   },
 
