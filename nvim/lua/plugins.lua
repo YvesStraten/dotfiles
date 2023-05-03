@@ -63,17 +63,6 @@ return {
   },
 
   {
-    "jghauser/auto-pandoc.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    ft = "markdown",
-    config = function()
-      require("auto-pandoc")
-    end,
-  },
-
-  {
     "numToStr/Comment.nvim",
     event = "InsertEnter",
     config = function()
