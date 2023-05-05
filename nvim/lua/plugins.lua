@@ -29,6 +29,14 @@ return {
   },
 
   {
+    "equalsraf/neovim-gui-shim",
+    event = "VeryLazy",
+    config = function()
+
+    end,
+  },
+
+  {
     "lewis6991/gitsigns.nvim",
     event = "BufEnter",
     config = function()
