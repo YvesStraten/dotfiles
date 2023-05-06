@@ -18,10 +18,10 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
+    # # Adds the 'hello' command to your environment. It prints a friendly # "Hello, world!" when run. pkgs.hello
     neovim 
+    tmux
+    neovim-qt
     python310Packages.pynvim
     ripgrep
     fd
@@ -41,14 +41,13 @@
     spicetify-cli
     rclone-browser
     gnome.sushi
-    filezilla 
     pandoc
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
     # # fonts?
-    (pkgs.nerdfonts.override { fonts = [ "RobotoMono" ]; })
+    (pkgs.nerdfonts.override { fonts = [ "RobotoMono" "FiraCode" ]; })
 
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
@@ -87,6 +86,7 @@
   home.sessionVariables = {
     # EDITOR = "emacs";
     EDITOR = "nvim";
+    TERM = "kitty";
   };
 
   home.sessionPath = [
@@ -106,11 +106,19 @@
     '';
   };
 
-  programs.fish = {
+  programs.zsh = {
     enable = true;
-
-    plugins = [
-      { name = "tide"; src = pkgs.fishPlugins.tide.src; } 
-    ];
+    profileExtra = ''
+      export XDG_DATA_DIRS=\"$HOME/.nix-profile/share:$XDG_DATA_DIRS\
+    '';
+    oh-my-zsh = {
+      enable = true;
+      plugins = [
+        "git"
+        "archlinux"
+        "common-aliases"
+      ];
+      theme = "robbyrussell";
+    };
   };
 }
