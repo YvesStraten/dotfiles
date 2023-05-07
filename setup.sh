@@ -19,6 +19,7 @@ rm -r "$HOME/.config/rofi"
 rm -r "$HOME/.config/swaylock"
 rm -r "$HOME/.config/waybar"
 rm -r "$HOME/.config/wlogout"
+rm -r "$HOME/.config/tmux"
 
 ln -s "$(pwd)/dunst" ~/.config/dunst
 ln -s "$(pwd)/hypr" ~/.config/hypr
@@ -28,3 +29,4 @@ ln -s "$(pwd)/rofi" ~/.config/rofi
 ln -s "$(pwd)/swaylock" ~/.config/swaylock
 ln -s "$(pwd)/waybar" ~/.config/waybar
 ln -s "$(pwd)/wlogout" ~/.config/wlogout 
+ln -s "$(pwd)/tmux" ~/.config/tmux 
