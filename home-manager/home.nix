@@ -36,11 +36,8 @@
     zathura
     libreoffice
     rclone
-    gnome.nautilus 
-    nautilus-open-any-terminal
     spicetify-cli
     rclone-browser
-    gnome.sushi
     pandoc
 
     # # It is sometimes useful to fine-tune packages, for example, by applying

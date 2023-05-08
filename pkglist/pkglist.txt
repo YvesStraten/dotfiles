@@ -13,7 +13,6 @@ brave-bin
 breeze
 brightnessctl
 btop
-btrfs-assistant
 btrfs-progs
 catppuccin-gtk-theme-frappe
 catppuccin-gtk-theme-latte
@@ -27,6 +26,7 @@ cups
 cups-pdf
 dhcpcd
 dolphin-emu
+downgrade
 dunst
 efibootmgr
 emacs
@@ -45,9 +45,11 @@ gamemode
 gamescope
 gamescope-session-git
 gdm
+gimp
 git
 github-cli
 gnome-backgrounds
+gnome-browser-connector
 gnome-calculator
 gnome-calendar
 gnome-characters
@@ -69,13 +71,13 @@ gnome-session
 gnome-settings-daemon
 gnome-shell
 gnome-shell-extension-appindicator
-gnome-shell-extension-arc-menu
-gnome-shell-extension-clipboard-indicator
-gnome-shell-extension-coverflow-alt-tab
+gnome-shell-extension-caffeine
 gnome-shell-extension-emoji-selector-git
+gnome-shell-extension-media-controls
 gnome-shell-extension-no-overview
 gnome-shell-extensions
 gnome-software
+gnome-software-packagekit-plugin
 gnome-system-monitor
 gnome-text-editor
 gnome-tweaks
@@ -100,13 +102,11 @@ gvfs-smb
 gwenview
 handbrake
 hyprland-nvidia-git
-indicator-kdeconnect-git
 intel-ucode
 iptables-nft
 iwd
 java-openjdk-bin
 jre-openjdk
-kdeconnect
 kitty
 lib32-alsa-plugins
 lib32-giflib
@@ -143,6 +143,7 @@ mangohud-git
 mmv-go
 mpv
 nautilus
+nautilus-open-any-terminal
 neofetch
 network-manager-applet
 networkmanager
@@ -166,7 +167,6 @@ os-prober
 pamixer
 papirus-icon-theme
 partitionmanager
-paru
 pavucontrol
 pipewire
 pipewire-alsa
@@ -174,6 +174,7 @@ pipewire-pulse
 plasma-browser-integration
 playerctl
 polkit-gnome
+power-profiles-daemon
 python-pip
 python-psutil
 python-pydbus
@@ -188,7 +189,6 @@ rygel
 samba
 sassc
 screen
-sddm-git
 selectdefaultapplication-git
 snap-pac-grub
 snapper
@@ -212,7 +212,6 @@ unityhub
 unrar
 unzip
 update-grub
-viewnior
 vim
 vulkan-intel
 waybar-hyprland-git
@@ -230,5 +229,6 @@ wtype
 xdg-desktop-portal-gnome
 xdg-user-dirs-gtk
 xdotool
+yay-bin
 yelp
 yt-dlp
