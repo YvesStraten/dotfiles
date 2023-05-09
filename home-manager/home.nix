@@ -31,7 +31,6 @@
     omnisharp-roslyn
 
     tesseract
-    fontconfig
     texlive.combined.scheme-full
     zathura
     libreoffice
@@ -93,7 +92,6 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   targets.genericLinux.enable = true;
-  fonts.fontconfig.enable = true;
 
 
   programs.bash = {
