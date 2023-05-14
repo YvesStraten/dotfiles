@@ -3,8 +3,8 @@
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = "yvess";
-  home.homeDirectory = "/home/yvess";
+  home.username = "storm";
+  home.homeDirectory = "/home/storm";
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -39,6 +39,10 @@
     spicetify-cli
     rclone-browser
     pandoc
+    
+    brave
+    gh
+    git
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -79,7 +83,19 @@
   #  /etc/profiles/per-user/yvess/etc/profile.d/hm-session-vars.sh
   #
   # if you don't want to manage your shell through Home Manager.
-  
+
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Catppuccin";
+      package = pkgs.catppuccin-gtk.override {
+        accents = [ "pink" ];
+        size = "standard";
+        variant = "mocha";
+      };
+    };
+  };
+
   home.sessionVariables = {
     # EDITOR = "emacs";
     EDITOR = "nvim";
@@ -94,7 +110,6 @@
   programs.home-manager.enable = true;
   targets.genericLinux.enable = true;
 
-
   programs.bash = {
 	enable = true; 
 	profileExtra = ''
@@ -104,6 +119,7 @@
 
   programs.zsh = {
     enable = true;
+    enableAutosuggestions = true;
     profileExtra = ''
       export XDG_DATA_DIRS=\"$HOME/.nix-profile/share:$XDG_DATA_DIRS\
     '';
@@ -116,7 +132,6 @@
       enable = true;
       plugins = [
         "git"
-        "archlinux"
         "common-aliases"
         "tmux"
       ];
