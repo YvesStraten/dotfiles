@@ -36,7 +36,6 @@
     zathura
     libreoffice
     rclone
-    spicetify-cli
     rclone-browser
     pandoc
     
@@ -124,6 +123,7 @@
       export XDG_DATA_DIRS=\"$HOME/.nix-profile/share:$XDG_DATA_DIRS\
     '';
     initExtraFirst = ''
+      ZSH_DISABLE_COMPFIX=true
       ZSH_TMUX_AUTOSTART=true
       ZSH_TMUX_CONFIG="$HOME/.config/tmux/.tmux.conf"
     '';
