@@ -1,11 +1,11 @@
 return {
 
   {
-    "Shatur/neovim-ayu",
+    "ellisonleao/gruvbox.nvim",
     lazy = false,
     priority = 1000,
     config = function()
-      vim.cmd([[colorscheme ayu-mirage]])
+      vim.cmd([[colorscheme gruvbox]])
     end,
   },
 
@@ -129,7 +129,7 @@ return {
       opt = true,
     },
     config = function()
-      local theme = require("lualine.themes.ayu_mirage")
+      local theme = require("lualine.themes.gruvbox-material")
       require("lualine").setup({
         options = {
           theme = theme,
