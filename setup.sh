@@ -1,11 +1,14 @@
 #!/bin/bash
 # My own
-rm -r "$HOME/.config/nvim"
+rm -rf "$HOME/.local/share/nvim"
+rm -rf "$HOME/.config/nvim"
 rm -r "$HOME/.config/mpv"
 rm -r "$HOME/.config/ranger"
 rm -r "$HOME/.config/zathura/"
 
-ln -s "$(pwd)/nvim" ~/.config/nvim
+git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
+ln -s "$(pwd)/nvim/custom" ~/.config/nvim/lua/custom
+
 ln -s "$(pwd)/mpv" ~/.config/mpv
 ln -s "$(pwd)/ranger" ~/.config/ranger
 ln -s "$(pwd)/zathura/" ~/.config/zathura
