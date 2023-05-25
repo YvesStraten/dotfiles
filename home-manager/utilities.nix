@@ -9,7 +9,7 @@
     rclone
     rclone-browser
     pandoc
-    
+
     brave
     gh
     git

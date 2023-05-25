@@ -21,11 +21,11 @@
     sessionVariables = {
       EDITOR = "nvim";
       TERM = "kitty";
-      SHELL = "${pkgs.zsh}/bin/zsh";
     };
 
     sessionPath = [
       "$HOME/go/bin"
+      "$HOME/.local/bin"
     ];
   };  
 

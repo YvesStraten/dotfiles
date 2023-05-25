@@ -7,6 +7,7 @@
     ];})
       
     #themes here
+    catppuccin-gtk
   ];
 
   gtk = {
