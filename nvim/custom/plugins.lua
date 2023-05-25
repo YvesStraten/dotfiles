@@ -5,6 +5,7 @@ local plugins = {
 			ensure_installed = {
 				"c",
 				"cpp",
+        "markdown",
 			},
 		},
 	},
@@ -36,12 +37,23 @@ local plugins = {
 		},
 	},
 
-  {
-    "lervag/vimtex",
-    ft = "tex",
-    config = function ()
-      require("custom.configs.vimtex")
-    end
-  }
+	{
+		"lervag/vimtex",
+		ft = "tex",
+		config = function()
+			require("custom.configs.vimtex")
+		end,
+	},
+
+	{
+		"quarto-dev/quarto-nvim",
+    lazy = false,
+    dependencies = {
+      "jmbuhr/otter.nvim",
+    },
+		config = function()
+			require("quarto").setup({})
+		end,
+	},
 }
 return plugins
