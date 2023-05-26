@@ -9,6 +9,7 @@
     rclone
     rclone-browser
     pandoc
+    ranger
 
     brave
     gh

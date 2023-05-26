@@ -7,15 +7,11 @@
     ];})
       
     #themes here
-    catppuccin-gtk
-  ];
+    (catppuccin-gtk.override {
+        accents = [ "pink" ];
+        variant = "mocha";
+      })
 
-  gtk = {
-    enable = true;
-    gtk3 = {
-      bookmarks = [
-          
-      ];
-    };
-  };
+    whitesur-icon-theme 
+  ];
 }
