@@ -68,6 +68,8 @@
      dunst
      kitty 
      git 
+     brightnessctl
+     swaylock
      swaylock-effects
      rofi-wayland
      wofi
@@ -80,6 +82,7 @@
      udiskie
      swayidle
      wlsunset
+     neofetch
   ];
 
   programs.hyprland = {

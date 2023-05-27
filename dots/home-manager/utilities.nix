@@ -13,6 +13,6 @@
 
     brave
     gh
-    git
+    mpv
   ];
 }
