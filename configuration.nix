@@ -65,7 +65,7 @@
   environment.systemPackages = with pkgs; [
      vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
      wget
-     nautilus
+     dunst
      kitty 
      git 
      swaylock-effects
@@ -96,7 +96,7 @@
 	wlr.enable = true;
   };
 
-  programs.zsh.enable = true 
+  programs.zsh.enable = true; 
   users.defaultUserShell = pkgs.zsh;
 
   sound.enable = false;
