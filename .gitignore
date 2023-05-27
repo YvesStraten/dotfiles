@@ -1,5 +1,4 @@
-mpv/watch_later
-kitty/theme.conf
-zathura/theme
-nvim/lazy-lock.json
+dots/mpv/watch_later
+dots/kitty/theme.conf
+dots/zathura/theme
 hardware-configuration.nix

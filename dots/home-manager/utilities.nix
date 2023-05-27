@@ -14,5 +14,6 @@
     brave
     gh
     mpv
+    ani-cli
   ];
 }
