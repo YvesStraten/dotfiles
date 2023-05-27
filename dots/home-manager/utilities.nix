@@ -3,7 +3,7 @@
   home.packages = with pkgs; [
 
     tesseract
-    texlive.combined.scheme-full
+    #texlive.combined.scheme-full
     zathura
     libreoffice
     rclone

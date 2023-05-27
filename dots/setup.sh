@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # My own
 rm -rf "$HOME/.local/share/nvim"
 rm -rf "$HOME/.config/nvim"

@@ -20,7 +20,7 @@
 
     sessionVariables = {
       EDITOR = "nvim";
-      TERM = "kitty";
+      TERMINAL = "kitty";
     };
 
     sessionPath = [
