@@ -12,6 +12,7 @@
     '';
 
     oh-my-zsh = {
+
       enable = true;
       plugins = [
         "git"
@@ -21,4 +22,11 @@
       theme = "robbyrussell";
     };
   };
+
+  programs.bash = {
+      enable = true;
+      profileExtra = ''
+        export XDG_DATA_DIRS=\"$HOME/.nix-profile/share:$XDG_DATA_DIRS\"
+      '';
+    };
 }

@@ -8,6 +8,7 @@
       
     #themes here
 
+    whitesur-gtk-theme
     whitesur-icon-theme 
   ];
 }

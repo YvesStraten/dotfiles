@@ -3,6 +3,7 @@
   imports = [
     ./zsh.nix
     ./neovim.nix
+    ./waybar.nix
     ./languages.nix
     ./utilities.nix
     ./theming.nix

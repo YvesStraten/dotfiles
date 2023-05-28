@@ -12,10 +12,7 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes"];
   # Bootloader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.version = 2;
-  boot.loader.grub.device = "nodev";
-  boot.loader.grub.useOSProber = true;
+  boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
@@ -71,16 +68,18 @@
      dunst
      kitty 
      git 
+     libappindicator
      brightnessctl
      swaylock-effects
      rofi-wayland
+     btop
      wofi
      wlogout
      grim
      wl-clipboard
      pamixer
      pavucontrol
-     waybar
+     wayland
      swaybg
      udiskie
      swayidle
@@ -89,7 +88,6 @@
      hyprpaper
      hyprpicker
      alejandra
-     lxappearance
   ];
 
   programs.hyprland = {
@@ -103,11 +101,15 @@
 
   xdg.portal = {
   	enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+    ];
 	wlr.enable = true;
   };
 
   programs.zsh.enable = true; 
   users.defaultUserShell = pkgs.zsh;
+  programs.nm-applet.enable = true;
 
   sound.enable = false;
   security.rtkit.enable = true;
@@ -121,6 +123,7 @@
 
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.enable = true;
+  services.upower.enable = true;
 
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.opengl.enable = true;
