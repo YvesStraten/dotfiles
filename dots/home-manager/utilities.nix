@@ -1,7 +1,6 @@
 { pkgs, ...}:
 {
   home.packages = with pkgs; [
-
     tesseract
     #texlive.combined.scheme-full
     zathura
@@ -10,6 +9,9 @@
     rclone-browser
     pandoc
     ranger
+    ani-cli
+    gnome.nautilus
+    gwenview
 
     brave
     gh

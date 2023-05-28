@@ -72,7 +72,6 @@
      kitty 
      git 
      brightnessctl
-     swaylock
      swaylock-effects
      rofi-wayland
      wofi
@@ -80,12 +79,17 @@
      grim
      wl-clipboard
      pamixer
+     pavucontrol
      waybar
      swaybg
      udiskie
      swayidle
      wlsunset
      neofetch
+     hyprpaper
+     hyprpicker
+     alejandra
+     lxappearance
   ];
 
   programs.hyprland = {
@@ -107,6 +111,7 @@
 
   sound.enable = false;
   security.rtkit.enable = true;
+  security.polkit.enable = true;
   services.pipewire = {
   	enable = true;
 	alsa.enable = true;
@@ -127,6 +132,7 @@
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 
+  security.pam.services.swaylock = {};
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

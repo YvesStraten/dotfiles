@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/sh 
 if hyprctl monitors | grep -q "Monitor HDMI-A-1"; then 
   echo "HDMI connected"
   hyprctl keyword monitor eDP-1,disable

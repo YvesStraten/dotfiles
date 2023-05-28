@@ -1,2 +1,3 @@
 #!/bin/sh
-wofi --show  ~/Pictures/Wallpaper/
+cd ~/Pictures/Wallpapers/
+fd | fzf | xargs swaybg -m fill -i  

@@ -8,5 +8,6 @@
       python310Packages.pynvim
       ripgrep
       fd
+      fzf
     ];
   }
