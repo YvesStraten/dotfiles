@@ -121,8 +121,10 @@
 	pulse.enable = true;
   };
 
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.enable = true;
+  sound.mediaKeys = {
+      enable = true;
+    };
+
   services.upower.enable = true;
 
   services.xserver.videoDrivers = [ "nvidia" ];
