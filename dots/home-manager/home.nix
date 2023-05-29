@@ -3,7 +3,7 @@
   imports = [
     ./zsh.nix
     ./neovim.nix
-    ./waybar.nix
+    ./hyprland.nix
     ./languages.nix
     ./utilities.nix
     ./theming.nix
@@ -19,10 +19,6 @@
     homeDirectory = "/home/yvess";
     stateVersion = "22.11"; # Please read the comment before changing.
 
-    sessionVariables = {
-      EDITOR = "nvim";
-      TERMINAL = "kitty";
-    };
 
     sessionPath = [
       "$HOME/go/bin"
