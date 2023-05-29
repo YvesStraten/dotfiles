@@ -12,6 +12,7 @@
     ani-cli
     gnome.nautilus
     gwenview
+    themechanger
 
     brave
     gh

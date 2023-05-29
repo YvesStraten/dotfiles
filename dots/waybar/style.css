@@ -1,8 +1,9 @@
 * {
     border: none;
     border-radius: 0;
-    font-family: Ubuntu, "Font Awesome 5 Free";
-    font-size: 14px;
+    font-family: FiraCode Nerd Font; 
+    font-weight: normal;
+    font-size: 13.5px;
     min-height: 0;
 }
 
@@ -51,6 +52,7 @@ tooltip {
 #custom-updates,
 #custom-caffeine,
 #custom-weather,
+#idle_inhibitor
 #custom-waybar-media
 #window,
 #clock,

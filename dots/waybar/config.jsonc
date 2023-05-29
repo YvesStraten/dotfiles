@@ -8,7 +8,7 @@
     "height": 0,
     "modules-left": [
         "clock",
-        "",
+        "idle_inhibitor",
         "wlr/workspaces",
         "custom/waybar-media"
     ],
