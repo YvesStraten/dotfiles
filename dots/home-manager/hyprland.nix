@@ -4,13 +4,11 @@
     sessionVariables = {
       EDITOR = "nvim";
       TERMINAL = "kitty";
-      _JAVA_AWT_WM_NONREPARENTING = 1;
-      XCURSOR_SIZE=24;
-      LIBVA_DRIVER_NAME = "nvidia";
+      _JAVA_AWT_WM_NONREPARENTING = "1";
+      XCURSOR_SIZE = "24";
+      WLR_NO_HARDWARE_CURSORS = "1";
       XDG_SESSION_TYPE = "wayland";
-      GBM_BACKEND = "nvidia-drm";
-      __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-      WLR_NO_HARDWARE_CURSORS = 1;
+      NIXOS_OZONE_WL = "1";
     };
 
   };
