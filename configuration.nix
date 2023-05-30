@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let 
   nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
@@ -69,6 +69,7 @@ in
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfreePredicate = (pkg: true);
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -86,6 +87,7 @@ in
      wofi
      wlogout
      grim
+     slurp
      wl-clipboard
      pamixer
      pavucontrol
@@ -99,7 +101,16 @@ in
      hyprpaper
      hyprpicker
      alejandra
+     appimage-run
   ];
+
+  specialisation = {
+    external-display.configuration = {
+      system.nixos.tags = [ "external-display" ];
+      hardware.nvidia.prime.offload.enable = lib.mkForce false;
+      hardware.nvidia.powerManagement.enable = lib.mkForce false;
+    };
+  };
 
   programs.hyprland = {
   	enable = true;
@@ -156,12 +167,20 @@ in
       nvidiaBusId = "PCI:1:0:0"; 
     };
 
-  services.xserver.displayManager.sddm = {
-      enable = true;
+  services.greetd = {
+  enable = true;
+  settings = rec {
+    initial_session = {
+      command = "${pkgs.hyprland}/bin/Hyprland";
+      user = "yvess";
     };
-
+    default_session = initial_session;
+  };
+};
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
+
+  services.flatpak.enable = true;
 
   security.pam.services.swaylock = {};
 

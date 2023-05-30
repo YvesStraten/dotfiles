@@ -2,7 +2,7 @@
 {
   home.packages = with pkgs; [
     tesseract
-    #texlive.combined.scheme-full
+    # texlive.combined.scheme-full
     zathura
     libreoffice
     rclone
@@ -13,8 +13,10 @@
     gnome.nautilus
     gwenview
     themechanger
+    # spotifywm
+    # spotify-tray
+    # spicetify-cli
 
-    brave
     gh
     mpv
     ani-cli

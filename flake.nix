@@ -9,6 +9,7 @@
     hyprland.url = "github:hyprwm/hyprland";
     hyprpicker.url = "github:hyprwm/hyprpicker";
     hyprpaper.url = "github:hyprwm/hyprpaper";
+    hypr-contrib.url ="github:hyprwm/contrib";
     alejandra = {
       url = "github:kamadorueda/alejandra/3.0.0";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -23,6 +24,7 @@
     hyprpicker,
     hyprpaper,
     alejandra,
+    hypr-contrib,
     ...
   }: let
     system = "x86_64-linux";

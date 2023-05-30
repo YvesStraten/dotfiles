@@ -9,7 +9,6 @@
     ./theming.nix
   ];
 
-  nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.package = pkgs.nix;
   targets.genericLinux.enable = true;
