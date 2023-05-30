@@ -5,5 +5,7 @@
       yarn
       gcc
       omnisharp-roslyn
+      python39
+      python39Packages.pillow
     ];
   }

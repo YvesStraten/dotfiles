@@ -1,25 +1,26 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, lib, ... }:
-
-let 
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
-    export __NV_PRIME_RENDER_OFFLOAD=1 
+    export __NV_PRIME_RENDER_OFFLOAD=1
     export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-GO
-    export __GLX_VENDOR_LIBRARY_NAME=nvidia 
-    export __VK_LAYER_NV_optimus=NVIDIA_only 
+    export __GLX_VENDOR_LIBRARY_NAME=nvidia
+    export __VK_LAYER_NV_optimus=NVIDIA_only
     exec "$@"
   '';
-in
-{
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+in {
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes"];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -64,69 +65,69 @@ in
   users.users.yvess = {
     isNormalUser = true;
     description = "Yves Straten";
-    extraGroups = [ "networkmanager" "wheel" "audio" ];
+    extraGroups = ["networkmanager" "wheel" "audio"];
   };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.allowUnfreePredicate = (pkg: true);
+  nixpkgs.config.allowUnfreePredicate = pkg: true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-     wget
-     dunst
-     kitty 
-     git 
-     libappindicator
-     brightnessctl
-     swaylock-effects
-     rofi-wayland
-     btop
-     wofi
-     wlogout
-     grim
-     slurp
-     wl-clipboard
-     pamixer
-     pavucontrol
-     wayland
-     nvidia-offload
-     swaybg
-     udiskie
-     swayidle
-     wlsunset
-     neofetch
-     hyprpaper
-     hyprpicker
-     alejandra
-     appimage-run
+    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    wget
+    dunst
+    kitty
+    git
+    libappindicator
+    brightnessctl
+    swaylock-effects
+    rofi-wayland
+    btop
+    wofi
+    wlogout
+    grim
+    slurp
+    wl-clipboard
+    pamixer
+    pavucontrol
+    wayland
+    nvidia-offload
+    swaybg
+    udiskie
+    swayidle
+    wlsunset
+    neofetch
+    hyprpaper
+    hyprpicker
+    alejandra
+    appimage-run
   ];
 
   specialisation = {
     external-display.configuration = {
-      system.nixos.tags = [ "external-display" ];
+      system.nixos.tags = ["external-display"];
       hardware.nvidia.prime.offload.enable = lib.mkForce false;
       hardware.nvidia.powerManagement.enable = lib.mkForce false;
     };
   };
 
   programs.hyprland = {
-  	enable = true;
-	xwayland = {
-		enable = true;
-		hidpi = true;
-	};
-	nvidiaPatches = true;
+    enable = true;
+    xwayland = {
+      enable = true;
+      hidpi = true;
+    };
+    nvidiaPatches = true;
   };
 
   xdg.portal = {
-  	enable = true;
-	wlr.enable = true;
+    enable = true;
+    wlr.enable = true;
   };
 
-  programs.zsh.enable = true; 
+  programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
   programs.nm-applet.enable = true;
 
@@ -134,19 +135,22 @@ in
   security.rtkit.enable = true;
   security.polkit.enable = true;
   services.pipewire = {
-  	enable = true;
-	alsa.enable = true;
-	alsa.support32Bit = true;
-	pulse.enable = true;
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
   };
 
   sound.mediaKeys = {
-      enable = true;
-    };
+    enable = true;
+  };
 
-  services.upower.enable = true;
+  services.upower = {
+    enable = true;
+    criticalPowerAction = "Hibernate";
+  };
 
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = ["nvidia"];
   hardware.opengl = {
     enable = true;
     driSupport = true;
@@ -161,22 +165,22 @@ in
   hardware.nvidia.modesetting.enable = true;
 
   hardware.nvidia.prime = {
-      offload.enable = true;
+    offload.enable = true;
 
-      intelBusId = "PCI:0:2:0"; 
-      nvidiaBusId = "PCI:1:0:0"; 
-    };
+    intelBusId = "PCI:0:2:0";
+    nvidiaBusId = "PCI:1:0:0";
+  };
 
   services.greetd = {
-  enable = true;
-  settings = rec {
-    initial_session = {
-      command = "${pkgs.hyprland}/bin/Hyprland";
-      user = "yvess";
+    enable = true;
+    settings = rec {
+      initial_session = {
+        command = "${pkgs.hyprland}/bin/Hyprland";
+        user = "yvess";
+      };
+      default_session = initial_session;
     };
-    default_session = initial_session;
   };
-};
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 
@@ -210,5 +214,4 @@ in
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
-
 }

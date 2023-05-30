@@ -13,9 +13,7 @@
     gnome.nautilus
     gwenview
     themechanger
-    # spotifywm
-    # spotify-tray
-    # spicetify-cli
+    spicetify-cli
 
     gh
     mpv
