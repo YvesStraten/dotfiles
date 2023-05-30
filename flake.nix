@@ -33,7 +33,7 @@
     nixosConfigurations = {
       nitro = nixpkgs.lib.nixosSystem {
         modules = [
-          ./configuration.nix
+          ./modules/core/configuration.nix
           hyprland.nixosModules.default
         ];
       };
@@ -42,7 +42,7 @@
       yvess = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
-          ./dots/home-manager/home.nix
+          ./modules/home/home.nix
         ];
       };
     };

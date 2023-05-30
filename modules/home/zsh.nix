@@ -1,5 +1,4 @@
-{ pkgs, ...}:
-{
+{pkgs, ...}: {
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
@@ -13,7 +12,6 @@
     '';
 
     oh-my-zsh = {
-
       enable = true;
       plugins = [
         "git"
@@ -25,9 +23,9 @@
   };
 
   programs.bash = {
-      enable = true;
-      profileExtra = ''
-        export XDG_DATA_DIRS=\"$HOME/.nix-profile/share:$XDG_DATA_DIRS\"
-      '';
-    };
+    enable = true;
+    profileExtra = ''
+      export XDG_DATA_DIRS=\"$HOME/.nix-profile/share:$XDG_DATA_DIRS\"
+    '';
+  };
 }

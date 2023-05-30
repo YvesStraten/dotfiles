@@ -1,5 +1,8 @@
-{ config, pkgs, ... }:
 {
+  config,
+  pkgs,
+  ...
+}: {
   home = {
     sessionVariables = {
       EDITOR = "nvim";
@@ -10,14 +13,12 @@
       XDG_SESSION_TYPE = "wayland";
       NIXOS_OZONE_WL = "1";
     };
-
   };
 
-    programs.waybar = {
-        enable = true;
-        package = pkgs.waybar.overrideAttrs (oa: {
-            mesonFlags = (oa.mesonFlags or []) ++ ["-Dexperimental=true"];
-          });
-      };
-
-  }
+  programs.waybar = {
+    enable = true;
+    package = pkgs.waybar.overrideAttrs (oa: {
+      mesonFlags = (oa.mesonFlags or []) ++ ["-Dexperimental=true"];
+    });
+  };
+}
