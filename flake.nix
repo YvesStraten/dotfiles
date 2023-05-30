@@ -33,7 +33,7 @@
     nixosConfigurations = {
       nitro = nixpkgs.lib.nixosSystem {
         modules = [
-          ./modules/core/hardware-configuration.nix
+          ./hosts/nixos/hardware-configuration.nix
           ./modules/core/configuration.nix
           hyprland.nixosModules.default
         ];
