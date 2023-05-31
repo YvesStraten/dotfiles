@@ -22,4 +22,11 @@
   };
 
   services.flatpak.enable = true;
+
+  services.printing = {
+      enable = true;
+      drivers = [
+        pkgs.gutenprintBin
+      ];
+    };
 }
