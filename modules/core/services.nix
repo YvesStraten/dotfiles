@@ -1,5 +1,5 @@
 { config, pkgs, lib, ... }
-{
+:{
   services.upower = {
     enable = true;
     criticalPowerAction = "Hibernate";
