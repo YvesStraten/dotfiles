@@ -34,7 +34,16 @@
       nitro = nixpkgs.lib.nixosSystem {
         modules = [
           ./hosts/nixos/hardware-configuration.nix
-          ./modules/core/configuration.nix
+          ./modules/core/bootloader.nix 
+          ./modules/core/hyprland.nix 
+          ./modules/core/networking.nix
+          ./modules/core/nvidia.nix 
+          ./modules/core/pkgs.nix
+          ./modules/core/security.nix 
+          ./modules/core/services.nix 
+          ./modules/core/settings.nix
+          ./modules/core/sound.nix
+          ./modules/core/time.nix
           hyprland.nixosModules.default
         ];
       };

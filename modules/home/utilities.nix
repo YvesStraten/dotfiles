@@ -13,6 +13,7 @@
     gwenview
     themechanger
     spicetify-cli
+    gscan2pdf
 
     gh
     mpv
