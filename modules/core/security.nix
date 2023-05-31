@@ -1,12 +1,16 @@
-{ config, pkgs, lib, ... } :{
-
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.yvess = {
     isNormalUser = true;
     description = "Yves Straten";
     extraGroups = ["networkmanager" "wheel" "audio"];
   };
-  
+
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
 

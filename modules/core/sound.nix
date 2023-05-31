@@ -1,5 +1,10 @@
-{ config, pkgs, lib, ... }
-:{
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}
+: {
   sound.enable = false;
   security.rtkit.enable = true;
   security.polkit.enable = true;

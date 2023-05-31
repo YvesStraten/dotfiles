@@ -1,10 +1,14 @@
-{ config, pkgs, lib, ... }
-:{
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}
+: {
   services.upower = {
     enable = true;
     criticalPowerAction = "Hibernate";
   };
-
 
   services.greetd = {
     enable = true;

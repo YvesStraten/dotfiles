@@ -1,5 +1,10 @@
-{ config, pkgs, lib, ... }
-:{
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}
+: {
   # Set your time zone.
   time.timeZone = "Asia/Makassar";
 
