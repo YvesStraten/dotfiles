@@ -8,6 +8,7 @@
       ];
     })
     noto-fonts-emoji
+    noto-fonts
 
     #themes here
     (catppuccin-gtk.override {
