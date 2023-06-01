@@ -16,6 +16,7 @@
     brightnessctl
     swaylock-effects
     rofi-wayland
+    rofi-emoji
     btop
     wofi
     wlogout

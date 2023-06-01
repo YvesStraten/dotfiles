@@ -7,6 +7,7 @@
         "FiraCode"
       ];
     })
+    noto-fonts-emoji
 
     #themes here
     (catppuccin-gtk.override {

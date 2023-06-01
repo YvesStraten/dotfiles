@@ -1,7 +1,6 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
     tesseract
-    # texlive.combined.scheme-full
     zathura
     libreoffice
     rclone
@@ -10,6 +9,7 @@
     ranger
     ani-cli
     gnome.nautilus
+    gnome.gnome-clocks
     gwenview
     themechanger
     spicetify-cli
