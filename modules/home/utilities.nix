@@ -16,7 +16,9 @@
     gscan2pdf
 
     gh
+    git
     mpv
     ani-cli
+    neofetch
   ];
 }

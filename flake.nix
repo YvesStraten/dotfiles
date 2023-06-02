@@ -55,6 +55,12 @@
           ./modules/home/home.nix
         ];
       };
+      nixos = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [
+          ./modules/home/wsl.nix
+        ];
+      };
     };
   };
 }

@@ -11,6 +11,6 @@
     quarto
     jupyter
     python39Packages.numpy
-    texlive.combined.scheme-full
+    #texlive.combined.scheme-full
   ];
 }
