@@ -8,6 +8,7 @@
     ./neovim.nix
     ./languages.nix
     ./utilities.nix
+    ./wsl-variables.nix
   ];
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
