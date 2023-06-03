@@ -22,7 +22,7 @@
     wofi
     inputs.hypr-contrib.packages.${pkgs.system}.grimblast
     inputs.hyprpicker.packages.${pkgs.system}.hyprpicker
-    inputs.alejandra.packages.${pkgs.system}.alejandra    
+    inputs.alejandra.defaultPackage.${system}
     wlogout
     wl-clipboard
     virt-manager

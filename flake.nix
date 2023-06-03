@@ -7,8 +7,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland.url = "github:hyprwm/hyprland";
-    hyprpicker.url = "github:hyprwm/hyprpicker";
-    hyprpaper.url = "github:hyprwm/hyprpaper";
+    hyprpicker.url = "github:hyprwm/hyprpicker";     
     hypr-contrib.url ="github:hyprwm/contrib";
     alejandra = {
       url = "github:kamadorueda/alejandra/3.0.0";
@@ -16,22 +15,22 @@
     };
   };
 
-  outputs = inputs @{
+  outputs = {
     self,
     nixpkgs,
     home-manager,
     hyprland,
     hyprpicker,
-    hyprpaper,
-    alejandra,
     hypr-contrib,
+    alejandra,
     ...
-  }: let
+  }@inputs : let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
   in {
     nixosConfigurations = {
       nitro = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs;};
         modules = [
           ./hosts/nixos/hardware-configuration.nix
           ./modules/core/bootloader.nix 
