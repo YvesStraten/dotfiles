@@ -14,6 +14,7 @@
     themechanger
     spicetify-cli
     gscan2pdf
+    gimp
 
     gh
     git
