@@ -8,10 +8,11 @@
   users.users.yvess = {
     isNormalUser = true;
     description = "Yves Straten";
-    extraGroups = ["networkmanager" "wheel" "audio"];
+    extraGroups = ["networkmanager" "wheel" "audio" "libvirtd"];
   };
 
   programs.zsh.enable = true;
+  programs.dconf.enable = true;
   users.defaultUserShell = pkgs.zsh;
 
   security.pam.services.swaylock = {};

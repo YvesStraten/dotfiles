@@ -29,4 +29,6 @@
         pkgs.gutenprintBin
       ];
     };
+
+  virtualisation.libvirtd.enable = true;
 }

@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  inputs,
   ...
 }: {
   # List packages installed in system profile. To search, run:
@@ -19,10 +20,12 @@
     rofi-emoji
     btop
     wofi
+    inputs.hypr-contrib.packages.${pkgs.system}.grimblast
+    inputs.hyprpicker.packages.${pkgs.system}.hyprpicker
+    inputs.alejandra.packages.${pkgs.system}.alejandra    
     wlogout
-    grim
-    slurp
     wl-clipboard
+    virt-manager
     pamixer
     pavucontrol
     swaybg
@@ -30,9 +33,6 @@
     swayidle
     wlsunset
     neofetch
-    hyprpaper
-    hyprpicker
-    alejandra
     appimage-run
   ];
 
