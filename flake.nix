@@ -6,6 +6,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     hyprland.url = "github:hyprwm/hyprland";
     hyprpicker.url = "github:hyprwm/hyprpicker";     
     hypr-contrib.url ="github:hyprwm/contrib";
@@ -23,6 +24,7 @@
     hyprpicker,
     hypr-contrib,
     alejandra,
+    nixos-hardware,
     ...
   }@inputs : let
     system = "x86_64-linux";
@@ -44,8 +46,17 @@
           ./modules/core/sound.nix
           ./modules/core/time.nix
           hyprland.nixosModules.default
+          nixos-hardware.nixosModules.common-pc-laptop-ssd
+          nixos-hardware.nixosModules.common-pc-laptop
+          nixos-hardware.nixosModules.common-pc-laptop-acpi_call
         ];
       };
+
+      wsl = nixpkgs.lib.nixosSystem {
+          modules = [
+
+          ];
+        };
     };
     homeConfigurations = {
       yvess = home-manager.lib.homeManagerConfiguration {
