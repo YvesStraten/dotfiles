@@ -1,0 +1,17 @@
+{
+    "workspace.library": [
+        "/home/yvess/.config/nvim",
+        "/home/yvess/.local/share/nvim/lazy/lazy.nvim",
+        "/home/yvess/.local/share/nvim/lazy/null-ls.nvim",
+        "/home/yvess/.local/share/nvim/lazy/nvim-lspconfig",
+        "/home/yvess/.local/share/nvim/lazy/otter.nvim",
+        "/home/yvess/.local/share/nvim/lazy/quarto-nvim",
+        "/home/yvess/.local/share/nvim/lazy/ui",
+        "/home/yvess/.local/share/nvim/lazy/snippet-converter.nvim",
+        "/nix/store/sdxkxsfjpq8chjnbswrzi87fmxgv5ykn-neovim-unwrapped-0.9.1/share/nvim/runtime",
+        "/nix/store/sdxkxsfjpq8chjnbswrzi87fmxgv5ykn-neovim-unwrapped-0.9.1/lib/nvim",
+        "/home/yvess/.local/state/nvim/lazy/readme",
+        "/home/yvess/.local/share/nvim/lazy/quarto-nvim/after",
+        "${3rd}/luassert/library"
+    ]
+}
