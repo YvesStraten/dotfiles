@@ -11,6 +11,13 @@
     quarto
     jupyter
     python39Packages.numpy
-    #texlive.combined.scheme-full
+    texlive.combined.scheme-medium
+
+    texlab
+    sumneko-lua-language-server 
+    stylua
+    nodePackages_latest.prettier 
+    shellcheck
+
   ];
 }

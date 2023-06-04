@@ -15,6 +15,7 @@
     spicetify-cli
     gscan2pdf
     gimp
+    unzip
 
     gh
     git

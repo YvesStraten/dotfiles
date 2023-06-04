@@ -14,6 +14,7 @@
   programs.zsh.enable = true;
   programs.dconf.enable = true;
   users.defaultUserShell = pkgs.zsh;
+  environment.shells = [ pkgs.zsh ];
 
   security.pam.services.swaylock = {};
 

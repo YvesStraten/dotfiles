@@ -1,11 +1,11 @@
 local plugins = {
-	{
-		"nvim-treesitter/nvim-treesitter",
+	{ "nvim-treesitter/nvim-treesitter",
 		opts = {
 			ensure_installed = {
 				"c",
 				"cpp",
-        "markdown",
+				"markdown",
+        "nix",
 			},
 		},
 	},
@@ -26,18 +26,6 @@ local plugins = {
 	},
 
 	{
-		"williamboman/mason.nvim",
-		opts = {
-			ensure_installed = {
-				"lua-language-server",
-				"html-lsp",
-				"stylua",
-				"texlab",
-			},
-		},
-	},
-
-	{
 		"lervag/vimtex",
 		ft = "tex",
 		config = function()
@@ -47,10 +35,10 @@ local plugins = {
 
 	{
 		"quarto-dev/quarto-nvim",
-    lazy = false,
-    dependencies = {
-      "jmbuhr/otter.nvim",
-    },
+		lazy = false,
+		dependencies = {
+			"jmbuhr/otter.nvim",
+		},
 		config = function()
 			require("quarto").setup({})
 		end,
