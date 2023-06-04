@@ -1,11 +1,12 @@
 local plugins = {
-	{ "nvim-treesitter/nvim-treesitter",
+	{
+		"nvim-treesitter/nvim-treesitter",
 		opts = {
 			ensure_installed = {
 				"c",
 				"cpp",
 				"markdown",
-        "nix",
+				"nix",
 			},
 		},
 	},
@@ -44,14 +45,21 @@ local plugins = {
 		end,
 	},
 
-  {
-    "iamcco/markdown-preview.nvim",
-    ft = "markdown",
-    build = {
-      "cd app && npm install" 
-    }, 
-    config = function ()
-    end,
-  },
+	{
+		"iamcco/markdown-preview.nvim",
+		ft = "markdown",
+		build = {
+			"cd app && npm install",
+		},
+		config = function() end,
+	},
+
+	{
+		"andrewferrier/wrapping.nvim",
+		event = "VeryLazy",
+		config = function()
+			require("wrapping").setup()
+		end,
+	},
 }
 return plugins
