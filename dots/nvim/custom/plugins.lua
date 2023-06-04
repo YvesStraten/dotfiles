@@ -43,5 +43,15 @@ local plugins = {
 			require("quarto").setup({})
 		end,
 	},
+
+  {
+    "iamcco/markdown-preview.nvim",
+    ft = "markdown",
+    build = {
+      "cd app && npm install" 
+    }, 
+    config = function ()
+    end,
+  },
 }
 return plugins
