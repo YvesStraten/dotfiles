@@ -2,7 +2,6 @@ local on_attach = require("plugins.configs.lspconfig").on_attach
 local capabilities = require("plugins.configs.lspconfig").capabilities
 
 local lspconfig = require "lspconfig"
-local servers = { "clangd", "texlab", "lua_ls"}
 
 lspconfig.lua_ls.setup {
   on_attach = on_attach,
@@ -20,4 +19,24 @@ lspconfig.lua_ls.setup {
       },
     },
   },
+}
+
+lspconfig.clangd.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+
+lspconfig.texlab.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+
+lspconfig.pyright.setup{
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+
+lspconfig.statix.setup{
+  on_attach = on_attach,
+  capabilities = capabilities,
 }

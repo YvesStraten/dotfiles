@@ -4,20 +4,23 @@
     yarn
     gcc
     omnisharp-roslyn
-    python39
-    python39Packages.pillow
-    python39Packages.pip
+    python310
+    python310Packages.pillow
+    python310Packages.pip
     virtualenv
     quarto
     jupyter
-    python39Packages.numpy
+    python310Packages.numpy
     texlive.combined.scheme-medium
+    pipenv
 
     texlab
     sumneko-lua-language-server 
     stylua
     nodePackages_latest.prettier 
     shellcheck
+    nodePackages_latest.pyright
+    statix
 
   ];
 }
