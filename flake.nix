@@ -14,6 +14,7 @@
       url = "github:kamadorueda/alejandra/3.0.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixd.url = "github:nix-community/nixd";
   };
 
   outputs = {
@@ -25,6 +26,7 @@
     hypr-contrib,
     alejandra,
     nixos-hardware,
+    nixd,
     ...
   }@inputs : let
     system = "x86_64-linux";
