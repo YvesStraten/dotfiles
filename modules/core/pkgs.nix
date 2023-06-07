@@ -24,6 +24,7 @@
     inputs.hyprpicker.packages.${pkgs.system}.hyprpicker
     inputs.alejandra.defaultPackage.${system}
     inputs.nixd.packages.${pks.system}.nixd
+    distrobox
     wlogout
     wl-clipboard
     virt-manager

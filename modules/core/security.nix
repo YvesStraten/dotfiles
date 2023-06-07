@@ -8,7 +8,7 @@
   users.users.yvess = {
     isNormalUser = true;
     description = "Yves Straten";
-    extraGroups = ["networkmanager" "wheel" "audio" "libvirtd"];
+    extraGroups = ["networkmanager" "wheel" "audio" "libvirtd" "docker"];
   };
 
   programs.zsh.enable = true;
