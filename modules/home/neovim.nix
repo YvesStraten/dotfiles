@@ -7,5 +7,14 @@
     ripgrep
     fd
     fzf
+
+    # LSP servers
+    texlab
+    omnisharp-roslyn
+    sumneko-lua-language-server 
+    stylua
+    nodePackages_latest.prettier 
+    shellcheck
+    nodePackages_latest.pyright
   ];
 }
