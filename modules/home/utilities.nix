@@ -21,7 +21,6 @@
     gh
     git
     mpv
-    ani-cli
     neofetch
   ];
 }

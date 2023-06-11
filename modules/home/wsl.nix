@@ -7,17 +7,15 @@
     ./zsh.nix
     ./neovim.nix
     ./languages.nix
-    ./utilities.nix
     ./wsl-variables.nix
   ];
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
-  nix.package = pkgs.nix;
   targets.genericLinux.enable = true;
 
   home = {
-    username = "nixos";
-    homeDirectory = "/home/nixos";
+    username = "akali";
+    homeDirectory = "/home/akali";
     stateVersion = "22.11"; # Please read the comment before changing.
 
     sessionPath = [

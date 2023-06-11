@@ -22,8 +22,6 @@
     wofi
     inputs.hypr-contrib.packages.${pkgs.system}.grimblast
     inputs.hyprpicker.packages.${pkgs.system}.hyprpicker
-    inputs.alejandra.defaultPackage.${system}
-    inputs.nixd.packages.${pkgs.system}.nixd
     distrobox
     wlogout
     wl-clipboard
