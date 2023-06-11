@@ -7,10 +7,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    home-manager-old = {
-      url = "github:nix-community/home-manager/release-22.11";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     hyprland.url = "github:hyprwm/hyprland";
     hyprpicker.url = "github:hyprwm/hyprpicker";
@@ -26,7 +22,6 @@
     nixpkgs,
     nixpkgs-old,
     home-manager,
-    home-manager-old,
     hyprland,
     hyprpicker,
     hypr-contrib,
@@ -69,12 +64,12 @@
         ];
       };
 
-      wsl = nixpkgs-old.lib.nixosSystem {
+      wsl = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
           ./hosts/wsl/wsl.nix
           nixos-wsl.nixosModules.wsl
-          home-manager-old.nixosModules.home-manager
+          home-manager.nixosModules.home-manager
           {
             home-manager = {
               useGlobalPkgs = true;
