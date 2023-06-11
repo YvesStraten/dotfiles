@@ -8,17 +8,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager-old = {
-        url = "github:nix-community/home-manager/release-22.11";
-        inputs.nixpkgs.follows = "nixpkgs";
-      };
+      url = "github:nix-community/home-manager/release-22.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     hyprland.url = "github:hyprwm/hyprland";
     hyprpicker.url = "github:hyprwm/hyprpicker";
     hypr-contrib.url = "github:hyprwm/contrib";
     nixos-wsl = {
-        url = "github:nix-community/NixOS-WSL";
-        inputs.nixpkgs.follows = "nixpkgs-old";
-      };
+      url = "github:nix-community/NixOS-WSL";
+      inputs.nixpkgs.follows = "nixpkgs-old";
+    };
   };
 
   outputs = {
@@ -73,14 +73,15 @@
         inherit system;
         modules = [
           ./hosts/wsl/wsl.nix
-          nixos-wsl.nixosModules.wsl 
-          home-manager-old.nixosModules.home-manager {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.akali = import ./modules/home/wsl.nix;
-              };
-            }
+          nixos-wsl.nixosModules.wsl
+          home-manager-old.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.akali = import ./modules/home/wsl.nix;
+            };
+          }
         ];
       };
     };
