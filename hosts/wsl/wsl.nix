@@ -28,6 +28,5 @@
     defaultUser = "akali";
 
     startMenuLaunchers = true;
-    docker-native.enable = true;
   };
 }
