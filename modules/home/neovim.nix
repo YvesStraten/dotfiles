@@ -11,9 +11,9 @@
     # LSP servers
     texlab
     omnisharp-roslyn
-    sumneko-lua-language-server 
+    sumneko-lua-language-server
     stylua
-    nodePackages_latest.prettier 
+    nodePackages_latest.prettier
     shellcheck
     nodePackages_latest.pyright
   ];

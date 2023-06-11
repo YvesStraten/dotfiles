@@ -24,17 +24,17 @@
   services.flatpak.enable = true;
 
   services.printing = {
-      enable = true;
-      drivers = [
-        pkgs.gutenprintBin
-      ];
-    };
+    enable = true;
+    drivers = [
+      pkgs.gutenprintBin
+    ];
+  };
 
   virtualisation.libvirtd.enable = true;
   virtualisation.docker.enable = true;
   services.samba = {
     enable = true;
-    
+
     # This adds to the [global] section:
     extraConfig = ''
       browseable = yes
@@ -43,7 +43,7 @@
 
     shares = {
       homes = {
-        browseable = "no";  # note: each home will be browseable; the "homes" share will not.
+        browseable = "no"; # note: each home will be browseable; the "homes" share will not.
         "read only" = "no";
         "guest ok" = "no";
       };
@@ -52,9 +52,9 @@
 
   # Curiously, `services.samba` does not automatically open
   # the needed ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 445 139 ];
-  networking.firewall.allowedUDPPorts = [ 137 138 ];
-  
+  networking.firewall.allowedTCPPorts = [445 139];
+  networking.firewall.allowedUDPPorts = [137 138];
+
   # To make SMB mounting easier on the command line
   environment.systemPackages = with pkgs; [
     cifs-utils
