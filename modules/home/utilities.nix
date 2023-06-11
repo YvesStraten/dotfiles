@@ -8,6 +8,7 @@
     pandoc
     ranger
     ani-cli
+    okular
     gnome.nautilus
     gnome.gnome-clocks
     gwenview
