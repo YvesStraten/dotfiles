@@ -5,6 +5,8 @@
 
     shellAliases = {
       neovide = "WINIT_UNIX_BACKEND=x11 neovide";
+      updatenix = "nix flake update ~/Git-repos/dotfiles";
+      upgradenix = "sudo nixos-rebuild switch --flake ~/Git-repos/dotfiles#nitro";
     };
     profileExtra = ''
       export XDG_DATA_DIRS=\"$HOME/.nix-profile/share:$XDG_DATA_DIRS\
