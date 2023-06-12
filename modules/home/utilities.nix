@@ -18,11 +18,11 @@
     gscan2pdf
     gimp
     unzip
-    wshowkeys
 
     gh
     git
     mpv
     neofetch
   ];
+
 }

@@ -14,6 +14,7 @@
     kitty
     git
     libappindicator
+    showmethekey
     config.nur.repos.ocfox.swww
     brightnessctl
     swaylock-effects
@@ -37,6 +38,8 @@
     appimage-run
     swaynag-battery
   ];
+
+  programs.wshowkeys.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
