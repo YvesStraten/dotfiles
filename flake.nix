@@ -6,8 +6,7 @@
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    }; nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     hyprland.url = "github:hyprwm/hyprland";
     hyprpicker.url = "github:hyprwm/hyprpicker";
     hypr-contrib.url = "github:hyprwm/contrib";
@@ -41,16 +40,7 @@
         modules = [
           nur.nixosModules.nur
           ./hosts/nixos/hardware-configuration.nix
-          ./modules/core/bootloader.nix
-          ./modules/core/hyprland.nix
-          ./modules/core/networking.nix
-          ./modules/core/nvidia.nix
-          ./modules/core/pkgs.nix
-          ./modules/core/security.nix
-          ./modules/core/services.nix
-          ./modules/core/settings.nix
-          ./modules/core/sound.nix
-          ./modules/core/time.nix
+          ./modules/core/default.nix
           hyprland.nixosModules.default
           nixos-hardware.nixosModules.common-pc-laptop-ssd
           nixos-hardware.nixosModules.common-pc-laptop
@@ -70,7 +60,7 @@
       wsl = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
-          ./hosts/wsl/wsl.nix
+          ./modules/core/wsl/wsl.nix
           nixos-wsl.nixosModules.wsl
           home-manager.nixosModules.home-manager
           {
