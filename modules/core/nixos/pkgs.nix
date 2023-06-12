@@ -32,6 +32,7 @@
     udiskie
     swayidle
     wlsunset
+    eww-wayland
     neofetch
     appimage-run
     swaynag-battery

@@ -9,6 +9,8 @@
     })
     noto-fonts-emoji
     noto-fonts
+    font-awesome 
+    comic-mono
 
     #themes here
     (catppuccin-gtk.override {
