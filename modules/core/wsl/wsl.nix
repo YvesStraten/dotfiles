@@ -10,7 +10,7 @@
 
   system.stateVersion = "22.11";
   networking.hostName = "wsl";
-  
+
   programs.zsh.enable = true;
 
   users = {

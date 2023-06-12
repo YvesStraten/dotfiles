@@ -2,6 +2,10 @@
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
+
+    shellAliases = {
+      neovide = "WINIT_UNIX_BACKEND=x11 neovide";
+    };
     profileExtra = ''
       export XDG_DATA_DIRS=\"$HOME/.nix-profile/share:$XDG_DATA_DIRS\
       export XDG_DATA_DIRS:$XDG_DATA_DIRS:/usr/share:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share
