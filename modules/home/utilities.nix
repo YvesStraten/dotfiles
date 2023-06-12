@@ -11,6 +11,7 @@
     okular
     gnome.nautilus
     gnome.gnome-clocks
+    gnome.pomodoro
     gwenview
     themechanger
     spicetify-cli
