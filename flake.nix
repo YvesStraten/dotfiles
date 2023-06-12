@@ -15,6 +15,7 @@
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs-old";
     };
+    nur.url = "github:nix-community/NUR";
   };
 
   outputs = {
@@ -27,6 +28,7 @@
     hypr-contrib,
     nixos-hardware,
     nixos-wsl,
+    nur,
     ...
   } @ inputs: let
     system = "x86_64-linux";
@@ -37,6 +39,7 @@
         inherit system;
         specialArgs = {inherit inputs;};
         modules = [
+          nur.nixosModules.nur
           ./hosts/nixos/hardware-configuration.nix
           ./modules/core/bootloader.nix
           ./modules/core/hyprland.nix

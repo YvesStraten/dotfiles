@@ -14,6 +14,7 @@
     kitty
     git
     libappindicator
+    config.nur.repos.ocfox.swww
     brightnessctl
     swaylock-effects
     rofi-wayland
@@ -28,7 +29,6 @@
     virt-manager
     pamixer
     pavucontrol
-    swaybg
     udiskie
     swayidle
     wlsunset
