@@ -15,12 +15,10 @@
     "modules-center": ["hyprland/window"],
     "modules-right": [
         "tray",
-        "custom/updates",
-        "custom/language",
         "battery",
         "backlight",
         "pulseaudio",
-        "pulseaudio#microphone"
+        "cpu"
     ],
 
     "hyprland/window": {
@@ -45,12 +43,6 @@
         }
       },
 
-    "custom/updates": {
-        "exec": "(pacman -Qu ; yay -Qua) | wc -l",
-        "interval": 7200,
-        "format": " {}"
-    },
-
    "custom/weather" : {
         "tooltip" : true,
         "format" : "{}",
@@ -60,7 +52,7 @@
     },
 
     "tray": {
-        "icon-size": 13,
+        "icon-size": 20,
         "spacing": 10
     },
 
@@ -72,7 +64,7 @@
     "backlight": {
         "device": "intel_backlight",
         "format": "{icon} {percent}%",
-        "format-icons": ["", "", ""],
+        "format-icons": ["🔅", "🔆" ],
         "on-scroll-up": "brightnessctl set 1%+",
         "on-scroll-down": "brightnessctl set 1%-",
         "min-length": 6
@@ -84,11 +76,17 @@
             "warning": 30,
             "critical": 20
         },
-        "format": "{icon} {capacity}%",
+        "format": "{icon}   {capacity}%",
         "format-charging": " {capacity}%",
         "format-plugged": " {capacity}%",
         "format-alt": "{time} {icon}",
-        "format-icons": ["", "", "", "", "", "", "", "", "", "", ""]
+        "format-icons": [
+          "",
+			    "",
+			    "",
+			    "",
+			    ""
+        ]
     },
 
     "pulseaudio": {
@@ -118,6 +116,12 @@
         "on-scroll-up": "pamixer --default-source -i 5",
         "on-scroll-down": "pamixer --default-source -d 5",
         "scroll-step": 5
+    },
+
+    "cpu": {
+		  "interval": 5,
+		  "on-click": "emacsclient -c -e '(proced)'",
+		  "format": "CPU {usage:2}%"
     },
 
     "custom/waybar-media": {

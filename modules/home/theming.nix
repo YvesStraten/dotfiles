@@ -5,6 +5,7 @@
       fonts = [
         "JetBrainsMono"
         "FiraCode"
+        "CascadiaCode"
       ];
     })
     noto-fonts-emoji
