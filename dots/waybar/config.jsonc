@@ -1,6 +1,6 @@
 {
     "layer": "top",
-    "position": "top",
+    "position": "bottom",
     "mod": "dock",
     "exclusive": true,
     "passthrough": false,
@@ -18,6 +18,7 @@
         "battery",
         "backlight",
         "pulseaudio",
+        "pulseaudio#microphone",
         "cpu"
     ],
 
@@ -77,8 +78,8 @@
             "critical": 20
         },
         "format": "{icon}   {capacity}%",
-        "format-charging": " {capacity}%",
-        "format-plugged": " {capacity}%",
+        "format-charging": "   {capacity}%",
+        "format-plugged": "  {capacity}%",
         "format-alt": "{time} {icon}",
         "format-icons": [
           "",
@@ -90,7 +91,7 @@
     },
 
     "pulseaudio": {
-        "format": "{icon} {volume}%",
+        "format": "{icon}   {volume}%",
         "tooltip": false,
         "format-muted": " Muted",
         "on-click": "pamixer -t",
@@ -110,8 +111,8 @@
 
     "pulseaudio#microphone": {
         "format": "{format_source}",
-        "format-source": " {volume}%",
-        "format-source-muted": " Muted",
+        "format-source": " {volume}%",
+        "format-source-muted": " Muted",
         "on-click": "pamixer --default-source -t",
         "on-scroll-up": "pamixer --default-source -i 5",
         "on-scroll-down": "pamixer --default-source -d 5",
@@ -121,7 +122,7 @@
     "cpu": {
 		  "interval": 5,
 		  "on-click": "emacsclient -c -e '(proced)'",
-		  "format": "CPU {usage:2}%"
+		  "format": "  {usage:2}%"
     },
 
     "custom/waybar-media": {
