@@ -15,6 +15,7 @@
     ./nixos/settings.nix
     ./nixos/sound.nix
     ./nixos/time.nix
-    ./nixos/qtile.nix
+    # ./nixos/qtile.nix
+    ./nixos/i3.nix
   ];
 }

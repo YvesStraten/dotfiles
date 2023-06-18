@@ -37,6 +37,13 @@
     neofetch
     appimage-run
     swaynag-battery
+
+    dmenu 
+    i3status
+    i3lock-fancy
+    picom 
+    maim 
+    xclip
   ];
 
   programs.wshowkeys.enable = true;
