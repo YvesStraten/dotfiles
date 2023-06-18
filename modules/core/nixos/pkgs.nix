@@ -38,12 +38,16 @@
     appimage-run
     swaynag-battery
 
-    dmenu 
+    dmenu
     i3status
     i3lock-fancy
-    picom 
-    maim 
+    picom
+    maim
     xclip
+    nitrogen 
+    polybar
+    feh
+    lxappearance
   ];
 
   programs.wshowkeys.enable = true;

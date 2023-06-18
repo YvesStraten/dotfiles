@@ -10,7 +10,7 @@
     criticalPowerAction = "Hibernate";
   };
 
-  services.greetd = {
+  /* services.greetd = {
     enable = true;
     settings = rec {
       initial_session = {
@@ -19,7 +19,7 @@
       };
       default_session = initial_session;
     };
-  };
+  }; */
 
   services.flatpak.enable = true;
 

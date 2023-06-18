@@ -10,7 +10,7 @@
     })
     noto-fonts-emoji
     noto-fonts
-    font-awesome 
+    font-awesome
     comic-mono
 
     #themes here

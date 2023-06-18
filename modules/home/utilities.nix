@@ -24,5 +24,4 @@
     mpv
     neofetch
   ];
-
 }
