@@ -41,10 +41,13 @@
     dmenu
     i3status
     i3lock-fancy
-    picom
+    picom-jonaburg
     maim
     xclip
-    nitrogen 
+    feh
+    xorg.xrandr
+    arandr
+    polybar
     polybar
     feh
     lxappearance
