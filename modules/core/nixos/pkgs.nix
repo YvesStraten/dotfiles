@@ -39,12 +39,14 @@
     swaynag-battery
 
     dmenu
+    xautolock
     i3status
     i3lock-fancy
     picom-jonaburg
     maim
     xclip
     feh
+    xss-lock
     xorg.xrandr
     arandr
     polybar
