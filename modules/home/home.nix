@@ -6,7 +6,8 @@
   imports = [
     ./zsh.nix
     ./neovim.nix
-    ./hyprland.nix
+    # ./hyprland.nix
+    ./sway.nix
     ./languages.nix
     ./utilities.nix
     ./theming.nix

@@ -37,6 +37,8 @@
     neofetch
     appimage-run
     swaynag-battery
+    vulkan-validation-layers
+    wmenu
 
     dmenu
     xautolock

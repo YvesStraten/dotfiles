@@ -6,7 +6,6 @@
 }: {
   imports = [
     ./nixos/bootloader.nix
-    ./nixos/hyprland.nix
     ./nixos/networking.nix
     ./nixos/nvidia.nix
     ./nixos/pkgs.nix
@@ -15,7 +14,11 @@
     ./nixos/settings.nix
     ./nixos/sound.nix
     ./nixos/time.nix
+
+    # Desktops
+    # ./nixos/hyprland.nix
     # ./nixos/qtile.nix
     ./nixos/i3.nix
+    # ./nixos/sway.nix
   ];
 }

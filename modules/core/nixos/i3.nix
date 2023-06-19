@@ -13,7 +13,7 @@
       defaultSession = "none+i3";
       autoLogin.enable = true;
       autoLogin.user = "yvess";
-      };
+    };
 
     windowManager.i3 = {
       enable = true;
