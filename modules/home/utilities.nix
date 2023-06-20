@@ -18,6 +18,7 @@
     gscan2pdf
     gimp
     unzip
+    filezilla
 
     gh
     git
