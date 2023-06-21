@@ -22,15 +22,16 @@ font CascadiaCode NF:Mono 12
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
-exec --no-startup-id i3-lock-fancy
 exec --no-startup-id ~/.fehbg
 exec --no-startup-id polybar
+exec --no-startup-id autotiling
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
 exec --no-startup-id picom --experimental-backends -b
 exec --no-startup-id dunst
+exec i3-lock-fancy
 
 # Use pactl to adjust volume in PulseAudio.
 bindsym XF86AudioRaiseVolume exec --no-startup-id pamixer -i 5 
@@ -41,12 +42,12 @@ floating_modifier $mod
 
 # move tiling windows via drag & drop by left-clicking into the title bar,
 # or left-clicking anywhere into the window while holding the floating modifier.
-tiling_drag modifier titlebar
 default_border pixel 0
 
 #sets gaps
 gaps inner 15
 gaps outer 10
+border_radius 10
 
 # start a terminal
 bindsym $mod+Return exec "kitty"

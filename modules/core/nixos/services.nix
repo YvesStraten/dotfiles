@@ -12,6 +12,12 @@
 
   
   services.flatpak.enable = true;
+  xdg.portal = {
+    enable = true;
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+    ];
+  };
 
   services.printing = {
     enable = true;
@@ -19,6 +25,9 @@
       pkgs.gutenprintBin
     ];
   };
+  
+  # Enable the OpenSSH daemon.
+  services.openssh.enable = true;
 
   virtualisation.libvirtd.enable = true;
   virtualisation.docker.enable = true;

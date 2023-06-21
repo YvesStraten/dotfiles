@@ -55,6 +55,7 @@
     polybar
     feh
     lxappearance
+    autotiling
   ];
 
   programs.wshowkeys.enable = true;

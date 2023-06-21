@@ -7,4 +7,9 @@ vim.cmd([[
 set backupdir=~/nvim/backup//
 ]])
 
-vim.g.lua_snippets_path = vim.fn.stdpath "config" .. "/lua/custom/lua_snippets"
+vim.g.neovide_scale_factor = "0.8"
+
+if vim.g.neovide then
+	vim.g.neovide_scale_factor = "0.8"
+	vim.opt.guifont = { "CascadiaCode NF", ":h12" }
+end
