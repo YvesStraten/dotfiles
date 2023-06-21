@@ -7,7 +7,7 @@
     ./zsh.nix
     ./neovim.nix
     # ./hyprland.nix
-    ./sway.nix
+    # ./sway.nix
     ./languages.nix
     ./utilities.nix
     ./theming.nix
@@ -25,6 +25,11 @@
       "$HOME/go/bin"
       "$HOME/.local/bin"
     ];
+
+    sessionVariables = {
+      EDITOR = "nvim";
+      TERMINAL = "kitty";
+    };
   };
 
   services = {

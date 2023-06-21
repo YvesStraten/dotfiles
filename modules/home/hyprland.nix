@@ -5,8 +5,6 @@
 }: {
   home = {
     sessionVariables = {
-      EDITOR = "nvim";
-      TERMINAL = "kitty";
       GRIMBLAST_EDITOR = "gwenview";
       _JAVA_AWT_WM_NONREPARENTING = "1";
       XCURSOR_SIZE = "24";
