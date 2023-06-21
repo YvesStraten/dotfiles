@@ -56,6 +56,7 @@
     feh
     lxappearance
     autotiling
+    sshfs
   ];
 
   programs.wshowkeys.enable = true;
