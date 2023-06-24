@@ -26,6 +26,8 @@
     enable = true;
     wslConf.automount.root = "/mnt";
     defaultUser = "akali";
+    nativeSystemd = true;
+
 
     startMenuLaunchers = true;
   };
