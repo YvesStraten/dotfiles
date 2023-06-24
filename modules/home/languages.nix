@@ -7,5 +7,7 @@
     quarto
     jupyter
     texlive.combined.scheme-medium
+
+    virtualenv
   ];
 }
