@@ -22,5 +22,6 @@
     shellcheck
     nodePackages_latest.pyright
     alejandra
+    clang-tools
   ];
 }
