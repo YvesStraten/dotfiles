@@ -12,7 +12,7 @@
     wget
     dunst
     kitty
-    git
+    git 
     libappindicator
     showmethekey
     config.nur.repos.ocfox.swww
@@ -39,6 +39,8 @@
     swaynag-battery
     vulkan-validation-layers
     wmenu
+    glxinfo 
+    mesa-demos
 
     dmenu
     xautolock
