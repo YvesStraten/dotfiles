@@ -23,7 +23,7 @@ font CascadiaCode NF:Mono 12
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id ~/.fehbg
-exec --no-startup-id polybar
+exec --no-startup-id ~/.config/polybar/launch.sh --grayblocks
 exec --no-startup-id autotiling
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,

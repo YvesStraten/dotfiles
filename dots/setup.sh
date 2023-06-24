@@ -1,6 +1,5 @@
 #!/bin/sh
-# My own
-rm -rf "$HOME/.local/share/nvim"
+# My own rm -rf "$HOME/.local/share/nvim"
 rm -rf "$HOME/.config/nvim"
 rm -r "$HOME/.config/mpv"
 rm -r "$HOME/.config/ranger"
@@ -36,3 +35,9 @@ ln -s "$(pwd)/swaylock" ~/.config/swaylock
 ln -s "$(pwd)/waybar" ~/.config/waybar
 ln -s "$(pwd)/wlogout" ~/.config/wlogout 
 ln -s "$(pwd)/tmux" ~/.config/tmux 
+
+#polybar setup
+rm -rf "$HOME/.config/polybar/"
+git clone --depth=1 https://github.com/adi1090x/polybar-themes.git ~/Git-repos/ 
+cd ~/Git-repos/polybar-themes/ 
+./setup.sh 
