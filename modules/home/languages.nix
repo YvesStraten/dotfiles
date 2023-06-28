@@ -7,6 +7,7 @@
     quarto
     jupyter
     texlive.combined.scheme-medium
+    raylib
 
     virtualenv
   ];

@@ -12,7 +12,7 @@
     wget
     dunst
     kitty
-    git 
+    git
     libappindicator
     showmethekey
     config.nur.repos.ocfox.swww
@@ -37,28 +37,18 @@
     neofetch
     appimage-run
     swaynag-battery
-    vulkan-validation-layers
-    wmenu
-    glxinfo 
-    mesa-demos
+    autotiling
 
     dmenu
-    xautolock
     i3status
     i3lock-fancy
     picom-jonaburg
     maim
     xclip
     feh
-    xss-lock
-    xorg.xrandr
-    arandr
-    polybar
     polybar
     feh
     lxappearance
-    autotiling
-    sshfs
   ];
 
   programs.wshowkeys.enable = true;

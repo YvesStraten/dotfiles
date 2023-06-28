@@ -34,6 +34,11 @@ in {
       vaapiIntel
       vaapiVdpau
       libvdpau-va-gl
+      intel-media-driver
+    ];
+    extraPackages32 = with pkgs; [
+      libva 
+      vaapiIntel
     ];
   };
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
