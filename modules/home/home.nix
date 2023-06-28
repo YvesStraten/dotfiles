@@ -8,13 +8,12 @@
     ./neovim.nix
     # ./hyprland.nix
     # ./sway.nix
-    ./languages.nix
+    #./languages.nix
     ./utilities.nix
     ./theming.nix
     ./symlinks.nix
   ];
 
-  nix.settings.experimental-features = ["nix-command" "flakes"];
   targets.genericLinux.enable = true;
 
   home = {
@@ -33,12 +32,12 @@
     };
   };
 
-  services = {
+  /* services = {
     kdeconnect = {
       enable = true;
       indicator = true;
     };
-  };
+  }; */
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
