@@ -37,9 +37,9 @@
     neofetch
     appimage-run
     swaynag-battery
-     vulkan-validation-layers
+    vulkan-validation-layers
     wmenu
-    glxinfo 
+    glxinfo
     mesa-demos
     autotiling
 
@@ -47,9 +47,9 @@
     i3status
     i3lock-fancy
     xautolock
-    xss-lock 
-    xorg.xrandr 
-    arandr 
+    xss-lock
+    xorg.xrandr
+    arandr
     picom-jonaburg
     maim
     xclip

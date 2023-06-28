@@ -37,7 +37,7 @@ in {
       intel-media-driver
     ];
     extraPackages32 = with pkgs; [
-      libva 
+      libva
       vaapiIntel
     ];
   };

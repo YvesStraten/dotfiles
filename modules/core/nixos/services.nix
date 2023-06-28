@@ -10,7 +10,6 @@
     criticalPowerAction = "Hibernate";
   };
 
-  
   services.flatpak.enable = true;
   xdg.portal = {
     enable = true;
@@ -25,7 +24,7 @@
       pkgs.gutenprintBin
     ];
   };
-  
+
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 

@@ -80,7 +80,7 @@
     };
 
     ".config/polybar/" = {
-      source = ./dots/polybar/bitmap; 
+      source = ./dots/polybar/bitmap;
       recursive = true;
     };
 

@@ -1,5 +1,6 @@
 {
-  config, pkgs,
+  config,
+  pkgs,
   lib,
   ...
 }: let
@@ -44,21 +45,21 @@ in {
   environment.systemPackages = with pkgs; [
     dbus-sway-environment
   ];
-  
+
   services.dbus.enable = true;
-  
+
   xdg.portal = {
     enable = true;
     wlr.enable = true;
     # gtk portal needed to make gtk apps happy
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    extraPortals = [pkgs.xdg-desktop-portal-gtk];
   };
 
   programs.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
   };
-     services.greetd = {
+  services.greetd = {
     enable = true;
     settings = rec {
       initial_session = {
@@ -68,6 +69,4 @@ in {
       default_session = initial_session;
     };
   };
- 
-
 }

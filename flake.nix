@@ -81,12 +81,12 @@
           ./modules/home/wsl.nix
         ];
       };
-	yvess = home-manager.lib.homeManagerConfiguration {
-	inherit pkgs;
-	modules = [
-	./modules/home/home.nix
-	];
-	};
+      yvess = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [
+          ./modules/home/home.nix
+        ];
+      };
     };
   };
 }

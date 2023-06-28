@@ -28,7 +28,6 @@
     defaultUser = "akali";
     nativeSystemd = true;
 
-
     startMenuLaunchers = true;
   };
 }
