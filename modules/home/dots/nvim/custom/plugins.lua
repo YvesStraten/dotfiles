@@ -54,6 +54,13 @@ local plugins = {
 		config = function() end,
 	},
 
+  {
+    "sindrets/diffview.nvim",
+    event = "VeryLazy",
+    config = function ()
+    end,
+  },
+
 	{
 		"andrewferrier/wrapping.nvim",
 		event = "VeryLazy",
