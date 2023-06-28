@@ -37,16 +37,25 @@
     neofetch
     appimage-run
     swaynag-battery
+     vulkan-validation-layers
+    wmenu
+    glxinfo 
+    mesa-demos
     autotiling
 
     dmenu
     i3status
     i3lock-fancy
+    xautolock
+    xss-lock 
+    xorg.xrandr 
+    arandr 
     picom-jonaburg
     maim
     xclip
     feh
     polybar
+    sshfs
     feh
     lxappearance
   ];
