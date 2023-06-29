@@ -21,6 +21,7 @@
     nodePackages_latest.prettier
     shellcheck
     nodePackages_latest.pyright
+    cppcheck
     alejandra
     clang-tools
     
