@@ -54,12 +54,23 @@ local plugins = {
 		config = function() end,
 	},
 
-  {
-    "sindrets/diffview.nvim",
-    event = "VeryLazy",
-    config = function ()
-    end,
-  },
+	{
+		"sindrets/diffview.nvim",
+		event = "VeryLazy",
+		config = function() end,
+	},
+
+	{
+		"rcarriga/nvim-dap-ui",
+		event = "InsertEnter",
+		dependencies = {
+			"mfussenegger/nvim-dap",
+			"folke/neodev.nvim",
+		},
+		config = function()
+			require("custom.configs.nvim-dap")
+		end,
+	},
 
 	{
 		"andrewferrier/wrapping.nvim",

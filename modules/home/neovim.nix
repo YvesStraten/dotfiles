@@ -23,5 +23,8 @@
     nodePackages_latest.pyright
     alejandra
     clang-tools
+    
+    # DAP protocols
+    lldb
   ];
 }
