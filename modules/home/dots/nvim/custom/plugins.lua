@@ -61,6 +61,12 @@ local plugins = {
 	},
 
 	{
+		"tpope/vim-fugitive",
+		event = "InsertEnter",
+		config = function() end,
+	},
+
+	--[[ {
 		"rcarriga/nvim-dap-ui",
 		event = "InsertEnter",
 		dependencies = {
@@ -70,7 +76,7 @@ local plugins = {
 		config = function()
 			require("custom.configs.nvim-dap")
 		end,
-	},
+	}, ]]
 
 	{
 		"andrewferrier/wrapping.nvim",
