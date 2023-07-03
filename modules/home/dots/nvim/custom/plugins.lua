@@ -85,5 +85,19 @@ local plugins = {
 			require("wrapping").setup()
 		end,
 	},
+
+	{
+		"jbyuki/instant.nvim",
+		event = "VeryLazy",
+		config = function()
+      vim.g.instant_username = "yvess"
+    end,
+	},
+
+	{
+		"rhysd/vim-grammarous",
+		ft = "tex",
+		config = function() end,
+	},
 }
 return plugins
