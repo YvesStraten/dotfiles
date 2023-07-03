@@ -9,7 +9,7 @@
     # ./hyprland.nix
     # ./sway.nix
     #./languages.nix
-    ./utilities.nix
+    # ./utilities.nix
     ./theming.nix
     ./symlinks.nix
   ];
