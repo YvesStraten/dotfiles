@@ -35,6 +35,8 @@
     pkgs = nixpkgs.legacyPackages.${system};
   in {
     defaultPackage.${system} = home-manager.defaultPackage.${system};
+    defaultPackage.x86_64-darwin = home-manager.defaultPackage.x86_64-darwin;
+    defaultPackage.aarch64-darwin = home-manager.defaultPackage.aarch64-darwin;
 
     nixosConfigurations = {
       nitro = nixpkgs.lib.nixosSystem {
