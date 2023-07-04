@@ -7,6 +7,7 @@ local sources = {
 	formatting.stylua,
 	formatting.alejandra,
   formatting.clang_format,
+  formatting.tidy,
 
 	lint.shellcheck,
   lint.cppcheck,

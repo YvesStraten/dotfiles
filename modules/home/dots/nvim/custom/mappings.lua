@@ -8,5 +8,18 @@ M.vimtex = {
 		},
 	},
 }
+M.fugitive = {
+  n = {
+    ["<leader>g"] = {
+      "<cmd> Git <CR>",
+      "Open Fugitive",
+    },
+
+    ["<leader>gp"] = {
+      "<cmd> Git push <CR>",
+      "Push commits",
+    }
+  },
+}
 
 return M

@@ -10,7 +10,7 @@
     # ./sway.nix
     #./languages.nix
     # ./utilities.nix
-    ./theming.nix
+    # ./theming.nix
     ./symlinks.nix
   ];
 

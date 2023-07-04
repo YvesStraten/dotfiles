@@ -19,6 +19,8 @@
     sumneko-lua-language-server
     stylua
     nodePackages_latest.prettier
+    nodePackages_latest.vscode-html-languageserver-bin
+    html-tidy
     shellcheck
     nodePackages_latest.pyright
     cppcheck
