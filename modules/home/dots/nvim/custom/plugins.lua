@@ -9,7 +9,7 @@ local plugins = {
 				"nix",
         "html",
         "css",
-        "js",
+        "javascript",
 			},
 		},
 	},
