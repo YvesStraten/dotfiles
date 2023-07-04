@@ -10,6 +10,7 @@
     };
     sessionVariables = {
       QT_QPA_PLATFORMTHEME = "qt5ct";
+      GTK_THEME = "Catppuccin-Mocha-Standard-Pink-dark";
     };
     profileExtra = ''
       export XDG_DATA_DIRS=\"$HOME/.nix-profile/share:$XDG_DATA_DIRS\
