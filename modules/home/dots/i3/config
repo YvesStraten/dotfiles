@@ -20,7 +20,7 @@ font CascadiaCode NF:Mono 12
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id ~/.fehbg
-exec --no-startup-id ~/.config/polybar/launch.sh --grayblocks
+# exec --no-startup-id ~/.config/polybar/launch.sh --grayblocks
 exec --no-startup-id autotiling
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
@@ -152,7 +152,7 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 bindsym $mod+e exec "kitty -e ranger"
-bindsym $mod+b exec "flatpak run com.brave.Browser"
+bindsym $mod+b exec "brave"
 
 # resize window (you can also use the mouse for that)
 bindsym $mod+Control+l resize shrink width 10 px or 10 ppt
@@ -161,3 +161,18 @@ bindsym $mod+Control+j resize shrink height 10 px or 10 ppt
 bindsym $mod+Control+h resize grow width 10 px or 10 ppt
 
 bindsym $mod+r mode "resize"
+
+bar {
+  font pango:Inconsolata 10
+  status_command /usr/bin/bumblebee-status \
+    -m cpu memory battery time \
+    pasink pasource \
+    -p time.format="%H:%M" \
+    -t powerline
+  position top
+  colors {
+    background #282C34
+    statusline #ffffff 
+    separator #666666
+  }
+}

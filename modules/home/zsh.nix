@@ -8,12 +8,9 @@
       # updatenix = "nix flake update ~/Git-repos/dotfiles";
       # upgradenix = "sudo nixos-rebuild switch --flake ~/Git-repos/dotfiles#nitro";
     };
-    sessionVariables = {
-      QT_QPA_PLATFORMTHEME = "qt5ct";
-      GTK_THEME = "Catppuccin-Mocha-Standard-Pink-dark";
-    };
     profileExtra = ''
       export XDG_DATA_DIRS=\"$HOME/.nix-profile/share:$XDG_DATA_DIRS\
+      export QT_QPA_PLATFORMTHEME=qt5ct
     '';
     initExtraFirst = ''
       ZSH_DISABLE_COMPFIX=true
