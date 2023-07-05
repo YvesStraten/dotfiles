@@ -33,7 +33,8 @@ exec --no-startup-id dunst
 # Use pactl to adjust volume in PulseAudio.
 bindsym XF86AudioRaiseVolume exec --no-startup-id pamixer -i 5 
 bindsym XF86AudioLowerVolume exec --no-startup-id pamixer -d 5 
-
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl s 10%+ 
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl s 10%- 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
@@ -165,9 +166,9 @@ bindsym $mod+r mode "resize"
 bar {
   font pango:Inconsolata 10
   status_command /usr/bin/bumblebee-status \
-    -m cpu memory battery time \
+    -m xrandr aur-update cpu memory battery caffeine time \
     pasink pasource \
-    -p time.format="%H:%M" \
+    -p brightness.use_acpi=true time.format="%H:%M" \
     -t powerline
   position top
   colors {
