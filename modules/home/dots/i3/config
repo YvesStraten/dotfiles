@@ -166,7 +166,7 @@ bindsym $mod+r mode "resize"
 bar {
   font pango:Inconsolata 10
   status_command /usr/bin/bumblebee-status \
-    -m xrandr aur-update cpu memory battery caffeine time \
+    -m title indicator xrandr playerctl cpu memory battery caffeine time \
     pasink pasource \
     -p brightness.use_acpi=true time.format="%H:%M" \
     -t powerline
