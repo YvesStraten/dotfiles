@@ -4,7 +4,7 @@
     enableAutosuggestions = true;
 
     shellAliases = {
-      neovide = "WINIT_UNIX_BACKEND=x11 neovide";
+      # neovide = "WINIT_UNIX_BACKEND=x11 neovide";
       # updatenix = "nix flake update ~/Git-repos/dotfiles";
       # upgradenix = "sudo nixos-rebuild switch --flake ~/Git-repos/dotfiles#nitro";
     };
