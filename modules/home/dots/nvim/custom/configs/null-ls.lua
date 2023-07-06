@@ -6,11 +6,9 @@ local lint = null_ls.builtins.diagnostics
 local sources = {
 	formatting.stylua,
 	formatting.alejandra,
-  formatting.clang_format,
   formatting.tidy,
 
 	lint.shellcheck,
-  lint.cppcheck,
 }
 
 null_ls.setup({
