@@ -10,7 +10,25 @@ local plugins = {
 				"html",
 				"css",
 				"javascript",
-        "python",
+				"python",
+			},
+		},
+	},
+
+	{
+		"williamboman/mason.nvim",
+		opts = {
+			ensure_installed = {
+				"html-lsp",
+				"lua-language-server",
+				"clangd",
+				"texlab",
+				"pyright",
+        "rnix-lsp",
+
+        "stylua",
+        "htmlbeautifier",
+        "shellcheck",
 			},
 		},
 	},
