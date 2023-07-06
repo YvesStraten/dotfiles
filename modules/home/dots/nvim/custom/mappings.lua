@@ -35,7 +35,7 @@ M.lspsaga = {
 
 		["<leader>lr"] = {
 			"<cmd>Lspsaga rename <CR>",
-			"Rename all occurunces of hovered word",
+			"Rename all occurrences of hovered word",
 		},
 
 		["<leader>lpd"] = {

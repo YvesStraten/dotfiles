@@ -10,6 +10,7 @@ local plugins = {
 				"html",
 				"css",
 				"javascript",
+        "python",
 			},
 		},
 	},
