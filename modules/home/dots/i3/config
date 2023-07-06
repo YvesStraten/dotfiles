@@ -166,10 +166,11 @@ bindsym $mod+r mode "resize"
 bar {
   font pango:Inconsolata 10
   status_command /usr/bin/bumblebee-status \
-    -m playerctl title indicator cpu memory battery caffeine time \
-    pasink pasource \
-    -p brightness.use_acpi=true time.format="%H:%M" \
-    -t gruvbox
+    -m playerctl title indicator \
+    cpu memory battery \
+    pasink pasource caffeine dunstctl time \
+    -p playerctl.hide=true brightness.use_acpi=true time.format="%H:%M" \
+    -t onedark-powerline
   position top
   colors {
     background #282C34

@@ -31,7 +31,7 @@ local plugins = {
 					"nvim-treesitter/nvim-treesitter",
 				},
 				config = function()
-          require("lspsaga").setup({})
+					require("lspsaga").setup({})
 				end,
 			},
 		},
@@ -113,6 +113,18 @@ local plugins = {
 	{
 		"rhysd/vim-grammarous",
 		ft = "tex",
+		config = function() end,
+	},
+
+	{
+		"folke/zen-mode.nvim",
+		event = "BufEnter",
+		config = function() end,
+	},
+
+	{
+		"ellisonleao/glow.nvim",
+		ft = "markdown",
 		config = function() end,
 	},
 }
