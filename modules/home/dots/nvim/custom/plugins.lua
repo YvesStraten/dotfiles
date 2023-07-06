@@ -7,9 +7,9 @@ local plugins = {
 				"cpp",
 				"markdown",
 				"nix",
-        "html",
-        "css",
-        "javascript",
+				"html",
+				"css",
+				"javascript",
 			},
 		},
 	},
@@ -17,10 +17,23 @@ local plugins = {
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
-			"jose-elias-alvarez/null-ls.nvim",
-			config = function()
-				require("custom.configs.null-ls")
-			end,
+			{
+				"jose-elias-alvarez/null-ls.nvim",
+				config = function()
+					require("custom.configs.null-ls")
+				end,
+			},
+
+			{
+				"glepnir/lspsaga.nvim",
+				dependencies = {
+					"nvim-tree/nvim-web-devicons",
+					"nvim-treesitter/nvim-treesitter",
+				},
+				config = function()
+          require("lspsaga").setup({})
+				end,
+			},
 		},
 
 		config = function()
@@ -65,7 +78,7 @@ local plugins = {
 
 	{
 		"tpope/vim-fugitive",
-		event = "InsertEnter",
+		cmd = "Git",
 		config = function() end,
 	},
 
@@ -93,8 +106,8 @@ local plugins = {
 		"jbyuki/instant.nvim",
 		event = "VeryLazy",
 		config = function()
-      vim.g.instant_username = "yvess"
-    end,
+			vim.g.instant_username = "yvess"
+		end,
 	},
 
 	{
