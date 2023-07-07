@@ -5,7 +5,7 @@
 }: {
   imports = [
     ./zsh.nix
-    ./neovim.nix
+    # ./neovim.nix
     # ./hyprland.nix
     # ./sway.nix
     #./languages.nix

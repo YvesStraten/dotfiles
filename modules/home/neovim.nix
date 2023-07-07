@@ -14,7 +14,7 @@
     neofetch
 
     # LSP servers
-    /* texlab
+    texlab
     omnisharp-roslyn
     sumneko-lua-language-server
     stylua
@@ -23,11 +23,11 @@
     html-tidy
     shellcheck
     nodePackages_latest.pyright
-    cppcheck */
+    cppcheck
     alejandra
-    /* clang-tools
+    clang-tools
     
     # DAP protocols
-    lldb */
+    lldb
   ];
 }
