@@ -11,6 +11,8 @@ local plugins = {
 				"css",
 				"javascript",
 				"python",
+        "lua",
+        "gitcommit",
 			},
 		},
 	},
