@@ -146,5 +146,13 @@ local plugins = {
 		ft = "markdown",
 		config = function() end,
 	},
+
+  {
+    "stevearc/oil.nvim",
+    event = "VeryLazy",
+    config = function ()
+      require("oil").setup()
+    end,
+  },
 }
 return plugins
