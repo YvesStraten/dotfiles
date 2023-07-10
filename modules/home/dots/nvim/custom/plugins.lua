@@ -13,6 +13,7 @@ local plugins = {
 				"python",
         "lua",
         "gitcommit",
+        "json",
 			},
 		},
 	},
