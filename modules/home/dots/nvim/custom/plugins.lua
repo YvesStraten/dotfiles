@@ -28,6 +28,8 @@ local plugins = {
 				"texlab",
 				"pyright",
         "rnix-lsp",
+        "prettierd",
+        "typescript-language-server",
 
         "stylua",
         "htmlbeautifier",
@@ -130,12 +132,6 @@ local plugins = {
 		config = function()
 			vim.g.instant_username = "yvess"
 		end,
-	},
-
-	{
-		"rhysd/vim-grammarous",
-		ft = "tex",
-		config = function() end,
 	},
 
 	{

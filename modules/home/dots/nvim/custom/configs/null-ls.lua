@@ -6,6 +6,7 @@ local lint = null_ls.builtins.diagnostics
 local sources = {
 	formatting.stylua,
   formatting.htmlbeautifier,
+  formatting.prettierd,
 
 	lint.shellcheck,
 }
