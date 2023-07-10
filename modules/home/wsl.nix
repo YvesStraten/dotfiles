@@ -4,10 +4,13 @@
   ...
 }: {
   imports = [
-    ./zsh.nix
-    ./neovim.nix
-    ./languages.nix
-    ./wsl-variables.nix
+  # Main stuff
+    ./main/neovim.nix
+    ./main/languages.nix
+
+  # Variables
+    ./variables/zsh.nix
+    ./variables/wsl-variables.nix
   ];
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
@@ -22,13 +25,6 @@
       "$HOME/go/bin"
       "$HOME/.local/bin"
     ];
-  };
-
-  services = {
-    kdeconnect = {
-      enable = true;
-      indicator = true;
-    };
   };
 
   # Let Home Manager install and manage itself.

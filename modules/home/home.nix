@@ -4,14 +4,18 @@
   ...
 }: {
   imports = [
-    ./zsh.nix
-    # ./neovim.nix
-    # ./hyprland.nix
-    # ./sway.nix
-    #./languages.nix
-    # ./utilities.nix
-    # ./theming.nix
-    ./symlinks.nix
+  # Main stuff
+    ./main/languages.nix
+    ./main/utilities.nix
+    ./main/theming.nix
+    ./main/symlinks.nix
+    ./main/neovim.nix
+
+  # Variables 
+
+    ./variables/zsh.nix
+    ./variables/hyprland.nix
+    ./variables/sway.nix
   ];
 
   targets.genericLinux.enable = true;
