@@ -19,11 +19,6 @@
       recursive = true;
     };
 
-    ".config/sway" = {
-      source = ./dots/sway;
-      recursive = true;
-    };
-
     ".config/kitty" = {
       source = ./dots/kitty;
       recursive = true;

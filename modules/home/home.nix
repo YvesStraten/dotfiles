@@ -7,7 +7,7 @@
     ./zsh.nix
     # ./neovim.nix
     # ./hyprland.nix
-    ./sway.nix
+    # ./sway.nix
     #./languages.nix
     # ./utilities.nix
     # ./theming.nix
