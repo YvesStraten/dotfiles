@@ -153,5 +153,10 @@ local plugins = {
       require("oil").setup()
     end,
   },
+
+  {
+    "NvChad/nvterm",
+    enabled = false,
+  },
 }
 return plugins

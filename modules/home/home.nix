@@ -5,17 +5,17 @@
 }: {
   imports = [
   # Main stuff
-    ./main/languages.nix
-    ./main/utilities.nix
-    ./main/theming.nix
+    # ./main/languages.nix
+    # ./main/utilities.nix
+    # ./main/theming.nix
     ./main/symlinks.nix
-    ./main/neovim.nix
+    # ./main/neovim.nix
 
   # Variables 
 
     ./variables/zsh.nix
-    ./variables/hyprland.nix
-    ./variables/sway.nix
+    # ./variables/hyprland.nix
+    # ./variables/sway.nix
   ];
 
   targets.genericLinux.enable = true;
