@@ -7,13 +7,13 @@
       # neovide = "WINIT_UNIX_BACKEND=x11 neovide";
       # updatenix = "nix flake update ~/Git-repos/dotfiles";
       # upgradenix = "sudo nixos-rebuild switch --flake ~/Git-repos/dotfiles#nitro";
+      updatesymlinks = "home-manager switch --flake ~/Git-repos/dotfiles";
     };
     profileExtra = ''
       export QT_QPA_PLATFORMTHEME=qt5ct
     '';
     initExtraFirst = ''
       ZSH_DISABLE_COMPFIX=true
-      ZSH_TMUX_CONFIG="$HOME/.config/tmux/.tmux.conf"
     '';
 
     oh-my-zsh = {
@@ -23,7 +23,7 @@
         "common-aliases"
         "tmux"
       ];
-      theme = "robbyrussell";
+      theme = "mortalscumbag";
     };
   };
 

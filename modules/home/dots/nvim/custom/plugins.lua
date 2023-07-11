@@ -100,12 +100,6 @@ local plugins = {
 		config = function() end,
 	},
 
-	{
-		"tpope/vim-fugitive",
-		cmd = "Git",
-		config = function() end,
-	},
-
 	--[[ {
 		"rcarriga/nvim-dap-ui",
 		event = "InsertEnter",
