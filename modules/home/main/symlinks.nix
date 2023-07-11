@@ -59,9 +59,8 @@
       recursive = true;
     };
 
-    ".config/tmux" = {
-      source = ../dots/tmux;
-      recursive = true;
+    ".tmux.conf" = {
+      source = ../dots/tmux/.tmux.conf;
     };
 
     ".config/waybar" = {
