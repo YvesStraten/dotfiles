@@ -13,3 +13,12 @@ if vim.g.neovide then
 	vim.g.neovide_scale_factor = "0.8"
 	vim.opt.guifont = { "CascadiaCode NF", ":h12" }
 end
+
+local enable_providers = {
+  "python3_provider",
+}
+
+for _, plugin in pairs(enable_providers) do 
+  vim.g["loaded_" .. plugin] = nil 
+  vim.cmd("runtime " .. plugin)
+end

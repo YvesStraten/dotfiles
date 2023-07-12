@@ -11,9 +11,9 @@ local plugins = {
 				"css",
 				"javascript",
 				"python",
-        "lua",
-        "gitcommit",
-        "json",
+				"lua",
+				"gitcommit",
+				"json",
 			},
 		},
 	},
@@ -27,13 +27,13 @@ local plugins = {
 				"clangd",
 				"texlab",
 				"pyright",
-        "rnix-lsp",
-        "prettierd",
-        "typescript-language-server",
+				"rnix-lsp",
+				"prettierd",
+				"typescript-language-server",
 
-        "stylua",
-        "htmlbeautifier",
-        "shellcheck",
+				"stylua",
+				"htmlbeautifier",
+				"shellcheck",
 			},
 		},
 	},
@@ -140,17 +140,28 @@ local plugins = {
 		config = function() end,
 	},
 
-  {
-    "stevearc/oil.nvim",
-    event = "VeryLazy",
-    config = function ()
-      require("oil").setup()
-    end,
-  },
+	{
+		"stevearc/oil.nvim",
+		event = "VeryLazy",
+		config = function()
+			require("oil").setup()
+		end,
+	},
 
-  {
-    "NvChad/nvterm",
-    enabled = false,
-  },
+	{
+		"turbio/bracey.vim",
+		ft = {
+			"html",
+			"css",
+			"javascript",
+		},
+		build = "npm install --prefix server",
+		config = function() end,
+	},
+
+	{
+		"NvChad/nvterm",
+		enabled = false,
+	},
 }
 return plugins

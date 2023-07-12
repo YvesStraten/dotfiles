@@ -60,7 +60,7 @@
     };
 
     ".tmux.conf" = {
-      source = ../dots/tmux/.tmux.conf;
+      source = ../dots/tmux/tmux.conf;
     };
 
     ".config/waybar" = {
