@@ -1,16 +1,15 @@
 local dap = require("dap")
-dap.adapters.lldb = {
-  type = "executable",
-  command = "~/.nix-profile/bin/lldb-vscode",
-  name = "lldb",
-}
+local dapui = require("dapui")
 
-require("dapui").setup()
-require("neodev").setup({
-  library = {
-    plugins = {
-      "nvim-dap-ui",
-      types = true
-    },
-  }
-})
+dapui.setup()
+dap.listeners.after.event_initialized["dapui_config"] = function()
+	dapui.open()
+end
+
+dap.listeners.before.event_terminated["dapui_config"] = function()
+	dapui.close()
+end
+
+dap.listeners.before.event_exited["dapui_config"] = function()
+	dapui.close()
+end

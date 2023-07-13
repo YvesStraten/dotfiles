@@ -21,10 +21,13 @@ lspconfig.lua_ls.setup({
 	},
 })
 
-lspconfig.clangd.setup({
-	on_attach = on_attach,
+lspconfig.clangd.setup{
+  on_attach = function(client, bufnr)
+    client.server_capabilities.signatureHelpProvider = false
+    on_attach(client, bufnr)
+  end,
 	capabilities = capabilities,
-})
+}
 
 lspconfig.texlab.setup({
 	on_attach = on_attach,

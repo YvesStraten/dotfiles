@@ -25,6 +25,8 @@ local plugins = {
 				"html-lsp",
 				"lua-language-server",
 				"clangd",
+				"clang-format",
+				"codelldb",
 				"texlab",
 				"pyright",
 				"rnix-lsp",
@@ -43,8 +45,8 @@ local plugins = {
 		dependencies = {
 			{
 				"jose-elias-alvarez/null-ls.nvim",
-				config = function()
-					require("custom.configs.null-ls")
+				opts = function()
+					return require("custom.configs.null-ls")
 				end,
 			},
 
@@ -71,6 +73,7 @@ local plugins = {
 		ft = "tex",
 		config = function()
 			require("custom.configs.vimtex")
+			require("core.utils").load_mappings("vimtex")
 		end,
 	},
 
@@ -91,7 +94,9 @@ local plugins = {
 		build = {
 			"cd app && npm install",
 		},
-		config = function() end,
+		config = function()
+			require("core.utils").load_mappings("markdownpreview")
+		end,
 	},
 
 	{
@@ -100,17 +105,33 @@ local plugins = {
 		config = function() end,
 	},
 
-	--[[ {
+	{
+		"mfussenegger/nvim-dap",
+		config = function(_, _)
+			require("core.utils").load_mappings("dap")
+		end,
+	},
+
+	{
 		"rcarriga/nvim-dap-ui",
-		event = "InsertEnter",
-		dependencies = {
-			"mfussenegger/nvim-dap",
-			"folke/neodev.nvim",
-		},
+		event = "VeryLazy",
+		dependencies = "mfussenegger/nvim-dap",
 		config = function()
 			require("custom.configs.nvim-dap")
 		end,
-	}, ]]
+	},
+
+	{
+		"jay-babu/mason-nvim-dap.nvim",
+		event = "VeryLazy",
+		dependencies = {
+			"williamboman/mason.nvim",
+			"mfussenegger/nvim-dap",
+		},
+		opts = {
+			handlers = {},
+		},
+	},
 
 	{
 		"andrewferrier/wrapping.nvim",
@@ -157,6 +178,14 @@ local plugins = {
 		},
 		build = "npm install --prefix server",
 		config = function() end,
+	},
+
+	{
+		"rcarriga/nvim-notify",
+		event = "VeryLazy",
+		config = function()
+			vim.notify = require("notify")
+		end,
 	},
 
 	{

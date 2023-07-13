@@ -1,10 +1,34 @@
 local M = {}
 
 M.vimtex = {
+	plugin = true,
 	n = {
 		["<leader>ll"] = {
 			"<cmd> VimtexCompile <CR>",
 			"Compile latex file",
+		},
+	},
+}
+M.markdownpreview = {
+	plugin = true,
+	n = {
+		["<leader>ll"] = {
+			"<cmd> MarkDownPreview <CR>",
+			"Preview Markdown",
+		},
+	},
+}
+M.dap = {
+	plugin = true,
+	n = {
+		["<leader>db"] = {
+			"<cmd> DapToggleBreakpoint <CR>",
+			"Toggle Breakpoint at line",
+		},
+
+		["<leader>dr"] = {
+			"<cmd> DapContinue <CR>",
+			"Start or continue debugger",
 		},
 	},
 }
