@@ -3,7 +3,7 @@ vim.opt.relativenumber = true
 vim.opt.termguicolors = true
 vim.keymap.set("n", "<leader>sp", ":set spell<CR> <bar> :set spelllang=en_gb<CR>")
 vim.keymap.set("n", "<leader>vp", "<cmd> vsplit <CR>")
-vim.keymap.set("n", "<leader>p", "<cmd> split <CR>")
+vim.keymap.set("n", "<leader>h", "<cmd> split <CR>")
 
 vim.cmd([[
 set backupdir=~/nvim/backup//

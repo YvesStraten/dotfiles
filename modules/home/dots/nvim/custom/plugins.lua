@@ -187,6 +187,23 @@ local plugins = {
 			vim.notify = require("notify")
 		end,
 	},
+
+	{
+		"jakemason/ouroboros.nvim",
+		ft = {
+			"cpp",
+			"h",
+			"hpp",
+			"c",
+		},
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
+		config = function()
+			require("core.utils").load_mappings("ouroboros")
+		end,
+	},
+
 	{
 		"andweeb/presence.nvim",
 		event = "VeryLazy",

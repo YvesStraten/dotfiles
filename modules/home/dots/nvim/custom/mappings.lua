@@ -9,6 +9,15 @@ M.vimtex = {
 		},
 	},
 }
+M.ouroboros = {
+	plugin = true,
+	n = {
+		["<leader>jp"] = {
+			"<cmd> Ouroboros <CR>",
+			"Jump to header file",
+		},
+	},
+}
 M.markdownpreview = {
 	plugin = true,
 	n = {
