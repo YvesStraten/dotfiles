@@ -6,14 +6,14 @@
   imports = [
   # Main stuff
     ./main/neovim.nix
-    ./main/languages.nix
+    ./main/symlinks.nix
+    # ./main/languages.nix
 
   # Variables
     ./variables/zsh.nix
     ./variables/wsl-variables.nix
   ];
 
-  nix.settings.experimental-features = ["nix-command" "flakes"];
   targets.genericLinux.enable = true;
 
   home = {
