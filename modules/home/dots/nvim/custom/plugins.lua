@@ -213,6 +213,24 @@ local plugins = {
 	},
 
 	{
+		"hrsh7th/nvim-cmp",
+		dependencies = {
+			{
+				-- snippet plugin
+				"L3MON4D3/LuaSnip",
+				config = function(_, opts)
+					require("plugins.configs.others").luasnip(opts) -- from default luasnip conf
+
+					local luasnip = require("luasnip")
+
+					luasnip.filetype_extend("javascriptreact", { "html" })
+					require("luasnip/loaders/from_vscode").lazy_load() -- from default luasnip conf
+				end,
+			},
+		},
+	},
+
+	{
 		"NvChad/nvterm",
 		enabled = false,
 	},
