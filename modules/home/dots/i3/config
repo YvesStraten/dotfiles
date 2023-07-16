@@ -19,7 +19,6 @@ font CascadiaCode NF:Mono 12
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
-exec --no-startup-id wal -R
 exec --no-startup-id ~/.fehbg
 # exec --no-startup-id ~/.config/polybar/launch.sh --grayblocks
 exec --no-startup-id autotiling
@@ -159,7 +158,7 @@ bindsym $mod+Control+h resize grow width 10 px or 10 ppt
 bindsym $mod+r mode "resize"
 
 bar {
-  font pango:Inconsolata 10
+  font pango:Inconsolata 15
   status_command /usr/bin/bumblebee-status \
     -m playerctl title indicator \
     cpu memory battery \
