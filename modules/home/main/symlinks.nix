@@ -83,13 +83,18 @@
       recursive = true;
     };
 
+    ".config/bspwm/" = {
+      source = ../dots/bspwm;
+      recursive = true;
+    };
+
     ".local/bin/" = {
-      source = ../dots/scripts;
+      source = ../dots/bin;
       recursive = true;
     };
 
     ".local/share/fonts" = {
-      source = ../dots/polybar/fonts;
+      source = ../dots/fonts;
       recursive = true;
     };
   };
