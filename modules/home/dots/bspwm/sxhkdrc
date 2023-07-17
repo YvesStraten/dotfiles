@@ -31,6 +31,12 @@ super + alt + o
 ctrl + super + alt + {p,r,q,l,k}
 	{systemctl poweroff, systemctl reboot,bspc quit,physlock -d,xkill}
 
+super + b 
+  brave 
+
+super + e 
+  thunar
+
 # Apps
 shift + alt + {b,g,n,p,r,t,w,m,v,k}
 	{firefox, \

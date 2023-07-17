@@ -83,11 +83,6 @@
       recursive = true;
     };
 
-    ".config/bspwm/" = {
-      source = ../dots/bspwm;
-      recursive = true;
-    };
-
     ".local/bin/" = {
       source = ../dots/bin;
       recursive = true;
