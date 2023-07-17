@@ -9,7 +9,7 @@ alt + F1
 	
 # Open Terminal (alacritty)
 super + Return
-  Kitty
+  kitty
 	
 # Open floating Terminal
 super + alt + Return
