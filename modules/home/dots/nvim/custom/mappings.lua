@@ -9,6 +9,14 @@ M.vimtex = {
 		},
 	},
 }
+M.oil = {
+  n = {
+    ["<C-n>"] = {
+      "<cmd> Oil --float <CR>",
+      "Open file explorer"
+    },
+  },
+}
 M.ouroboros = {
 	plugin = true,
 	n = {

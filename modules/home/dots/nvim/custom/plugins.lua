@@ -234,5 +234,10 @@ local plugins = {
 		"NvChad/nvterm",
 		enabled = false,
 	},
+
+  {
+    "nvim-tree/nvim-tree.lua",
+    enabled = false,
+  },
 }
 return plugins
