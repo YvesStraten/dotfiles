@@ -162,14 +162,6 @@ local plugins = {
 	},
 
 	{
-		"stevearc/oil.nvim",
-		event = "VeryLazy",
-		config = function()
-			require("oil").setup()
-		end,
-	},
-
-	{
 		"turbio/bracey.vim",
 		ft = {
 			"html",
@@ -234,10 +226,5 @@ local plugins = {
 		"NvChad/nvterm",
 		enabled = false,
 	},
-
-  {
-    "nvim-tree/nvim-tree.lua",
-    enabled = false,
-  },
 }
 return plugins
