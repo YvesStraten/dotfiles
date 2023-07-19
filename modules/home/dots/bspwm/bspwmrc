@@ -77,11 +77,18 @@ done
 picom --config "$HOME"/.config/bspwm/picom.conf --experimental-backends &
 #picom --legacy-backends --config "$HOME"/.config/bspwm/picom.conf &
 
+# Launch lockscreen
+i3lock-fancy-multimonitor &
+
+optimus-manager-qt &
+
 # Launch dunst notification daemon
 dunst -config "$HOME"/.config/bspwm/dunstrc &
 
 # Set random wallpaper for actual rice
 feh -z --no-fehbg --bg-fill ${rice_dir}/walls
+
+run optimus-manager-qt
 
 # Reload sxhkd daemon
 sxhkd -c "$HOME"/.config/bspwm/sxhkdrc &
