@@ -80,8 +80,6 @@ picom --config "$HOME"/.config/bspwm/picom.conf --experimental-backends &
 # Launch lockscreen
 i3lock-fancy-multimonitor &
 
-optimus-manager-qt &
-
 # Launch dunst notification daemon
 dunst -config "$HOME"/.config/bspwm/dunstrc &
 
@@ -95,6 +93,8 @@ sxhkd -c "$HOME"/.config/bspwm/sxhkdrc &
 
 # Launch polkit
 pidof -q polkit-gnome-authentication-agent-1 || { /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 & }
+
+optimus-manager-qt
 
 # Fix cursor
 xsetroot -cursor_name left_ptr
