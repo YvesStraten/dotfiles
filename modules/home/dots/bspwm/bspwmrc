@@ -86,8 +86,6 @@ dunst -config "$HOME"/.config/bspwm/dunstrc &
 # Set random wallpaper for actual rice
 feh -z --no-fehbg --bg-fill ${rice_dir}/walls
 
-run optimus-manager-qt
-
 # Reload sxhkd daemon
 sxhkd -c "$HOME"/.config/bspwm/sxhkdrc &
 
@@ -95,6 +93,8 @@ sxhkd -c "$HOME"/.config/bspwm/sxhkdrc &
 pidof -q polkit-gnome-authentication-agent-1 || { /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 & }
 
 optimus-manager-qt
+blueman-applet 
 
 # Fix cursor
 xsetroot -cursor_name left_ptr
+xset r rate 200 30
