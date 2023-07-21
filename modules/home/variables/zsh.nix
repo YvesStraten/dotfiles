@@ -8,6 +8,7 @@
       # updatenix = "nix flake update ~/Git-repos/dotfiles";
       # upgradenix = "sudo nixos-rebuild switch --flake ~/Git-repos/dotfiles#nitro";
       updatesymlinks = "home-manager switch --flake ~/Git-repos/dotfiles";
+      mux = "tmuxinator"
     };
     profileExtra = ''
       export QT_QPA_PLATFORMTHEME=qt5ct
