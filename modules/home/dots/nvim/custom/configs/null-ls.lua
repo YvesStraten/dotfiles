@@ -2,6 +2,7 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 local null_ls = require("null-ls")
 local format = null_ls.builtins.formatting
 local lint = null_ls.builtins.diagnostics
+local code_action = null_ls.builtins.code_actions
 
 local opts = {
 	sources = {
@@ -10,6 +11,8 @@ local opts = {
 		format.prettierd,
 
 		lint.shellcheck,
+
+		code_action.eslint_d,
 	},
 	on_attach = function(client, bufnr)
 		if client.supports_method("textDocument/formatting") then

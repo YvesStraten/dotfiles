@@ -24,6 +24,7 @@ local plugins = {
 			ensure_installed = {
 				"html-lsp",
 				"lua-language-server",
+				"eslint_d",
 				"clangd",
 				"clang-format",
 				"codelldb",
