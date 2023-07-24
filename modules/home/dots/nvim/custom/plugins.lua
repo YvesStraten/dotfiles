@@ -32,6 +32,7 @@ local plugins = {
 				"rnix-lsp",
 				"prettierd",
 				"typescript-language-server",
+				"tailwindcss-language-server",
 
 				"stylua",
 				"htmlbeautifier",
@@ -174,6 +175,7 @@ local plugins = {
 
 	{
 		"rcarriga/nvim-notify",
+		enabled = false,
 		event = "VeryLazy",
 		config = function()
 			vim.notify = require("notify")
@@ -216,6 +218,7 @@ local plugins = {
 					local luasnip = require("luasnip")
 
 					luasnip.filetype_extend("javascriptreact", { "html" })
+					luasnip.filetype_extend("typescriptreact", { "html" })
 					require("luasnip/loaders/from_vscode").lazy_load() -- from default luasnip conf
 				end,
 			},
