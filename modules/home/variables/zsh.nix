@@ -2,6 +2,7 @@
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
+    enableCompletion = true;
 
     shellAliases = {
       # neovide = "WINIT_UNIX_BACKEND=x11 neovide";
