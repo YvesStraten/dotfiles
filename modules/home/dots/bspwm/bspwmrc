@@ -77,9 +77,6 @@ done
 picom --config "$HOME"/.config/bspwm/picom.conf --experimental-backends &
 #picom --legacy-backends --config "$HOME"/.config/bspwm/picom.conf &
 
-# Launch lockscreen
-i3lock-fancy-multimonitor &
-
 # Launch dunst notification daemon
 dunst -config "$HOME"/.config/bspwm/dunstrc &
 
