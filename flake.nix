@@ -16,11 +16,13 @@
       inputs.nixpkgs.follows = "nixpkgs-old";
     };
     nur.url = "github:nix-community/NUR";
+    nixgl.url = "github:guibou/nixGL";
   };
 
   outputs = {
     self,
     nixpkgs,
+    nixgl,
     nixpkgs-old,
     home-manager,
     hyprland,
@@ -33,6 +35,9 @@
   } @ inputs: let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
+    overlays = [
+      nixgl.overlay
+    ];
   in {
     defaultPackage.${system} = home-manager.defaultPackage.${system};
     defaultPackage.x86_64-darwin = home-manager.defaultPackage.x86_64-darwin;
