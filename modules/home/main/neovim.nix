@@ -26,7 +26,7 @@
     cppcheck
     alejandra
     clang-tools
-    
+
     # DAP protocols
     lldb
   ];

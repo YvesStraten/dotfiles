@@ -43,6 +43,8 @@
     mesa-demos
     autotiling
 
+    nixgl.nixGLNvidia
+
     dmenu
     i3status
     i3lock-fancy

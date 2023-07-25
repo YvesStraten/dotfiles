@@ -4,12 +4,12 @@
   ...
 }: {
   imports = [
-  # Main stuff
+    # Main stuff
     ./main/neovim.nix
     ./main/symlinks.nix
     # ./main/languages.nix
 
-  # Variables
+    # Variables
     ./variables/zsh.nix
     ./variables/wsl-variables.nix
   ];

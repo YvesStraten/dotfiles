@@ -4,14 +4,14 @@
   ...
 }: {
   imports = [
-  # Main stuff
+    # Main stuff
     # ./main/languages.nix
     # ./main/utilities.nix
     # ./main/theming.nix
     ./main/symlinks.nix
     # ./main/neovim.nix
 
-  # Variables 
+    # Variables
 
     ./variables/zsh.nix
     # ./variables/hyprland.nix

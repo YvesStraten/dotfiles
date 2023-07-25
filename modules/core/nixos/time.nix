@@ -9,7 +9,7 @@
   time.timeZone = "Asia/Makassar";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.defaultLocale = "de_DE.UTF-8";
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "id_ID.UTF-8";
