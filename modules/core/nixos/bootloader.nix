@@ -5,9 +5,12 @@
   ...
 }: {
   boot.loader = {
-    systemd-boot.enable = true;
+    grub = {
+      enable = true;
+      efiSupport = true;
+    };
     efi.canTouchEfiVariables = true;
-    efi.efiSysMountPoint = "/boot/efi";
+    efi.efiSysMountPoint = "/boot/";
   };
   boot.kernelPackages = pkgs.linuxPackages_zen;
 }
