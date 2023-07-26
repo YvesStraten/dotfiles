@@ -5,7 +5,7 @@
   ...
 }
 : let
-  nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
+  prime-run = pkgs.writeShellScriptBin "nvidia-offload" ''
     export __NV_PRIME_RENDER_OFFLOAD=1
     export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-GO
     export __GLX_VENDOR_LIBRARY_NAME=nvidia
@@ -14,7 +14,7 @@
   '';
 in {
   environment.systemPackages = with pkgs; [
-    nvidia-offload
+    prime-run
   ];
 
   # Configure keymap in X11

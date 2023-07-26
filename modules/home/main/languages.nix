@@ -1,13 +1,9 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
-    nodejs
-    yarn
-    gcc
     python310
-    quarto
-    jupyter
+    pipx
+
     texlive.combined.scheme-medium
-    raylib
 
     virtualenv
   ];
