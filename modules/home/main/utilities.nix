@@ -17,6 +17,7 @@
     filezilla
 
     mpv
+    ffmpeg 
     neofetch
   ];
 }
