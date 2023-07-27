@@ -15,6 +15,7 @@
     };
     font = {
       name = "Cantarell Regular";
+      package = pkgs.cantarell-fonts;
       size = 11;
     };
     cursorTheme = {
