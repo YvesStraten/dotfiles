@@ -20,8 +20,6 @@
     unzip
     filezilla
 
-    gh
-    git
     mpv
     neofetch
   ];

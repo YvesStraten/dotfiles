@@ -10,12 +10,13 @@
     };
 
     displayManager = {
-      sddm.enable = "true";
+      sddm.enable = true;
       defaultSession = "none+bspwm";
     };
 
     windowManager.bspwm = {
       enable = true;
+      configFile = "/home/yvess/.config/bspwm/bspwmrc";
     };
   };
 }

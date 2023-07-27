@@ -18,7 +18,9 @@
     config.nur.repos.ocfox.swww
     brightnessctl
     swaylock-effects
-    rofi-wayland
+    xfce.thunar
+
+    # rofi-wayland
     rofi-emoji
     btop
     wofi
@@ -33,7 +35,7 @@
     udiskie
     swayidle
     wlsunset
-    eww-wayland
+    eww
     neofetch
     appimage-run
     swaynag-battery
@@ -42,14 +44,16 @@
     glxinfo
     mesa-demos
     autotiling
+    jq
 
-    nixgl.nixGLNvidia
+#    nixgl.nixGLNvidia
 
     dmenu
     i3status
     i3lock-fancy
     xautolock
     xss-lock
+    sxhkd
     xorg.xrandr
     arandr
     picom-jonaburg
@@ -60,6 +64,7 @@
     sshfs
     feh
     lxappearance
+    rofi
   ];
 
   programs.wshowkeys.enable = true;

@@ -89,7 +89,6 @@ sxhkd -c "$HOME"/.config/bspwm/sxhkdrc &
 # Launch polkit
 pidof -q polkit-gnome-authentication-agent-1 || { /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 & }
 
-optimus-manager-qt
 blueman-applet 
 
 # Fix cursor

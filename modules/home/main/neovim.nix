@@ -8,9 +8,9 @@
     ripgrep
     fd
     fzf
+    gcc
     zathura
     gh
-    git
     neofetch
 
     # LSP servers
@@ -20,7 +20,9 @@
     stylua
     nodePackages_latest.prettier
     nodePackages_latest.vscode-html-languageserver-bin
+    nodePackages_latest.typescript-language-server
     html-tidy
+    rnix-lsp
     shellcheck
     nodePackages_latest.pyright
     cppcheck

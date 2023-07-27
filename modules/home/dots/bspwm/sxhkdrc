@@ -32,7 +32,7 @@ ctrl + super + alt + {p,r,q,l,k}
 	{systemctl poweroff, systemctl reboot,bspc quit,physlock -d,xkill}
 
 super + b 
-  brave 
+  flatpak run com.brave.Browser 
 
 super + e 
   thunar
