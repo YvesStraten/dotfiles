@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
     tesseract
+    brave
     libreoffice
     rclone
     rclone-browser
