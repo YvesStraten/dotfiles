@@ -10,7 +10,7 @@
       };
     };
     iconTheme = {
-      name = "Whitesur";
+      name = "WhiteSur-dark";
       package = pkgs.whitesur-icon-theme;
     };
     font = {
@@ -18,7 +18,7 @@
       size = 11;
     };
     cursorTheme = {
-      name = "dark-sense";
+      name = "Nordzy-cursors";
       size = 24;
       package = pkgs.nordzy-cursor-theme;
     };

@@ -70,7 +70,7 @@
           home-manager.nixosModules.home-manager
           {
             home-manager = {
-              useGlobalPkgs = true;
+              useGlobalPkgs = false;
               useUserPackages = true;
               users.akali = import ./modules/home/wsl.nix;
             };

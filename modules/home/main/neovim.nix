@@ -9,8 +9,10 @@
     fd
     fzf
     gcc
+    nodejs_20
+    unzip 
+    cargo
     zathura
-    gh
     neofetch
 
     # LSP servers

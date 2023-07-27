@@ -5,8 +5,8 @@
 }: {
   imports = [
     # Main stuff
-    # ./main/languages.nix
-    # ./main/utilities.nix
+    ./main/languages.nix
+    ./main/utilities.nix
     ./main/theming.nix
     ./main/symlinks.nix
     ./main/neovim.nix
@@ -36,14 +36,14 @@
     };
   };
 
-  /*
+  
      services = {
     kdeconnect = {
       enable = true;
       indicator = true;
     };
   };
-  */
+ 
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
