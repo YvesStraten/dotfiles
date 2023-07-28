@@ -7,7 +7,7 @@
     # Main stuff
     ./main/neovim.nix
     ./main/symlinks.nix
-    # ./main/languages.nix
+    ./main/languages.nix
 
     # Variables
     ./variables/zsh.nix
