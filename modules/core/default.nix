@@ -21,5 +21,6 @@
     # ./nixos/i3.nix
     # ./nixos/sway.nix
     ./nixos/bspwm.nix
+    ./nixos/plasma.nix
   ];
 }
