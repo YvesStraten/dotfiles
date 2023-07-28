@@ -18,7 +18,7 @@
     # ./variables/sway.nix
   ];
 
-  targets.genericLinux.enable = true;
+  # targets.genericLinux.enable = true;
 
   home = {
     username = "yvess";
