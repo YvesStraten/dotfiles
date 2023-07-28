@@ -8,6 +8,12 @@
     experimental-features = nix-command flakes
   '';
 
+  environment.systemPackages = with pkgs; [
+    vim 
+    git 
+    gh
+  ];
+
   system.stateVersion = "22.11";
   networking.hostName = "wsl";
 
