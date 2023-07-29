@@ -8,7 +8,7 @@
     grub = {
       enable = true;
       efiSupport = true;
-	device = "nodev";
+      device = "nodev";
     };
     efi.canTouchEfiVariables = true;
     efi.efiSysMountPoint = "/boot/";

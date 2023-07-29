@@ -48,7 +48,7 @@
     autotiling
     jq
 
-#    nixgl.nixGLNvidia
+    #    nixgl.nixGLNvidia
 
     dmenu
     i3status

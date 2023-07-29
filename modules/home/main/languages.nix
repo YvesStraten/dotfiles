@@ -3,7 +3,6 @@
     python310
     pipx
 
-
     virtualenv
   ];
 }

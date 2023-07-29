@@ -10,7 +10,7 @@
     fzf
     gcc
     nodejs_20
-    unzip 
+    unzip
     cargo
     zathura
     neofetch
