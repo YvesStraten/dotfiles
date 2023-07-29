@@ -67,6 +67,9 @@
     feh
     lxappearance
     rofi
+
+    # For plasma 
+    libsForQt5.plasma-browser-integration
   ];
 
   programs.wshowkeys.enable = true;
