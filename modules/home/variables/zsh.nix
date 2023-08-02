@@ -5,8 +5,8 @@
     enableCompletion = true;
 
     shellAliases = {
-      neovide = "env WINIT_UNIX_BACKEND=x11 prime-run nixGLNvidia-535.86.05 neovide";
       # neovide = "prime-run nixGLNvidia-535.86.05 neovide";
+      emacs = "emacs -nw";
       updatenix = "nix flake update ~/Git-repos/dotfiles";
       upgradenix = "sudo nixos-rebuild switch --flake ~/Git-repos/dotfiles#nitro";
       # updatesymlinks = "home-manager switch --flake ~/Git-repos/dotfiles";

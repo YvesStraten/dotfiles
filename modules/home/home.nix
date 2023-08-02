@@ -32,7 +32,7 @@
     ];
 
     sessionVariables = {
-      EDITOR = "nvim";
+      EDITOR = "emacs";
       TERMINAL = "kitty";
     };
   };
