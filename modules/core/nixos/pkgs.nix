@@ -11,66 +11,72 @@
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     gh
-
     dunst
     kitty
     git
     libappindicator
     showmethekey
-    config.nur.repos.ocfox.swww
     brightnessctl
-    swaylock-effects
-    xfce.thunar
-
-    # rofi-wayland
-    rofi-emoji
     btop
-    wofi
-    inputs.hypr-contrib.packages.${pkgs.system}.grimblast
-    inputs.hyprpicker.packages.${pkgs.system}.hyprpicker
     distrobox
-    wlogout
-    wl-clipboard
     virt-manager
-    pamixer
-    pavucontrol
-    udiskie
-    swayidle
-    wlsunset
-    eww
     neofetch
     appimage-run
-    swaynag-battery
-    vulkan-validation-layers
-    wmenu
-    glxinfo
     mesa-demos
-    autotiling
     jq
-
+    sshfs
+    xfce.thunar
+    # pamixer
+    # pavucontrol
+    # udiskie
     #    nixgl.nixGLNvidia
 
-    dmenu
-    i3status
-    i3lock-fancy
-    xautolock
-    xss-lock
-    sxhkd
-    xorg.xrandr
-    arandr
-    picom-jonaburg
-    maim
-    xclip
-    feh
-    polybar
-    sshfs
-    feh
-    lxappearance
-    rofi
+
+    # x11 stuff
+    # dmenu
+    # i3status
+    # i3lock-fancy
+    # xautolock
+    # xss-lock
+    # sxhkd
+    # xorg.xrandr
+    # arandr
+    # picom-jonaburg
+    # maim
+    # xclip
+    # feh
+    # polybar
+    # autotiling
+    # eww
+    # feh
+    # lxappearance
+    # rofi
+
+    # Wayland stuff
+    # wofi
+    # inputs.hypr-contrib.packages.${pkgs.system}.grimblast
+    # inputs.hyprpicker.packages.${pkgs.system}.hyprpicker
+    # config.nur.repos.ocfox.swww
+    # wlogout
+    wl-clipboard
+    # swaylock-effects
+    # swayidle
+    wlsunset
+    # eww-wayland
+    # vulkan-validation-layers
+    # wmenu
+    # rofi-wayland
+    # rofi-emoji
+    # swaynag-battery
 
     # For plasma 
     libsForQt5.plasma-browser-integration
+    latte-dock
   ];
+
+  programs.nm-applet = {
+    enable = false;
+  };
 
   programs.wshowkeys.enable = true;
 
