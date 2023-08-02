@@ -2,7 +2,7 @@
   description = "My system";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-old.url = "github:nixos/nixpkgs/nixos-22.11";
+    nixpkgs-old.url = "github:nixos/nixpkgs/nixos-23.05";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -56,7 +56,11 @@
             home-manager = {
               useGlobalPkgs = false;
               useUserPackages = true;
-              users.yvess = import ./modules/home/home.nix;
+              users.yvess = {...}: {
+                imports = [
+                  ./modules/home/home.nix
+                ];
+              };
             };
           }
         ];

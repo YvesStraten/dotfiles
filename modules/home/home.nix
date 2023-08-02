@@ -10,6 +10,7 @@
     ./main/theming.nix
     ./main/symlinks.nix
     ./main/neovim.nix
+    ./main/emacs.nix
 
     # Variables
 

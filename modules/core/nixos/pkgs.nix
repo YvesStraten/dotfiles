@@ -31,7 +31,6 @@
     # udiskie
     #    nixgl.nixGLNvidia
 
-
     # x11 stuff
     # dmenu
     # i3status
@@ -69,7 +68,7 @@
     # rofi-emoji
     # swaynag-battery
 
-    # For plasma 
+    # For plasma
     libsForQt5.plasma-browser-integration
     latte-dock
   ];

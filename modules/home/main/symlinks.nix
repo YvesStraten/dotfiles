@@ -9,6 +9,11 @@
       recursive = true;
     };
 
+    ".doom.d" = {
+      source = ../dots/doom.d;
+      recursive = true;
+    };
+
     ".config/hypr" = {
       source = ../dots/hypr;
       recursive = true;

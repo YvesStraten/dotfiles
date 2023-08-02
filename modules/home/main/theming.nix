@@ -40,7 +40,5 @@
     })
     whitesur-icon-theme
     catppuccin-gtk
-
-
   ];
 }
