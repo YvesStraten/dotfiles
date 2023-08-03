@@ -33,7 +33,6 @@
     ];
 
     sessionVariables = {
-      EDITOR = "emacs";
       TERMINAL = "kitty";
     };
   };

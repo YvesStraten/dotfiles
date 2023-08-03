@@ -6,7 +6,7 @@
 
     shellAliases = {
       # neovide = "prime-run nixGLNvidia-535.86.05 neovide";
-      emacs = "emacs -nw";
+      emacs = "emacsclient -nw";
       updatenix = "nix flake update ~/Git-repos/dotfiles";
       upgradenix = "sudo nixos-rebuild switch --flake ~/Git-repos/dotfiles#nitro";
       # updatesymlinks = "home-manager switch --flake ~/Git-repos/dotfiles";
