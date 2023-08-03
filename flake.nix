@@ -66,6 +66,14 @@
         ];
       };
 
+      nitroIso = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+          ./modules/core/iso.nix
+        ];
+      };
+
       wsl = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
