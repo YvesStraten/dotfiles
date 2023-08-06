@@ -15,7 +15,6 @@
     gscan2pdf
     gimp
     filezilla
-    kuro
 
     mpv
     ffmpeg
