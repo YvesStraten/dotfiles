@@ -71,6 +71,19 @@
         modules = [
           "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
           ./modules/core/iso.nix
+
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = false;
+              useUserPackages = true;
+              users.yvess = {...}: {
+                imports = [
+                  ./modules/home/home.nix
+                ];
+              };
+            };
+          }
         ];
       };
 
