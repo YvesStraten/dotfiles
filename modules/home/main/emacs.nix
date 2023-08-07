@@ -7,6 +7,11 @@
     ];
   };
 
+  home.packages = with pkgs; [
+    zulu8
+    languagetool
+  ];
+
   services.emacs = {
     enable = true;
     defaultEditor = true;
