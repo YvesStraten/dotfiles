@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: New todo
+# key: @T
+# --
+** TODO [] $3
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a %R")`$1>
+   :PROPERTIES:
+   :CREATED: [`(format-time-string "%Y-%m-%d %a %R")`]
+   :END:
+   - Progress [/] [%]
+     - $2
