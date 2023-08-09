@@ -3,7 +3,7 @@
 # key: @T
 # --
 ** TODO [] $3
-   DEADLINE: <`(format-time-string "%Y-%m-%d %a %R")`$1>
+   DEADLINE: <${`(format-time-string "%Y-%m-%d %a %R")`}>
    :PROPERTIES:
    :CREATED: [`(format-time-string "%Y-%m-%d %a %R")`]
    :END:
