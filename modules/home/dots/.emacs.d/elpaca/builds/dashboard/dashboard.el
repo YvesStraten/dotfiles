@@ -1,0 +1,1 @@
+/home/yvess/.emacs.d/elpaca/repos/emacs-dashboard/dashboard.el

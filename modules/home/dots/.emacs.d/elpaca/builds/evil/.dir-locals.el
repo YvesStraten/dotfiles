@@ -1,0 +1,1 @@
+/home/yvess/.emacs.d/elpaca/repos/evil/.dir-locals.el
