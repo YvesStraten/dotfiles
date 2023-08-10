@@ -1,1 +1,0 @@
-/home/yvess/.emacs.d/elpaca/repos/timu-spacegrey-theme/timu-spacegrey-theme.el

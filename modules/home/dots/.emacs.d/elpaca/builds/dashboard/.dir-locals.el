@@ -1,1 +1,0 @@
-/home/yvess/.emacs.d/elpaca/repos/emacs-dashboard/.dir-locals.el

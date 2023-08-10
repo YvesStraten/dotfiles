@@ -1,1 +1,0 @@
-/home/yvess/.emacs.d/elpaca/repos/elpaca/elpaca-manager.el
