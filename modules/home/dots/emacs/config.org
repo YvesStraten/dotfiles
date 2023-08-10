@@ -85,24 +85,26 @@
 ** General Keybindings
 #+begin_src emacs-lisp
     (use-package general
-	:config
+        :config
   (general-evil-setup)
     (general-create-definer ys/leader-keys
-	    :states '(normal insert visual emacs)
-	    :keymaps 'override
-	    :prefix "SPC"
-	    :global-prefix "M-SPC")
+            :states '(normal insert visual emacs)
+            :keymaps 'override
+            :prefix "SPC"
+            :global-prefix "M-SPC")
 
 
-	    (ys/leader-keys
-	  "b" '(:ignore t :wk "buffer")
-	      "bb" '(switch-to-buffer :wk "Switch buffer")
-	      "bk" '(kill-this-buffer :wk "Kill this buffer")
-	      "bn" '(next-buffer :wk "Next buffer")
-	      "bp" '(previous-buffer :wk "Previous buffer"))
+            (ys/leader-keys
+          "b" '(:ignore t :wk "buffer")
+              "bb" '(switch-to-buffer :wk "Switch buffer")
+              "bk" '(kill-this-buffer :wk "Kill this buffer")
+              "bn" '(next-buffer :wk "Next buffer")
+              "bp" '(previous-buffer :wk "Previous buffer"))
 
-  
-	    )
+
+            )
+            (ys/leader-keys
+  "t" '(vterm :wk "terminal"))
 #+end_src
 
 * Make Emacs look better
@@ -201,6 +203,8 @@
   (add-to-list 'load-path "~/.emacs.d/plugins/yasnippet")
   (setq yas-global-mode 1)
   )
+
+  (use-package yasnippet-snippets :ensure t)
 
 
 #+end_src
