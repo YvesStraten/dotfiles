@@ -9,8 +9,8 @@
       recursive = true;
     };
 
-    ".doom.d" = {
-      source = ../dots/doom.d;
+    ".emacs.d" = {
+      source = ../dots/emacs;
       recursive = true;
     };
 
