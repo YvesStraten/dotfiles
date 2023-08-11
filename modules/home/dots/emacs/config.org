@@ -375,6 +375,7 @@ Displays the actual color of a hex code as its background
   (setq show-paren-delay 0)
 
     (use-package rainbow-delimiters
+    :diminish
     :hook ((prog-mode . rainbow-delimiters-mode)))
 #+end_src
 
@@ -390,6 +391,7 @@ Displays the actual color of a hex code as its background
 #+begin_src emacs-lisp
   (use-package projectile
   :config
+  :diminish
   (projectile-mode 1))
 #+end_src
 

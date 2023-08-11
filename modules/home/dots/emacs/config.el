@@ -200,6 +200,11 @@ one, an error is signaled."
 (global-display-line-numbers-mode 1)
 (global-visual-line-mode t)
 
+(global-set-key (kbd "C-=") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
+(global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
+(global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
+
 (setq
         case-fold-search nil
           use-short-answers t
