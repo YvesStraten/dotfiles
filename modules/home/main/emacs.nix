@@ -4,6 +4,7 @@
     package = pkgs.emacs-gtk;
     extraPackages = epkgs: with epkgs; [
       vterm
+      vterm-toggle
     ];
   };
 
