@@ -3,7 +3,6 @@
 #+OPTIONS: :toc:2
 
 * Important programs to load first
-
 ** Package manager
 #+begin_src emacs-lisp
 	(defvar elpaca-installer-version 0.5)
@@ -230,6 +229,14 @@ one, an error is signaled."
   (global-display-line-numbers-mode 1)
   (global-visual-line-mode t)
 
+#+end_src
+
+** Zoom in and out
+#+begin_src emacs-lisp 
+(global-set-key (kbd "C-=") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
+(global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
+(global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
 #+end_src
 
 ** Extra cool stuff

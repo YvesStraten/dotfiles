@@ -9,11 +9,6 @@
       recursive = true;
     };
 
-    ".emacs.d" = {
-      source = ../dots/emacs;
-      recursive = true;
-    };
-
     ".config/hypr" = {
       source = ../dots/hypr;
       recursive = true;
