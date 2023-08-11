@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   programs.emacs = {
     enable = true;
-    package = pkgs.emacsPgtk;
+    package = pkgs.emacs-gtk;
     extraPackages = epkgs: with epkgs; [
       vterm
     ];
@@ -10,12 +10,6 @@
   home.packages = with pkgs; [
     zulu8
     languagetool
-  ];
-
-  nixpkgs.overlays = [
-    (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-    }))
   ];
 
   services.emacs = {

@@ -38,6 +38,7 @@
         "JetBrainsMono"
       ];
     })
+    ubuntu_font_family
     whitesur-icon-theme
     catppuccin-gtk
   ];
