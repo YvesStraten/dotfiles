@@ -334,6 +334,7 @@ Displays the actual color of a hex code as its background
             )
 #+end_src
 
+Typescript
 #+begin_src emacs-lisp 
   (use-package typescript-mode
   :mode "\\.ts\\'"
@@ -341,6 +342,12 @@ Displays the actual color of a hex code as its background
   :config
   (setq typescript-ident-level 2))
 
+#+end_src
+
+For nix files
+#+begin_src emacs-lisp 
+    (use-package nix-mode
+  :mode "\\.nix\\'")
 #+end_src
 
 

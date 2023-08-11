@@ -273,6 +273,9 @@ create-lockfiles nil)
 :config
 (setq typescript-ident-level 2))
 
+(use-package nix-mode
+:mode "\\.nix\\'")
+
 (use-package lsp-ui :hook (lsp-mode . lsp-ui-mode)
 
   :custom (
@@ -292,12 +295,14 @@ lsp-ui-doc-position 'bottom))
 (setq show-paren-delay 0)
 
   (use-package rainbow-delimiters
+  :diminish
   :hook ((prog-mode . rainbow-delimiters-mode)))
 
 
 
 (use-package projectile
 :config
+:diminish
 (projectile-mode 1))
 
 (use-package company 
