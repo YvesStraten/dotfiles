@@ -107,6 +107,13 @@
     "ot" '(org-todo :wk "Org Todo")
     "oT" '(org-todo-list :wk "Org Todo List")
     )
+
+  (ys/leader-keys
+    "c" '(:ignore t :wk "Tabs")
+    "cn" '(centaur-tabs-forward :wk "Next tab")
+    "cp" '(centaur-tabs-backward :wk "Previous tab")
+    )
+
   (ys/leader-keys
     "w" '(:ignore t :wk "Windows")
     ;; Window splits
@@ -128,14 +135,16 @@
   )
 
 (defun reload-init-file ()
- (interactive)
- (load-file user-init-file)
- (load-file user-init-file)
-)
+  (interactive)
+  (load-file user-init-file)
+  (load-file user-init-file)
+  )
 
 (set-frame-font "JetBrainsMono NF 15")
 
 (use-package centaur-tabs
+  :defer 5
+  :diminish centaur-tabs-mode
   :config (centaur-tabs-mode t)
   )
 
@@ -283,8 +292,8 @@ one, an error is signaled."
 :if (display-graphic-p))
 
 (use-package rainbow-mode
- :diminish
- :hook org-mode prog-mode)
+  :diminish rainbow-mode
+  :hook org-mode prog-mode)
 
 (use-package lsp-mode
   :ensure t
@@ -333,7 +342,7 @@ one, an error is signaled."
 (setq show-paren-delay 0)
 
 (use-package rainbow-delimiters
-  :diminish
+  :diminish rainbow-delimiters-mode
   :hook ((prog-mode . rainbow-delimiters-mode)))
 
 (use-package projectile
