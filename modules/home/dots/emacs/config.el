@@ -74,7 +74,7 @@ evil-split-window-below t)
       (use-package emacs :elpaca nil :config (setq ring-bell-function #'ignore))
 
       ;; Don't install anything. Defer execution of BODY
-      (elpaca nil (message "deferred"))
+      (elpaca nil (message "Packages loaded"))
 
 (use-package general
           :config
@@ -123,6 +123,22 @@ evil-split-window-below t)
   "w K" '(buf-move-up :wk "Buffer move up")
   "w L" '(buf-move-right :wk "Buffer move right"))
 )
+
+(defun reload-init-file ()
+ (interactive)
+ (load-file user-init-file)
+ (load-file user-init-file)
+)
+
+(set-frame-font "JetBrainsMono NF 15")
+
+(use-package doom-modeline
+  :ensure t
+:init (doom-modeline-mode 1))
+
+(use-package nerd-icons
+:custom
+(nerd-icons-font-family "JetBrainsMono NF"))
 
 (require 'windmove)
 
@@ -258,8 +274,6 @@ create-lockfiles nil)
           lsp-log-io nil
           lsp-restart 'auto-restart
           lsp-ui-sideline-show-hover t
-          lsp-ui-sideline-show-code-actions t
-          lsp-eslint-auto-fix-on-save t
 )
           :hook (
     (prog-mode-hook . lsp)
@@ -270,8 +284,7 @@ create-lockfiles nil)
 (use-package typescript-mode
 :mode "\\.ts\\'"
 :hook (typescript-mode . lsp-deferred)
-:config
-(setq typescript-ident-level 2))
+)
 
 (use-package nix-mode
 :mode "\\.nix\\'")
@@ -283,6 +296,10 @@ lsp-ui-doc-position 'bottom))
       (use-package helm-lsp :commands helm-lsp-workspace-symbol)
       (use-package helm-projectile :commands helm-projectile)
       (use-package dap-mode)
+
+(use-package format-all
+:hook (prog-mode . format-all-mode)
+)
 
 (use-package tree-sitter
 :hook (typescript-mode . tree-sitter-hl-mode))
@@ -298,16 +315,13 @@ lsp-ui-doc-position 'bottom))
   :diminish
   :hook ((prog-mode . rainbow-delimiters-mode)))
 
-
-
 (use-package projectile
 :config
-:diminish
 (projectile-mode 1))
 
 (use-package company 
 :after lsp-mode
-       :diminish
+       :diminish company-mode
 :custom
   (company-idle-delay 0.0)
   (company-minimum-prefix-length 1)
@@ -342,6 +356,7 @@ lsp-ui-doc-position 'bottom))
    (global-set-key [tab] 'tab-indent-or-complete)
 
 (use-package yasnippet
+:defer 5
 :diminish yas-minor-mode
 :config
 (add-to-list 'load-path "~/Git-repos/dotfiles/modules/home/dots/snippets")
@@ -351,6 +366,8 @@ lsp-ui-doc-position 'bottom))
 (use-package yasnippet-snippets)
 
 (use-package magit
+:defer 5
+:diminish magit-mode
 :ensure t)
 
 (use-package neotree
@@ -384,6 +401,7 @@ projectile-switch-project-action 'neotree-projectile-action)
        (setq auto-hscroll-mode nil)))))
 
 (use-package vterm
+   :config
    (ys/leader-keys
 "t" '(vterm-toggle :wk "term")
 ))
@@ -403,7 +421,7 @@ projectile-switch-project-action 'neotree-projectile-action)
                   ;;(display-buffer-reuse-window display-buffer-in-direction)
                   ;;display-buffer-in-direction/direction/dedicated is added in emacs27
                   ;;(direction . bottom)
-                  ;;(dedicated . t) ;dedicated is supported in emacs27
+                  (dedicated . t) ;dedicated is supported in emacs27
                   (reusable-frames . visible)
                   (window-height . 0.3))))
 
@@ -428,9 +446,3 @@ projectile-switch-project-action 'neotree-projectile-action)
     :config
   (load-theme 'timu-spacegrey t)
 (customize-set-variable 'timu-spacegrey-flabour "dark"))
-
-(defun reload-init-file ()
- (interactive)
- (load-file user-init-file)
- (load-file user-init-file)
-)

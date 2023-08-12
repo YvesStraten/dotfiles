@@ -87,7 +87,7 @@
         (use-package emacs :elpaca nil :config (setq ring-bell-function #'ignore))
 
         ;; Don't install anything. Defer execution of BODY
-        (elpaca nil (message "deferred"))
+        (elpaca nil (message "Packages loaded"))
 
 
 #+end_src
@@ -141,6 +141,37 @@
     "w K" '(buf-move-up :wk "Buffer move up")
     "w L" '(buf-move-right :wk "Buffer move right"))
   )
+#+end_src
+
+** Ability to reload config
+#+begin_src emacs-lisp 
+  (defun reload-init-file ()
+   (interactive)
+   (load-file user-init-file)
+   (load-file user-init-file)
+  )
+#+end_src
+
+** Set font size
+#+begin_src emacs-lisp 
+  (set-frame-font "JetBrainsMono NF 15")
+
+#+end_src
+
+** Status bar
+*** Doom modeline
+#+begin_src emacs-lisp  
+      (use-package doom-modeline
+    :ensure t
+  :init (doom-modeline-mode 1))
+#+end_src
+
+*** Fonts needed for doom modeline
+#+begin_src emacs-lisp 
+    (use-package nerd-icons
+  :custom
+  (nerd-icons-font-family "JetBrainsMono NF"))
+
 #+end_src
 
 * Useful functions to move splits around
@@ -324,8 +355,6 @@ Displays the actual color of a hex code as its background
             lsp-log-io nil
             lsp-restart 'auto-restart
             lsp-ui-sideline-show-hover t
-            lsp-ui-sideline-show-code-actions t
-            lsp-eslint-auto-fix-on-save t
   )
             :hook (
       (prog-mode-hook . lsp)
@@ -339,8 +368,7 @@ Typescript
   (use-package typescript-mode
   :mode "\\.ts\\'"
   :hook (typescript-mode . lsp-deferred)
-  :config
-  (setq typescript-ident-level 2))
+  )
 
 #+end_src
 
@@ -362,6 +390,13 @@ For nix files
         (use-package helm-projectile :commands helm-projectile)
         (use-package dap-mode)
 #+end_src 
+
+*** Formatter
+#+begin_src emacs-lisp 
+    (use-package format-all
+  :hook (prog-mode . format-all-mode)
+  )
+#+end_src
 
 ** Highlighting
 *** Treesitter
@@ -386,19 +421,10 @@ For nix files
     :hook ((prog-mode . rainbow-delimiters-mode)))
 #+end_src
 
-**** Autopairs
-**** TODO Setup auto pairs
-
-#+begin_src emacs-lisp 
-
-#+end_src
-
-
 ** Project management
 #+begin_src emacs-lisp
   (use-package projectile
   :config
-  :diminish
   (projectile-mode 1))
 #+end_src
 
@@ -407,7 +433,7 @@ For nix files
 #+begin_src emacs-lisp
                  (use-package company 
   :after lsp-mode
-         :diminish
+         :diminish company-mode
   :custom
     (company-idle-delay 0.0)
     (company-minimum-prefix-length 1)
@@ -445,6 +471,7 @@ For nix files
 *** Yassnippets
 #+begin_src emacs-lisp
   (use-package yasnippet
+  :defer 5
   :diminish yas-minor-mode
   :config
   (add-to-list 'load-path "~/Git-repos/dotfiles/modules/home/dots/snippets")
@@ -452,13 +479,13 @@ For nix files
   )
 
   (use-package yasnippet-snippets)
-
-
 #+end_src
 
-*** Magic
+*** Magit
 #+begin_src emacs-lisp
   (use-package magit
+  :defer 5
+  :diminish magit-mode
   :ensure t)
 #+end_src
 
@@ -499,6 +526,7 @@ For nix files
 ** Terminal
 #+begin_src emacs-lisp
      (use-package vterm
+     :config
      (ys/leader-keys
   "t" '(vterm-toggle :wk "term")
   ))
@@ -521,7 +549,7 @@ For nix files
                   ;;(display-buffer-reuse-window display-buffer-in-direction)
                   ;;display-buffer-in-direction/direction/dedicated is added in emacs27
                   ;;(direction . bottom)
-                  ;;(dedicated . t) ;dedicated is supported in emacs27
+                  (dedicated . t) ;dedicated is supported in emacs27
                   (reusable-frames . visible)
                   (window-height . 0.3))))
 #+end_src
@@ -558,15 +586,3 @@ Allows to open files with sudo or switched over to it if we did not open it with
     (load-theme 'timu-spacegrey t)
   (customize-set-variable 'timu-spacegrey-flabour "dark"))
 #+end_src 
-
-* Reload Emacs instantly
-#+begin_src emacs-lisp
-  (defun reload-init-file ()
-   (interactive)
-   (load-file user-init-file)
-   (load-file user-init-file)
-  )
-#+end_src
-
-
-
