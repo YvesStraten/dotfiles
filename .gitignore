@@ -1,6 +1,6 @@
-dots/mpv/watch_later
-dots/kitty/theme.conf
-dots/zathura/theme
+modules/home/dots/mpv/watch_later
+modules/home/dots/kitty/theme.conf
+modules/home/dots/zathura/theme
 modules/home/dots/bspwm/.rice
 modules/home/dots/bspwm/dunstrc
 result/
