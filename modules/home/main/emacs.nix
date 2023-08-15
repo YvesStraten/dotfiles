@@ -8,6 +8,11 @@
     ];
   };
 
+    ".emacs.d" = {
+      source = ../dots/emacs;
+      recursive = true;
+    };
+
   home.packages = with pkgs; [
     zulu8
     languagetool
