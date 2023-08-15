@@ -9,6 +9,7 @@
     ./main/emacs-wsl.nix
     ./main/symlinks.nix
     ./main/languages.nix
+    ./main/theming.nix
 
     # Variables
     ./variables/zsh.nix

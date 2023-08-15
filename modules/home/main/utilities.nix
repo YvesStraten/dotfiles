@@ -15,6 +15,7 @@
     gscan2pdf
     gimp
     filezilla
+    krename
 
     mpv
     ffmpeg

@@ -11,6 +11,7 @@
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     gh
+    xdg-user-dirs
     dunst
     kitty
     git
@@ -26,9 +27,9 @@
     jq
     sshfs
     xfce.thunar
-    # pamixer
-    # pavucontrol
-    # udiskie
+    pamixer
+    pavucontrol
+    udiskie
     #    nixgl.nixGLNvidia
 
     # x11 stuff
@@ -52,29 +53,29 @@
     # rofi
 
     # Wayland stuff
-    # wofi
-    # inputs.hypr-contrib.packages.${pkgs.system}.grimblast
-    # inputs.hyprpicker.packages.${pkgs.system}.hyprpicker
-    # config.nur.repos.ocfox.swww
-    # wlogout
+    wofi
+    inputs.hypr-contrib.packages.${pkgs.system}.grimblast
+    inputs.hyprpicker.packages.${pkgs.system}.hyprpicker
+    config.nur.repos.ocfox.swww
+    wlogout
     wl-clipboard
-    # swaylock-effects
-    # swayidle
+    swaylock-effects
+    swayidle
     wlsunset
-    # eww-wayland
-    # vulkan-validation-layers
-    # wmenu
-    # rofi-wayland
-    # rofi-emoji
-    # swaynag-battery
+    eww-wayland
+    vulkan-validation-layers
+    wmenu
+    rofi-wayland
+    rofi-emoji
+    swaynag-battery
 
     # For plasma
     libsForQt5.plasma-browser-integration
-    latte-dock
+    # latte-dock
   ];
 
   programs.nm-applet = {
-    enable = false;
+    enable = true;
   };
 
   programs.wshowkeys.enable = true;
