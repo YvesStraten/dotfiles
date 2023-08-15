@@ -15,7 +15,7 @@
     # Variables
 
     ./variables/zsh.nix
-    ./variables/hyprland.nix
+    # ./variables/hyprland.nix
     # ./variables/sway.nix
   ];
 

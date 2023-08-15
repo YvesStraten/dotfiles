@@ -454,6 +454,9 @@ one, an error is signaled."
               (define-key evil-normal-state-local-map (kbd "n") 'neotree-next-line)
               (define-key evil-normal-state-local-map (kbd "p") 'neotree-previous-line)
               (define-key evil-normal-state-local-map (kbd "A") 'neotree-stretch-toggle)
+              (define-key evil-normal-state-local-map (kbd "d") 'neotree-delete-node)
+              (define-key evil-normal-state-local-map (kbd "a") 'neotree-create-node)
+              (define-key evil-normal-state-local-map (kbd "r") 'neotree-rename-node)
               (define-key evil-normal-state-local-map (kbd "H") 'neotree-hidden-file-toggle)))
   (add-hook 'neo-after-create-hook
             #'(lambda (_)
