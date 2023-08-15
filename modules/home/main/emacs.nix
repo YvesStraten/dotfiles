@@ -8,7 +8,7 @@
     ];
   };
 
-    ".emacs.d" = {
+    home.file.".emacs.d" = {
       source = ../dots/emacs;
       recursive = true;
     };
