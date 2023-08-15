@@ -11,12 +11,6 @@
   };
 
   services.flatpak.enable = true;
-  xdg.portal = {
-    enable = true;
-    extraPortals = [
-      pkgs.xdg-desktop-portal-hyprland
-    ];
-  };
 
   services.printing = {
     enable = true;
