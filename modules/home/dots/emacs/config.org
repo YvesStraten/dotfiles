@@ -551,22 +551,20 @@ Indent guidelines
 *** Yassnippets
 #+begin_src emacs-lisp
   (use-package yasnippet
-  :defer 5
-  :diminish yas-minor-mode
-  :config
-  (add-to-list 'load-path "~/Git-repos/dotfiles/modules/home/dots/snippets")
-  (yas/global-mode)
-  )
-
+    :diminish yas-minor-mode
+    :config
+    (yas/global-mode)
+    )
+  (setq yas-snippet-dirs '("~/Git-repos/dotfiles/modules/home/dots/snippets"))
   (use-package yasnippet-snippets)
 #+end_src
 
 *** Magit
 #+begin_src emacs-lisp
   (use-package magit
-  :defer 5
-  :diminish magit-mode
-  :ensure t)
+    :defer 5
+    :diminish magit-mode
+    :ensure t)
 #+end_src
 
 ** File tree

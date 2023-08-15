@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: New todo
-# key: @T
+# key: @TOD
 # --
 ** TODO [] $3
    DEADLINE: <${`(format-time-string "%Y-%m-%d %a %R")`}>

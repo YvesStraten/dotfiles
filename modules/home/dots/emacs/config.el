@@ -419,13 +419,12 @@ one, an error is signaled."
 (global-set-key [tab] 'tab-indent-or-complete)
 
 (use-package yasnippet
-:defer 5
-:diminish yas-minor-mode
-:config
-(add-to-list 'load-path "~/Git-repos/dotfiles/modules/home/dots/snippets")
-(yas/global-mode)
-)
-
+  :defer 5
+  :diminish yas-minor-mode
+  :config
+  (yas/global-mode)
+  )
+  (setq yas-snippet-dirs '("~/Git-repos/dotfiles/modules/home/dots/snippets"))
 (use-package yasnippet-snippets)
 
 (use-package magit
