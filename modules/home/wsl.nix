@@ -6,7 +6,7 @@
   imports = [
     # Main stuff
     ./main/neovim.nix
-    ./main/emacs-wsl.nix
+    ./main/emacs.nix
     ./main/symlinks.nix
     ./main/languages.nix
     ./main/theming.nix

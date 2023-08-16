@@ -12,40 +12,40 @@
 
 ** Package manager
 #+begin_src elisp
-  (defvar elpaca-installer-version 0.5)
-  (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
-  (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
-  (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
-  (defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
-                                :ref nil :files (:defaults (:exclude "extensions"))
-                                :build (:not elpaca--activate-package)))
-  (let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
-         (build (expand-file-name "elpaca/" elpaca-builds-directory))
-         (order (cdr elpaca-order))
-         (default-directory repo))
-    (add-to-list 'load-path (if (file-exists-p build) build repo))
-    (unless (file-exists-p repo) (make-directory repo t)
-            (when (< emacs-major-version 28) (require 'subr-x))
-            (condition-case-unless-debug err
-                (if-let ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
-                         ((zerop (call-process "git" nil buffer t "clone"
-                                               (plist-get order :repo) repo)))
-                         ((zerop (call-process "git" nil buffer t "checkout"
-                                               (or (plist-get order :ref) "--"))))
-                         (emacs (concat invocation-directory invocation-name))
-                         ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
-                                               "--eval" "(byte-recompile-directory \".\" 0 'force)")))
-                         ((require 'elpaca))
-                         ((elpaca-generate-autoloads "elpaca" repo)))
-                    (progn (message "%s" (buffer-string)) (kill-buffer buffer))
-                  (error "%s" (with-current-buffer buffer (buffer-string))))
-              ((error) (warn "%s" err) (delete-directory repo 'recursive))))
-    (unless (require 'elpaca-autoloads nil t)
-      (require 'elpaca)
-      (elpaca-generate-autoloads "elpaca" repo)
-      (load "./elpaca-autoloads")))
-  (add-hook 'after-init-hook #'elpaca-process-queues)
-  (elpaca `(,@elpaca-order))
+(defvar elpaca-installer-version 0.5)
+(defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
+(defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
+(defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
+(defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
+                              :ref nil :files (:defaults (:exclude "extensions"))
+                              :build (:not elpaca--activate-package)))
+(let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
+       (build (expand-file-name "elpaca/" elpaca-builds-directory))
+       (order (cdr elpaca-order))
+       (default-directory repo))
+  (add-to-list 'load-path (if (file-exists-p build) build repo))
+  (unless (file-exists-p repo) (make-directory repo t)
+          (when (< emacs-major-version 28) (require 'subr-x))
+          (condition-case-unless-debug err
+              (if-let ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
+                       ((zerop (call-process "git" nil buffer t "clone"
+                                             (plist-get order :repo) repo)))
+                       ((zerop (call-process "git" nil buffer t "checkout"
+                                             (or (plist-get order :ref) "--"))))
+                       (emacs (concat invocation-directory invocation-name))
+                       ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
+                                             "--eval" "(byte-recompile-directory \".\" 0 'force)")))
+                       ((require 'elpaca))
+                       ((elpaca-generate-autoloads "elpaca" repo)))
+                  (progn (message "%s" (buffer-string)) (kill-buffer buffer))
+                (error "%s" (with-current-buffer buffer (buffer-string))))
+            ((error) (warn "%s" err) (delete-directory repo 'recursive))))
+  (unless (require 'elpaca-autoloads nil t)
+    (require 'elpaca)
+    (elpaca-generate-autoloads "elpaca" repo)
+    (load "./elpaca-autoloads")))
+(add-hook 'after-init-hook #'elpaca-process-queues)
+(elpaca `(,@elpaca-order))
 #+end_src
 
 ** Load Evil Mode
@@ -338,6 +338,35 @@
   (use-package org-auto-tangle
     :defer t
     :hook (org-mode . org-auto-tangle-mode))
+#+end_src
+
+** Other langs
+#+begin_src elisp 
+  (org-babel-do-load-languages
+  'org-babel-load-languages
+  '((js . t)
+  (python . t)))
+#+end_src
+
+** Latex preferred settings 
+#+begin_src elisp 
+  (setq org-src-preserve-indentation t
+
+        org-src-fontify-natively t
+
+        org-export-latex-listings t
+
+        org-latex-listings 'listings
+
+        org-latex-prefer-user-labels t
+
+        org-confirm-babel-evaluate nil
+
+        org-latex-pdf-process '("latexmk -bibtex -f %f")
+
+        org-babel-python-command "/usr/bin/env python3")
+
+  (add-to-list 'org-latex-packages-alist '("" "listings"))
 #+end_src
 
 

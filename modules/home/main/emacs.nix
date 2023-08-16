@@ -5,6 +5,7 @@
     extraPackages = epkgs: with epkgs; [
       vterm
       vterm-toggle
+      magit
     ];
   };
 

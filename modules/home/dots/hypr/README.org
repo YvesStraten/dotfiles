@@ -19,13 +19,13 @@
   exec-once = swayidle -w timeout 300 'swaylock -f' timeout 480 'hyprctl dispatch dpms off' resume 'hyprctl dpms on' before-sleep 'swaylock -f'
   exec-once = swaylock
   # exec-once = swaynag-battery
-  exec-once = ~/.conf :tangle hyprland.config/hypr/wallpaper.sh 
+  exec-once = ~/.config/hypr/wallpaper.sh 
 #+end_src
 
 * Monitor settings 
 #+begin_src conf :tangle hyprland.conf 
   monitor = ,highrr,auto,1
-  bind = SUPER, P, exec, kitty -e ~/.conf :tangle hyprland.config/hypr/monitors.sh
+  bind = SUPER, P, exec, kitty -e ~/.config/hypr/monitors.sh
 #+end_src
 
 * Keyboard and mouse 
@@ -43,7 +43,7 @@
 *** Utilities
 #+begin_src conf :tangle hyprland.conf 
   bind = SUPER, B, exec, brave 
-  bind = SUPER, F1, exec, ~/.conf :tangle hyprland.config/hypr/keybind
+  bind = SUPER, F1, exec, ~/.config/hypr/keybind
   bind = , XF86AudioRaiseVolume, exec, pamixer -i 5 
   bind = , XF86AudioLowerVolume, exec, pamixer -d 5 
   bind = , XF86MonBrightnessUp, exec, brightnessctl s +10%
@@ -68,14 +68,12 @@
 *** Misc
 #+begin_src conf :tangle hyprland.conf 
   bind = SUPER SHIFT, X, exec, hyprpicker -a -n
-  bind = SUPER, W, exec, kitty -e ~/.conf :tangle hyprland.config/hypr/wallpaper_picker
   bind = CTRL ALT, L, exec, swaylock
   bind = SUPER, Return, exec, kitty
   bind = SUPER, X, exec, kitty
   bind = SUPER, E, exec, kitty -e ranger 
-  # bind = SUPER, R, exec, killall rofi || rofi -show drun -theme ~/.conf :tangle hyprland.config/rofi/global/rofi.rasi
-  bind = SUPER, period, exec, killall rofi || rofi -show emoji -emoji-format "{emoji}" -modi emoji -theme ~/.conf :tangle hyprland.config/rofi/global/emoji
-  bind = SUPER, space, exec, killall wofi || wofi --show drun
+  bind = SUPER, R, exec, killall rofi || rofi -show drun -theme ~/.config/rofi/global/rofi.rasi
+  bind = SUPER, period, exec, killall rofi || rofi -show emoji -emoji-format "{emoji}" -modi emoji -theme ~/.config/rofi/global/emoji
   bind = SUPER, escape, exec, wlogout --protocol layer-shell -b 5 -T 400 -B 400
 #+end_src
 
