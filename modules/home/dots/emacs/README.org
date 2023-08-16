@@ -2,8 +2,14 @@
 #+STARTUP: showeverything
 #+OPTIONS: :toc:2
 #+PROPERTY: header-args :tangle init.el
+#+auto_tangle: yes
 
 * Important programs to load first
+** Disable package.el
+#+begin_src elisp :tangle early-init.el
+  (setq package-enable-at-startup nil)
+#+end_src
+
 ** Package manager
 #+begin_src elisp
   (defvar elpaca-installer-version 0.5)
@@ -326,11 +332,14 @@
    '(org-agenda-files (list org-directory)))
 #+end_src
 
-** Org tangle
+** Org babel 
+*** Auto tangle
 #+begin_src elisp 
-
-
+  (use-package org-auto-tangle
+    :defer t
+    :hook (org-mode . org-auto-tangle-mode))
 #+end_src
+
 
 ** Electric pairs
 #+begin_src elisp

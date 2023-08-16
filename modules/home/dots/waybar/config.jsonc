@@ -1,6 +1,6 @@
 {
     "layer": "top",
-    "position": "bottom",
+    "position": "top",
     "mod": "dock",
     "exclusive": true,
     "passthrough": false,
@@ -29,7 +29,7 @@
         "disable-scroll": true,
         "all-outputs": true,
         "on-click": "activate",
-        //"format": "{icon}",
+        "format": "{icon}",
         "persistent_workspaces": {
             "1": [],
             "2": [],
@@ -83,10 +83,10 @@
         "format-alt": "{time} {icon}",
         "format-icons": [
           "",
-			    "",
-			    "",
-			    "",
-			    ""
+	  "",
+	  "",
+	  "",
+	  ""
         ]
     },
 
@@ -124,14 +124,4 @@
 		  "on-click": "emacsclient -c -e '(proced)'",
 		  "format": "  {usage:2}%"
     },
-
-    "custom/waybar-media": {
-        "return-type": "json",
-        "exec": "~/.config/waybar/scripts/waybar-media.py status",
-        "on-click": "~/.config/waybar/scripts/waybar-media.py playpause",
-        "on-scroll-up": "~/.config/waybar/scripts/waybar-media.py previous",
-        "on-scroll-down": "~/.config/waybar/scripts/waybar-media.py next",
-        "escape": true
-    }
-
 }

@@ -259,7 +259,9 @@ one, an error is signaled."
  '(org-directory "~/org")
  '(org-agenda-files (list org-directory)))
 
-
+(use-package org-auto-tangle
+  :defer t
+  :hook (org-mode . org-auto-tangle-mode))
 
 (electric-pair-mode 1)
 
