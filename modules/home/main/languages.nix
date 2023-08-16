@@ -4,6 +4,6 @@
     pipx
     virtualenv
 
-    # texlive.combined.scheme-full
+    texlive.combined.scheme-full
   ];
 }
