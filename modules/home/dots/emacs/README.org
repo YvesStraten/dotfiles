@@ -51,111 +51,114 @@
 ** Load Evil Mode
 
 #+begin_src elisp
-  ;; Install use-package support
-  (elpaca elpaca-use-package
-    ;; Enable :elpaca use-package keyword.
-    (elpaca-use-package-mode)
-    ;; Assume :elpaca t unless otherwise specified.
-    (setq elpaca-use-package-by-default t))
+;; Install use-package support
+(elpaca elpaca-use-package
+  ;; Enable :elpaca use-package keyword.
+  (elpaca-use-package-mode)
+  ;; Assume :elpaca t unless otherwise specified.
+  (setq elpaca-use-package-by-default t))
 
-  ;; Block until current queue processed.
-  (elpaca-wait)
+;; Block until current queue processed.
+(elpaca-wait)
 
-  ;;When installing a package which modifies a form used at the top-level
-  ;;(e.g. a package which adds a use-package key word),
-  ;;use `elpaca-wait' to block until that package has been installed/configured.
-  ;;For example:
-  ;;(use-package general :demand t)
-  ;;(elpaca-wait)
+;;When installing a package which modifies a form used at the top-level
+;;(e.g. a package which adds a use-package key word),
+;;use `elpaca-wait' to block until that package has been installed/configured.
+;;For example:
+;;(use-package general :demand t)
+;;(elpaca-wait)
 
-  ;; Expands to: (elpaca evil (use-package evil :demand t))
-  (use-package evil
-    :init
-    (setq
-     evil-want-keybinding nil
-     evil-vsplit-window-right t
-     evil-split-window-below t
-     evil-set-undo-system 'undo-redo
-     )
-    (evil-mode) )
+;; Expands to: (elpaca evil (use-package evil :demand t))
+(use-package evil
+  :init
+  (setq
+   evil-want-keybinding nil
+   evil-vsplit-window-right t
+   evil-split-window-below t
+   evil-set-undo-system 'undo-redo
+   )
+  (evil-mode) )
 
-  (use-package evil-collection
-    :after evil
-    :config
-    (setq evil-collection-mode-list '(dashboard dired ibuffer))
-    (evil-collection-init))
+(use-package evil-collection
+  :after evil
+  :config
+  (setq evil-collection-mode-list '(dashboard dired ibuffer))
+  (evil-collection-init))
 
-  (use-package evil-tutor)
+(use-package evil-tutor)
 
-  ;;Turns off elpaca-use-package-mode current declartion
-  ;;Note this will cause the declaration to be interpreted immediately (not deferred).
-  ;;Useful for configuring built-in emacs features.
-  (use-package emacs :elpaca nil :config (setq ring-bell-function #'ignore))
+;;Turns off elpaca-use-package-mode current declartion
+;;Note this will cause the declaration to be interpreted immediately (not deferred).
+;;Useful for configuring built-in emacs features.
+(use-package emacs :elpaca nil :config (setq ring-bell-function #'ignore))
 
-  ;; Don't install anything. Defer execution of BODY
-  (elpaca nil (message "Packages loaded"))
+;; Don't install anything. Defer execution of BODY
+(elpaca nil (message "Packages loaded"))
 
 
 #+end_src
 
 ** General Keybindings
 #+begin_src elisp
-  (use-package general
-    :config
-    (general-evil-setup)
-    (general-create-definer ys/leader-keys
-      :states '(normal insert visual emacs)
-      :keymaps 'override
-      :prefix "SPC"
-      :global-prefix "M-SPC")
+(use-package general
+  :config
+  (general-evil-setup)
+  (general-create-definer ys/leader-keys
+    :states '(normal insert visual emacs)
+    :keymaps 'override
+    :prefix "SPC"
+    :global-prefix "M-SPC")
 
 
-    (ys/leader-keys
-      "b" '(:ignore t :wk "buffer")
-      "bb" '(switch-to-buffer :wk "Switch buffer")
-      "bn" '(next-buffer :wk "Next buffer")
-      "bp" '(previous-buffer :wk "Previous buffer")
-      "p" '(:ignore t :wk "projectile")
-      "pp" '(helm-projectile :wk "Go to project") 
-      "pf" '(helm-projectile-find-file :wk "Find file")
-      "pb" '(helm-projectile-switch-to-buffer :wk "Switch to buffer")
-      )
-
-    (ys/leader-keys
-      "o" '(:ignore t :wk "Org")
-      "oa" '(org-agenda :wk "Org agenda")
-      "oe" '(org-export-dispatch :wk "Org export")
-      "oi" '(org-toggle-item :wk "Org toggle Item")
-      "ot" '(org-todo :wk "Org Todo")
-      "oT" '(org-todo-list :wk "Org Todo List")
-      )
-
-    (ys/leader-keys
-      "c" '(:ignore t :wk "Tabs")
-      "cn" '(centaur-tabs-forward :wk "Next tab")
-      "cp" '(centaur-tabs-backward :wk "Previous tab")
-      "cx" '(kill-this-buffer :wk "Kill this buffer")
-      )
-
-    (ys/leader-keys
-      "w" '(:ignore t :wk "Windows")
-      ;; Window splits
-      "w c" '(evil-window-delete :wk "Close window")
-      "w n" '(evil-window-new :wk "New window")
-      "w s" '(evil-window-split :wk "Horizontal split window")
-      "w v" '(evil-window-vsplit :wk "Vertical split window")
-      ;; Window motions
-      "w h" '(evil-window-left :wk "Window left")
-      "w j" '(evil-window-down :wk "Window down")
-      "w k" '(evil-window-up :wk "Window up")
-      "w l" '(evil-window-right :wk "Window right")
-      "w w" '(evil-window-next :wk "Goto next window")
-      ;; Move Windows
-      "w H" '(buf-move-left :wk "Buffer move left")
-      "w J" '(buf-move-down :wk "Buffer move down")
-      "w K" '(buf-move-up :wk "Buffer move up")
-      "w L" '(buf-move-right :wk "Buffer move right"))
+  (ys/leader-keys
+    "b" '(:ignore t :wk "buffer")
+    "bb" '(switch-to-buffer :wk "Switch buffer")
+    "bn" '(next-buffer :wk "Next buffer")
+    "bp" '(previous-buffer :wk "Previous buffer")
+    "p" '(:ignore t :wk "projectile")
+    "pp" '(helm-projectile :wk "Go to project") 
+    "pf" '(helm-projectile-find-file :wk "Find file")
+    "pb" '(helm-projectile-switch-to-buffer :wk "Switch to buffer")
     )
+
+  (ys/leader-keys
+    "o" '(:ignore t :wk "Org")
+    "oa" '(org-agenda :wk "Org agenda")
+    "oe" '(org-export-dispatch :wk "Org export")
+    "oi" '(org-toggle-item :wk "Org toggle Item")
+    "ot" '(org-todo :wk "Org Todo")
+    "oT" '(org-todo-list :wk "Org Todo List")
+    )
+
+  (ys/leader-keys
+    "c" '(:ignore t :wk "Tabs")
+    "cn" '(centaur-tabs-forward :wk "Next tab")
+    "cp" '(centaur-tabs-backward :wk "Previous tab")
+    "cx" '(kill-this-buffer :wk "Kill this buffer")
+    )
+
+  (ys/leader-keys
+    "g" '(magit :wk "Open magit"))
+
+  (ys/leader-keys
+    "w" '(:ignore t :wk "Windows")
+    ;; Window splits
+    "w c" '(evil-window-delete :wk "Close window")
+    "w n" '(evil-window-new :wk "New window")
+    "w s" '(evil-window-split :wk "Horizontal split window")
+    "w v" '(evil-window-vsplit :wk "Vertical split window")
+    ;; Window motions
+    "w h" '(evil-window-left :wk "Window left")
+    "w j" '(evil-window-down :wk "Window down")
+    "w k" '(evil-window-up :wk "Window up")
+    "w l" '(evil-window-right :wk "Window right")
+    "w w" '(evil-window-next :wk "Goto next window")
+    ;; Move Windows
+    "w H" '(buf-move-left :wk "Buffer move left")
+    "w J" '(buf-move-down :wk "Buffer move down")
+    "w K" '(buf-move-up :wk "Buffer move up")
+    "w L" '(buf-move-right :wk "Buffer move right"))
+  )
 #+end_src
 
 ** Ability to reload config
