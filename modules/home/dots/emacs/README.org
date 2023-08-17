@@ -10,8 +10,7 @@
   (setq package-enable-at-startup nil)
 #+end_src
 
-** Package manager
-#+begin_src elisp
+** Package manager #+begin_src elisp
 (defvar elpaca-installer-version 0.5)
 (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
@@ -102,7 +101,8 @@
 #+begin_src elisp 
 (use-package exec-path-from-shell
   :config
-  (exec-path-from-shell-initialize))
+  (when (daemonp)
+    (exec-path-from-shell-initialize)))
 #+end_src
 
 ** General Keybindings
