@@ -217,12 +217,12 @@ dwindle {
 
 *** Tabbed & scratchpad 
 #+begin_src conf :tangle hyprland.conf 
-  bind= SUPER, g, togglegroup
-  bind= SUPER, tab, changegroupactive
+bind = SUPER, g, togglegroup
+bind = SUPER, tab, changegroupactive
 
-  bind = SUPER, grave, togglespecialworkspace
-  bind = SUPERSHIFT, grave, movetoworkspace, special
-  
+bind = SUPER, grave, togglespecialworkspace
+bind = SUPERSHIFT, grave, movetoworkspace, special
+
 #+end_src
 
 
@@ -234,43 +234,43 @@ dwindle {
 
 *** Window Rules
 #+begin_src conf :tangle hyprland.conf
-  windowrule = float, file_progress
-  windowrule = float, blueman-manager
-  windowrule = float, conf :tangle hyprland.confirm
-  windowrule = float, dialog
-  windowrule = float, download
-  windowrule = float, notification
-  windowrule = float, error
-  windowrule = float, splashhyprl
-  windowrule = float, conf :tangle hyprland.confirmreset
-  windowrule = float, title:Open File
-  windowrule = float, title:branchdialog
-  windowrule = float, Lxappearance
-  windowrule = float, Rofi
-  windowrule = animation none,Rofi
-  windowrule = float,viewnior
-  windowrule = float,feh
-  windowrule = float, pavucontrol-qt
-  windowrule = float, pavucontrol
-  windowrule = float, file-roller
-  windowrule = fullscreen, wlogout
-  windowrule = float, title:wlogout
-  windowrule = fullscreen, title:wlogout
-  windowrule = fullscreen, dunst
-  windowrule = idleinhibit focus, mpv
-  windowrule = idleinhibit lutris
-  windowrule = idleinhibit steam
-  windowrule = idleinhibit fullscreen, brave
-  windowrule = float, title:^(Media viewer)$
-  windowrule = float, title:^(Volume Control)$
-  windowrule = float, title:^(Picture-in-Picture)$
-  windowrule = size 800 600, title:^(Volume Control)$
-  windowrule = move 75 44%, title:^(Volume Control)$
-  windowrule = tile, neovide
+windowrule = float, file_progress
+windowrule = float, blueman-manager
+windowrule = float, conf :tangle hyprland.confirm
+windowrule = float, dialog
+windowrule = float, download
+windowrule = float, notification
+windowrule = float, error
+windowrule = float, splashhyprl
+windowrule = float, conf :tangle hyprland.confirmreset
+windowrule = float, title:Open File
+windowrule = float, title:branchdialog
+windowrule = float, Lxappearance
+windowrule = float, Rofi
+windowrule = animation none,Rofi
+windowrule = float,viewnior
+windowrule = float,feh
+windowrule = float, pavucontrol-qt
+windowrule = float, pavucontrol
+windowrule = float, file-roller
+windowrule = fullscreen, wlogout
+windowrule = float, title:wlogout
+windowrule = fullscreen, title:wlogout
+windowrule = fullscreen, dunst
+windowrule = idleinhibit focus, mpv
+windowrule = idleinhibit lutris
+windowrule = idleinhibit steam
+windowrule = idleinhibit fullscreen, brave
+windowrule = float, title:^(Media viewer)$
+windowrule = float, title:^(Volume Control)$
+windowrule = float, title:^(Picture-in-Picture)$
+windowrule = size 800 600, title:^(Volume Control)$
+windowrule = move 75 44%, title:^(Volume Control)$
+windowrule = tile, neovide
 
-  # Where applications appear
-  windowrule = workspace 8, Kuro
-  windowrule = workspace 9, rclone-browser
+# Where applications appear
+windowrule = workspace 8, Kuro
+windowrule = workspace 9, rclone-browser
 #+end_src
 
 
@@ -286,11 +286,11 @@ dwindle {
 #+end_src
 
 
+** Mouse binding
 
-# █▀▄▀█ █▀█ █░█ █▀ █▀▀   █▄▄ █ █▄░█ █▀▄ █ █▄░█ █▀▀
-# █░▀░█ █▄█ █▄█ ▄█ ██▄   █▄█ █ █░▀█ █▄▀ █ █░▀█ █▄█
+#+begin_src conf :tangle hyprland.conf 
 bindm = SUPER, mouse:272, movewindow
 bindm = SUPER, mouse:273, resizewindow
 bind = SUPER, mouse_down, workspace, e+1
 bind = SUPER, mouse_up, workspace, e-1
-
+#+end_src
