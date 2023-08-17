@@ -316,7 +316,7 @@
    create-lockfiles nil)
 #+end_src
 
-* ORG Mode
+* ORG mode
 ** Table of contents
 #+begin_src elisp
   (use-package toc-org
@@ -358,28 +358,6 @@
   '((js . t)
   (python . t)))
 #+end_src
-
-** Latex preferred settings 
-#+begin_src elisp 
-  (setq org-src-preserve-indentation t
-
-        org-src-fontify-natively t
-
-        org-export-latex-listings t
-
-        org-latex-listings 'listings
-
-        org-latex-prefer-user-labels t
-
-        org-confirm-babel-evaluate nil
-
-        org-latex-pdf-process '("latexmk -bibtex -f %f")
-
-        org-babel-python-command "/usr/bin/env python3")
-
-  (add-to-list 'org-latex-packages-alist '("" "listings"))
-#+end_src
-
 
 ** Electric pairs
 #+begin_src elisp
