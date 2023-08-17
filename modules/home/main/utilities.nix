@@ -11,6 +11,7 @@
     gnome.nautilus
     gnome.gnome-clocks
     gnome.pomodoro
+    tootle
     gwenview
     gscan2pdf
     gimp

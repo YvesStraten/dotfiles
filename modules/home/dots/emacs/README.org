@@ -499,8 +499,10 @@ Indent guidelines
   (use-package highlight-indent-guides
     :diminish highlight-indent-guides-mode
     :hook (prog-mode . highlight-indent-guides-mode)
-    :config (setq highlighting-ident-guides-method 'character)
-    )
+    :config
+    (setq highlight-indent-guides-method 'character)
+    :config
+    (setq highlight-indent-guides-responsive 'top))
 #+end_src
 
 *** Formatter
