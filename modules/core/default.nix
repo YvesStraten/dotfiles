@@ -17,10 +17,8 @@
 
     # Desktops
     ./nixos/hyprland.nix
-    # ./nixos/qtile.nix
     # ./nixos/i3.nix
     # ./nixos/sway.nix
-    #./nixos/bspwm.nix
     # ./nixos/plasma.nix
   ];
 }

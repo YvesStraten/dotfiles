@@ -56,7 +56,7 @@
     wofi
     inputs.hypr-contrib.packages.${pkgs.system}.grimblast
     inputs.hyprpicker.packages.${pkgs.system}.hyprpicker
-    config.nur.repos.ocfox.swww
+    swww
     wlogout
     wl-clipboard
     swaylock-effects

@@ -77,6 +77,10 @@
 ;; Don't install anything. Defer execution of BODY
 (elpaca nil (message "Packages loaded"))
 
+(use-package exec-path-from-shell
+  :config
+  (exec-path-from-shell-initialize))
+
 (use-package general
   :config
   (general-evil-setup)

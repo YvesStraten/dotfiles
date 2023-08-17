@@ -1,6 +1,7 @@
 {pkgs, ...}: {
+  programs.neovim.enable = true;
+
   home.packages = with pkgs; [
-    neovim
     neovide
     tmux
     tmuxinator
@@ -34,4 +35,5 @@
     # DAP protocols
     lldb
   ];
+
 }

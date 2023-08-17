@@ -98,6 +98,13 @@
 
 #+end_src
 
+** Exec commands from path
+#+begin_src elisp 
+(use-package exec-path-from-shell
+  :config
+  (exec-path-from-shell-initialize))
+#+end_src
+
 ** General Keybindings
 #+begin_src elisp
 (use-package general
