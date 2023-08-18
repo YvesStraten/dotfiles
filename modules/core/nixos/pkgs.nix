@@ -29,7 +29,6 @@
     xfce.thunar
     pamixer
     pavucontrol
-    udiskie
     #    nixgl.nixGLNvidia
 
     # x11 stuff

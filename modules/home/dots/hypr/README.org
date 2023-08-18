@@ -5,21 +5,19 @@
 
 * Startup programs
 #+begin_src conf :tangle hyprland.conf 
-exec-once = ~/.conf :tangle hyprland.config/hypr/wl-clipboard-history.sh -t
-exec-once = ~/.conf :tangle hyprland.config/hypr/xdg-portal-hyprland
-exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-exec-once = /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec-once = wlsunset -S 8:30 -s 19:30
-exec-once = waybar
-exec-once = plasma-browser-integration-host
-exec-once = /usr/lib/kdeconnectd
-exec-once = udiskie &
-exec-once = blueman-applet
-exec-once = swayidle -w timeout 300 'swaylock -f' timeout 480 'hyprctl dispatch dpms off' resume 'hyprctl dpms on' before-sleep 'swaylock -f'
-exec-once = swaylock
-# exec-once = swaynag-battery
-exec-once = ~/.config/hypr/wallpaper.sh 
+  exec-once = ~/.conf :tangle hyprland.config/hypr/wl-clipboard-history.sh -t
+  exec-once = ~/.conf :tangle hyprland.config/hypr/xdg-portal-hyprland
+  exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+  exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+  exec-once = /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+  exec-once = wlsunset -S 8:30 -s 19:30
+  exec-once = waybar
+  exec-once = plasma-browser-integration-host
+  exec-once = blueman-applet
+  exec-once = swayidle -w timeout 300 'swaylock -f' timeout 480 'hyprctl dispatch dpms off' resume 'hyprctl dpms on' before-sleep 'swaylock -f'
+  exec-once = swaylock
+  # exec-once = swaynag-battery
+  exec-once = ~/.config/hypr/wallpaper.sh 
 #+end_src
 
 * Monitor settings 
