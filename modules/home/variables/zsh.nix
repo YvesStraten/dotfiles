@@ -8,6 +8,7 @@
       # neovide = "prime-run nixGLNvidia-535.86.05 neovide";
       updatenix = "nix flake update ~/Git-repos/dotfiles";
       upgradenix = "sudo nixos-rebuild switch --flake ~/Git-repos/dotfiles#nitro";
+      wslupgrade = "sudo nixos-rebuild switch --flake ~/Git-repos/dotfiles#wsl";
       # updatesymlinks = "home-manager switch --flake ~/Git-repos/dotfiles";
       mux = "tmuxinator";
       nxdev = "nix develop -c $SHELL";
