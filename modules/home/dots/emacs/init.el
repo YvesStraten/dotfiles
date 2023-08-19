@@ -530,3 +530,17 @@ one, an error is signaled."
   (load-theme 'catppuccin t)
   (setq catppuccin-flavor 'mocha)
   )
+
+(use-package langtool
+  :commands (langtool-check
+             langtool-check-done
+             langtool-show-message-at-point
+             langtool-correct-buffer)
+  :init (setq langtool-default-language "en-US")
+  :config
+  (unless (or langtool-bin
+              langtool-language-tool-jar
+              langtool-java-classpath)
+    (cond ((setq langtool-bin
+                 (or (executable-find "languagetool-commandline")
+                     (executable-find "languagetool")))))))  ; for nixpkgs.languagetool

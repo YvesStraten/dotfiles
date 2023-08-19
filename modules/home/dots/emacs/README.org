@@ -702,3 +702,21 @@ Allows to open files with sudo or switched over to it if we did not open it with
     (setq catppuccin-flavor 'mocha)
     )
 #+end_src 
+
+* Spell checker
+This code snippet is borrowed with courtesy from [[https://github.com/doomemacs/doomemacs/blob/master/modules/checkers/grammar/config.el][Doom emacs]]
+#+begin_src elisp 
+  (use-package langtool
+    :commands (langtool-check
+               langtool-check-done
+               langtool-show-message-at-point
+               langtool-correct-buffer)
+    :init (setq langtool-default-language "en-US")
+    :config
+    (unless (or langtool-bin
+                langtool-language-tool-jar
+                langtool-java-classpath)
+      (cond ((setq langtool-bin
+                   (or (executable-find "languagetool-commandline")
+                       (executable-find "languagetool")))))))  ; for nixpkgs.languagetool
+#+end_src

@@ -1,9 +1,10 @@
-{pkgs, ...}: {
+{pkgs, ...}:
+{
   home.packages = with pkgs; [
-    python310
-    python310Packages.matplotlib
-    pipx
-    virtualenv
+    (python311.withPackages(ps: with ps; [
+      matplotlib
+      requests
+    ]))
 
     texlive.combined.scheme-full
   ];
