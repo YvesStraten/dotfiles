@@ -403,52 +403,18 @@ one, an error is signaled."
 
 (use-package company 
   :after lsp-mode
+  :ensure t
   :diminish company-mode
   :custom
   (company-idle-delay 0.0)
   (company-minimum-prefix-length 1)
-  (global-company-mode 1))
+  :init
+  (add-hook 'after-init-hook 'global-company-mode))
 
 (use-package company-box
   :after company
   :diminish
   :hook (company-mode . company-box-mode))
-(defun check-expansion ()
-  (save-excursion
-    (if (looking-at "\\_>") t
-      (backward-char 1)
-      (if (looking-at "\\.") t
-        (backward-char 1)
-        (if (looking-at "->") t nil)))))
-
-(defun do-yas-expand ()
-  (let ((yas/fallback-behavior 'return-nil))
-    (yas/expand)))
-
-(defun tab-indent-or-complete ()
-  (interactive)
-  (if (minibufferp)
-      (minibuffer-complete)
-    (if (or (not yas/minor-mode)
-            (null (do-yas-expand)))
-        (if (check-expansion)
-            (company-complete-common)
-          (indent-for-tab-command)))))
-
-(global-set-key [tab] 'tab-indent-or-complete)
-
-(use-package yasnippet
-  :diminish yas-minor-mode
-  :config
-  (yas/global-mode)
-  )
-(setq yas-snippet-dirs '("~/Git-repos/dotfiles/modules/home/dots/snippets"))
-(use-package yasnippet-snippets)
-
-(use-package magit
-  :defer 5
-  :diminish magit-mode
-  :ensure t)
 
 (use-package neotree
   :ensure t
