@@ -400,7 +400,6 @@ one, an error is signaled."
 
 (use-package company 
   :after lsp-mode
-  :ensure t
   :diminish company-mode
   :custom
   (company-idle-delay 0.0)
@@ -437,7 +436,7 @@ one, an error is signaled."
    neo-theme 'icons
    neo-smart-open t
    neo-show-hidden-file t
-   neo-window-width 30
+   neo-window-width 30)
    (add-hook 'neotree-mode-hook
              (lambda ()
                (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
@@ -458,7 +457,7 @@ one, an error is signaled."
                    (setq truncate-lines t)
                    (setq word-wrap nil)
                    (make-local-variable 'auto-hscroll-mode)
-                   (setq auto-hscroll-mode nil))))))
+                   (setq auto-hscroll-mode nil)))))
 
 (use-package vterm
    :config
