@@ -6,6 +6,7 @@
       vterm
       vterm-toggle
       magit
+      all-the-icons
     ];
   };
 
@@ -24,11 +25,8 @@
     defaultEditor = true;
     client = {
       enable = true;
-      arguments = [
-        "-c"
-      ];
     };
-    socketActivation.enable = true;
+    startWithUserSession = true;
   };
 
   services.syncthing = {

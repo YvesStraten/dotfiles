@@ -10,6 +10,10 @@
     criticalPowerAction = "Hibernate";
   };
 
+  services.logind.extraConfig = ''
+    HandlePowerKey=ignore
+  '';
+
   services.flatpak.enable = true;
 
   services.printing = {

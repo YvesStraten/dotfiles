@@ -148,7 +148,7 @@
   (load-file user-init-file)
   )
 
-(set-frame-font "JetBrainsMono NF 15")
+(add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-15"))
 
 (use-package centaur-tabs
   :defer 5
@@ -233,6 +233,9 @@ one, an error is signaled."
       (set-window-buffer other-win buf-this-buf)
       (select-window other-win))))
 
+(use-package linum-relative
+  )
+
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -276,15 +279,7 @@ one, an error is signaled."
 '((js . t)
 (python . t)))
 
-(electric-pair-mode 1)
-
-(defun indent-org-block-automatically ()
-  (when (org-in-src-block-p)
-   (org-edit-special)
-    (indent-region (point-min) (point-max))
-    (org-edit-src-exit)))
-
-(run-at-time 1 10 'indent-org-block-automatically)
+(add-hook 'prog-mode-hook 'electric-pair-mode)
 
 (use-package which-key
   :init
@@ -305,7 +300,6 @@ one, an error is signaled."
 (use-package diminish)
 
 (use-package all-the-icons
-  :ensure t
   :if (display-graphic-p))
 
 (use-package ligature
@@ -358,6 +352,7 @@ one, an error is signaled."
   :hook (javascript-mode . lsp-deferred)
   :config
   (setq-default typescript-indent-level 2)
+  (setq-default javascript-indent-level 2)
   )
 
 (use-package nix-mode
@@ -380,7 +375,9 @@ one, an error is signaled."
   (setq highlight-indent-guides-responsive 'top))
 
 (use-package format-all
-  :hook (prog-mode . format-all-mode)
+  :init
+  (add-hook 'prog-mode-hook 'format-all-mode)
+  (add-hook 'format-all-mode-hook 'format-all-ensure-formatter)
   )
 
 (use-package tree-sitter
@@ -411,10 +408,25 @@ one, an error is signaled."
   :init
   (add-hook 'after-init-hook 'global-company-mode))
 
+(defvar company-backends nil)
+(add-to-list 'company-backends '(company-yasnippet company-dabbrev))
+
 (use-package company-box
   :after company
   :diminish
   :hook (company-mode . company-box-mode))
+
+(use-package yasnippet
+  :diminish yas-minor-mode
+  :config
+  (yas/global-mode)
+  )
+(setq yas-snippet-dirs '("~/Git-repos/dotfiles/modules/home/dots/snippets"))
+(use-package yasnippet-snippets)
+
+(use-package magit
+  :diminish magit-mode
+  )
 
 (use-package neotree
   :ensure t
@@ -426,28 +438,27 @@ one, an error is signaled."
    neo-smart-open t
    neo-show-hidden-file t
    neo-window-width 30
-   projectile-switch-project-action 'neotree-projectile-action)
-  (add-hook 'neotree-mode-hook
-            (lambda ()
-              (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
-              (define-key evil-normal-state-local-map (kbd "SPC") 'neotree-quick-look)
-              (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
-              (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter)
-              (define-key evil-normal-state-local-map (kbd "g") 'neotree-refresh)
-              (define-key evil-normal-state-local-map (kbd "n") 'neotree-next-line)
-              (define-key evil-normal-state-local-map (kbd "p") 'neotree-previous-line)
-              (define-key evil-normal-state-local-map (kbd "A") 'neotree-stretch-toggle)
-              (define-key evil-normal-state-local-map (kbd "d") 'neotree-delete-node)
-              (define-key evil-normal-state-local-map (kbd "a") 'neotree-create-node)
-              (define-key evil-normal-state-local-map (kbd "r") 'neotree-rename-node)
-              (define-key evil-normal-state-local-map (kbd "H") 'neotree-hidden-file-toggle)))
-  (add-hook 'neo-after-create-hook
-            #'(lambda (_)
-                (with-current-buffer (get-buffer neo-buffer-name)
-                  (setq truncate-lines t)
-                  (setq word-wrap nil)
-                  (make-local-variable 'auto-hscroll-mode)
-                  (setq auto-hscroll-mode nil)))))
+   (add-hook 'neotree-mode-hook
+             (lambda ()
+               (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
+               (define-key evil-normal-state-local-map (kbd "SPC") 'neotree-quick-look)
+               (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
+               (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter)
+               (define-key evil-normal-state-local-map (kbd "g") 'neotree-refresh)
+               (define-key evil-normal-state-local-map (kbd "n") 'neotree-next-line)
+               (define-key evil-normal-state-local-map (kbd "p") 'neotree-previous-line)
+               (define-key evil-normal-state-local-map (kbd "A") 'neotree-stretch-toggle)
+               (define-key evil-normal-state-local-map (kbd "d") 'neotree-delete-node)
+               (define-key evil-normal-state-local-map (kbd "a") 'neotree-create-node)
+               (define-key evil-normal-state-local-map (kbd "r") 'neotree-rename-node)
+               (define-key evil-normal-state-local-map (kbd "H") 'neotree-hidden-file-toggle)))
+   (add-hook 'neo-after-create-hook
+             #'(lambda (_)
+                 (with-current-buffer (get-buffer neo-buffer-name)
+                   (setq truncate-lines t)
+                   (setq word-wrap nil)
+                   (make-local-variable 'auto-hscroll-mode)
+                   (setq auto-hscroll-mode nil))))))
 
 (use-package vterm
    :config

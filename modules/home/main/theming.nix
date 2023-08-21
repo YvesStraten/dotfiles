@@ -41,5 +41,6 @@
     ubuntu_font_family
     whitesur-icon-theme
     catppuccin-gtk
+    emacs-all-the-icons-fonts
   ];
 }
