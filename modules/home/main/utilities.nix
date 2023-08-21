@@ -22,4 +22,10 @@
     ffmpeg
     neofetch
   ];
+
+  services.udiskie = {
+    enable = true;
+    automount = true;
+    tray = "never";
+  };
 }
