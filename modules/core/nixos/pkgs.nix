@@ -61,6 +61,7 @@
     swaylock-effects
     swayidle
     wlsunset
+    wdisplays
     eww-wayland
     vulkan-validation-layers
     wmenu
