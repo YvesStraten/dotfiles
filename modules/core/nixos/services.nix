@@ -25,6 +25,7 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+  services.udisks2.enable = true;
 
   virtualisation.libvirtd.enable = true;
   virtualisation.docker.enable = true;
