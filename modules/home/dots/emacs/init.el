@@ -280,6 +280,10 @@ one, an error is signaled."
 (python . t)))
 
 (add-hook 'prog-mode-hook 'electric-pair-mode)
+(add-hook 'org-mode-hook (lambda ()
+         (setq-local electric-pair-inhibit-predicate
+                 `(lambda (c)
+                (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c))))))
 
 (use-package which-key
   :init
@@ -399,13 +403,13 @@ one, an error is signaled."
   (projectile-mode 1))
 
 (use-package company 
-  :after lsp-mode
+  :init (global-company-mode)
+  :ensure t
   :diminish company-mode
   :custom
   (company-idle-delay 0.0)
   (company-minimum-prefix-length 1)
-  :init
-  (add-hook 'after-init-hook 'global-company-mode))
+  )
 
 (defvar company-backends nil)
 (add-to-list 'company-backends '(company-yasnippet company-dabbrev))
