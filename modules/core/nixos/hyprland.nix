@@ -15,15 +15,14 @@
 
   services.udisks2.enable = true;
 
-
-     services.greetd = {
+  services.xserver.displayManager = {
+    defaultSession = "hyprland";
+    
+sddm = {
     enable = true;
-    settings = rec {
-      initial_session = {
-        command = "${pkgs.hyprland}/bin/Hyprland";
-        user = "yvess";
-      };
-      default_session = initial_session;
-    };
   };
+    
+  };
+
+  programs.nm-applet.enable = true;
 }
