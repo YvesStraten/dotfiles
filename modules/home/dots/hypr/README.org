@@ -3,11 +3,6 @@
 #+OPTIONS: :toc:2
 #+auto_tangle: t
 
-* Source theme
-#+begin_src conf :tangle hyprland.conf 
-  source=~/.config/hypr/themes/frappe.conf
-#+end_src
-
 * Startup programs
 #+begin_src conf :tangle hyprland.conf 
   exec-once = ~/.config/hypr/wl-clipboard-history.sh -t
@@ -85,9 +80,24 @@ sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
   general {
   gaps_in=10
   gaps_out=15
-  border_size=0
   no_border_on_floating = true
   layout = dwindle
+
+  col.active_border = rgb(44475a) rgb(bd93f9) 90deg
+  col.inactive_border = rgba(44475aaa)
+  col.group_border = rgba(282a36dd)
+  col.group_border_active = rgb(bd93f9) rgb(44475a) 90deg
+    # non-gradient alternative
+    #col.active_border = rgb(bd93f9)
+    #col.inactive_border = rgba(44475aaa)
+    #col.group_border = rgba(282a36dd)
+    #col.group_border_active = rgb(bd93f9)
+    # darker alternative
+    #col.active_border = rgb(44475a) # or rgb(6272a4)
+    #col.inactive_border = rgb(282a36)
+    #col.group_border = rgb(282a36)
+    #col.group_border_active = rgb(44475a) # or rgb(6272a4)
+
   }
 #+end_src
 
@@ -108,15 +118,16 @@ sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
   blur_passes = 3
   blur_new_optimizations = true
 
-  #shadows
-  drop_shadow = true
-  shadow_ignore_window = true
-  shadow_offset = 2 2
-  shadow_range = 4
-  shadow_render_power = 2
-  col.shadow = 0x66000000
+  col.shadow = rgba(1E202966)
+    suggested shadow setting
+    drop_shadow = yes
+    shadow_range = 60
+    shadow_offset = 1 2
+    shadow_render_power = 3
+    shadow_scale = 0.97 #shadows
 
-  blurls = gtk-layer-shell
+  blurls = 
+  gtk-layer-shell
   # blurls = waybar
   blurls = lockscreen
   }
@@ -284,4 +295,9 @@ bindm = SUPER, mouse:272, movewindow
 bindm = SUPER, mouse:273, resizewindow
 bind = SUPER, mouse_down, workspace, e+1
 bind = SUPER, mouse_up, workspace, e-1
+#+end_src
+
+* Source theme
+#+begin_src conf :tangle hyprland.conf 
+  source=~/.config/hypr/themes/frappe.conf
 #+end_src
