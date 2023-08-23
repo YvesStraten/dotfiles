@@ -40,64 +40,67 @@
     (exec-path-from-shell-initialize)))
 
 (use-package general
-  :config
-  (general-evil-setup)
-  (general-create-definer ys/leader-keys
-    :states '(normal insert visual emacs)
-    :keymaps 'override
-    :prefix "SPC"
-    :global-prefix "M-SPC")
+    :config
+    (general-evil-setup)
+    (general-create-definer ys/leader-keys
+      :states '(normal insert visual emacs)
+      :keymaps 'override
+      :prefix "SPC"
+      :global-prefix "M-SPC")
 
 
-  (ys/leader-keys
-    "b" '(:ignore t :wk "buffer")
-    "bb" '(switch-to-buffer :wk "Switch buffer")
-    "bn" '(next-buffer :wk "Next buffer")
-    "bp" '(previous-buffer :wk "Previous buffer")
-    "p" '(:ignore t :wk "projectile")
-    "pp" '(helm-projectile :wk "Go to project") 
-    "pf" '(helm-projectile-find-file :wk "Find file")
-    "pb" '(helm-projectile-switch-to-buffer :wk "Switch to buffer")
+    (ys/leader-keys
+      "b" '(:ignore t :wk "buffer")
+      "bb" '(switch-to-buffer :wk "Switch buffer")
+      "bn" '(next-buffer :wk "Next buffer")
+      "bp" '(previous-buffer :wk "Previous buffer")
+      "p" '(:ignore t :wk "projectile")
+      "pp" '(helm-projectile :wk "Go to project") 
+      "pf" '(helm-projectile-find-file :wk "Find file")
+      "pb" '(helm-projectile-switch-to-buffer :wk "Switch to buffer")
+      )
+
+    (ys/leader-keys
+      "o" '(:ignore t :wk "Org")
+      "oa" '(org-agenda :wk "Org agenda")
+      "oe" '(org-export-dispatch :wk "Org export")
+      "oi" '(org-toggle-item :wk "Org toggle Item")
+      "ot" '(org-todo :wk "Org Todo")
+      "oT" '(org-todo-list :wk "Org Todo List")
+      )
+
+    (ys/leader-keys
+      "c" '(:ignore t :wk "Tabs")
+      "cn" '(centaur-tabs-forward :wk "Next tab")
+      "cp" '(centaur-tabs-backward :wk "Previous tab")
+      "cx" '(kill-this-buffer :wk "Kill this buffer")
+      )
+
+    (ys/leader-keys
+      "g" '(magit :wk "Open magit"))
+
+    (ys/leader-keys
+"c" '(evilnc-comment-or-uncomment-lines :wk "Toggle comment"))
+
+    (ys/leader-keys
+      "w" '(:ignore t :wk "Windows")
+      ;; Window splits
+      "w c" '(evil-window-delete :wk "Close window")
+      "w n" '(evil-window-new :wk "New window")
+      "w s" '(evil-window-split :wk "Horizontal split window")
+      "w v" '(evil-window-vsplit :wk "Vertical split window")
+      ;; Window motions
+      "w h" '(evil-window-left :wk "Window left")
+      "w j" '(evil-window-down :wk "Window down")
+      "w k" '(evil-window-up :wk "Window up")
+      "w l" '(evil-window-right :wk "Window right")
+      "w w" '(evil-window-next :wk "Goto next window")
+      ;; Move Windows
+      "w H" '(buf-move-left :wk "Buffer move left")
+      "w J" '(buf-move-down :wk "Buffer move down")
+      "w K" '(buf-move-up :wk "Buffer move up")
+      "w L" '(buf-move-right :wk "Buffer move right"))
     )
-
-  (ys/leader-keys
-    "o" '(:ignore t :wk "Org")
-    "oa" '(org-agenda :wk "Org agenda")
-    "oe" '(org-export-dispatch :wk "Org export")
-    "oi" '(org-toggle-item :wk "Org toggle Item")
-    "ot" '(org-todo :wk "Org Todo")
-    "oT" '(org-todo-list :wk "Org Todo List")
-    )
-
-  (ys/leader-keys
-    "c" '(:ignore t :wk "Tabs")
-    "cn" '(centaur-tabs-forward :wk "Next tab")
-    "cp" '(centaur-tabs-backward :wk "Previous tab")
-    "cx" '(kill-this-buffer :wk "Kill this buffer")
-    )
-
-  (ys/leader-keys
-    "g" '(magit :wk "Open magit"))
-
-  (ys/leader-keys
-    "w" '(:ignore t :wk "Windows")
-    ;; Window splits
-    "w c" '(evil-window-delete :wk "Close window")
-    "w n" '(evil-window-new :wk "New window")
-    "w s" '(evil-window-split :wk "Horizontal split window")
-    "w v" '(evil-window-vsplit :wk "Vertical split window")
-    ;; Window motions
-    "w h" '(evil-window-left :wk "Window left")
-    "w j" '(evil-window-down :wk "Window down")
-    "w k" '(evil-window-up :wk "Window up")
-    "w l" '(evil-window-right :wk "Window right")
-    "w w" '(evil-window-next :wk "Goto next window")
-    ;; Move Windows
-    "w H" '(buf-move-left :wk "Buffer move left")
-    "w J" '(buf-move-down :wk "Buffer move down")
-    "w K" '(buf-move-up :wk "Buffer move up")
-    "w L" '(buf-move-right :wk "Buffer move right"))
-  )
 
 (defun reload-init-file ()
   (interactive)
@@ -308,13 +311,13 @@ one, an error is signaled."
   :diminish rainbow-mode
   :hook org-mode prog-mode)
 
+(use-package evil-nerd-commenter
+)
+
 (use-package lsp-mode
-  :straight t
   :init
   (setq lsp-keymap-prefix "C-c l"
-        lsp-log-io nil
         lsp-restart 'auto-restart
-        lsp-ui-sideline-show-hover t
         )
   :hook (
          (prog-mode-hook . lsp)
@@ -325,10 +328,8 @@ one, an error is signaled."
 (use-package typescript-mode
   :mode "\\.ts\\'"
   :hook (typescript-mode . lsp-deferred)
-  :hook (javascript-mode . lsp-deferred)
   :config
   (setq-default typescript-indent-level 2)
-  (setq-default javascript-indent-level 2)
   )
 
 (use-package nix-mode
@@ -349,6 +350,11 @@ one, an error is signaled."
   (setq highlight-indent-guides-method 'character)
   :config
   (setq highlight-indent-guides-responsive 'top))
+
+(use-package lsp-treemacs
+:after lsp)
+
+(use-package lsp-ivy)
 
 (use-package format-all
   :init
@@ -376,7 +382,6 @@ one, an error is signaled."
 
 (use-package company 
   :init (global-company-mode)
-  :straight t
   :diminish company-mode
   :custom
   (company-idle-delay 0.0)
