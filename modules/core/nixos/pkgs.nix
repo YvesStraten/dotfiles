@@ -63,6 +63,7 @@
     wlsunset
     wdisplays
     eww-wayland
+    networkmanagerapplet
     polkit_gnome
     vulkan-validation-layers
     wmenu
@@ -74,10 +75,6 @@
     libsForQt5.plasma-browser-integration
     # latte-dock
   ];
-
-  programs.nm-applet = {
-    enable = true;
-  };
 
   programs.wshowkeys.enable = true;
 
