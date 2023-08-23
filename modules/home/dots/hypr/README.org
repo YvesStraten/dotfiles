@@ -3,6 +3,11 @@
 #+OPTIONS: :toc:2
 #+auto_tangle: t
 
+* Source theme
+#+begin_src conf :tangle hyprland.conf 
+  source=~/.config/hypr/themes/frappe.conf
+#+end_src
+
 * Startup programs
 #+begin_src conf :tangle hyprland.conf 
   exec-once = ~/.config/hypr/wl-clipboard-history.sh -t
