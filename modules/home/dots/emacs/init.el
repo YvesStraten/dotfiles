@@ -150,6 +150,21 @@
 
 (add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-15"))
 
+ (add-to-list 'default-frame-alist '(alpha-background . 80))
+
+ (defun toggle-transparency ()
+  (interactive)
+  (let ((alpha (frame-parameter nil 'alpha)))
+    (set-frame-parameter
+     nil 'alpha
+     (if (eql (cond ((numberp alpha) alpha)
+                    ((numberp (cdr alpha)) (cdr alpha))
+                    ;; Also handle undocumented (<active> <inactive>) form.
+                    ((numberp (cadr alpha)) (cadr alpha)))
+              100)
+         '(85 . 50) '(100 . 100)))))
+(global-set-key (kbd "C-c t") 'toggle-transparency)
+
 (use-package centaur-tabs
   :defer 5
   :diminish centaur-tabs-mode

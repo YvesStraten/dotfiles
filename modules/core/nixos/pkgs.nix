@@ -63,6 +63,7 @@
     wlsunset
     wdisplays
     eww-wayland
+    polkit_gnome
     vulkan-validation-layers
     wmenu
     rofi-wayland

@@ -1,7 +1,6 @@
-{
-  config,
-  pkgs,
-  ...
+{ config
+, pkgs
+, ...
 }: {
   home = {
     sessionVariables = {
@@ -14,12 +13,5 @@
       XDG_CURRENT_DESKTOP = "Hyprland";
       XDG_SESSION_DESKTOP = "Hyprland";
     };
-  };
-
-  programs.waybar = {
-    enable = true;
-    package = pkgs.waybar.overrideAttrs (oa: {
-      mesonFlags = (oa.mesonFlags or []) ++ ["-Dexperimental=true"];
-    });
   };
 }
