@@ -18,6 +18,7 @@
     ./mpv/mpv.nix
     ./tmux/tmux.nix
     ./zathura/zathura.nix
+    ./copyq/copyq.nix
 
     ./picom/picom.nix
 
