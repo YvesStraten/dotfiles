@@ -102,4 +102,9 @@
       }
     '';
   };
+
+  home.file.".config/wlogout/images" = {
+    source = ./images;
+    recursive = true;
+  };
 }
