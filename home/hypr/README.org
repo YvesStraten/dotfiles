@@ -5,8 +5,6 @@
 
 * Startup programs
 #+begin_src conf :tangle hyprland.conf 
-  exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-  exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
   exec-once = nm-applet
   exec-once = wlsunset -S 8:30 -s 19:30
   exec-once = waybar
@@ -110,13 +108,6 @@ sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
      #Opacity
      active_opacity = 1.0
      inactive_opacity = 1.0
-
-
-     blur {
-       blur = true
-       blur_size = 3
-       blur_passes = 3
-     }
 
      col.shadow = rgba(1E202966)
      drop_shadow = yes

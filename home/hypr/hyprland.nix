@@ -26,6 +26,8 @@
     };
   };
 
+  wayland.windowManager.hyprland.systemdIntegration = true;
+
   services.udiskie = {
     enable = true;
     automount = true;
