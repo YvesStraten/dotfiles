@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
@@ -36,5 +36,10 @@
     profileExtra = ''
       export XDG_DATA_DIRS=\"$HOME/.nix-profile/share:$XDG_DATA_DIRS\"
     '';
+  };
+
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
   };
 }

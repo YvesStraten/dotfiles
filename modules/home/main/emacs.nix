@@ -1,7 +1,7 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs-gtk;
+    package = pkgs.emacs29-pgtk;
     extraPackages = epkgs: with epkgs; [
       vterm
       vterm-toggle
@@ -10,10 +10,10 @@
     ];
   };
 
-    home.file.".emacs.d" = {
-      source = ../dots/emacs;
-      recursive = true;
-    };
+  home.file.".emacs.d" = {
+    source = ../dots/emacs;
+    recursive = true;
+  };
 
   home.packages = with pkgs; [
     zulu8

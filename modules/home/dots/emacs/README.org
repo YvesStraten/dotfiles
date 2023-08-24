@@ -254,11 +254,6 @@ The transparency snippet is from [[https://www.emacswiki.org/emacs/TransparentEm
 #+end_src
 
 * Make Emacs look better
-** Relative lines
-#+begin_src elisp
-  (use-package linum-relative
-    )
-#+end_src
 ** Disable menubar, toolbar
 #+begin_src elisp
   (menu-bar-mode -1)
@@ -270,7 +265,6 @@ The transparency snippet is from [[https://www.emacswiki.org/emacs/TransparentEm
 #+begin_src elisp
   (global-display-line-numbers-mode 1)
   (global-visual-line-mode t)
-
 #+end_src
 
 ** Zoom in and out
@@ -436,13 +430,7 @@ Easier commenting
 
 Typescript
 #+begin_src elisp 
-  (use-package typescript-mode
-    :mode "\\.ts\\'"
-    :hook (typescript-mode . lsp-deferred)
-    :config
     (setq-default typescript-indent-level 2)
-    )
-
 #+end_src
 
 For nix files
@@ -501,15 +489,6 @@ For quicker symbol searching
 #+end_src
 
 ** Highlighting
-*** Treesitter
-#+begin_src elisp
-  (use-package tree-sitter
-    :hook (typescript-mode . tree-sitter-hl-mode))
-
-  (use-package tree-sitter-langs)
-
-#+end_src
-
 *** Brackets
 **** Coloring
 #+begin_src elisp

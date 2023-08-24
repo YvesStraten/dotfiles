@@ -208,9 +208,6 @@ one, an error is signaled."
       (set-window-buffer other-win buf-this-buf)
       (select-window other-win))))
 
-(use-package linum-relative
-  )
-
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -325,12 +322,7 @@ one, an error is signaled."
   :commands (lsp lsp-deferred)
   )
 
-(use-package typescript-mode
-  :mode "\\.ts\\'"
-  :hook (typescript-mode . lsp-deferred)
-  :config
-  (setq-default typescript-indent-level 2)
-  )
+(setq-default typescript-indent-level 2)
 
 (use-package nix-mode
   :mode "\\.nix\\'")
@@ -361,11 +353,6 @@ one, an error is signaled."
   (add-hook 'prog-mode-hook 'format-all-mode)
   (add-hook 'format-all-mode-hook 'format-all-ensure-formatter)
   )
-
-(use-package tree-sitter
-  :hook (typescript-mode . tree-sitter-hl-mode))
-
-(use-package tree-sitter-langs)
 
 (make-variable-buffer-local 'show-paren-mode)
 (show-paren-mode 1)
