@@ -29,7 +29,6 @@
       extraConfig = ''
         exec-once = nm-applet
         exec-once = wlsunset -S 8:30 -s 19:30
-        exec-once = waybar
         exec-once = plasma-browser-integration-host
         exec-once = blueman-applet
         exec-once = swayidle -w timeout 300 'swaylock -f' timeout 480 'hyprctl dispatch dpms off' resume 'hyprctl dpms on' before-sleep 'swaylock -f'
