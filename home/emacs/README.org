@@ -307,6 +307,17 @@ The transparency snippet is from [[https://www.emacswiki.org/emacs/TransparentEm
    '(org-agenda-files (list org-directory)))
 #+end_src
 
+** Org cv
+#+begin_src emacs-lisp 
+            (straight-use-package '(ox-moderncv
+      :host gitlab
+    :repo "Titan-C/org-cv"
+  :branch "master"))
+#+end_src
+
+#+RESULTS:
+: t
+
 ** Org babel 
 *** Auto tangle
 #+begin_src elisp 

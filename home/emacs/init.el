@@ -236,6 +236,11 @@ one, an error is signaled."
  '(org-directory "~/org")
  '(org-agenda-files (list org-directory)))
 
+(straight-use-package '(ox-moderncv
+    :host gitlab
+  :repo "Titan-C/org-cv"
+:branch "master"))
+
 (use-package org-auto-tangle
   :defer t
   :hook (org-mode . org-auto-tangle-mode))

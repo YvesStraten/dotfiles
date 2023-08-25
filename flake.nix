@@ -50,7 +50,6 @@
             ./modules/default.nix
             nixos-hardware.nixosModules.common-pc-laptop-ssd
             nixos-hardware.nixosModules.common-pc-laptop
-            nixos-hardware.nixosModules.common-pc-laptop-acpi_call
 
             home-manager.nixosModules.home-manager
             {
