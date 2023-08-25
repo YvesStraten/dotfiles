@@ -183,6 +183,17 @@ local plugins = {
 		end,
 	},
 
+  {
+    "nvim-orgmode/orgmode",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+    },
+    ft = "org",
+    config = function()
+      require("orgmode").setup{}
+    end
+  },
+
 	{
 		"jakemason/ouroboros.nvim",
 		ft = {
