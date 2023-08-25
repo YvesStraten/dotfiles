@@ -12,8 +12,11 @@
     # Editors
     ./nvim/neovim.nix
     ./emacs/emacs.nix
+    # ./vscode/vscode.nix
 
     ./dunst/dunst.nix
+    ./rofi/rofi.nix
+    ./eww/eww.nix
     ./kitty/kitty.nix
     ./mpv/mpv.nix
     ./tmux/tmux.nix

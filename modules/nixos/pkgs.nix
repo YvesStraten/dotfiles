@@ -34,10 +34,8 @@
     # i3lock-fancy
     # xautolock
     # xss-lock
-    # sxhkd
     # xorg.xrandr
     # arandr
-    # picom-jonaburg
     # maim
     # xclip
     # feh
@@ -46,10 +44,8 @@
     # eww
     # feh
     # lxappearance
-    # rofi
 
     # Wayland stuff
-    wofi
     inputs.hypr-contrib.packages.${pkgs.system}.grimblast
     inputs.hyprpicker.packages.${pkgs.system}.hyprpicker
     swww
@@ -57,13 +53,9 @@
     swayidle
     wlsunset
     wdisplays
-    eww-wayland
     networkmanagerapplet
     polkit_gnome
     vulkan-validation-layers
-    wmenu
-    rofi-wayland
-    rofi-emoji
     swaynag-battery
 
     # For plasma

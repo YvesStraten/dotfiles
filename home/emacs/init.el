@@ -382,7 +382,7 @@ one, an error is signaled."
   :config
   (yas/global-mode)
   )
-(setq yas-snippet-dirs '("~/Git-repos/dotfiles/modules/home/dots/snippets"))
+(setq yas-snippet-dirs '("~/Git-repos/dotfiles/home/snippets"))
 (use-package yasnippet-snippets)
 
 (use-package magit

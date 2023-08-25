@@ -8,6 +8,8 @@
     criticalPowerAction = "Hibernate";
   };
 
+  services.gnome.gnome-keyring.enable = true;
+
   services.logind.extraConfig = ''
     HandlePowerKey=ignore
   '';
@@ -19,6 +21,15 @@
     drivers = [
       pkgs.gutenprintBin
     ];
+  };
+
+  services.xserver.displayManager = {
+    sessionPackages = [ pkgs.hyprland ];
+
+    sddm = {
+      enable = true;
+    };
+
   };
 
   services.gvfs.enable = true;

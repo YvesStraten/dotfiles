@@ -48,7 +48,6 @@
             nur.nixosModules.nur
             ./hosts/nixos/hardware-configuration.nix
             ./modules/default.nix
-            hyprland.nixosModules.default
             nixos-hardware.nixosModules.common-pc-laptop-ssd
             nixos-hardware.nixosModules.common-pc-laptop
             nixos-hardware.nixosModules.common-pc-laptop-acpi_call
@@ -61,6 +60,7 @@
                 users.yvess = { ... }: {
                   imports = [
                     ./home/home.nix
+                    hyprland.homeManagerModules.default
                   ];
                 };
               };
@@ -68,7 +68,7 @@
           ];
         };
 
-        nitroIso = nixpkgs.lib.nixosSystem {
+        Iso = nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
             "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
@@ -105,6 +105,7 @@
           ];
         };
       };
+
       homeConfigurations = {
         akali = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
