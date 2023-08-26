@@ -23,7 +23,6 @@
     mesa-demos
     jq
     sshfs
-    xfce.thunar
     pamixer
     pavucontrol
     #    nixgl.nixGLNvidia

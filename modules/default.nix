@@ -16,5 +16,6 @@
 
     # Desktops
     # ./nixos/plasma.nix
+    ../home/hypr/hyprland.nix
   ];
 }

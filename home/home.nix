@@ -26,7 +26,7 @@
     ./picom/picom.nix
 
     ./zsh/zsh.nix
-    ./hypr/hyprland.nix
+    ./hypr/home.nix
     ./swaylock/swaylock.nix
     ./wlogout/wlogout.nix
     ./waybar/waybar.nix

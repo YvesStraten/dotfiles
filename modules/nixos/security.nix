@@ -17,13 +17,6 @@
 
   security.pam.services.swaylock.text = "auth include login";
   security.polkit.enable = true;
-
-  xdg.portal = {
-    enable = true;
-    extraPortals = [
-      pkgs.xdg-desktop-portal-hyprland
-    ];
-  };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;

@@ -20,12 +20,11 @@
     enable = true;
     drivers = [
       pkgs.gutenprintBin
+      pkgs.gutenprint
     ];
   };
 
   services.xserver.displayManager = {
-    sessionPackages = [ pkgs.hyprland ];
-
     sddm = {
       enable = true;
     };

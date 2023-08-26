@@ -1,3 +1,7 @@
 { pkgs, ... }: {
-  services.copyq.enable = true;
+  services.copyq = {
+    enable = true;
+    systemdTarget = "hyprland-session.target";
+  };
+
 }
