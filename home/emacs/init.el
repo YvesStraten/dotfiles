@@ -37,6 +37,9 @@
   (when (daemonp)
     (exec-path-from-shell-initialize)))
 
+(setq tab-width 2)
+(setq-default ident-tabs-mode nil)
+
 (use-package general
     :config
     (general-evil-setup)
@@ -311,17 +314,18 @@ one, an error is signaled."
 )
 
 (use-package lsp-mode
-  :init
-  (setq lsp-keymap-prefix "C-c l"
-        lsp-restart 'auto-restart
-        )
-  :hook (
-         (prog-mode-hook . lsp)
-         (lsp-mode . lsp-enable-which-key-integration))
-  :commands (lsp lsp-deferred)
-  )
+    :init
+    (setq lsp-keymap-prefix "C-c l"
+          lsp-restart 'auto-restart
+          )
+    :hook (
+           (prog-mode-hook . lsp)
+           (lsp-mode . lsp-enable-which-key-integration))
+    :commands (lsp lsp-deferred)
+)
 
 (setq-default typescript-indent-level 2)
+(setq js-indent-level 2)
 
 (use-package nix-mode
   :mode "\\.nix\\'")
@@ -403,7 +407,7 @@ one, an error is signaled."
    neo-theme 'icons
    neo-smart-open t
    neo-show-hidden-file t
-   neo-window-width 30)
+   neo-window-width 25)
    (add-hook 'neotree-mode-hook
              (lambda ()
                (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
