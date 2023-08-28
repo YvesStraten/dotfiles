@@ -91,7 +91,7 @@
         wsl = nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
-            ./modules/core/wsl/wsl.nix
+            ./modules/wsl/wsl.nix
             nixos-wsl.nixosModules.wsl
             home-manager.nixosModules.home-manager
             {

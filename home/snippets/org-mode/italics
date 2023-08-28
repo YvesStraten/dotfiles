@@ -1,0 +1,4 @@
+# key: it
+# name: Italics
+# --
+/$1/ $0

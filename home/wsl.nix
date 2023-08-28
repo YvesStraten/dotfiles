@@ -5,14 +5,13 @@
   imports = [
     # Main stuff
     ./languages.nix
-    ./utilities.nix
     ./theming.nix
     ./others.nix
 
     # Editors
     ./nvim/neovim.nix
     ./emacs/emacs.nix
-    ./zathura/zathura.nix
+    ./tmux/tmux.nix
 
     # Variables
     ./zsh/zsh.nix

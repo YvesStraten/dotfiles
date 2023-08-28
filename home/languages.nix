@@ -4,6 +4,7 @@
     (python311.withPackages (ps: with ps; [
       matplotlib
       requests
+      minted
     ]))
 
     texlive.combined.scheme-full
@@ -23,6 +24,7 @@
     stylua
     nodePackages_latest.prettier
     nodePackages_latest.vscode-html-languageserver-bin
+    nodePackages_latest.typescript-language-server
     nodePackages_latest.typescript-language-server
     html-tidy
     rnix-lsp
