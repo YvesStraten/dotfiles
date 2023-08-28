@@ -5,7 +5,6 @@
     libreoffice
     rclone
     rclone-browser
-    ani-cli
     okular
     gnome.nautilus
     gnome.gnome-clocks
@@ -16,8 +15,11 @@
     gimp
     filezilla
     krename
+    htop
 
     ffmpeg
+    ani-cli
+    aria
     neofetch
   ];
 }

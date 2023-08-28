@@ -27,7 +27,6 @@
 (use-package evil-collection
   :after evil
   :config
-  (setq evil-collection-mode-list '(dashboard dired ibuffer))
   (evil-collection-init))
 
 (use-package evil-tutor)
@@ -56,6 +55,17 @@
       "pf" '(helm-projectile-find-file :wk "Find file")
       "pb" '(helm-projectile-switch-to-buffer :wk "Switch to buffer")
       )
+
+
+   (ys/leader-keys
+"t" '(:ignore t :wk "vterm")
+"tt" '(vterm-toggle :wk "Toggle vterm")
+
+"tk" '(:ignore t :wk "Vterm send")
+"tkc" '(vterm-send-C-c :wk "Send C-c")
+"tkd" '(vterm-send-C-d :wk "Send C-d")
+
+)
 
     (ys/leader-keys
       "o" '(:ignore t :wk "Org")
@@ -123,7 +133,6 @@
 (global-set-key (kbd "C-c t") 'toggle-transparency)
 
 (use-package centaur-tabs
-  :defer 5
   :diminish centaur-tabs-mode
   :config (centaur-tabs-mode t)
   )
@@ -317,9 +326,12 @@ one, an error is signaled."
     :init
     (setq lsp-keymap-prefix "C-c l"
           lsp-restart 'auto-restart
+          lsp-log-io nil
           )
     :hook (
            (prog-mode-hook . lsp)
+           (js-mode . lsp)
+           (typescript-ts-mode . lsp)
            (lsp-mode . lsp-enable-which-key-integration))
     :commands (lsp lsp-deferred)
 )
@@ -329,6 +341,8 @@ one, an error is signaled."
 
 (use-package nix-mode
   :mode "\\.nix\\'")
+
+(use-package tree-sitter-langs)
 
 (use-package lsp-ui :hook (lsp-mode . lsp-ui-mode)
 
@@ -430,11 +444,7 @@ one, an error is signaled."
                    (make-local-variable 'auto-hscroll-mode)
                    (setq auto-hscroll-mode nil)))))
 
-(use-package vterm
-   :config
-   (ys/leader-keys
-"t" '(vterm-toggle :wk "term")
-))
+(use-package vterm)
 
 (use-package vterm-toggle
   :after vterm

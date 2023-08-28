@@ -15,7 +15,6 @@
     libappindicator
     showmethekey
     brightnessctl
-    btop
     distrobox
     virt-manager
     neofetch
@@ -25,6 +24,7 @@
     sshfs
     pamixer
     pavucontrol
+    hfsprogs
     #    nixgl.nixGLNvidia
 
     # x11 stuff

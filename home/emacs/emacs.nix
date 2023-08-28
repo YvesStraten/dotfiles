@@ -7,6 +7,7 @@
       vterm-toggle
       magit
       all-the-icons
+      tree-sitter-langs
     ];
   };
 

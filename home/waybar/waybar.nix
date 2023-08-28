@@ -16,9 +16,9 @@
         height = 0;
         modules-left = [
           "clock"
+          "custom/weather"
           "idle_inhibitor"
           "wlr/workspaces"
-          "custom/waybar-media"
         ];
         modules-center = [ "hyprland/window" ];
         modules-right = [
@@ -83,7 +83,7 @@
           states = {
             good = 95;
             warning = 30;
-            critical = 20;
+            critical = 10;
           };
           format = "{icon}   {capacity}%";
           format-charging = "   {capacity}%";
@@ -418,7 +418,7 @@
     '';
   };
 
-  home.file."./config/waybar/scripts" = {
+  home.file.".config/waybar/scripts" = {
     source = ./scripts;
     recursive = true;
   };
