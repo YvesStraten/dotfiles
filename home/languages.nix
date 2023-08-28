@@ -4,7 +4,6 @@
     (python311.withPackages (ps: with ps; [
       matplotlib
       requests
-      minted
     ]))
 
     texlive.combined.scheme-full

@@ -310,28 +310,12 @@ The transparency snippet is from [[https://www.emacswiki.org/emacs/TransparentEm
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 #+end_src
 
-** Org tempo
-#+begin_src elisp
-  (require 'org-tempo)
-#+end_src
-
 ** Org agenda
 #+begin_src elisp 
   (custom-set-variables
    '(org-directory "~/org")
    '(org-agenda-files (list org-directory)))
 #+end_src
-
-** Org cv
-#+begin_src emacs-lisp 
-            (straight-use-package '(ox-moderncv
-      :host gitlab
-    :repo "Titan-C/org-cv"
-  :branch "master"))
-#+end_src
-
-#+RESULTS:
-: t
 
 ** Org babel 
 *** Auto tangle
@@ -653,15 +637,18 @@ Allows to open files with sudo or switched over to it if we did not open it with
 * Dashboard
 #+begin_src elisp
   (use-package dashboard
-  :straight t
   :init
   (setq initial-buffer-choice 'dashboard-open)
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
 
+  (setq dashboard-items '((recents . 5)
+                         (projects . 5)
+                         (agenda . 5)
+                         (registers . 5)))
+
   :config
   (dashboard-setup-startup-hook))
-
 #+end_src
 
 * Theming

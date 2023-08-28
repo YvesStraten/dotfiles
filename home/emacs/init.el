@@ -242,16 +242,9 @@ one, an error is signaled."
 (use-package org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
-(require 'org-tempo)
-
 (custom-set-variables
  '(org-directory "~/org")
  '(org-agenda-files (list org-directory)))
-
-(straight-use-package '(ox-moderncv
-    :host gitlab
-  :repo "Titan-C/org-cv"
-:branch "master"))
 
 (use-package org-auto-tangle
   :defer t
@@ -474,11 +467,15 @@ one, an error is signaled."
     "fU" '(sudo-edit :wk "Sudo edit file")))
 
 (use-package dashboard
-:straight t
 :init
 (setq initial-buffer-choice 'dashboard-open)
 (setq dashboard-set-heading-icons t)
 (setq dashboard-set-file-icons t)
+
+(setq dashboard-items '((recents . 5)
+                       (projects . 5)
+                       (agenda . 5)
+                       (registers . 5)))
 
 :config
 (dashboard-setup-startup-hook))
