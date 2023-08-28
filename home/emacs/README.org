@@ -467,7 +467,9 @@ For nix files
 ** Lsp mode extras
 *** Treesitter
 #+begin_src emacs-lisp
-(use-package tree-sitter-langs)
+  (use-package tree-sitter-langs)
+  (global-tree-sitter-mode)
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 #+end_src
 
 *** Ui

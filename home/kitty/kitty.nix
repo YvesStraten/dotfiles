@@ -21,6 +21,7 @@
     settings = {
       hide_window_decoratios = false;
       macos_option_as_alt = false;
+      enable_audio_bell = false;
       confirm_os_window_close = 0;
     };
   };
