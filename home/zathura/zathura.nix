@@ -6,4 +6,8 @@
     };
     extraConfig = "include theme";
   };
+
+  home.file.".config/zathura/theme" = {
+    source = ./themes/catppuccin-mocha;
+  };
 }
