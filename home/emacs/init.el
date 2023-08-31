@@ -62,9 +62,6 @@
 "tt" '(vterm-toggle :wk "Toggle vterm")
 
 "tk" '(:ignore t :wk "Vterm send")
-"tkc" '(vterm-send-C-c :wk "Send C-c")
-"tkd" '(vterm-send-C-d :wk "Send C-d")
-
 )
 
     (ys/leader-keys
@@ -330,7 +327,20 @@ one, an error is signaled."
 )
 
 (setq-default typescript-indent-level 2)
-(setq js-indent-level 2)
+       (setq js-indent-level 2)
+
+     (use-package treesit-auto
+       :config
+     (setq treesit-auto-install 'prompt)
+       (global-treesit-auto-mode))
+
+    (use-package typescript-ts-mode
+     :mode (("\\.ts\\'" . typescript-ts-mode)
+            ("\\.tsx\\'" . tsx-ts-mode)))
+
+    (use-package js
+  :mode (("\\.js\\'" . js-mode)
+("\\.jsx\\'" . js-jsx-mode)))
 
 (use-package nix-mode
   :mode "\\.nix\\'")

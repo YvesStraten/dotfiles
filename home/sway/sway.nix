@@ -1,13 +1,11 @@
-{
-  config,
-  pkgs,
-  ...
+{ config
+, pkgs
+, ...
 }: {
   home = {
     sessionVariables = {
       EDITOR = "nvim";
       TERMINAL = "kitty";
-      GRIMBLAST_EDITOR = "gwenview";
       _JAVA_AWT_WM_NONREPARENTING = "1";
       # Hardware cursors not yet working on wlroots
       WLR_NO_HARDWARE_CURSORS = "1";
