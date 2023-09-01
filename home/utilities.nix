@@ -17,9 +17,6 @@
     krename
     htop
 
-    ffmpeg
     ani-cli
-    aria
-    neofetch
   ];
 }

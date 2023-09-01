@@ -15,6 +15,10 @@
     nodejs_20
     unzip
     cargo
+    sshfs
+    ffmpeg
+    aria
+    neofetch
 
     # LSP servers
     texlab

@@ -40,5 +40,12 @@
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
+    settings = {
+      add_newline = false;
+      hostname = {
+        ssh_only = false;
+        disabled = false;
+      };
+    };
   };
 }
