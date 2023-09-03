@@ -15,6 +15,12 @@
             inner = 10;
             outer = 15;
           };
+          input = {
+            "keyboard" = {
+              repeat_delay = "150";
+              repeat_rate = "60";
+            };
+          };
           keybindings =
             let modifier = config.wayland.windowManager.sway.config.modifier;
             in lib.mkOptionDefault {
