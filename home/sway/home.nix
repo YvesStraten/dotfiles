@@ -29,7 +29,8 @@
 
               "${modifier}+b" = "exec brave";
               "${modifier}+q" = "kill";
-              "${modifier}+escape" = "wlogout";
+              "${modifier}+escape" = "exec wlogout";
+              "${modifier}+n" = "exec nautilus";
 
               "${modifier}+Shift+s" = "exec flameshot gui";
               "${modifier}+p" = "exec wdisplays";
@@ -69,22 +70,21 @@
             {
               command = "wlsunset -S 8:30 -s 19:30";
             }
-            {
-              command = "swayidle -w timeout 300 'swaylock -f' timeout 480 'hyprctl dispatch dpms off' resume 'hyprctl dpms on' before-sleep 'swaylock -f'";
-            }
           ];
         };
       extraOptions = [ "--unsupported-gpu" ];
       extraSessionCommands = ''
-        export SDL_VIDEODRIVER=wayland
-                # needs qt5.qtwayland in systemPackages
-                export QT_QPA_PLATFORM=wayland
-                export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
-                # Fix for some Java AWT applications (e.g. Android Studio),
-                # use this if they aren't displayed properly:
-                export _JAVA_AWT_WM_NONREPARENTING=1
+          export
+          SDL_VIDEODRIVER=wayland
+        # needs qt5.qtwayland in systemPackages
+        export QT_QPA_PLATFORM=wayland
+        export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
+        # Fix for some Java AWT applications (e.g. Android Studio),
+        # use this if they aren't displayed properly:
+        export _JAVA_AWT_WM_NONREPARENTING=1
         export XDG_CURRENT_DESKTOP=sway
         export XDG_SESSION_DESKTOP=sway
       '';
     };
 }
+
