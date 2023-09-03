@@ -22,15 +22,19 @@
     ./tmux/tmux.nix
     ./zathura/zathura.nix
     ./copyq/copyq.nix
+    ./flameshot/flameshot.nix
 
-    ./picom/picom.nix
+    # ./picom/picom.nix
 
     ./zsh/zsh.nix
-    ./hypr/home.nix
+
+    # Wayland programs
     ./swaylock/swaylock.nix
     ./wlogout/wlogout.nix
     ./waybar/waybar.nix
-    # ./sway/sway.nix
+
+    ./sway/home.nix
+    # ./hypr/home.nix
   ];
 
   # targets.genericLinux.enable = true;

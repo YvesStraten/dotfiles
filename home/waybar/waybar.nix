@@ -20,7 +20,7 @@
           "idle_inhibitor"
           "wlr/workspaces"
         ];
-        modules-center = [ "hyprland/window" ];
+        modules-center = [ "sway/workspaces" ];
         modules-right = [
           "tray"
           "battery"
