@@ -55,6 +55,9 @@
               command = "nm-applet";
             }
             {
+              command = "swww init";
+            }
+            {
               command = "copyq";
             }
             {
