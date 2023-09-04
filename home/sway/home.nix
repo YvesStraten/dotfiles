@@ -6,7 +6,8 @@
 }: {
   wayland.windowManager.sway = {
     enable = true;
-    extraConfig = "blur 
+    extraConfig = "
+    blur 
     enable corner_radius 5
     default_dim_inactive 0.8";
     config = {

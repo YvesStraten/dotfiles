@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   services.copyq = {
     enable = true;
-    systemdTarget = "hyprland-session.target";
+    systemdTarget = "sway-session.target";
   };
 }
