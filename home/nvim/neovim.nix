@@ -4,4 +4,8 @@
     neovide
     python310Packages.pynvim
   ];
+
+  services.syncthing = {
+    enable = true;
+  };
 }
