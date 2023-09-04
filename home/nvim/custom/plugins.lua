@@ -80,17 +80,6 @@ local plugins = {
 	},
 
 	{
-		"quarto-dev/quarto-nvim",
-		lazy = false,
-		dependencies = {
-			"jmbuhr/otter.nvim",
-		},
-		config = function()
-			require("quarto").setup({})
-		end,
-	},
-
-	{
 		"iamcco/markdown-preview.nvim",
 		ft = "markdown",
 		build = {
@@ -183,16 +172,16 @@ local plugins = {
 		end,
 	},
 
-  {
-    "nvim-orgmode/orgmode",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-    },
-    ft = "org",
-    config = function()
-      require("orgmode").setup{}
-    end
-  },
+	{
+		"nvim-orgmode/orgmode",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+		},
+		ft = "org",
+		config = function()
+			require("orgmode").setup({})
+		end,
+	},
 
 	{
 		"jakemason/ouroboros.nvim",
@@ -235,11 +224,6 @@ local plugins = {
 				end,
 			},
 		},
-	},
-
-	{
-		"NvChad/nvterm",
-		enabled = false,
 	},
 }
 return plugins

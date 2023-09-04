@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   programs.wlogout = {
     enable = true;
     layout = [
@@ -36,7 +36,6 @@
         text = "Suspend";
         keybind = "u";
       }
-
     ];
 
     style = ''

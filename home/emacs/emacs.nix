@@ -1,14 +1,15 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   programs.emacs = {
     enable = true;
     package = pkgs.emacs29-pgtk;
-    extraPackages = epkgs: with epkgs; [
-      vterm
-      vterm-toggle
-      magit
-      all-the-icons
-      tree-sitter-langs
-    ];
+    extraPackages = epkgs:
+      with epkgs; [
+        vterm
+        vterm-toggle
+        magit
+        all-the-icons
+        tree-sitter-langs
+      ];
   };
 
   home.file.".emacs.d/init.el" = {

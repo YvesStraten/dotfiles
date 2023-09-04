@@ -1,12 +1,11 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   programs.waybar = {
     enable = true;
     package = pkgs.waybar.overrideAttrs (oa: {
-      mesonFlags = (oa.mesonFlags or [ ]) ++ [ "-Dexperimental=true" ];
+      mesonFlags = (oa.mesonFlags or []) ++ ["-Dexperimental=true"];
     });
     settings = {
       mainBar = {
-
         layer = "top";
         position = "top";
         mod = "dock";
@@ -20,7 +19,7 @@
           "idle_inhibitor"
           "sway/workspaces"
         ];
-        modules-center = [ "sway/window" ];
+        modules-center = ["sway/window"];
         modules-right = [
           "tray"
           "battery"
@@ -39,16 +38,16 @@
           on-click = "activate";
           format = "{icon}";
           persistent_workspaces = {
-            "1" = [ ];
-            "2" = [ ];
-            "3" = [ ];
-            "4" = [ ];
-            "5" = [ ];
-            "6" = [ ];
-            "7" = [ ];
-            "8" = [ ];
-            "9" = [ ];
-            "10" = [ ];
+            "1" = [];
+            "2" = [];
+            "3" = [];
+            "4" = [];
+            "5" = [];
+            "6" = [];
+            "7" = [];
+            "8" = [];
+            "9" = [];
+            "10" = [];
           };
         };
 
@@ -73,7 +72,7 @@
         "backlight" = {
           device = "intel_backlight";
           format = "{icon}   {percent}%";
-          format-icons = [ "󰃞" "󰃟" "󰃠" ];
+          format-icons = ["󰃞" "󰃟" "󰃠"];
           on-scroll-up = "brightnessctl set 1%+";
           on-scroll-down = "brightnessctl set 1%-";
           min-length = 6;
@@ -113,7 +112,7 @@
             phone = "";
             portable = "";
             car = "";
-            default = [ "" "" "" ];
+            default = ["" "" ""];
           };
         };
 

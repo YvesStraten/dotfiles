@@ -1,6 +1,7 @@
-{ config
-, pkgs
-, ...
+{
+  config,
+  pkgs,
+  ...
 }: {
   imports = [
     # Main stuff
@@ -11,7 +12,7 @@
 
     # Editors
     ./nvim/neovim.nix
-    ./emacs/emacs.nix
+    # ./emacs/emacs.nix
     # ./vscode/vscode.nix
 
     ./dunst/dunst.nix

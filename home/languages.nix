@@ -1,12 +1,17 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   home.packages = with pkgs; [
-    (python311.withPackages (ps: with ps; [
-      matplotlib
-      requests
-    ]))
+    (python311.withPackages (ps:
+      with ps; [
+        matplotlib
+        requests
+      ]))
 
-    texlive.combined.scheme-full
+    (pkgs.texlive.combine {
+      inherit
+        (pkgs.texlive)
+        scheme-full
+        ;
+    })
 
     ripgrep
     fd

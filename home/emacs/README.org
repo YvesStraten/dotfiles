@@ -292,7 +292,7 @@ The transparency snippet is from [[https://www.emacswiki.org/emacs/TransparentEm
    create-lockfiles nil)
 #+end_src
 
-* ORG mode
+* ORG Mode
 ** Table of contents
 #+begin_src elisp
   (use-package toc-org
@@ -312,6 +312,13 @@ The transparency snippet is from [[https://www.emacswiki.org/emacs/TransparentEm
   (custom-set-variables
    '(org-directory "~/org")
    '(org-agenda-files (list org-directory)))
+#+end_src
+
+** Org-cv
+#+begin_src emacs-lisp 
+  (straight-use-package '(org-cv :host gitlab :repo "Titan-C/org-cv" :branch "master"))
+  (require 'ox-moderncv)
+
 #+end_src
 
 ** Org babel 

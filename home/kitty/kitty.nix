@@ -1,11 +1,10 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   programs.kitty = {
     enable = true;
-    shellIntegration =
-      {
-        enableBashIntegration = true;
-        enableZshIntegration = true;
-      };
+    shellIntegration = {
+      enableBashIntegration = true;
+      enableZshIntegration = true;
+    };
     theme = "Dracula";
     font = {
       name = "JetBrainsMono NF";

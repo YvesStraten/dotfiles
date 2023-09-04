@@ -1,8 +1,7 @@
-{ config, ... }: {
+{config, ...}: {
   services.dunst = {
     enable = true;
     settings = {
-
       global = {
         follow = "mouse";
         indicate_hidden = true;
@@ -40,7 +39,6 @@
         dmenu = "/usr/bin/wofi - p dunst:";
         browser = "brave --new-tab";
 
-
         title = "Dunst";
         class = "Dunst";
 
@@ -51,13 +49,11 @@
       urgency_low = {
         background = "#1E1E2E";
         foreground = "#CDD6F4";
-
       };
 
       urgency_normal = {
         background = "#1E1E2E";
         foreground = "#CDD6F4";
-
       };
 
       urgency_critical = {

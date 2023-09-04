@@ -27,7 +27,7 @@
       extraGroups = ["wheel" "docker"];
     };
   };
-  
+
   programs.dconf.enable = true;
 
   wsl = {

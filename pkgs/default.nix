@@ -1,0 +1,3 @@
+{
+  NvChad = pkgs.callPackage ./NvChad;
+}
