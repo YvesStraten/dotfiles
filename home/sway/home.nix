@@ -27,7 +27,7 @@
         modifier = config.wayland.windowManager.sway.config.modifier;
       in
         lib.mkOptionDefault {
-          "${modifier}+e" = "exec nvim";
+          "${modifier}+e" = "exec kitty -e nvim";
 
           "${modifier}+b" = "exec brave";
           "${modifier}+q" = "kill";
