@@ -4,6 +4,7 @@ local plugins = {
 		opts = {
 			ensure_installed = {
 				"c",
+				"org",
 				"cpp",
 				"markdown",
 				"nix",
@@ -14,30 +15,6 @@ local plugins = {
 				"lua",
 				"gitcommit",
 				"json",
-			},
-		},
-	},
-
-	{
-		"williamboman/mason.nvim",
-		opts = {
-			ensure_installed = {
-				"html-lsp",
-				"lua-language-server",
-				"eslint_d",
-				"clangd",
-				"clang-format",
-				"codelldb",
-				"texlab",
-				"pyright",
-				"rnix-lsp",
-				"prettierd",
-				"typescript-language-server",
-				"tailwindcss-language-server",
-
-				"stylua",
-				"htmlbeautifier",
-				"shellcheck",
 			},
 		},
 	},
@@ -179,7 +156,7 @@ local plugins = {
 		},
 		ft = "org",
 		config = function()
-			require("orgmode").setup({})
+			require("custom.configs.orgmode")
 		end,
 	},
 
@@ -205,6 +182,18 @@ local plugins = {
 		config = function()
 			require("presence").setup()
 		end,
+	},
+
+	{
+		"NeogitOrg/neogit",
+		lazy = false,
+		dependencies = {
+			"nvim-lua/plenary.nvim", -- required
+			"nvim-telescope/telescope.nvim", -- optional
+			"sindrets/diffview.nvim", -- optional
+			"ibhagwan/fzf-lua",
+		},
+		config = true,
 	},
 
 	{

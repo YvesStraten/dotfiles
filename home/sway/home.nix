@@ -6,6 +6,9 @@
 }: {
   wayland.windowManager.sway = {
     enable = true;
+    extraConfig = "blur 
+    enable corner_radius 5
+    default_dim_inactive 0.8";
     config = {
       modifier = "Mod4";
       terminal = "kitty";
@@ -24,7 +27,7 @@
         modifier = config.wayland.windowManager.sway.config.modifier;
       in
         lib.mkOptionDefault {
-          "${modifier}+e" = "exec emacsclient -c";
+          "${modifier}+e" = "exec nvim";
 
           "${modifier}+b" = "exec brave";
           "${modifier}+q" = "kill";
@@ -33,7 +36,7 @@
 
           "${modifier}+Shift+s" = "exec flameshot gui";
           "${modifier}+p" = "exec wdisplays";
-          "ctrl+l" = "exec swaylock";
+          "ctrl+Shift+l" = "exec swaylock";
 
           "XF86AudioRaiseVolume" = "exec pamixer -i 5";
 
