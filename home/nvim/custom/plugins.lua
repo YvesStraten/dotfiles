@@ -193,7 +193,13 @@ local plugins = {
 			"sindrets/diffview.nvim", -- optional
 			"ibhagwan/fzf-lua",
 		},
-		config = true,
+		config = function()
+			require("neogit").setup({
+				integrations = {
+					diffview = true,
+				},
+			})
+		end,
 	},
 
 	{
