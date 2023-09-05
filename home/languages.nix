@@ -24,6 +24,7 @@
     ffmpeg
     aria
     neofetch
+    sqlite3
 
     # LSP servers
     texlab
@@ -33,7 +34,7 @@
     nodePackages_latest.prettier
     nodePackages_latest.vscode-html-languageserver-bin
     nodePackages_latest.typescript-language-server
-    nodePackages_latest.typescript-language-server
+    nodePackages_latest.eslint
     html-tidy
     rnix-lsp
     shellcheck

@@ -8,6 +8,7 @@ local plugins = {
 				"cpp",
 				"markdown",
 				"nix",
+				"sql",
 				"html",
 				"css",
 				"javascript",
@@ -204,8 +205,18 @@ local plugins = {
 
 	{
 		"tpope/vim-dadbod",
-		cmd = "DB",
-		config = true,
+		dependencies = {
+			{
+				"kristijanhusak/vim-dadbod-ui",
+				config = function() end,
+			},
+			{
+				"kristijanhusak/vim-dadbod-completion",
+				config = function() end,
+			},
+		},
+		event = "VeryLazy",
+		config = function() end,
 	},
 
 	{
