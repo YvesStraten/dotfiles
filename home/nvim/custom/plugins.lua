@@ -186,7 +186,7 @@ local plugins = {
 
 	{
 		"NeogitOrg/neogit",
-		lazy = false,
+		cmd = "Neogit",
 		dependencies = {
 			"nvim-lua/plenary.nvim", -- required
 			"nvim-telescope/telescope.nvim", -- optional
@@ -194,6 +194,23 @@ local plugins = {
 			"ibhagwan/fzf-lua",
 		},
 		config = true,
+	},
+
+	{
+		"tpope/vim-dadbod",
+		cmd = "DB",
+		config = true,
+	},
+
+	{
+		"nvim-telescope/telescope-project.nvim",
+		dependencies = {
+			"nvim-telescope/telescope-file-browser.nvim",
+			"nvim-telescope/telescope.nvim",
+		},
+		config = function()
+			require("telescope").load_extension("project")
+		end,
 	},
 
 	{
