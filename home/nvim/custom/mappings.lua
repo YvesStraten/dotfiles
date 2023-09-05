@@ -9,6 +9,14 @@ M.vimtex = {
 		},
 	},
 }
+M.neogit = {
+	n = {
+		["<leader>go"] = {
+			"<cmd> Neogit <CR>",
+			"Open neogit",
+		},
+	},
+}
 M.ouroboros = {
 	plugin = true,
 	n = {

@@ -34,6 +34,7 @@
           "${modifier}+q" = "kill";
           "${modifier}+escape" = "exec wlogout";
           "${modifier}+n" = "exec nautilus";
+          "${modifier}+v" = null;
 
           "${modifier}+Shift+s" = "exec flameshot gui";
           "${modifier}+p" = "exec wdisplays";

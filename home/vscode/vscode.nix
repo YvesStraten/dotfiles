@@ -4,6 +4,4 @@
     extensions = with pkgs; [
     ];
   };
-
-  nixpkgs.config.allowUnfree = true;
 }

@@ -40,6 +40,8 @@
 
   # targets.genericLinux.enable = true;
 
+  nixpkgs.config.allowUnfree = true;
+
   home = {
     username = "yvess";
     homeDirectory = "/home/yvess";

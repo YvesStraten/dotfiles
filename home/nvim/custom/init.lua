@@ -10,8 +10,8 @@ set backupdir=~/nvim/backup//
 ]])
 
 if vim.g.neovide then
-	vim.g.neovide_scale_factor = "0.8"
-	vim.opt.guifont = { "CascadiaCode NF", ":h12" }
+	vim.g.neovide_scale_factor = "1.0"
+	vim.opt.guifont = { "JetBrains Mono NF", ":h15" }
 end
 
 local enable_providers = {
