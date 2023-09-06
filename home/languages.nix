@@ -24,7 +24,7 @@
     ffmpeg
     aria
     neofetch
-    sqlite3
+    sqlite
 
     # LSP servers
     texlab
