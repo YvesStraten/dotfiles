@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   home.packages = with pkgs; [
     tesseract
     brave
@@ -16,6 +16,11 @@
     filezilla
     krename
     htop
+
+    # For notes
+    nb
+    nmap
+    pandoc
 
     ani-cli
   ];
