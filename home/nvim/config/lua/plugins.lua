@@ -199,5 +199,11 @@ require("lazy").setup({
 			show_current_context = true,
 			show_current_context_start = true
 		}
+	},
+
+	{
+		"norcalli/nvim-colorizer.lua",
+		event = "VeryLazy",
+		opts = {}
 	}
 })
