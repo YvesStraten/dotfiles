@@ -94,6 +94,12 @@ require("lazy").setup({
 			window = {
 				width = 25,
 			},
+			buffers = {
+				follow_current_file = {
+					enabled = true,
+					leave_dirs_open = true,
+				}
+			}
 		}
 	},
 

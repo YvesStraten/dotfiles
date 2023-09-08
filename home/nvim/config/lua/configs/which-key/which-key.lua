@@ -23,7 +23,7 @@ wk.register({
 			o = { ":Neogit<cr>", "Neogit" }
 		}
 	},
-	["<C-n>"] = { ":Neotree toggle<cr>", "File explorer" },
+	["<C-n>"] = { ":Neotree toggle reveal=true<cr>", "File explorer" },
 	["<tab>"] = { ":BufferNext<cr>", "Next Buffer" },
 	["<S-tab>"] = { ":BufferPrevious<cr>", "Previous Buffer" }
 })
