@@ -37,7 +37,13 @@ require("lazy").setup({
 		"nvim-telescope/telescope.nvim",
 		event = "VeryLazy",
 		dependencies = {
-			"nvim-lua/plenary.nvim"
+			"nvim-lua/plenary.nvim",
+			{
+				"nvim-telescope/telescope-project.nvim",
+				config = function()
+					require("telescope").load_extension("project")
+				end
+			},
 		},
 		opts = {
 
@@ -129,7 +135,7 @@ require("lazy").setup({
 
 	{
 		"romgrk/barbar.nvim",
-		event = "VeryLazy",
+		event = "BufEnter",
 		dependencies = {
 			"lewis6991/gitsigns.nvim",
 			"nvim-tree/nvim-web-devicons",
@@ -195,15 +201,41 @@ require("lazy").setup({
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		event = "BufEnter",
-		opts = {
-			show_current_context = true,
-			show_current_context_start = true
-		}
+		config = function()
+			require("configs.indent-blankline.indent-blankline")
+		end
 	},
 
 	{
 		"norcalli/nvim-colorizer.lua",
 		event = "VeryLazy",
 		opts = {}
+	},
+
+	{
+		"nvim-lualine/lualine.nvim",
+		event = "VeryLazy",
+		dependencies = {
+			"nvim-tree/nvim-web-devicons"
+		},
+		opts = {
+			sections = {
+				lualine_x = { "fileformat" }
+			},
+			globalstatus = true
+		}
+	},
+
+	{
+		"nvimdev/dashboard-nvim",
+		event = "VimEnter",
+		dependencies = {
+			"nvim-tree/nvim-web-devicons"
+		},
+		opts = {
+			shortcut_type = "letter",
+			hide = {
+			}
+		}
 	}
 })

@@ -5,6 +5,7 @@ wk.register({
 			name = "Telescope",
 			f = { ":Telescope find_files<cr>", "Find file" },
 			g = { ":Telescope live_grep<cr>", "Grep files" },
+			p = { ":Telescope project<cr>", "Project picker" }
 		},
 
 		x = { ":BufferClose<cr>", "Close buffer" },
