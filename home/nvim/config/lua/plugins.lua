@@ -232,10 +232,8 @@ require("lazy").setup({
 		dependencies = {
 			"nvim-tree/nvim-web-devicons"
 		},
-		opts = {
-			shortcut_type = "letter",
-			hide = {
-			}
-		}
+		config = function()
+			require("configs.dashboard.dashboard")
+		end
 	}
 })
