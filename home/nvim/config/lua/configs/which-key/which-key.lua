@@ -25,5 +25,6 @@ wk.register({
 	},
 	["<C-n>"] = { ":Neotree toggle reveal=true<cr>", "File explorer" },
 	["<tab>"] = { ":BufferNext<cr>", "Next Buffer" },
-	["<S-tab>"] = { ":BufferPrevious<cr>", "Previous Buffer" }
+	["<S-tab>"] = { ":BufferPrevious<cr>", "Previous Buffer" },
+	["<esc>"] = { ":nohlsearch<cr>", "Wipes previous search" }
 })

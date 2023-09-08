@@ -185,10 +185,19 @@ require("lazy").setup({
 	{
 		"dkarter/bullets.vim",
 		ft = {
-			"md",
+			"markdown",
 			"org",
 		},
 		config = function()
 		end,
+	},
+
+	{
+		"lukas-reineke/indent-blankline.nvim",
+		event = "BufEnter",
+		opts = {
+			show_current_context = true,
+			show_current_context_start = true
+		}
 	}
 })

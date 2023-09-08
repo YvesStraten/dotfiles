@@ -20,7 +20,6 @@
     nodejs_20
 		dotnet-sdk
 		mono
-		roslyn
     unzip
     cargo
     sshfs
