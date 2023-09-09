@@ -25,7 +25,6 @@
       plugins = [
         "git"
         "common-aliases"
-        "tmux"
       ];
     };
   };

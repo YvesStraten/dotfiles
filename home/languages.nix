@@ -18,9 +18,9 @@
     fzf
     gcc
     nodejs_20
-		yarn
-		dotnet-sdk
-		mono
+    yarn
+    dotnet-sdk
+    mono
     unzip
     cargo
     sshfs
@@ -28,6 +28,5 @@
     aria
     neofetch
     sqlite
-
   ];
 }
