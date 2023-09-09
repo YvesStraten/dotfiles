@@ -235,5 +235,13 @@ require("lazy").setup({
 		config = function()
 			require("configs.dashboard.dashboard")
 		end
+	},
+
+	{
+		"iamcco/markdown-preview.nvim",
+		ft = "markdown",
+		build = "cd app && yarn install",
+		config = function()
+		end
 	}
 })

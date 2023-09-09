@@ -14,7 +14,7 @@ lspconfig.clangd.setup {
 }
 
 lspconfig.omnisharp.setup {
-	cmd = { "omnisharp" }
+	cmd = { "OmniSharp" }
 }
 
 lspconfig.pyright.setup {

@@ -18,6 +18,7 @@
     fzf
     gcc
     nodejs_20
+		yarn
 		dotnet-sdk
 		mono
     unzip
