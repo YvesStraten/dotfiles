@@ -20,6 +20,7 @@
     nodejs_20
     yarn
     dotnet-sdk
+		mongosh
     mono
     unzip
     cargo

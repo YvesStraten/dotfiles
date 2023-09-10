@@ -4,14 +4,7 @@
     plugins = with pkgs.tmuxPlugins; [
       yank
       sensible
-			{
-			 	plugin = dracula;
-				extraConfig = ''
-					set -g @dracula-show-battery false
-					set -g @dracula-show-powerline true
-					set -g @dracula-refresh-rate 10
-				'';
-			}
+			catppuccin
     ];
 		
 		baseIndex = 1;

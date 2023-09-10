@@ -55,7 +55,7 @@ require("lazy").setup({
 		dependencies = {
 			"nvimdev/lspsaga.nvim",
 			config = function()
-				require("lspsaga")
+				require("lspsaga").setup()
 			end
 		},
 		event = "BufEnter",
