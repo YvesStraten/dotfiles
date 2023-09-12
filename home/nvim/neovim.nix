@@ -11,6 +11,8 @@
   home.packages = with pkgs; [
     neovide
     python310Packages.pynvim
+    zulu8
+    languagetool
 
     # LSP servers
     texlab

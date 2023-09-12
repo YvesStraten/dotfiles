@@ -243,5 +243,14 @@ require("lazy").setup({
 		build = "cd app && yarn install",
 		config = function()
 		end
+	},
+
+	{
+		"dpelle/vim-LanguageTool",
+		cmd = {
+			"LanguageToolCheck",
+		},
+		config = function()
+		end
 	}
 })

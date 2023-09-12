@@ -5,6 +5,7 @@
       yank
       sensible
 			catppuccin
+			vim-tmux-navigator
     ];
 		
 		baseIndex = 1;
