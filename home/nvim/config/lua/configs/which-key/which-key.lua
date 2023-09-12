@@ -22,6 +22,10 @@ wk.register({
 
 		g = {
 			o = { ":Neogit<cr>", "Neogit" }
+		},
+		t = {
+			l = { ":VimtexCompile<cr>", "Compiled latex document" },
+			m = { ":MarkdownPreview<cr>", "Preview Markdown" }
 		}
 	},
 	["<C-n>"] = { ":Neotree toggle reveal=true<cr>", "File explorer" },
