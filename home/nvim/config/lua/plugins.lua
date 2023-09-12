@@ -3,8 +3,8 @@ require("lazy").setup({
 		"Mofiqul/dracula.nvim",
 		lazy = false,
 		init = function()
-			vim.cmd [[colorscheme dracula]]
-		end
+			vim.cmd([[colorscheme dracula]])
+		end,
 	},
 
 	{
@@ -16,21 +16,19 @@ require("lazy").setup({
 		end,
 		config = function()
 			require("configs.which-key.which-key")
-		end
+		end,
 	},
 
 	{
 		"windwp/nvim-autopairs",
 		event = "InsertEnter",
-		opts = {}
+		opts = {},
 	},
 
 	{
 		"numToStr/Comment.nvim",
 		lazy = false,
-		opts = {
-
-		}
+		opts = {},
 	},
 
 	{
@@ -42,21 +40,28 @@ require("lazy").setup({
 				"nvim-telescope/telescope-project.nvim",
 				config = function()
 					require("telescope").load_extension("project")
-				end
+				end,
 			},
 		},
-		opts = {
-
-		}
+		opts = {},
 	},
 
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
-			"nvimdev/lspsaga.nvim",
-			config = function()
-				require("lspsaga").setup()
-			end
+			{
+				"nvimdev/lspsaga.nvim",
+				config = function()
+					require("lspsaga").setup()
+				end,
+			},
+
+			{
+				"nvimdev/guard.nvim",
+				config = function()
+					require("configs.lsp.guard")
+				end,
+			},
 		},
 		event = "BufEnter",
 		config = function()
@@ -83,7 +88,7 @@ require("lazy").setup({
 	{
 		"L3MON4D3/Luasnip",
 		dependencies = {
-			"rafamadriz/friendly-snippets"
+			"rafamadriz/friendly-snippets",
 		},
 		config = function()
 			require("luasnip.loaders.from_vscode").lazy_load()
@@ -107,16 +112,16 @@ require("lazy").setup({
 				follow_current_file = {
 					enabled = true,
 					leave_dirs_open = true,
-				}
-			}
-		}
+				},
+			},
+		},
 	},
 
 	{
 		"nvim-treesitter/nvim-treesitter",
 		cmd = {
 			"TSInstall",
-			"TSUpdate"
+			"TSUpdate",
 		},
 		opts = {
 			ensure = {
@@ -127,10 +132,9 @@ require("lazy").setup({
 			sync_install = true,
 			auto_install = true,
 			ignore_install = {
-				"latex"
+				"latex",
 			},
-		}
-
+		},
 	},
 
 	{
@@ -140,15 +144,16 @@ require("lazy").setup({
 			"lewis6991/gitsigns.nvim",
 			"nvim-tree/nvim-web-devicons",
 		},
-		init = function() vim.g.barbar_auto_setup = false end,
-		opts = {}
+		init = function()
+			vim.g.barbar_auto_setup = false
+		end,
+		opts = {},
 	},
 
 	{
 		"christoomey/vim-tmux-navigator",
 		event = "VeryLazy",
-		config = function()
-		end,
+		config = function() end,
 	},
 
 	{
@@ -157,8 +162,7 @@ require("lazy").setup({
 		dependencies = {
 			"tpope/vim-dadbod",
 		},
-		config = function()
-		end,
+		config = function() end,
 	},
 
 	{
@@ -174,18 +178,18 @@ require("lazy").setup({
 		ft = "org",
 		config = function()
 			require("configs.orgmode.orgmode")
-		end
+		end,
 	},
 
 	{
 		"NeogitOrg/neogit",
 		dependencies = {
-			"nvim-lua/plenary.nvim",      -- required
+			"nvim-lua/plenary.nvim", -- required
 			"nvim-telescope/telescope.nvim", -- optional
-			"sindrets/diffview.nvim",     -- optional
-			"ibhagwan/fzf-lua",           -- optional
+			"sindrets/diffview.nvim", -- optional
+			"ibhagwan/fzf-lua", -- optional
 		},
-		config = true
+		config = true,
 	},
 
 	{
@@ -194,8 +198,7 @@ require("lazy").setup({
 			"markdown",
 			"org",
 		},
-		config = function()
-		end,
+		config = function() end,
 	},
 
 	{
@@ -203,46 +206,45 @@ require("lazy").setup({
 		event = "BufEnter",
 		config = function()
 			require("configs.indent-blankline.indent-blankline")
-		end
+		end,
 	},
 
 	{
 		"norcalli/nvim-colorizer.lua",
 		event = "VeryLazy",
-		opts = {}
+		opts = {},
 	},
 
 	{
 		"nvim-lualine/lualine.nvim",
 		event = "VeryLazy",
 		dependencies = {
-			"nvim-tree/nvim-web-devicons"
+			"nvim-tree/nvim-web-devicons",
 		},
 		opts = {
 			sections = {
-				lualine_x = { "fileformat" }
+				lualine_x = { "fileformat" },
 			},
-			globalstatus = true
-		}
+			globalstatus = true,
+		},
 	},
 
 	{
 		"nvimdev/dashboard-nvim",
 		event = "VimEnter",
 		dependencies = {
-			"nvim-tree/nvim-web-devicons"
+			"nvim-tree/nvim-web-devicons",
 		},
 		config = function()
 			require("configs.dashboard.dashboard")
-		end
+		end,
 	},
 
 	{
 		"iamcco/markdown-preview.nvim",
 		ft = "markdown",
 		build = "cd app && yarn install",
-		config = function()
-		end
+		config = function() end,
 	},
 
 	{
@@ -250,7 +252,6 @@ require("lazy").setup({
 		cmd = {
 			"LanguageToolCheck",
 		},
-		config = function()
-		end
-	}
+		config = function() end,
+	},
 })

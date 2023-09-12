@@ -1,5 +1,4 @@
 local lspconfig = require("lspconfig")
-vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
 
 lspconfig.tsserver.setup {
 }
