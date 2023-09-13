@@ -25,12 +25,6 @@
     ];
   };
 
-  services.xserver.displayManager = {
-    sddm = {
-      enable = true;
-    };
-  };
-
   services.gvfs.enable = true;
 
   # Enable the OpenSSH daemon.

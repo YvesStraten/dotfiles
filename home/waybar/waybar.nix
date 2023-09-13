@@ -17,9 +17,9 @@
           "clock"
           "custom/weather"
           "idle_inhibitor"
-          "sway/workspaces"
+          "hyprland/workspaces"
         ];
-        modules-center = ["sway/window"];
+        modules-center = ["hyprland/window"];
         modules-right = [
           "tray"
           "battery"

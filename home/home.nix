@@ -13,29 +13,19 @@
     # Editors
     ./nvim/neovim.nix
     # ./emacs/emacs.nix
-    # ./vscode/vscode.nix
+    ./vscode/vscode.nix
 
-    ./dunst/dunst.nix
-    ./rofi/rofi.nix
-    ./eww/eww.nix
     ./kitty/kitty.nix
     ./mpv/mpv.nix
     ./tmux/tmux.nix
     ./zathura/zathura.nix
-    ./copyq/copyq.nix
-    ./flameshot/flameshot.nix
 
     # ./picom/picom.nix
 
     ./zsh/zsh.nix
 
-    # Wayland programs
-    ./swaylock/swaylock.nix
-    ./wlogout/wlogout.nix
-    ./waybar/waybar.nix
-
-    ./sway/home.nix
-    # ./hypr/home.nix
+    # ./sway/home.nix
+    ./hypr/home.nix
   ];
 
   # targets.genericLinux.enable = true;

@@ -4,6 +4,16 @@
   lib,
   ...
 }: {
+  imports = [
+    ../swaylock/swaylock.nix
+    ../wlogout/wlogout.nix
+    ../waybar/waybar.nix
+    ../dunst/dunst.nix
+    ../rofi/rofi.nix
+    ../eww/eww.nix
+    ../copyq/copyq.nix
+    ../flameshot/flameshot.nix
+  ];
   wayland.windowManager.sway = {
     enable = true;
     # extraConfig = "

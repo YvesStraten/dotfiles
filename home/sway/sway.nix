@@ -48,6 +48,8 @@ in {
     extraPortals = [pkgs.xdg-desktop-portal-gtk];
   };
 
+  services.xserver.displayManager.sddm.enable = true;
+
   programs.sway = {
     enable = true;
     wrapperFeatures.gtk = true;

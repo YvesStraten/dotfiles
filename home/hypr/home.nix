@@ -3,6 +3,16 @@
   pkgs,
   ...
 }: {
+  imports = [
+    ../swaylock/swaylock.nix
+    ../wlogout/wlogout.nix
+    ../waybar/waybar.nix
+    ../dunst/dunst.nix
+    ../rofi/rofi.nix
+    ../eww/eww.nix
+    ../copyq/copyq.nix
+    ../flameshot/flameshot.nix
+  ];
   home = {
     sessionVariables = {
       GRIMBLAST_EDITOR = "gwenview";
@@ -43,7 +53,7 @@
 
       bind = SUPER, B, exec, brave
       bind = SUPER, F1, exec, ~/.config/hypr/scripts/keybind
-      bind = SUPER, W, exec, ~/.config/hypr/scripts/monitors
+      bind = SUPER, W, exec, kitty -e ~/.config/hypr/scripts/monitors.sh
       bind = , XF86AudioRaiseVolume, exec, pamixer -i 5
       bind = , XF86AudioLowerVolume, exec, pamixer -d 5
       bind = , XF86MonBrightnessUp, exec, brightnessctl s +10%

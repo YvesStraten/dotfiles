@@ -4,22 +4,21 @@
     plugins = with pkgs.tmuxPlugins; [
       yank
       sensible
-			catppuccin
-			vim-tmux-navigator
+      catppuccin
+      vim-tmux-navigator
     ];
-		
-		baseIndex = 1;
-		mouse = true;
-		keyMode = "vi";
-		prefix = "C-Space";
-		
-		extraConfig = ''
-			
-bind '"' split-window -v -c "#{pane_current_path}"
-bind % split-window -h -c "#{pane_current_path}"
-		'';
 
+    baseIndex = 1;
+    mouse = true;
+    keyMode = "vi";
+    prefix = "C-Space";
 
-		tmuxinator.enable = true;
+    extraConfig = ''
+
+      bind '"' split-window -v -c "#{pane_current_path}"
+      bind % split-window -h -c "#{pane_current_path}"
+    '';
+
+    tmuxinator.enable = true;
   };
 }

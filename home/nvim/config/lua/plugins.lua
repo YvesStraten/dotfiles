@@ -254,4 +254,10 @@ require("lazy").setup({
 		},
 		config = function() end,
 	},
+
+	{
+		"folke/flash.nvim",
+		event = "VeryLazy",
+		opts = {},
+	},
 })
