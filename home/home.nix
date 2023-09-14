@@ -28,6 +28,7 @@
     ./hypr/home.nix
   ];
 
+
   # targets.genericLinux.enable = true;
 
   nixpkgs.config.allowUnfree = true;
