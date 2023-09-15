@@ -20,6 +20,7 @@
 	gnome-tour
 	]) ++ (with pkgs.gnome; [
 	gnome-terminal 
+	gnome-music
 	epiphany
 	geary 
 	tali

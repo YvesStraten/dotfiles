@@ -51,8 +51,16 @@ require("lazy").setup({
 		dependencies = {
 			{
 				"nvimdev/lspsaga.nvim",
+				dependencies = {
+					"nvim-treesitter/nvim-treesitter",
+					"nvim-tree/nvim-web-devicons",
+				},
 				config = function()
-					require("lspsaga").setup()
+					require("lspsaga").setup({
+						lightbulb = {
+							sign = false,
+						},
+					})
 				end,
 			},
 

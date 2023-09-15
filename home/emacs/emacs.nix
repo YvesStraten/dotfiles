@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   programs.emacs = {
     enable = true;
     package = pkgs.emacs29-pgtk;
@@ -12,25 +12,18 @@
       ];
   };
 
-  home.file.".emacs.d/init.el" = {
-    source = ./init.el;
-  };
+  # home.file.".emacs.d/init.el" = {
+  #   source = ./init.el;
+  # };
 
-  home.packages = with pkgs; [
-    zulu8
-    languagetool
-  ];
+  home.packages = with pkgs; [ zulu8 languagetool ];
 
   services.emacs = {
     enable = true;
-    defaultEditor = true;
-    client = {
-      enable = true;
-    };
+    # defaultEditor = true;
+    client = { enable = true; };
     startWithUserSession = true;
   };
 
-  services.syncthing = {
-    enable = true;
-  };
+  services.syncthing = { enable = true; };
 }
