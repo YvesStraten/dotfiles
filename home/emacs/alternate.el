@@ -44,12 +44,13 @@
   :init
   (setq evil-want-C-u-scroll t) ;; Enable C-u for scrolling
   :config
-  (evil-mode 1))
+  (evil-mode 1)
+	(evil-set-undo-system 'undo-redo))
 
 ;; Add other configuration options and packages as needed below
 
 ;; Example: Configure Org mode for a great-looking setup
-(use-package org
+(use-package org-bullets
   :config
   (setq org-ellipsis "⤵")
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
@@ -105,10 +106,31 @@
 ;; File tree
 (use-package neotree
   :config
-  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+  )
 
 ;; Integrated term
 (use-package vterm)
+
+(use-package vterm-toggle
+	:after vterm
+	:config
+  (setq vterm-toggle-fullscreen-p nil)
+  (setq vterm-toggle-scope 'project)
+  (add-to-list 'display-buffer-alist
+               '((lambda (buffer-or-name _)
+                   (let ((buffer (get-buffer buffer-or-name)))
+                     (with-current-buffer buffer
+                       (or (equal major-mode 'vterm-mode)
+                           (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
+                 (display-buffer-reuse-window display-buffer-at-bottom)
+                 ;;(display-buffer-reuse-window display-buffer-in-direction)
+                 ;;display-buffer-in-direction/direction/dedicated is added in emacs27
+                 ;;(direction . bottom)
+                 (dedicated . t) ;dedicated is supported in emacs27
+                 (reusable-frames . visible)
+                 (window-height . 0.3))))
+	
 
 ;; Which key
 (use-package which-key
@@ -130,6 +152,22 @@
 ;; All-the-icons
 (use-package all-the-icons
   :if (display-graphic-p))
+
+;; Status bar
+(use-package doom-modeline
+	:init (doom-modeline-mode 1))
+
+;; Centaur tabs
+(use-package centaur-tabs
+	:demand
+	:config
+	(centaur-tabs-mode t)
+	(setq centaur-tabs-set-icons t)
+	(setq centaur-tabs-gray-out-icons 'buffer)
+	(setq centaur-tabs-set-bar 'over)
+	:bind
+	("<tab>" . centaur-tabs-forward)
+	("<backtab>" . centaur-tabs-backward))
 
 ;; Disable unrelated warnings
 (setq warning-minimum-level :error)
@@ -156,7 +194,7 @@
 
  (add-to-list 'default-frame-alist '(alpha-background . 80))
 
- (defun toggle-transparency ()
+(defun toggle-transparency ()
   (interactive)
   (let ((alpha (frame-parameter nil 'alpha)))
     (set-frame-parameter
@@ -171,6 +209,44 @@
 
 
 ;; Keybinds 
+(use-package general
+    :config
+    (general-evil-setup)
+    (general-create-definer ys/leader-keys
+      :states '(normal insert visual emacs)
+      :keymaps 'override
+      :prefix "SPC"
+      :global-prefix "M-SPC")
+
+
+    (ys/leader-keys
+      "f" '(:ignore t :wk "projectile")
+      "ff" '(projectile-find-file :wk "Find file")
+      "fb" '(projectile-switch-to-buffer :wk "Switch to buffer")
+      )
+
+		(ys/leader-keys
+			"s" '(:ignore t :wk "window")
+			"sh" '(evil-window-split :wk "Horizontal split")
+      "sv" '(evil-window-vsplit :wk "Vertical split"))
+
+
+   (ys/leader-keys
+"t" '(vterm-toggle :wk "vterm")
+)
+
+    (ys/leader-keys
+      "o" '(:ignore t :wk "Org")
+      "oa" '(org-agenda :wk "Org agenda")
+      "oe" '(org-export-dispatch :wk "Org export")
+      "oi" '(org-toggle-item :wk "Org toggle Item")
+      "ot" '(org-todo :wk "Org Todo")
+      "oT" '(org-todo-list :wk "Org Todo List")
+      )
+
+    (ys/leader-keys
+      "g" '(magit :wk "Open magit"))
+		)
 
 ;; End of init.el
 (custom-set-variables
@@ -179,9 +255,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-	 '("f25f174e4e3dbccfcb468b8123454b3c61ba94a7ae0a870905141b050ad94b8f" default))
+   '("f25f174e4e3dbccfcb468b8123454b3c61ba94a7ae0a870905141b050ad94b8f" default))
  '(package-selected-packages
-	 '(which-key neotree company-lsp org-plus-contrib evil yasnippet-snippets vterm-toggle tree-sitter-langs magit all-the-icons lsp-ui lsp-treemacs ivy-yasnippet company)))
+   '(centaur-tabs doom-modeline org-bullets general which-key neotree company-lsp org-plus-contrib evil yasnippet-snippets vterm-toggle tree-sitter-langs magit all-the-icons lsp-ui lsp-treemacs ivy-yasnippet company)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
