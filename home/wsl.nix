@@ -10,9 +10,9 @@
     ./others.nix
 
     # Editors
-    ./nvim/neovim.nix
-    #./emacs/emacs.nix
-    ./tmux/tmux.nix
+    #./nvim/neovim.nix
+    ./emacs/emacs.nix
+    #./tmux/tmux.nix
 
     # Variables
     ./zsh/zsh.nix

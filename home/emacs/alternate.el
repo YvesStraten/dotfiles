@@ -78,6 +78,10 @@
   (setq org-ellipsis "⤵")
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
+(use-package org-fragtog
+  :config
+  (add-hook 'org-mode-hook 'org-fragtog-mode))
+
 ;; Projectile
 (use-package projectile
   :config
