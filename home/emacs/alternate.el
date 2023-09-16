@@ -34,22 +34,46 @@
 (use-package ivy-yasnippet
   :bind (("C-c y" . ivy-yasnippet)))
 
+(use-package lsp-ivy
+  :bind (("C-C l" . lsp-ivy-workspace-symbol)))
+
 ;; Integrate yasnippet with Company for snippet completion
 (use-package company
+  :after lsp-mode
+  :hook (prog-mode . company-mode)
+  :bind
+  (:map company-active-map
+         ("<tab>" . company-complete-selection))
+        (:map lsp-mode-map
+         ("<tab>" . company-indent-or-complete-common))
   :config
-  (add-to-list 'company-backends 'company-yasnippet))
+  ;; (add-to-list 'company-backends 'company-yasnippet)
+  (setq company-idle-delay 0.0 
+	company-minimum-prefix-length 1))
+
+;; Company box
+(use-package company-box
+	:hook (company-mode . company-box-mode))
 
 ;; Add Evil mode for Vim-style keybindings
 (use-package evil
   :init
-  (setq evil-want-C-u-scroll t) ;; Enable C-u for scrolling
+  (setq evil-want-C-u-scroll t
+				evil-want-keybinding nil) ;; Enable C-u for scrolling
   :config
   (evil-mode 1)
 	(evil-set-undo-system 'undo-redo))
+;; Evil collection
+(use-package evil-collection
+  :after evil
+  :ensure t
+  :config
+  (evil-collection-init))
 
-;; Add other configuration options and packages as needed below
+(use-package toc-org
+  :commands toc-org-enable
+  :init (add-hook 'org-mode-hook 'toc-org-enable))
 
-;; Example: Configure Org mode for a great-looking setup
 (use-package org-bullets
   :config
   (setq org-ellipsis "⤵")
@@ -73,15 +97,23 @@
 	 (tsx-ts-mode . lsp))
   :commands lsp
   :config
-  (setq lsp-prefer-flymake nil)
+  (setq lsp-prefer-flymake nil
+				lsp-prefer-capf t
+	gc-cons-threshold 100000000
+	read-process-output-max (* 1024 1024)
+	lsp-idle-delay 0.500
+	lsp-log-io nil)
   ;; Configure other LSP settings as needed
   )
 
 (use-package lsp-ui
-  :commands lsp-ui-mode)
+  :hook (lsp-mode . lsp-ui-mode))
+
+(use-package evil-nerd-commenter
+	:bind ("M-/" . evilnc-comment-or-uncomment-lines))
 
 (use-package lsp-treemacs
-  :commands lsp-treemacs-errors-list)
+  :after lsp)
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
@@ -107,6 +139,9 @@
 (use-package neotree
   :config
   (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+	:bind
+	(:map evil-normal-state-map
+        ("C-n" . neotree-toggle))
   )
 
 ;; Integrated term
@@ -162,12 +197,15 @@
 	:demand
 	:config
 	(centaur-tabs-mode t)
+	(centaur-tabs-headline-match)
 	(setq centaur-tabs-set-icons t)
 	(setq centaur-tabs-gray-out-icons 'buffer)
 	(setq centaur-tabs-set-bar 'over)
 	:bind
-	("<tab>" . centaur-tabs-forward)
-	("<backtab>" . centaur-tabs-backward))
+	(:map evil-normal-state-map
+        ("g t" . centaur-tabs-forward)
+        ("g T" . centaur-tabs-backward))
+	)
 
 ;; Disable unrelated warnings
 (setq warning-minimum-level :error)
@@ -187,6 +225,23 @@
 (setq-default ident-tabs-mode nil)
 
 ;; UI related things
+;; Dashboard 
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook))
+(setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
+(setq dashboard-banner-logo-title "Welcome to Emacs")
+(setq dashboard-startup-banner 'official)
+(setq dashboard-center-content t)
+
+;; Sets which dashboard items should show
+(setq dashboard-items '((recents  . 5)
+                        (bookmarks . 5)
+                        (projects . 5)
+                        (agenda . 5)))
+
+;; Uses dracula theme
 (use-package dracula-theme)
 (load-theme 'dracula t)
 
@@ -223,6 +278,7 @@
       "f" '(:ignore t :wk "projectile")
       "ff" '(projectile-find-file :wk "Find file")
       "fb" '(projectile-switch-to-buffer :wk "Switch to buffer")
+			"fp" '(projectile-switch-project :wk "Switch project")
       )
 
 		(ys/leader-keys
@@ -234,6 +290,10 @@
    (ys/leader-keys
 "t" '(vterm-toggle :wk "vterm")
 )
+
+   (ys/leader-keys
+     "l" '(:ignore t :wk "Lsp")
+     "lr" '(lsp-rename :wk "Rename reference"))
 
     (ys/leader-keys
       "o" '(:ignore t :wk "Org")
@@ -255,9 +315,11 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("f25f174e4e3dbccfcb468b8123454b3c61ba94a7ae0a870905141b050ad94b8f" default))
+	 '("f25f174e4e3dbccfcb468b8123454b3c61ba94a7ae0a870905141b050ad94b8f" default))
+ '(org-agenda-files (list org-directory))
+ '(org-directory "~/org")
  '(package-selected-packages
-   '(centaur-tabs doom-modeline org-bullets general which-key neotree company-lsp org-plus-contrib evil yasnippet-snippets vterm-toggle tree-sitter-langs magit all-the-icons lsp-ui lsp-treemacs ivy-yasnippet company)))
+	 '(evil-nerd-commenter company-box evil-collection lsp-ivy dashboard toc-org centaur-tabs doom-modeline org-bullets general which-key neotree company-lsp org-plus-contrib evil yasnippet-snippets vterm-toggle tree-sitter-langs magit all-the-icons lsp-ui lsp-treemacs ivy-yasnippet company)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
