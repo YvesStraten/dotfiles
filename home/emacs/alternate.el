@@ -22,13 +22,12 @@
 (use-package yasnippet
   :config
   (yas-global-mode 1)
-  ;; Display snippets in a popup
-  (use-package yasnippet-snippets
-    :config
-    (yas-reload-all)
-    (add-hook 'prog-mode-hook #'yas-minor-mode)
-    (add-hook 'org-mode-hook #'yas-minor-mode)
-    (add-hook 'markdown-mode-hook #'yas-minor-mode)))
+  )
+
+(setq yas-snippet-dirs '("~/Git-repos/dotfiles/home/snippets"))
+
+;; Display snippets in a popup
+(use-package yasnippet-snippets)
 
 ;; Integrate yasnippet with Ivy for snippet selection
 (use-package ivy-yasnippet
@@ -59,7 +58,7 @@
 (use-package evil
   :init
   (setq evil-want-C-u-scroll t
-				evil-want-keybinding nil) ;; Enable C-u for scrolling
+	evil-want-keybinding nil) ;; Enable C-u for scrolling
   :config
   (evil-mode 1)
 	(evil-set-undo-system 'undo-redo))
@@ -89,6 +88,9 @@
   :config
   (counsel-projectile-mode 1))
 
+(global-tree-sitter-mode)
+(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+
 ;; Example: LSP integration with lsp-mode
 (use-package lsp-mode
   :hook ((python-mode . lsp)
@@ -114,6 +116,9 @@
 
 (use-package lsp-treemacs
   :after lsp)
+
+(use-package nix-mode
+  :mode "\\.nix\\'")
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
@@ -141,7 +146,7 @@
   (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 	:bind
 	(:map evil-normal-state-map
-        ("C-n" . neotree-toggle))
+        ("C-n" . neotree-show))
   )
 
 ;; Integrated term
@@ -246,22 +251,8 @@
 (load-theme 'dracula t)
 
 (add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-15"))
-
- (add-to-list 'default-frame-alist '(alpha-background . 80))
-
-(defun toggle-transparency ()
-  (interactive)
-  (let ((alpha (frame-parameter nil 'alpha)))
-    (set-frame-parameter
-     nil 'alpha
-     (if (eql (cond ((numberp alpha) alpha)
-                    ((numberp (cdr alpha)) (cdr alpha))
-                    ;; Also handle undocumented (<active> <inactive>) form.
-                    ((numberp (cadr alpha)) (cadr alpha)))
-              100)
-         '(85 . 50) '(100 . 100)))))
-(global-set-key (kbd "C-c t") 'toggle-transparency)
-
+(setq display-line-numbers 'relative
+      display-line-numbers-current-absolute t)
 
 ;; Keybinds 
 (use-package general
@@ -315,11 +306,11 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-	 '("f25f174e4e3dbccfcb468b8123454b3c61ba94a7ae0a870905141b050ad94b8f" default))
+   '("f25f174e4e3dbccfcb468b8123454b3c61ba94a7ae0a870905141b050ad94b8f" default))
  '(org-agenda-files (list org-directory))
  '(org-directory "~/org")
  '(package-selected-packages
-	 '(evil-nerd-commenter company-box evil-collection lsp-ivy dashboard toc-org centaur-tabs doom-modeline org-bullets general which-key neotree company-lsp org-plus-contrib evil yasnippet-snippets vterm-toggle tree-sitter-langs magit all-the-icons lsp-ui lsp-treemacs ivy-yasnippet company)))
+   '(evil-nerd-commenter company-box evil-collection lsp-ivy dashboard toc-org centaur-tabs doom-modeline org-bullets general which-key neotree company-lsp org-plus-contrib evil yasnippet-snippets vterm-toggle tree-sitter-langs magit all-the-icons lsp-ui lsp-treemacs ivy-yasnippet company)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

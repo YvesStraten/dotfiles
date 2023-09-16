@@ -9,6 +9,8 @@
         magit
         all-the-icons
         tree-sitter-langs
+	company
+	company-box
       ];
   };
 
@@ -20,7 +22,7 @@
 
   services.emacs = {
     enable = true;
-    # defaultEditor = true;
+    defaultEditor = true;
     client = { enable = true; };
     startWithUserSession = true;
   };

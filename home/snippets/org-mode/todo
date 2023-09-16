@@ -4,7 +4,4 @@
 # --
 ** TODO $1
    DEADLINE: <`(format-time-string "%Y")`-${`(format-time-string "%m")`}-${`(format-time-string "%d")`} ${`(format-time-string "%a")`} ${`(format-time-string "%R")`}>
-   :PROPERTIES:
-   :CREATED: [`(format-time-string "%Y-%m-%d %a %R")`]
-   :END:
 $0

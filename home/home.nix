@@ -7,7 +7,7 @@
     ./others.nix
 
     # Editors
-    ./nvim/neovim.nix
+    # ./nvim/neovim.nix
     ./emacs/emacs.nix
     ./vscode/vscode.nix
 
