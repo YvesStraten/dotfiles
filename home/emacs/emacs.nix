@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   programs.emacs = {
     enable = true;
     package = pkgs.emacs29-pgtk;
@@ -20,17 +20,38 @@
   # };
 
   home.packages = with pkgs; [
-    zulu8
+    openjdk17
     languagetool
     rnix-lsp
+    jdt-language-server
+    texlab
+    omnisharp-roslyn
+    sumneko-lua-language-server
+    stylua
+    nodePackages_latest.prettier
+    nodePackages_latest.vscode-html-languageserver-bin
+    nodePackages_latest.typescript-language-server
+    nodePackages_latest.eslint
+    html-tidy
+    rnix-lsp
+    shellcheck
+    nodePackages_latest.pyright
+    cppcheck
+    alejandra
+    clang-tools
+    # nixpkgs-fmt
+    nixfmt
+
+    # DAP protocols
+    lldb
   ];
 
   services.emacs = {
     enable = true;
     defaultEditor = true;
-    client = {enable = true;};
+    client = { enable = true; };
     startWithUserSession = true;
   };
 
-  services.syncthing = {enable = true;};
+  services.syncthing = { enable = true; };
 }

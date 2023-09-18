@@ -24,7 +24,7 @@
 ;; Configure yasnippet for code snippets
 (use-package yasnippet
   :config
-(yas-global-mode 1)
+  (yas-global-mode 1)
   )
 
 ;; Integrate yasnippet with Ivy for snippet selection
@@ -40,17 +40,17 @@
   :hook (prog-mode . company-mode)
   :bind
   (:map company-active-map
-         ("<tab>" . company-complete-selection))
-        (:map lsp-mode-map
-         ("<tab>" . company-indent-or-complete-common))
+        ("<tab>" . company-complete-selection))
+  (:map lsp-mode-map
+        ("<tab>" . company-indent-or-complete-common))
   :config
   ;; (add-to-list 'company-backends 'company-yasnippet)
-  (setq company-idle-delay 0.0 
+  (setq company-idle-delay 0.0
 	company-minimum-prefix-length 1))
 
 ;; Company box
 (use-package company-box
-	:hook (company-mode . company-box-mode))
+  :hook (company-mode . company-box-mode))
 
 ;; Add Evil mode for Vim-style keybindings
 (use-package evil
@@ -59,7 +59,8 @@
 	evil-want-keybinding nil) ;; Enable C-u for scrolling
   :config
   (evil-mode 1)
-	(evil-set-undo-system 'undo-redo))
+  (evil-set-undo-system 'undo-redo))
+
 ;; Evil collection
 (use-package evil-collection
   :after evil
@@ -81,22 +82,22 @@
   (add-hook 'org-mode-hook 'org-fragtog-mode))
 
 (org-babel-do-load-languages
-'org-babel-load-languages
-'((js . t)
-(C . t)
-(java . t)
-(python . t)))
+ 'org-babel-load-languages
+ '((js . t)
+   (C . t)
+   (java . t)
+   (python . t)))
 
 ;; Credit to Derek Taylor for these agenda commands
 (setq
-   ;; org-fancy-priorities-list '("[A]" "[B]" "[C]")
-   ;; org-fancy-priorities-list '("❗" "[B]" "[C]")
-   org-fancy-priorities-list '("🟥" "🟧" "🟨")
-   org-priority-faces
-   '((?A :foreground "#ff6c6b" :weight bold)
-     (?B :foreground "#98be65" :weight bold)
-     (?C :foreground "#c678dd" :weight bold))
-   org-agenda-block-separator 8411)
+ ;; org-fancy-priorities-list '("[A]" "[B]" "[C]")
+ ;; org-fancy-priorities-list '("❗" "[B]" "[C]")
+ org-fancy-priorities-list '("🟥" "🟧" "🟨")
+ org-priority-faces
+ '((?A :foreground "#ff6c6b" :weight bold)
+   (?B :foreground "#98be65" :weight bold)
+   (?C :foreground "#c678dd" :weight bold))
+ org-agenda-block-separator 8411)
 
 (setq org-agenda-custom-commands
       '(("v" "A better agenda view"
@@ -119,9 +120,9 @@
 ;; Latex
 (use-package xenops
   :config
-(add-hook 'latex-mode-hook #'xenops-mode)
-(add-hook 'LaTeX-mode-hook #'xenops-mode)
-(add-hook 'org-mode-hook #'xenops-mode)
+  (add-hook 'latex-mode-hook #'xenops-mode)
+  (add-hook 'LaTeX-mode-hook #'xenops-mode)
+  (add-hook 'org-mode-hook #'xenops-mode)
   )
 
 ;; Projectile
@@ -134,6 +135,8 @@
   :config
   (counsel-projectile-mode 1))
 
+(require 'tree-sitter-langs)
+(require 'tree-sitter)
 (global-tree-sitter-mode)
 (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 
@@ -141,12 +144,12 @@
 (use-package lsp-mode
   :hook ((python-mode . lsp)
          (java-mode . lsp)
-	 (js-mode . lsp)
-	 (tsx-ts-mode . lsp))
+	 (typescript-mode . lsp)
+	 (javascript-mode . lsp))
   :commands lsp
   :config
   (setq lsp-prefer-flymake nil
-				lsp-prefer-capf t
+	lsp-prefer-capf t
 	gc-cons-threshold 100000000
 	read-process-output-max (* 1024 1024)
 	lsp-idle-delay 0.500
@@ -160,19 +163,27 @@
   (add-hook 'java-mode-hook #'lsp))
 
 ;; For debugging
-
-
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode))
 
+;; Formatter
+(use-package format-all
+  :config
+  (add-hook 'prog-mode-hook 'format-all-mode))
+
 (use-package evil-nerd-commenter
-	:bind ("M-/" . evilnc-comment-or-uncomment-lines))
+  :bind ("M-/" . evilnc-comment-or-uncomment-lines))
 
 (use-package lsp-treemacs
   :after lsp)
 
 (use-package nix-mode
   :mode "\\.nix\\'")
+
+(use-package typescript-mode
+  :config
+  (setq typescript-indent-level 2))
+
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
@@ -181,8 +192,6 @@
   :config
   (require 'smartparens-config)
   (smartparens-global-mode 1))
-
-;; General.el
 
 ;; Adds magit
 (use-package magit
@@ -198,8 +207,8 @@
 (use-package neotree
   :config
   (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
-	:bind
-	(:map evil-normal-state-map
+  :bind
+  (:map evil-normal-state-map
         ("C-n" . neotree-show))
   )
 
@@ -207,8 +216,8 @@
 (use-package vterm)
 
 (use-package vterm-toggle
-	:after vterm
-	:config
+  :after vterm
+  :config
   (setq vterm-toggle-fullscreen-p nil)
   (setq vterm-toggle-scope 'project)
   (add-to-list 'display-buffer-alist
@@ -224,7 +233,7 @@
                  (dedicated . t) ;dedicated is supported in emacs27
                  (reusable-frames . visible)
                  (window-height . 0.3))))
-	
+
 
 ;; Which key
 (use-package which-key
@@ -249,22 +258,22 @@
 
 ;; Status bar
 (use-package doom-modeline
-	:init (doom-modeline-mode 1))
+  :init (doom-modeline-mode 1))
 
 ;; Centaur tabs
 (use-package centaur-tabs
-	:demand
-	:config
-	(centaur-tabs-mode t)
-	(centaur-tabs-headline-match)
-	(setq centaur-tabs-set-icons t)
-	(setq centaur-tabs-gray-out-icons 'buffer)
-	(setq centaur-tabs-set-bar 'over)
-	:bind
-	(:map evil-normal-state-map
+  :demand
+  :config
+  (centaur-tabs-mode t)
+  (centaur-tabs-headline-match)
+  (setq centaur-tabs-set-icons t)
+  (setq centaur-tabs-gray-out-icons 'buffer)
+  (setq centaur-tabs-set-bar 'over)
+  :bind
+  (:map evil-normal-state-map
         ("g t" . centaur-tabs-forward)
         ("g T" . centaur-tabs-backward))
-	)
+  )
 
 ;; Disable unrelated warnings
 (setq warning-minimum-level :error)
@@ -284,7 +293,7 @@
 (setq-default ident-tabs-mode nil)
 
 ;; UI related things
-;; Dashboard 
+;; Dashboard
 (use-package dashboard
   :ensure t
   :config
@@ -308,50 +317,52 @@
 (setq display-line-numbers 'relative
       display-line-numbers-current-absolute t)
 
-;; Keybinds 
+;; Keybinds
 (use-package general
-    :config
-    (general-evil-setup)
-    (general-create-definer ys/leader-keys
-      :states '(normal insert visual emacs)
-      :keymaps 'override
-      :prefix "SPC"
-      :global-prefix "M-SPC")
+  :config
+  (general-evil-setup)
+  (general-create-definer ys/leader-keys
+    :states '(normal insert visual emacs)
+    :keymaps 'override
+    :prefix "SPC"
+    :global-prefix "M-SPC")
 
 
-    (ys/leader-keys
-      "f" '(:ignore t :wk "projectile")
-      "ff" '(projectile-find-file :wk "Find file")
-      "fb" '(projectile-switch-to-buffer :wk "Switch to buffer")
-			"fp" '(projectile-switch-project :wk "Switch project")
-      )
+  (ys/leader-keys
+    "f" '(:ignore t :wk "projectile")
+    "ff" '(projectile-find-file :wk "Find file")
+    "fb" '(projectile-switch-to-buffer :wk "Switch to buffer")
+    "fp" '(projectile-switch-project :wk "Switch project")
+    )
 
-		(ys/leader-keys
-			"s" '(:ignore t :wk "window")
-			"sh" '(evil-window-split :wk "Horizontal split")
-      "sv" '(evil-window-vsplit :wk "Vertical split"))
+  (ys/leader-keys
+    "s" '(:ignore t :wk "window")
+    "sh" '(evil-window-split :wk "Horizontal split")
+    "sv" '(evil-window-vsplit :wk "Vertical split"))
 
 
-   (ys/leader-keys
-"t" '(vterm-toggle :wk "vterm")
-)
+  (ys/leader-keys
+    "t" '(vterm-toggle :wk "vterm")
+    )
 
-   (ys/leader-keys
-     "l" '(:ignore t :wk "Lsp")
-     "lr" '(lsp-rename :wk "Rename reference"))
+  (ys/leader-keys
+    "l" '(:ignore t :wk "Lsp")
+    "lr" '(lsp-rename :wk "Rename reference")
+    "lf" '(format-all-buffer
+	   :wk "Formats buffer"))
 
-    (ys/leader-keys
-      "o" '(:ignore t :wk "Org")
-      "oa" '(org-agenda :wk "Org agenda")
-      "oe" '(org-export-dispatch :wk "Org export")
-      "oi" '(org-toggle-item :wk "Org toggle Item")
-      "ot" '(org-todo :wk "Org Todo")
-      "oT" '(org-todo-list :wk "Org Todo List")
-      )
+  (ys/leader-keys
+    "o" '(:ignore t :wk "Org")
+    "oa" '(org-agenda :wk "Org agenda")
+    "oe" '(org-export-dispatch :wk "Org export")
+    "oi" '(org-toggle-item :wk "Org toggle Item")
+    "ot" '(org-todo :wk "Org Todo")
+    "oT" '(org-todo-list :wk "Org Todo List")
+    )
 
-    (ys/leader-keys
-      "g" '(magit :wk "Open magit"))
-		)
+  (ys/leader-keys
+    "g" '(magit :wk "Open magit"))
+  )
 
 ;; End of init.el
 (custom-set-variables
@@ -364,7 +375,7 @@
  '(org-agenda-files (list org-directory))
  '(org-directory "~/org")
  '(package-selected-packages
-   '(lsp-java xenops evil-nerd-commenter company-box evil-collection lsp-ivy dashboard toc-org centaur-tabs doom-modeline org-bullets general which-key neotree company-lsp org-plus-contrib evil yasnippet-snippets vterm-toggle tree-sitter-langs magit all-the-icons lsp-ui lsp-treemacs ivy-yasnippet company)))
+   '(typescript-mode format-all lsp-java xenops evil-nerd-commenter company-box evil-collection lsp-ivy dashboard toc-org centaur-tabs doom-modeline org-bullets general which-key neotree company-lsp org-plus-contrib evil yasnippet-snippets vterm-toggle tree-sitter-langs magit all-the-icons lsp-ui lsp-treemacs ivy-yasnippet company)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
