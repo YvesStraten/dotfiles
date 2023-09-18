@@ -18,16 +18,14 @@
   (interactive)
   (load-file (expand-file-name "~/.emacs.d/init.el")))
 
+;; Display snippets in a popup
+(use-package yasnippet-snippets)
+
 ;; Configure yasnippet for code snippets
 (use-package yasnippet
   :config
-  (yas-global-mode 1)
+(yas-global-mode 1)
   )
-
-(setq yas-snippet-dirs '("~/Git-repos/dotfiles/home/snippets"))
-
-;; Display snippets in a popup
-(use-package yasnippet-snippets)
 
 ;; Integrate yasnippet with Ivy for snippet selection
 (use-package ivy-yasnippet
@@ -85,6 +83,8 @@
 (org-babel-do-load-languages
 'org-babel-load-languages
 '((js . t)
+(C . t)
+(java . t)
 (python . t)))
 
 ;; Credit to Derek Taylor for these agenda commands
@@ -153,6 +153,14 @@
 	lsp-log-io nil)
   ;; Configure other LSP settings as needed
   )
+
+;; For java
+(use-package lsp-java
+  :config
+  (add-hook 'java-mode-hook #'lsp))
+
+;; For debugging
+
 
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode))
@@ -356,7 +364,7 @@
  '(org-agenda-files (list org-directory))
  '(org-directory "~/org")
  '(package-selected-packages
-   '(xenops evil-nerd-commenter company-box evil-collection lsp-ivy dashboard toc-org centaur-tabs doom-modeline org-bullets general which-key neotree company-lsp org-plus-contrib evil yasnippet-snippets vterm-toggle tree-sitter-langs magit all-the-icons lsp-ui lsp-treemacs ivy-yasnippet company)))
+   '(lsp-java xenops evil-nerd-commenter company-box evil-collection lsp-ivy dashboard toc-org centaur-tabs doom-modeline org-bullets general which-key neotree company-lsp org-plus-contrib evil yasnippet-snippets vterm-toggle tree-sitter-langs magit all-the-icons lsp-ui lsp-treemacs ivy-yasnippet company)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

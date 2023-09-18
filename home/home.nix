@@ -1,4 +1,8 @@
-{ config, pkgs, ... }: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   imports = [
     # Main stuff
     ./languages.nix
@@ -33,9 +37,9 @@
     homeDirectory = "/home/yvess";
     stateVersion = "22.11"; # Please read the comment before changing.
 
-    sessionPath = [ "$HOME/.local/bin" ];
+    sessionPath = ["$HOME/.local/bin"];
 
-    sessionVariables = { TERMINAL = "kitty"; };
+    sessionVariables = {TERMINAL = "kitty";};
   };
 
   services = {

@@ -13,19 +13,23 @@
     gnomeExtensions.pano
     gnomeExtensions.forge
     gnomeExtensions.espresso
-	];
-	
-	environment.gnome.excludePackages = (with pkgs; [
-	gnome-photos 
-	gnome-tour
-	]) ++ (with pkgs.gnome; [
-	gnome-terminal 
-	gnome-music
-	epiphany
-	geary 
-	tali
-	iagno
-	hitori 
-	atomix
-	]);
+    gnomeExtensions.dock-from-dash
+    gnomeExtensions.docker
+  ];
+
+  environment.gnome.excludePackages =
+    (with pkgs; [
+      gnome-photos
+      gnome-tour
+    ])
+    ++ (with pkgs.gnome; [
+      gnome-terminal
+      gnome-music
+      epiphany
+      geary
+      tali
+      iagno
+      hitori
+      atomix
+    ]);
 }

@@ -22,7 +22,6 @@ in {
     layout = "us";
     xkbVariant = "";
   };
-
   services.xserver.videoDrivers = ["nvidia"];
   hardware.opengl = {
     enable = true;
@@ -32,7 +31,6 @@ in {
       vaapiIntel
       vaapiVdpau
       libvdpau-va-gl
-      intel-media-driver
     ];
     extraPackages32 = with pkgs; [
       libva

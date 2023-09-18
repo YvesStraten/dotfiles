@@ -31,7 +31,7 @@
     alejandra
     clang-tools
     # nixpkgs-fmt
-		nixfmt
+    nixfmt
 
     # DAP protocols
     lldb
