@@ -244,10 +244,13 @@
 ;; File tree
 (use-package neotree
   :config
-  (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)
+	neo-window-width 25
+	neo-smart-open t
+	neo-show-hidden-files t)
   :bind
   (:map evil-normal-state-map
-        ("C-n" . neotree-show))
+        ("C-n" . neotree-toggle))
   )
 
 ;; Integrated term
@@ -304,14 +307,34 @@
   :config
   (centaur-tabs-mode t)
   (centaur-tabs-headline-match)
-  (setq centaur-tabs-set-icons t)
-  (setq centaur-tabs-gray-out-icons 'buffer)
-  (setq centaur-tabs-set-bar 'over)
+  (setq centaur-tabs-height 40
+	centaur-tabs-style "wave"
+	centaur-tabs-set-icons t
+	centaur-tabs-gray-out-icons 'buffer
+	centaur-tabs-set-bar 'under
+	x-underline-at-descent-line t
+	centaur-tabs-set-modified-marker t)
   :bind
   (:map evil-normal-state-map
         ("g t" . centaur-tabs-forward)
         ("g T" . centaur-tabs-backward))
   )
+
+;; Language tool
+;; Credits to doom emacs developers
+(use-package langtool
+  :commands (langtool-check
+             langtool-check-done
+             langtool-show-message-at-point
+             langtool-correct-buffer)
+  :init (setq langtool-default-language "en-US")
+  :config
+  (unless (or langtool-bin
+              langtool-language-tool-jar
+              langtool-java-classpath)
+    (cond ((setq langtool-bin
+                 (or (executable-find "languagetool-commandline")
+                     (executable-find "languagetool")))))))  ; for nixpkgs.languagetool
 
 ;; Disable unrelated warnings
 (setq warning-minimum-level :error)
@@ -321,6 +344,9 @@
 
 ;; Disable auto-save files (e.g., #filename#)
 (setq auto-save-default nil)
+
+;; Disable lock file creation
+(setq create-lockfiles nil)
 
 ;; Store all backup and auto-save files in a specific directory
 (setq backup-directory-alist '(("." . "~/emacs/backups/")))
@@ -340,6 +366,8 @@
 (setq dashboard-banner-logo-title "Welcome to Emacs")
 (setq dashboard-startup-banner 'official)
 (setq dashboard-center-content t)
+(setq dashboard-set-file-icons t)
+(setq dashboard-set-heading-icons t)
 
 ;; Sets which dashboard items should show
 (setq dashboard-items '((recents  . 5)
