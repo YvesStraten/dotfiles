@@ -204,6 +204,10 @@
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode))
 
+;; For the vscode themed minimap
+(use-package minimap
+  )
+
 ;; Formatter
 (use-package format-all
   :config
@@ -339,6 +343,15 @@
                  (or (executable-find "languagetool-commandline")
                      (executable-find "languagetool")))))))  ; for nixpkgs.languagetool
 
+;; Automatically reverts buffers for changed files
+(global-auto-revert-mode 1)
+
+;; Reverts dired as well
+(setq global-auto-revert-non-file-buffers t)
+
+;; Remembers the last place you visited in a file
+(save-place-mode 1)
+
 ;; Disable unrelated warnings
 (setq warning-minimum-level :error)
 
@@ -444,7 +457,7 @@
  '(org-agenda-files (list org-directory))
  '(org-directory "~/org")
  '(package-selected-packages
-   '(rainbow-mode typescript-mode format-all lsp-java xenops evil-nerd-commenter company-box evil-collection lsp-ivy dashboard toc-org centaur-tabs doom-modeline org-bullets general which-key neotree company-lsp org-plus-contrib evil yasnippet-snippets vterm-toggle tree-sitter-langs magit all-the-icons lsp-ui lsp-treemacs ivy-yasnippet company)))
+   '(minimap rainbow-mode typescript-mode format-all lsp-java xenops evil-nerd-commenter company-box evil-collection lsp-ivy dashboard toc-org centaur-tabs doom-modeline org-bullets general which-key neotree company-lsp org-plus-contrib evil yasnippet-snippets vterm-toggle tree-sitter-langs magit all-the-icons lsp-ui lsp-treemacs ivy-yasnippet company)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
