@@ -204,6 +204,10 @@
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode))
 
+;; For the vscode themed minimap
+(use-package minimap
+  )
+
 ;; Formatter
 (use-package format-all
   :config
@@ -239,6 +243,9 @@
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
+
+(use-package rainbow-mode
+  :hook (prog-mode . rainbow-mode))
 
 (use-package smartparens
   :config
@@ -350,6 +357,15 @@
                  (or (executable-find "languagetool-commandline")
                      (executable-find "languagetool")))))))  ; for nixpkgs.languagetool
 
+;; Automatically reverts buffers for changed files
+(global-auto-revert-mode 1)
+
+;; Reverts dired as well
+(setq global-auto-revert-non-file-buffers t)
+
+;; Remembers the last place you visited in a file
+(save-place-mode 1)
+
 ;; Disable unrelated warnings
 (setq warning-minimum-level :error)
 
@@ -448,16 +464,3 @@
   )
 
 ;; End of init.el
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(general dracula-theme dashboard langtool centaur-tabs doom-modeline which-key neotree tmux-pane smartparens rainbow-delimiters typescript-mode nix-mode evil-nerd-commenter highlight-indent-guides format-all lsp-ui counsel-projectile projectile org-bullets toc-org evil-collection evil lsp-ivy ivy-yasnippet yasnippet-snippets vterm-toggle tree-sitter-langs magit lsp-java company-box all-the-icons)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
