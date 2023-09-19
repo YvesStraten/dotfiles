@@ -183,7 +183,7 @@
   :hook ((python-mode . lsp)
          (java-mode . lsp)
 	 (typescript-mode . lsp)
-	 (javascript-mode . lsp))
+	 (js-mode . lsp))
   :commands lsp
   :config
   (setq lsp-prefer-flymake nil
@@ -225,6 +225,9 @@
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
+
+(use-package rainbow-mode
+  :hook (prog-mode . rainbow-mode))
 
 (use-package smartparens
   :config
@@ -441,7 +444,7 @@
  '(org-agenda-files (list org-directory))
  '(org-directory "~/org")
  '(package-selected-packages
-   '(typescript-mode format-all lsp-java xenops evil-nerd-commenter company-box evil-collection lsp-ivy dashboard toc-org centaur-tabs doom-modeline org-bullets general which-key neotree company-lsp org-plus-contrib evil yasnippet-snippets vterm-toggle tree-sitter-langs magit all-the-icons lsp-ui lsp-treemacs ivy-yasnippet company)))
+   '(rainbow-mode typescript-mode format-all lsp-java xenops evil-nerd-commenter company-box evil-collection lsp-ivy dashboard toc-org centaur-tabs doom-modeline org-bullets general which-key neotree company-lsp org-plus-contrib evil yasnippet-snippets vterm-toggle tree-sitter-langs magit all-the-icons lsp-ui lsp-treemacs ivy-yasnippet company)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
