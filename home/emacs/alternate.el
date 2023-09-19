@@ -115,9 +115,9 @@
   (setq org-ellipsis "⤵")
   (add-hook 'org-mode-hook 'org-bullets-mode ))
 
-(use-package org-fragtog
-  :config
-  (add-hook 'org-mode-hook 'org-fragtog-mode))
+; (use-package org-fragtog
+;   :config
+;   (add-hook 'org-mode-hook 'org-fragtog-mode))
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -156,12 +156,12 @@
           (alltodo "")))))
 
 ;; Latex
-(use-package xenops
-  :config
-  (add-hook 'latex-mode-hook #'xenops-mode)
-  (add-hook 'LaTeX-mode-hook #'xenops-mode)
-  (add-hook 'org-mode-hook #'xenops-mode)
-  )
+; (use-package xenops
+;   :config
+;   (add-hook 'latex-mode-hook #'xenops-mode)
+;   (add-hook 'LaTeX-mode-hook #'xenops-mode)
+;   (add-hook 'org-mode-hook #'xenops-mode)
+;   )
 
 ;; Projectile
 (use-package projectile
@@ -183,7 +183,7 @@
   :hook ((python-mode . lsp)
          (java-mode . lsp)
 	 (typescript-mode . lsp)
-	 (javascript-mode . lsp))
+	 (js-mode . lsp))
   :commands lsp
   :config
   (setq lsp-prefer-flymake nil
@@ -209,6 +209,13 @@
   :config
   (add-hook 'prog-mode-hook 'format-all-mode))
 
+;; Indent blankline
+(use-package highlight-indent-guides
+  :config
+  (setq highlight-indent-guides-method 'character
+				highlight-indent-guides-responsive 'top)
+  (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
+
 (use-package evil-nerd-commenter
   :bind ("M-/" . evilnc-comment-or-uncomment-lines))
 
@@ -221,6 +228,13 @@
 (use-package typescript-mode
   :config
   (setq typescript-indent-level 2))
+(setq js-indent-level 2)
+
+;; Markdown mode
+(use-package markdown-mode
+  :mode ("README\\.md\\'" . gfm-mode)
+  :init (setq markdown-command "pandoc")
+  )
 
 
 (use-package rainbow-delimiters
@@ -401,6 +415,9 @@
     "fp" '(projectile-switch-project :wk "Switch project")
     )
 
+	(ys/leader-keys
+		"x" '(kill-this-buffer :wk "Kill buffer"))
+
   (ys/leader-keys
     "s" '(:ignore t :wk "window")
     "sh" '(evil-window-split :wk "Horizontal split")
@@ -436,12 +453,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("f25f174e4e3dbccfcb468b8123454b3c61ba94a7ae0a870905141b050ad94b8f" default))
- '(org-agenda-files (list org-directory))
- '(org-directory "~/org")
  '(package-selected-packages
-   '(typescript-mode format-all lsp-java xenops evil-nerd-commenter company-box evil-collection lsp-ivy dashboard toc-org centaur-tabs doom-modeline org-bullets general which-key neotree company-lsp org-plus-contrib evil yasnippet-snippets vterm-toggle tree-sitter-langs magit all-the-icons lsp-ui lsp-treemacs ivy-yasnippet company)))
+   '(general dracula-theme dashboard langtool centaur-tabs doom-modeline which-key neotree tmux-pane smartparens rainbow-delimiters typescript-mode nix-mode evil-nerd-commenter highlight-indent-guides format-all lsp-ui counsel-projectile projectile org-bullets toc-org evil-collection evil lsp-ivy ivy-yasnippet yasnippet-snippets vterm-toggle tree-sitter-langs magit lsp-java company-box all-the-icons)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
