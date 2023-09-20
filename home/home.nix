@@ -15,7 +15,8 @@
     ./emacs/emacs.nix
     ./vscode/vscode.nix
 
-    ./kitty/kitty.nix
+    # ./kitty/kitty.nix
+    ./alacritty/alacritty.nix
     ./mpv/mpv.nix
     ./tmux/tmux.nix
     ./zathura/zathura.nix
@@ -38,15 +39,6 @@
     stateVersion = "22.11"; # Please read the comment before changing.
 
     sessionPath = ["$HOME/.local/bin"];
-
-    sessionVariables = {TERMINAL = "kitty";};
-  };
-
-  services = {
-    kdeconnect = {
-      enable = true;
-      indicator = true;
-    };
   };
 
   # Let Home Manager install and manage itself.

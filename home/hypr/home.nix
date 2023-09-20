@@ -28,6 +28,13 @@
     recursive = true;
   };
 
+  services = {
+    kdeconnect = {
+      enable = true;
+      indicator = true;
+    };
+  };
+
   wayland.windowManager.hyprland = {
     enable = true;
     systemdIntegration = true;

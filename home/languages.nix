@@ -16,12 +16,21 @@
     ripgrep
     fd
     fzf
+
+    # Cpp
     gcc
+    conan
+    cmake
+
+    # JS
     nodejs_20
     yarn
+
+    # C#
     dotnet-sdk
     mongosh
     mono
+
     unzip
     cargo
     sshfs

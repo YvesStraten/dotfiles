@@ -115,9 +115,9 @@
   (setq org-ellipsis "⤵")
   (add-hook 'org-mode-hook 'org-bullets-mode ))
 
-; (use-package org-fragtog
-;   :config
-;   (add-hook 'org-mode-hook 'org-fragtog-mode))
+					; (use-package org-fragtog
+					;   :config
+					;   (add-hook 'org-mode-hook 'org-fragtog-mode))
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -156,12 +156,12 @@
           (alltodo "")))))
 
 ;; Latex
-; (use-package xenops
-;   :config
-;   (add-hook 'latex-mode-hook #'xenops-mode)
-;   (add-hook 'LaTeX-mode-hook #'xenops-mode)
-;   (add-hook 'org-mode-hook #'xenops-mode)
-;   )
+					; (use-package xenops
+					;   :config
+					;   (add-hook 'latex-mode-hook #'xenops-mode)
+					;   (add-hook 'LaTeX-mode-hook #'xenops-mode)
+					;   (add-hook 'org-mode-hook #'xenops-mode)
+					;   )
 
 ;; Projectile
 (use-package projectile
@@ -217,7 +217,7 @@
 (use-package highlight-indent-guides
   :config
   (setq highlight-indent-guides-method 'character
-				highlight-indent-guides-responsive 'top)
+	highlight-indent-guides-responsive 'top)
   (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
 
 (use-package evil-nerd-commenter
@@ -233,13 +233,13 @@
   :config
   (setq typescript-indent-level 2))
 (setq js-indent-level 2)
+(setq css-indent-offset 2)
 
 ;; Markdown mode
 (use-package markdown-mode
   :mode ("README\\.md\\'" . gfm-mode)
   :init (setq markdown-command "pandoc")
   )
-
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
@@ -382,9 +382,37 @@
 (setq backup-directory-alist '(("." . "~/emacs/backups/")))
 (setq auto-save-file-name-transforms '((".*" "~/emacs/auto-save-list/" t)))
 
+;; Removes annoying prompts
+(setq use-short-answers t)
+
 ;; Tabs and space
 (setq tab-width 2)
 (setq-default ident-tabs-mode nil)
+
+(use-package ligature
+  :config
+  ;; Enable the "www" ligature in every possible major mode
+  (ligature-set-ligatures 't '("www"))
+  ;; Enable traditional ligature support in eww-mode, if the
+  ;; `variable-pitch' face supports it
+  (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
+  ;; Enable all Cascadia Code ligatures in programming modes
+  (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+                                       ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+                                       "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+                                       "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+                                       "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+                                       "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+                                       "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+                                       "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+                                       ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+                                       "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+                                       "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+                                       "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
+                                       "\\\\" "://"))
+  ;; Enables ligature checks globally in all buffers. You can also do it
+  ;; per mode with `ligature-mode'.
+  (global-ligature-mode t))
 
 ;; UI related things
 ;; Dashboard
@@ -413,6 +441,15 @@
 (setq display-line-numbers 'relative
       display-line-numbers-current-absolute t)
 
+;; For never losing the cursor
+(use-package beacon
+  :config
+  (setq beacon-blink-when-window-scrolls t)
+  (beacon-mode 1))
+
+;; For jumping in the file
+(use-package avy)
+
 ;; Keybinds
 (use-package general
   :config
@@ -431,8 +468,11 @@
     "fp" '(projectile-switch-project :wk "Switch project")
     )
 
-	(ys/leader-keys
-		"x" '(kill-this-buffer :wk "Kill buffer"))
+  (ys/leader-keys
+    "x" '(kill-this-buffer :wk "Kill buffer"))
+
+  (ys/leader-keys
+    "j" '(avy-goto-char-2 :wk "Search buffer"))
 
   (ys/leader-keys
     "s" '(:ignore t :wk "window")
@@ -464,3 +504,16 @@
   )
 
 ;; End of init.el
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(ligature beacon vterm-toggle tree-sitter-langs magit lsp-java company-box all-the-icons yasnippet-snippets which-key typescript-mode toc-org tmux-pane smartparens rainbow-mode rainbow-delimiters org-bullets nix-mode neotree minimap lsp-ui lsp-ivy langtool ivy-yasnippet highlight-indent-guides general format-all evil-nerd-commenter evil-collection dracula-theme doom-modeline dashboard counsel-projectile centaur-tabs)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

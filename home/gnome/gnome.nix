@@ -15,6 +15,7 @@
     gnomeExtensions.espresso
     gnomeExtensions.dock-from-dash
     gnomeExtensions.docker
+    gnomeExtensions.gsconnect
   ];
 
   environment.gnome.excludePackages =
