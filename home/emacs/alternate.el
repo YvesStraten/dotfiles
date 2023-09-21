@@ -371,6 +371,9 @@
 ;; Remembers the last place you visited in a file
 (save-place-mode 1)
 
+;; Wipes scrollbars
+(scroll-bar-mode -1)
+
 ;; Disable unrelated warnings
 (setq warning-minimum-level :error)
 
