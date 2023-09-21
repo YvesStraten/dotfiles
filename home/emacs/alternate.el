@@ -229,6 +229,11 @@
 (use-package nix-mode
   :mode "\\.nix\\'")
 
+;; Direnv support
+(use-package direnv
+  :config
+  (direnv-mode))
+
 (use-package typescript-mode
   :config
   (setq typescript-indent-level 2))
@@ -510,7 +515,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(ligature beacon vterm-toggle tree-sitter-langs magit lsp-java company-box all-the-icons yasnippet-snippets which-key typescript-mode toc-org tmux-pane smartparens rainbow-mode rainbow-delimiters org-bullets nix-mode neotree minimap lsp-ui lsp-ivy langtool ivy-yasnippet highlight-indent-guides general format-all evil-nerd-commenter evil-collection dracula-theme doom-modeline dashboard counsel-projectile centaur-tabs)))
+   '(direnv ligature beacon vterm-toggle tree-sitter-langs magit lsp-java company-box all-the-icons yasnippet-snippets which-key typescript-mode toc-org tmux-pane smartparens rainbow-mode rainbow-delimiters org-bullets nix-mode neotree minimap lsp-ui lsp-ivy langtool ivy-yasnippet highlight-indent-guides general format-all evil-nerd-commenter evil-collection dracula-theme doom-modeline dashboard counsel-projectile centaur-tabs)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

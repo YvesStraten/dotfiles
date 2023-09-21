@@ -19,7 +19,6 @@
 
     # Cpp
     gcc
-    conan
     cmake
 
     # JS
@@ -39,4 +38,9 @@
     neofetch
     sqlite
   ];
+
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+  };
 }
