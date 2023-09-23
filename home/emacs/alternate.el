@@ -37,6 +37,10 @@
 (add-hook 'typescript-mode-hook 'eglot-ensure)
 (add-hook 'js-mode-hook 'eglot-ensure)
 
+(use-package dap-mode
+  :config
+  (setq dap-auto-configure-mode t))
+
 (use-package company
   :after eglot
   :hook (prog-mode . company-mode)
