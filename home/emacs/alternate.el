@@ -31,17 +31,19 @@
 (use-package ivy-yasnippet
   :bind (("C-c y" . ivy-yasnippet)))
 
-(use-package lsp-ivy
-  :bind (("C-C l" . lsp-ivy-workspace-symbol)))
-
 ;; Integrate yasnippet with Company for snippet completion
+(require 'eglot)
+(add-hook 'c++-mode-hook 'eglot-ensure)
+(add-hook 'typescript-mode-hook 'eglot-ensure)
+(add-hook 'js-mode-hook 'eglot-ensure)
+
 (use-package company
-  :after lsp-mode
+  :after eglot
   :hook (prog-mode . company-mode)
   :bind
   (:map company-active-map
         ("<tab>" . company-complete-selection))
-  (:map lsp-mode-map
+  (:map eglot-mode-map 
         ("<tab>" . company-indent-or-complete-common))
   :config
   ;; (add-to-list 'company-backends 'company-yasnippet)
@@ -178,31 +180,12 @@
 (global-tree-sitter-mode)
 (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 
-;; Example: LSP integration with lsp-mode
-(use-package lsp-mode
-  :hook ((python-mode . lsp)
-         (java-mode . lsp)
-	 (typescript-mode . lsp)
-	 (js-mode . lsp))
-  :commands lsp
-  :config
   (setq lsp-prefer-flymake nil
 	lsp-prefer-capf t
 	gc-cons-threshold 100000000
 	read-process-output-max (* 1024 1024)
 	lsp-idle-delay 0.500
 	lsp-log-io nil)
-  ;; Configure other LSP settings as needed
-  )
-
-;; For java
-(use-package lsp-java
-  :config
-  (add-hook 'java-mode-hook #'lsp))
-
-;; For debugging
-(use-package lsp-ui
-  :hook (lsp-mode . lsp-ui-mode))
 
 ;; For the vscode themed minimap
 (use-package minimap
@@ -222,9 +205,6 @@
 
 (use-package evil-nerd-commenter
   :bind ("M-/" . evilnc-comment-or-uncomment-lines))
-
-(use-package lsp-treemacs
-  :after lsp)
 
 (use-package nix-mode
   :mode "\\.nix\\'")
@@ -494,7 +474,7 @@
 
   (ys/leader-keys
     "l" '(:ignore t :wk "Lsp")
-    "lr" '(lsp-rename :wk "Rename reference")
+    "lr" '(eglot-rename :wk "Rename reference")
     "lf" '(format-all-buffer
 	   :wk "Formats buffer"))
 
