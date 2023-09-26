@@ -91,6 +91,13 @@
 #+end_src
 
 ** Agenda 
+*** Discover files
+#+begin_src elisp
+  (setq org-directory "~/org")
+  (setq org-agenda-files '("Todos.org" "Timetable.org"))
+#+end_src
+
+*** Custom view
 Credit to Derek Taylor
 #+begin_src elisp
 (setq
