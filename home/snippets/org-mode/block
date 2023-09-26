@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: block
+# key: beg  
+# --
+#+begin_${src} ${elisp}
+$0
+#+end_src
