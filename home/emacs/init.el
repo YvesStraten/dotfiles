@@ -36,10 +36,10 @@
   :commands toc-org-enable
   :init (add-hook 'org-mode-hook 'toc-org-enable))
 
-(use-package org-bullets
+(use-package org-superstar
   :config
   (setq org-ellipsis "⤵")
-  (add-hook 'org-mode-hook 'org-bullets-mode ))
+  (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -47,6 +47,12 @@
    (C . t)
    (java . t)
    (python . t)))
+
+(setq org-latex-listings 'minted
+      org-latex-packages-alist '(("" "minted"))
+      org-latex-pdf-process
+      '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+	"pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
 (use-package org-auto-tangle
   :hook (org-mode . org-auto-tangle-mode))
@@ -81,6 +87,12 @@
 
           (agenda "")
           (alltodo "")))))
+
+(setq org-agenda-timegrid-use-ampm 1)
+
+(setq org-hide-emphasis-markers t)
+
+(setq org-return-follows-link t)
 
 (setq tab-width 2)
 (setq-default ident-tabs-mode nil)
@@ -123,12 +135,7 @@
 	centaur-tabs-gray-out-icons 'buffer
 	centaur-tabs-set-bar 'under
 	x-underline-at-descent-line t
-	centaur-tabs-set-modified-marker t)
-  :bind
-  (:map evil-normal-state-map
-        ("g t" . centaur-tabs-forward)
-        ("g T" . centaur-tabs-backward))
-  )
+	centaur-tabs-set-modified-marker t))
 
 (use-package avy)
 
@@ -337,6 +344,10 @@
     )
 
   (ys/leader-keys
+    "c" '(centaur-tabs-ace-jump :wk "Jump to tab")
+    )
+
+  (ys/leader-keys
     "l" '(:ignore t :wk "Lsp")
     "lr" '(eglot-rename :wk "Rename reference")
     "lf" '(format-all-buffer
@@ -458,16 +469,3 @@
 
 (setq backup-directory-alist '(("." . "~/emacs/backups/")))
 (setq auto-save-file-name-transforms '((".*" "~/emacs/auto-save-list/" t)))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(doom-modeline vterm-toggle tree-sitter-langs magit company-box all-the-icons yasnippet-snippets xenops which-key typescript-mode toc-org tmux-pane smartparens shrink-path rainbow-mode rainbow-delimiters org-fragtog org-bullets org-auto-tangle nix-mode nerd-icons neotree minimap lsp-ui lsp-java lsp-ivy ligature langtool ivy-yasnippet highlight-indent-guides general format-all evil-nerd-commenter evil-collection dracula-theme direnv dashboard counsel-projectile centaur-tabs beacon)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

@@ -14,6 +14,7 @@
     ./nixos/settings.nix
     ./nixos/sound.nix
     ./nixos/time.nix
+    ./nixos/vfio.nix
 
     # Desktops
     # ../home/hypr/hyprland.nix

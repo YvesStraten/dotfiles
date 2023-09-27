@@ -4,6 +4,7 @@
       with ps; [
         matplotlib
         requests
+        pygments
       ]))
 
     (pkgs.texlive.combine {

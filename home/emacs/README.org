@@ -1,6 +1,7 @@
 #+Title: My Emacs config
 #+Property: header-args :tangle init.el 
 #+auto_tangle: t
+#+startup: overview
 * Bootstrap
 ** Package.el
 #+begin_src elisp
@@ -64,14 +65,11 @@
 
 ** Bullets
 #+begin_src elisp
-(use-package org-bullets
-  :config
-  (setq org-ellipsis "⤵")
-  (add-hook 'org-mode-hook 'org-bullets-mode ))
+  (use-package org-superstar
+    :config
+    (setq org-ellipsis "⤵")
+    (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
 #+end_src
-					; (use-package org-fragtog
-					;   :config
-					;   (add-hook 'org-mode-hook 'org-fragtog-mode))
 
 ** Babel
 *** Code blocks
@@ -82,6 +80,15 @@
    (C . t)
    (java . t)
    (python . t)))
+#+end_src
+
+**** Syntax highlight in export
+#+begin_src elisp
+  (setq org-latex-listings 'minted
+	org-latex-packages-alist '(("" "minted"))
+	org-latex-pdf-process
+	'("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+	  "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 #+end_src
 
 *** Automatic tangle
@@ -128,6 +135,21 @@ Credit to Derek Taylor
           (agenda "")
           (alltodo "")))))
 #+end_src
+
+*** Show 12 hr clock
+#+begin_src elisp
+  (setq org-agenda-timegrid-use-ampm 1)
+#+end_src
+
+** Hide marks
+#+begin_src elisp
+  (setq org-hide-emphasis-markers t)
+#+end_src
+** Follow link
+#+begin_src elisp
+  (setq org-return-follows-link t)
+#+end_src
+
 * Project management
 ** Tabs and spaces
 #+begin_src elisp
@@ -180,23 +202,18 @@ Credit to Derek Taylor
 
 ** Tabs
 #+begin_src elisp
-(use-package centaur-tabs
-  :demand
-  :config
-  (centaur-tabs-mode t)
-  (centaur-tabs-headline-match)
-  (setq centaur-tabs-height 40
-	centaur-tabs-style "wave"
-	centaur-tabs-set-icons t
-	centaur-tabs-gray-out-icons 'buffer
-	centaur-tabs-set-bar 'under
-	x-underline-at-descent-line t
-	centaur-tabs-set-modified-marker t)
-  :bind
-  (:map evil-normal-state-map
-        ("g t" . centaur-tabs-forward)
-        ("g T" . centaur-tabs-backward))
-  )
+  (use-package centaur-tabs
+    :demand
+    :config
+    (centaur-tabs-mode t)
+    (centaur-tabs-headline-match)
+    (setq centaur-tabs-height 40
+	  centaur-tabs-style "wave"
+	  centaur-tabs-set-icons t
+	  centaur-tabs-gray-out-icons 'buffer
+	  centaur-tabs-set-bar 'under
+	  x-underline-at-descent-line t
+	  centaur-tabs-set-modified-marker t))
 #+end_src
 
 ** Jumping in the file
@@ -441,57 +458,61 @@ Like in vscode
 
 ** General
 #+begin_src elisp
-(use-package general
-  :config
-  (general-evil-setup)
-  (general-create-definer ys/leader-keys
-    :states '(normal insert visual emacs)
-    :keymaps 'override
-    :prefix "SPC"
-    :global-prefix "M-SPC")
+  (use-package general
+    :config
+    (general-evil-setup)
+    (general-create-definer ys/leader-keys
+      :states '(normal insert visual emacs)
+      :keymaps 'override
+      :prefix "SPC"
+      :global-prefix "M-SPC")
 
 
-  (ys/leader-keys
-    "f" '(:ignore t :wk "projectile")
-    "ff" '(projectile-find-file :wk "Find file")
-    "fb" '(projectile-switch-to-buffer :wk "Switch to buffer")
-    "fp" '(projectile-switch-project :wk "Switch project")
+    (ys/leader-keys
+      "f" '(:ignore t :wk "projectile")
+      "ff" '(projectile-find-file :wk "Find file")
+      "fb" '(projectile-switch-to-buffer :wk "Switch to buffer")
+      "fp" '(projectile-switch-project :wk "Switch project")
+      )
+
+    (ys/leader-keys
+      "x" '(kill-this-buffer :wk "Kill buffer"))
+
+    (ys/leader-keys
+      "j" '(avy-goto-char-2 :wk "Search buffer"))
+
+    (ys/leader-keys
+      "s" '(:ignore t :wk "window")
+      "sh" '(evil-window-split :wk "Horizontal split")
+      "sv" '(evil-window-vsplit :wk "Vertical split"))
+
+
+    (ys/leader-keys
+      "t" '(vterm-toggle :wk "vterm")
+      )
+
+    (ys/leader-keys
+      "c" '(centaur-tabs-ace-jump :wk "Jump to tab")
+      )
+
+    (ys/leader-keys
+      "l" '(:ignore t :wk "Lsp")
+      "lr" '(eglot-rename :wk "Rename reference")
+      "lf" '(format-all-buffer
+	     :wk "Formats buffer"))
+
+    (ys/leader-keys
+      "o" '(:ignore t :wk "Org")
+      "oa" '(org-agenda :wk "Org agenda")
+      "oe" '(org-export-dispatch :wk "Org export")
+      "oi" '(org-toggle-item :wk "Org toggle Item")
+      "ot" '(org-todo :wk "Org Todo")
+      "oT" '(org-todo-list :wk "Org Todo List")
+      )
+
+    (ys/leader-keys
+      "g" '(magit :wk "Open magit"))
     )
-
-  (ys/leader-keys
-    "x" '(kill-this-buffer :wk "Kill buffer"))
-
-  (ys/leader-keys
-    "j" '(avy-goto-char-2 :wk "Search buffer"))
-
-  (ys/leader-keys
-    "s" '(:ignore t :wk "window")
-    "sh" '(evil-window-split :wk "Horizontal split")
-    "sv" '(evil-window-vsplit :wk "Vertical split"))
-
-
-  (ys/leader-keys
-    "t" '(vterm-toggle :wk "vterm")
-    )
-
-  (ys/leader-keys
-    "l" '(:ignore t :wk "Lsp")
-    "lr" '(eglot-rename :wk "Rename reference")
-    "lf" '(format-all-buffer
-	   :wk "Formats buffer"))
-
-  (ys/leader-keys
-    "o" '(:ignore t :wk "Org")
-    "oa" '(org-agenda :wk "Org agenda")
-    "oe" '(org-export-dispatch :wk "Org export")
-    "oi" '(org-toggle-item :wk "Org toggle Item")
-    "ot" '(org-todo :wk "Org Todo")
-    "oT" '(org-todo-list :wk "Org Todo List")
-    )
-
-  (ys/leader-keys
-    "g" '(magit :wk "Open magit"))
-  )
 #+end_src
 
 * UI
@@ -636,3 +657,4 @@ Credit to doom-emacs devs
 (setq backup-directory-alist '(("." . "~/emacs/backups/")))
 (setq auto-save-file-name-transforms '((".*" "~/emacs/auto-save-list/" t)))
 #+end_src
+

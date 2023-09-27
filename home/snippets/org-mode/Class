@@ -2,7 +2,7 @@
 # name: Class 
 # key: cla
 # --
-* ${class name} ${time}${1:am}-${finish time}$1
-<%%(org-class ${`(format-time-string "%Y")`} ${`(format-time-string "%m")`} ${`(format-time-string "%d")`} ${`(format-time-string "%Y")`} ${`(format-time-string "%m")`} ${`(format-time-string "%d")`} ${day, eg: Monday is 1})>
+** ${class name}
+   <${`(format-time-string "%Y")`}-${`(format-time-string "%m")`}-${`(format-time-string "%d")`} ${`(format-time-string "%a")`} ${from time e.g 8:00}-${time to e.g 13:00} +1w>
 
 $0
