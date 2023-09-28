@@ -89,6 +89,10 @@
    (python . t)))
 #+end_src
 
+**** Java settings
+#+begin_src elisp
+#+end_src
+
 **** Syntax highlight in export
 #+begin_src elisp
   (setq org-latex-listings 'minted
