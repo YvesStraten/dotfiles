@@ -32,6 +32,10 @@ in { pkgs, lib, config, ... }: {
 
     virtualisation.spiceUSBRedirection.enable = true;
 
+    systemd.tmpfiles.rules = [
+      "f /dev/shm/looking-glass 0660 yvess kvm -"
+    ];
+
     specialisation."VFIO".configuration = {
       system.nixos.tags = [ "with-vfio" ];
       vfio.enable = true;
