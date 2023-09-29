@@ -5,38 +5,38 @@ read playnum
 
 # Checks for wsl
 echo "Are you in wsl? (y/n)"
-read $wsl
+read wsl
 
 # Create directories
 mkdir -p Videos/Playlist\ $playnum
-cd Vides/Playlist\ $playnum
-mkdir Livia Jorn Yves Final
+cd Videos/Playlist\ $playnum
+mkdir L J Y Final
 
 # Read Links from stdin
-echo "Jorn Link"
+echo "J Link"
 read link1 
 
-echo "Livia Link"
+echo "L Link"
 read link2
 
-echo "Yves Link"
+echo "Y Link"
 read link3
 
 # Download playlists from each link
-cd Jorn 
+cd J 
 yt-dlp -o "%(playlist_index)02dA.%(ext)s" $link1
 
-cd ../Livia
+cd ../L
 yt-dlp -o "%(playlist_index)02dB.%(ext)s" $link2
 
-cd ../Yves
+cd ../Y
 yt-dlp -o "%(playlist_index)02dC.%(ext)s" $link3
 
 # Copy all playlist files into the final folder
 cd ../Final
-cp ../Jorn/* .
-cp ../Livia/* .
-cp ../Yves/* .
+cp ../J/* .
+cp ../L/* .
+cp ../Y/* .
 
 # Create a concat list for ffmpeg
 for f in *.webm; do echo "file $f'" >> mylist.txt; done

@@ -5,6 +5,7 @@
         matplotlib
         requests
         pygments
+        yt-dlp
       ]))
 
     (pkgs.texlive.combine {
