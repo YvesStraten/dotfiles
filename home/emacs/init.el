@@ -39,6 +39,7 @@
 (use-package org-superstar
   :config
   (setq org-ellipsis "⤵"
+	org-superstar-special-todo-items t
 	org-superstar-todo-bullet-alist
 	'(("TODO" . ?☐)
 	  ("DONE" . ?✔)))

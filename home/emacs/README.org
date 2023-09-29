@@ -68,15 +68,13 @@
   (use-package org-superstar
     :config
     (setq org-ellipsis "⤵"
+	  org-superstar-special-todo-items t
 	  org-superstar-todo-bullet-alist
 	  '(("TODO" . ?☐)
 	    ("DONE" . ?✔)))
     (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
   (org-superstar-restart)
 #+end_src
-
-#+RESULTS:
-: t
 
 ** Babel
 *** Code blocks
