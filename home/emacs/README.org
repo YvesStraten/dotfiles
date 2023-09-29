@@ -91,6 +91,8 @@
 
 **** Java settings
 #+begin_src elisp
+  (nconc org-babel-default-header-args:java
+	 '((:dir . "/tmp/")))
 #+end_src
 
 **** Syntax highlight in export

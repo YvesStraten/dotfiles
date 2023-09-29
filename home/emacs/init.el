@@ -52,7 +52,8 @@
    (java . t)
    (python . t)))
 
-
+(nconc org-babel-default-header-args:java
+       '((:dir . "/tmp/")))
 
 (setq org-latex-listings 'minted
       org-latex-packages-alist '(("" "minted"))
