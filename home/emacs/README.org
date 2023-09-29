@@ -152,13 +152,21 @@ Credit to Derek Taylor
   (setq org-agenda-timegrid-use-ampm 1)
 #+end_src
 
-** Hide marks
+** Tweaks
+*** Hide marks
 #+begin_src elisp
   (setq org-hide-emphasis-markers t)
 #+end_src
-** Follow link
+*** Follow link
 #+begin_src elisp
   (setq org-return-follows-link t)
+#+end_src
+
+*** Further tweaks
+#+begin_src elisp
+  (setq org-startup-indented t
+        org-startup-with-inline-images t
+        org-image-actual-width '(300))
 #+end_src
 
 * Project management

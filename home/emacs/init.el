@@ -102,6 +102,10 @@
 
 (setq org-return-follows-link t)
 
+(setq org-startup-indented t
+      org-startup-with-inline-images t
+      org-image-actual-width '(300))
+
 (setq tab-width 2)
 (setq-default ident-tabs-mode nil)
 
