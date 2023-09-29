@@ -152,11 +152,18 @@ Credit to Derek Taylor
   (setq org-agenda-timegrid-use-ampm 1)
 #+end_src
 
-** Tweaks
-*** Hide marks
+** Hide marks
 #+begin_src elisp
   (setq org-hide-emphasis-markers t)
 #+end_src
+
+*** Show emphasis markers interactively
+#+begin_src elisp
+  (use-package org-appear
+    :hook (org-mode . org-appear-mode))
+#+end_src
+
+** Tweaks
 *** Follow link
 #+begin_src elisp
   (setq org-return-follows-link t)
@@ -166,6 +173,7 @@ Credit to Derek Taylor
 #+begin_src elisp
   (setq org-startup-indented t
         org-startup-with-inline-images t
+        org-pretty-entities t
         org-image-actual-width '(300))
 #+end_src
 

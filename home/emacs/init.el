@@ -100,10 +100,14 @@
 
 (setq org-hide-emphasis-markers t)
 
+(use-package org-appear
+  :hook (org-mode . org-appear-mode))
+
 (setq org-return-follows-link t)
 
 (setq org-startup-indented t
       org-startup-with-inline-images t
+      org-pretty-entities t
       org-image-actual-width '(300))
 
 (setq tab-width 2)
