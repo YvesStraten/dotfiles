@@ -98,6 +98,10 @@
 
 (setq org-agenda-timegrid-use-ampm 1)
 
+(use-package org-fragtog
+  :hook
+  (add-hook 'org-mode-hook 'org-fragtog-mode))
+
 (setq org-hide-emphasis-markers t)
 
 (use-package org-appear
@@ -280,13 +284,6 @@
 (use-package markdown-mode
   :mode ("README\\.md\\'" . gfm-mode)
   :init (setq markdown-command "pandoc")
-  )
-
-(use-package xenops
-  :config
-  (add-hook 'latex-mode-hook #'xenops-mode)
-  (add-hook 'LaTeX-mode-hook #'xenops-mode)
-  (add-hook 'org-mode-hook #'xenops-mode)
   )
 
 (use-package vterm)

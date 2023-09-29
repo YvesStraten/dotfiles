@@ -152,6 +152,13 @@ Credit to Derek Taylor
   (setq org-agenda-timegrid-use-ampm 1)
 #+end_src
 
+** Latex fragment preview
+#+begin_src elisp
+  (use-package org-fragtog
+    :hook
+    (add-hook 'org-mode-hook 'org-fragtog-mode))
+#+end_src
+
 ** Hide marks
 #+begin_src elisp
   (setq org-hide-emphasis-markers t)
@@ -425,17 +432,6 @@ Like in vscode
 (use-package markdown-mode
   :mode ("README\\.md\\'" . gfm-mode)
   :init (setq markdown-command "pandoc")
-  )
-#+end_src
-
-
-*** Latex
-#+begin_src elisp
-(use-package xenops
-  :config
-  (add-hook 'latex-mode-hook #'xenops-mode)
-  (add-hook 'LaTeX-mode-hook #'xenops-mode)
-  (add-hook 'org-mode-hook #'xenops-mode)
   )
 #+end_src
 
