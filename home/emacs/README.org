@@ -63,13 +63,20 @@
   :init (add-hook 'org-mode-hook 'toc-org-enable))
 #+end_src
 
-** Bullets
+** Bullets & Todos
 #+begin_src elisp
   (use-package org-superstar
     :config
-    (setq org-ellipsis "⤵")
+    (setq org-ellipsis "⤵"
+	  org-superstar-todo-bullet-alist
+	  '(("TODO" . ?☐)
+	    ("DONE" . ?✔)))
     (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
+  (org-superstar-restart)
 #+end_src
+
+#+RESULTS:
+: t
 
 ** Babel
 *** Code blocks
@@ -80,6 +87,10 @@
    (C . t)
    (java . t)
    (python . t)))
+#+end_src
+
+**** Java settings
+#+begin_src elisp
 #+end_src
 
 **** Syntax highlight in export
