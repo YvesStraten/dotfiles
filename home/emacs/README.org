@@ -371,9 +371,10 @@ Like in vscode
 
 ** Formatter
 #+begin_src elisp
-(use-package format-all
-  :config
-  (add-hook 'prog-mode-hook 'format-all-mode))
+  (use-package format-all
+    :config
+    (add-hook 'format-all-mode-hook 'format-all-ensure-formatter)
+    (add-hook 'prog-mode-hook 'format-all-mode))
 #+end_src
 
 ** Indentation and parenthesis
@@ -568,11 +569,18 @@ Like in vscode
                         (agenda . 5)))
 #+end_src
 
-** Dracula theme
+** Theme
 #+begin_src elisp
-;; Uses dracula theme
-(use-package dracula-theme)
-(load-theme 'dracula t)
+  (use-package doom-themes
+    :ensure t
+    :config
+    (setq doom-themes-enable-bold t
+          doom-themes-enable-italic t)
+    (load-theme 'doom-tokyo-night)
+
+    (doom-themes-visual-bell-config)
+    (doom-themes-neotree-config)
+    (doom-themes-org-config))
 #+end_src
 
 ** Font & relative line numbering

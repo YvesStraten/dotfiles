@@ -248,6 +248,7 @@
 
 (use-package format-all
   :config
+  (add-hook 'format-all-mode-hook 'format-all-ensure-formatter)
   (add-hook 'prog-mode-hook 'format-all-mode))
 
 ;; Indent blankline
@@ -402,9 +403,16 @@
                         (projects . 5)
                         (agenda . 5)))
 
-;; Uses dracula theme
-(use-package dracula-theme)
-(load-theme 'dracula t)
+(use-package doom-themes
+  :ensure t
+  :config
+  (setq doom-themes-enable-bold t
+        doom-themes-enable-italic t)
+  (load-theme 'doom-tokyo-night)
+
+  (doom-themes-visual-bell-config)
+  (doom-themes-neotree-config)
+  (doom-themes-org-config))
 
 (add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-15"))
 (setq display-line-numbers 'relative 

@@ -11,7 +11,6 @@
         tree-sitter-langs
         company
         company-box
-        lsp-java
       ];
   };
 
