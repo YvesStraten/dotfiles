@@ -238,10 +238,13 @@
         (25 . fa_arrows)) ;; TypeParameter
       )
 
-(require 'tree-sitter-langs)
-(require 'tree-sitter)
-(global-tree-sitter-mode)
-(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+(when (version= emacs-version "29")
+    (require 'tree-sitter-langs)
+    (require 'tree-sitter)
+    (global-tree-sitter-mode)
+    (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+   (message "not on emacs 29")
+  )
 
 (use-package minimap
   )
