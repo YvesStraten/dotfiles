@@ -274,7 +274,6 @@ Credit to Derek Taylor
 
 ** Eglot
 #+begin_src elisp
-  (when (version= emacs-version "29")
     (require 'eglot)
     (add-hook 'c++-mode-hook 'eglot-ensure)
     (add-hook 'typescript-mode-hook 'eglot-ensure)
@@ -286,7 +285,6 @@ Credit to Derek Taylor
           read-process-output-max (* 1024 1024)
           lsp-idle-delay 0.500
           lsp-log-io nil)
-    )
 #+end_src
 
 ** Dap-mode
