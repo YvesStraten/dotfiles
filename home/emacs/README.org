@@ -365,9 +365,7 @@ Credit to Derek Taylor
 ** Minimap
 Like in vscode
 #+begin_src elisp
-  (use-package minimap
-    :hook (prog-mode . minimap-mode)
-    )
+  (use-package minimap)
 #+end_src
 
 ** Formatter
