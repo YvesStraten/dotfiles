@@ -357,14 +357,20 @@ Credit to Derek Taylor
 
 
 ** Tree-sitter
-*** Enable features
 #+begin_src elisp
+<<<<<<< HEAD
   (when (version= emacs-version "29")
       (require 'tree-sitter-langs)
       (require 'tree-sitter)
       (global-tree-sitter-mode)
       (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
     )
+=======
+(require 'tree-sitter-langs)
+(require 'tree-sitter)
+(global-tree-sitter-mode)
+(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+>>>>>>> parent of 50419fb (Made emacs 29 config stuff not emacs 29-bound)
 #+end_src
 
 ** Minimap
