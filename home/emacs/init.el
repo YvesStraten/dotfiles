@@ -169,17 +169,19 @@
 (use-package ivy-yasnippet
   :bind (("C-c y" . ivy-yasnippet)))
 
-(require 'eglot)
-(add-hook 'c++-mode-hook 'eglot-ensure)
-(add-hook 'typescript-mode-hook 'eglot-ensure)
-(add-hook 'js-mode-hook 'eglot-ensure)
+(when (version= emacs-version "29")
+  (require 'eglot)
+  (add-hook 'c++-mode-hook 'eglot-ensure)
+  (add-hook 'typescript-mode-hook 'eglot-ensure)
+  (add-hook 'js-mode-hook 'eglot-ensure)
 
-(setq lsp-prefer-flymake nil
-      lsp-prefer-capf t
-      gc-cons-threshold 100000000
-      read-process-output-max (* 1024 1024)
-      lsp-idle-delay 0.500
-      lsp-log-io nil)
+  (setq lsp-prefer-flymake nil
+        lsp-prefer-capf t
+        gc-cons-threshold 100000000
+        read-process-output-max (* 1024 1024)
+        lsp-idle-delay 0.500
+        lsp-log-io nil)
+  )
 
 (use-package dap-mode
   :config
@@ -243,10 +245,10 @@
     (require 'tree-sitter)
     (global-tree-sitter-mode)
     (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
-   (message "not on emacs 29")
   )
 
 (use-package minimap
+  :hook (prog-mode . minimap-mode)
   )
 
 (use-package format-all
