@@ -13,6 +13,7 @@
       # updatesymlinks = "home-manager switch --flake ~/Git-repos/dotfiles";
       mux = "tmuxinator";
       nxdev = "nix develop -c $SHELL";
+      cat = "${pkgs.bat}/bin/bat";
     };
     profileExtra = ''
       export QT_QPA_PLATFORMTHEME=qt5ct
