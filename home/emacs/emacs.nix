@@ -38,8 +38,7 @@
     cppcheck
     alejandra
     clang-tools
-    # nixpkgs-fmt
-    nixfmt
+    nixpkgs-fmt
 
     # DAP protocols
     lldb

@@ -1,7 +1,6 @@
-{
-  config,
-  pkgs,
-  ...
+{ config
+, pkgs
+, ...
 }: {
   imports = [
     # Main stuff
@@ -38,7 +37,7 @@
     homeDirectory = "/home/yvess";
     stateVersion = "22.11"; # Please read the comment before changing.
 
-    sessionPath = ["$HOME/.local/bin"];
+    sessionPath = [ "$HOME/.local/bin" ];
   };
 
   # Let Home Manager install and manage itself.

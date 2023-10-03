@@ -1,7 +1,6 @@
-{
-  self,
-  pkgs,
-  ...
+{ self
+, pkgs
+, ...
 }: {
   nix.package = pkgs.nixFlakes;
   nix.extraOptions = ''
@@ -24,7 +23,7 @@
     users.akali = {
       isNormalUser = true;
       description = "akali";
-      extraGroups = ["wheel" "docker"];
+      extraGroups = [ "wheel" "docker" ];
     };
   };
 

@@ -1,8 +1,7 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
+{ config
+, pkgs
+, lib
+, ...
 }: {
   imports = [
     ../swaylock/swaylock.nix
@@ -34,9 +33,10 @@
           repeat_rate = "60";
         };
       };
-      keybindings = let
-        modifier = config.wayland.windowManager.sway.config.modifier;
-      in
+      keybindings =
+        let
+          modifier = config.wayland.windowManager.sway.config.modifier;
+        in
         lib.mkOptionDefault {
           "${modifier}+e" = "exec kitty -e nvim";
 
@@ -62,7 +62,7 @@
         {
           command = "dbus-sway-environment";
         }
-        {command = "configure-gtk";}
+        { command = "configure-gtk"; }
         {
           command = "waybar";
         }
@@ -86,7 +86,7 @@
         }
       ];
     };
-    extraOptions = ["--unsupported-gpu"];
+    extraOptions = [ "--unsupported-gpu" ];
     extraSessionCommands = ''
         export
         SDL_VIDEODRIVER=wayland

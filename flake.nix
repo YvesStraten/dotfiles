@@ -18,104 +18,106 @@
     nur.url = "github:nix-community/NUR";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    nixpkgs-old,
-    home-manager,
-    hyprland,
-    hyprpicker,
-    hypr-contrib,
-    nixos-hardware,
-    nixos-wsl,
-    nur,
-    ...
-  } @ inputs: let
-    system = "x86_64-linux";
-    pkgs = nixpkgs.legacyPackages.${system};
-  in {
-    defaultPackage.${system} = home-manager.defaultPackage.${system};
-    defaultPackage.x86_64-darwin = home-manager.defaultPackage.x86_64-darwin;
-    defaultPackage.aarch64-darwin = home-manager.defaultPackage.aarch64-darwin;
+  outputs =
+    { self
+    , nixpkgs
+    , nixpkgs-old
+    , home-manager
+    , hyprland
+    , hyprpicker
+    , hypr-contrib
+    , nixos-hardware
+    , nixos-wsl
+    , nur
+    , ...
+    } @ inputs:
+    let
+      system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
+    in
+    {
+      defaultPackage.${system} = home-manager.defaultPackage.${system};
+      defaultPackage.x86_64-darwin = home-manager.defaultPackage.x86_64-darwin;
+      defaultPackage.aarch64-darwin = home-manager.defaultPackage.aarch64-darwin;
 
-    nixosConfigurations = {
-      nitro = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = {inherit inputs;};
-        modules = [
-          nur.nixosModules.nur
-          ./hosts/nixos/hardware-configuration.nix
-          ./modules/default.nix
-          nixos-hardware.nixosModules.common-pc-laptop-ssd
-          nixos-hardware.nixosModules.common-pc-laptop
+      nixosConfigurations = {
+        nitro = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit inputs; };
+          modules = [
+            nur.nixosModules.nur
+            ./hosts/nixos/hardware-configuration.nix
+            ./modules/default.nix
+            nixos-hardware.nixosModules.common-pc-laptop-ssd
+            nixos-hardware.nixosModules.common-pc-laptop
 
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = false;
-              useUserPackages = true;
-              users.yvess = {...}: {
-                imports = [
-                  ./home/home.nix
-                  hyprland.homeManagerModules.default
-                ];
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = false;
+                useUserPackages = true;
+                users.yvess = { ... }: {
+                  imports = [
+                    ./home/home.nix
+                    hyprland.homeManagerModules.default
+                  ];
+                };
               };
-            };
-          }
-        ];
+            }
+          ];
+        };
+
+        Iso = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+            ./modules/iso.nix
+
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = false;
+                useUserPackages = true;
+                users.yvess = { ... }: {
+                  imports = [
+                    ./home/home.nix
+                  ];
+                };
+              };
+            }
+          ];
+        };
+
+        wsl = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            ./modules/wsl/wsl.nix
+            nixos-wsl.nixosModules.wsl
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = false;
+                useUserPackages = true;
+                users.akali = import ./home/wsl.nix;
+              };
+            }
+          ];
+        };
       };
 
-      Iso = nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-          ./modules/iso.nix
-
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = false;
-              useUserPackages = true;
-              users.yvess = {...}: {
-                imports = [
-                  ./home/home.nix
-                ];
-              };
-            };
-          }
-        ];
-      };
-
-      wsl = nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          ./modules/wsl/wsl.nix
-          nixos-wsl.nixosModules.wsl
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = false;
-              useUserPackages = true;
-              users.akali = import ./home/wsl.nix;
-            };
-          }
-        ];
+      homeConfigurations = {
+        akali = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [
+            ./home/wsl.nix
+          ];
+        };
+        yvess = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [
+            ./home/home.nix
+          ];
+        };
       };
     };
-
-    homeConfigurations = {
-      akali = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [
-          ./home/wsl.nix
-        ];
-      };
-      yvess = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [
-          ./home/home.nix
-        ];
-      };
-    };
-  };
 }
