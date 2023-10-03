@@ -12,7 +12,7 @@
     # Editors
     # ./nvim/neovim.nix
     ./emacs/emacs.nix
-    ./vscode/vscode.nix
+    # ./vscode/vscode.nix
 
     # ./kitty/kitty.nix
     ./alacritty/alacritty.nix
