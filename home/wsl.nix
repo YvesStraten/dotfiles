@@ -7,6 +7,7 @@
     ./languages.nix
     ./theming.nix
     ./others.nix
+    ./bin/default.nix
 
     # Editors
     #./nvim/neovim.nix

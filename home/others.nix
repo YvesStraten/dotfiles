@@ -13,11 +13,6 @@
       recursive = true;
     };
 
-    ".local/bin/" = {
-      source = ./bin;
-      recursive = true;
-    };
-
     ".local/share/fonts" = {
       source = ./fonts;
       recursive = true;
