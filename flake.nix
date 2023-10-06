@@ -16,6 +16,7 @@
       inputs.nixpkgs.follows = "nixpkgs-old";
     };
     nur.url = "github:nix-community/NUR";
+    nix-colors.url = "github:misterio77/nix-colors";
   };
 
   outputs =
@@ -30,7 +31,7 @@
     , nixos-wsl
     , nur
     , ...
-    } @ inputs:
+    } @inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -54,6 +55,7 @@
             home-manager.nixosModules.home-manager
             {
               home-manager = {
+                extraSpecialArgs = { inherit inputs; };
                 useGlobalPkgs = false;
                 useUserPackages = true;
                 users.yvess = { ... }: {
@@ -96,6 +98,7 @@
             home-manager.nixosModules.home-manager
             {
               home-manager = {
+                extraSpecialArgs = { inherit inputs; };
                 useGlobalPkgs = false;
                 useUserPackages = true;
                 users.akali = import ./home/wsl.nix;

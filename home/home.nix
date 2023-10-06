@@ -1,8 +1,10 @@
 { config
 , pkgs
-, ...
+, inputs
+, , ...
 }: {
   imports = [
+    inputs.nix-colors.homeManagerModules.default
     # Main stuff
     ./languages.nix
     ./utilities.nix
@@ -32,6 +34,7 @@
   # targets.genericLinux.enable = true;
 
   nixpkgs.config.allowUnfree = true;
+  colorScheme = inputs.nix-colors.colorSchemes.gruvbox-dark-medium;
 
   home = {
     username = "yvess";

@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, config, ... }: {
   programs.alacritty = {
     enable = true;
     settings = {
@@ -9,6 +9,13 @@
         bold_italic.family = "JetBrainsMono NF";
 
         size = 15.0;
+      };
+
+      colors = with config.colorScheme.colors; {
+        primary = {
+          background = "0x${base00}";
+          foreground = "0x${base06}";
+        };
       };
     };
   };

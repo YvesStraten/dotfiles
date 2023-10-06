@@ -49,11 +49,11 @@ read link3
 cd J 
 yt-dlp -o "%(playlist_index)02dA.%(ext)s" $link1
 
-cd ../L
-yt-dlp -o "%(playlist_index)02dB.%(ext)s" $link2
-
 cd ../Y
-yt-dlp -o "%(playlist_index)02dC.%(ext)s" $link3
+yt-dlp -o "%(playlist_index)02dB.%(ext)s" $link3
+
+cd ../L
+yt-dlp -o "%(playlist_index)02dC.%(ext)s" $link2
 
 # Copy all playlist files into the final folder
 cd ../Final

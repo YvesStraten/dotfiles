@@ -1,8 +1,10 @@
 { config
 , pkgs
+, inputs
 , ...
 }: {
   imports = [
+    inputs.hyprland.homeManagerModules.default
     ../swaylock/swaylock.nix
     ../wlogout/wlogout.nix
     ../waybar/waybar.nix
