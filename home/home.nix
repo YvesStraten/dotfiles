@@ -1,7 +1,7 @@
 { config
 , pkgs
 , inputs
-, , ...
+, ...
 }: {
   imports = [
     inputs.nix-colors.homeManagerModules.default
@@ -34,7 +34,7 @@
   # targets.genericLinux.enable = true;
 
   nixpkgs.config.allowUnfree = true;
-  colorScheme = inputs.nix-colors.colorSchemes.gruvbox-dark-medium;
+  colorScheme = inputs.nix-colors.colorSchemes.dracula;
 
   home = {
     username = "yvess";
