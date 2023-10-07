@@ -1,4 +1,21 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+let
+  cursor = pkgs.stdenv.mkDerivation
+    {
+      name = "whitesur-cursors";
+      src = pkgs.fetchFromGitHub {
+        owner = "vinceliuice";
+        repo = "WhiteSur-cursors";
+        rev = "5c94e8c22de067282f4cf6d782afd7b75cdd08c8";
+        sha256 = "03828f21sgcmpldbmqwpqbfvxrxy2zr9laipb27yy9kkfv8iwnq8";
+      };
+      installPhase = ''
+        mkdir -p $out
+        cp -R dist/* $out
+      '';
+    };
+in
+{
   gtk = {
     enable = true;
     theme = {
@@ -19,9 +36,9 @@
       size = 11;
     };
     cursorTheme = {
-      name = "Nordzy-cursors";
+      name = "WhiteSur-cursors";
       size = 24;
-      package = pkgs.nordzy-cursor-theme;
+      package = cursor;
     };
     gtk4.extraConfig = {
       gtk-application-prefer-dark-theme = 1;
