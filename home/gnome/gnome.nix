@@ -15,6 +15,7 @@
     gnomeExtensions.dock-from-dash
     gnomeExtensions.docker
     gnomeExtensions.gsconnect
+    gnome.gnome-tweaks
   ];
 
   environment.gnome.excludePackages =
