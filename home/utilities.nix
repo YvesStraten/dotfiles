@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   pdfHTML = pkgs.stdenv.mkDerivation
     {
@@ -9,20 +9,17 @@ let
       };
 
       nativeBuildInputs = with pkgs; [
-        autoPatchelfHook
         dpkg
       ];
 
       buildInputs = with pkgs; [
         glibc
         gcc-unwrapped
-        libjpeg_original
         freetype
         libxml2
         glib
         zlib
         fontconfig
-        libjpeg_original
         libjpeg
         cairo
       ];
@@ -59,7 +56,7 @@ in
       nb
       nmap
       pandoc
-      # pdfHTML
+      pdfHTML
 
       ani-cli
     ];
