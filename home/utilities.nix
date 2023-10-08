@@ -4,15 +4,35 @@ let
     {
       name = "pdf2html";
       src = pkgs.fetchurl {
-        url = "https://github.com/pdf2htmlEX/pdf2htmlEX/releases/download/v0.18.8.rc1/pdf2htmlEX-0.18.8.rc1-master-20200630-alpine-3.12.0-x86_64.tar.gz";
-        sha256 = "0mspqx683dbyggs2f3zi44sn7mjyqlhd8y692fm2iwv9rwvj2xwz";
+        url = "https://github.com/pdf2htmlEX/pdf2htmlEX/releases/download/v0.18.8.rc1/pdf2htmlEX-0.18.8.rc1-master-20200630-Ubuntu-bionic-x86_64.deb";
+        sha256 = "1js27fb8pdvrj5azj2149f6hhb3qmkxw142n9rn29syhxmj6s044";
       };
 
-      installPhase = ''
-        mkdir -p $out/
-        cp -R * $out/
-      '';
+      nativeBuildInputs = with pkgs; [
+        autoPatchelfHook
+        dpkg
+      ];
 
+      buildInputs = with pkgs; [
+        glibc
+        gcc-unwrapped
+        libjpeg_original
+        freetype
+        libxml2
+        glib
+        zlib
+        fontconfig
+        libjpeg_original
+        libjpeg
+        cairo
+      ];
+
+      dontUnpack = true;
+
+      installPhase = ''
+        mkdir -p $out
+        dpkg -x $src $out
+      '';
     };
 in
 {
@@ -39,7 +59,7 @@ in
       nb
       nmap
       pandoc
-      pdfHTML
+      # pdfHTML
 
       ani-cli
     ];
