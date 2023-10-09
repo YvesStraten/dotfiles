@@ -45,8 +45,6 @@
     # lxappearance
 
     # Wayland stuff
-    inputs.hypr-contrib.packages.${pkgs.system}.grimblast
-    inputs.hyprpicker.packages.${pkgs.system}.hyprpicker
     swww
     autotiling
     wl-clipboard

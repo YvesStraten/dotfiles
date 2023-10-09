@@ -61,7 +61,6 @@
                 users.yvess = { ... }: {
                   imports = [
                     ./home/home.nix
-                    hyprland.homeManagerModules.default
                   ];
                 };
               };

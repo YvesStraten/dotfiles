@@ -28,8 +28,8 @@
     ./zsh/zsh.nix
 
     # ./sway/home.nix
-    # ./hypr/home.nix
-    ./gnome/home.nix
+    ./hypr/home.nix
+    # ./gnome/home.nix
   ];
 
   # targets.genericLinux.enable = true;

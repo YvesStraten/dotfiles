@@ -16,8 +16,8 @@
     ./nixos/vfio.nix
 
     # Desktops
-    # ../home/hypr/hyprland.nix
+    ../home/hypr/hyprland.nix
     # ../home/sway/sway.nix
-    ../home/gnome/gnome.nix
+    # ../home/gnome/gnome.nix
   ];
 }
