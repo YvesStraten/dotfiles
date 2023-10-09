@@ -62,8 +62,11 @@
                   repeat_rate = 40
                   repeat_delay = 400
                   follow_mouse = 1
-                  natural_scroll = true
                   sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
+                  touchpad {
+                           natural_scroll = true
+                           clickfinger_behavior = true
+                  }
                   }
 
                   bind = SUPER, B, exec, ${brave}/bin/brave
@@ -77,9 +80,7 @@
 
                   bind = SUPER SHIFT, S, exec, ${grim}/bin/grim -g "$(${slurp}/bin/slurp)" - | ${swappy}/bin/swappy -f - 
 
-                  bind = SUPER SHIFT, X, exec, ${
-                inputs.hyprpicker.packages.${pkgs.system}.hyprpicker
-            } -a -n
+                  bind = SUPER SHIFT, X, exec, ${inputs.hyprpicker.packages.${pkgs.system}.hyprpicker} -a -n
                   bind = CTRL ALT, L, exec, ${swaylock}/bin/swaylock
                   bind = SUPER, Return, exec, ${alacritty}/bin/alacritty
                   bind = SUPER, X, exec, ${alacritty}/bin/alacritty

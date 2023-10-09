@@ -31,6 +31,33 @@ let
         dpkg -x $src $out
       '';
     };
+
+  ani-cli-new = pkgs.stdenv.mkDerivation {
+    name = "ani-cli";
+    src = pkgs.fetchFromGitHub {
+      owner = "pystardust";
+      repo = "ani-cli";
+      rev = "aef48eed709921403029f48d8b3c221a8cc8f8f2";
+      sha256 = "06is3bxsqidr5p83gqsayvcw402jf0vbgpsjg43wyrjaiw3g2qc1";
+    };
+
+    nativeBuildInputs = with pkgs; [
+      mpv
+      gnugrep
+      gnused
+      curlWithGnuTls
+      ffmpeg
+      aria
+      fzf
+    ];
+
+    dontUnpack = true;
+
+    installPhase = ''
+      mkdir -p $out/bin
+      cp $src/ani-cli $out/bin
+    '';
+  };
 in
 {
   home.packages = with pkgs;
@@ -44,8 +71,8 @@ in
       gnome.nautilus
       gnome.gnome-clocks
       gnome.pomodoro
+      gnome.eog
       tootle
-      gwenview
       gscan2pdf
       gimp
       filezilla
@@ -58,6 +85,8 @@ in
       pandoc
       pdfHTML
 
-      ani-cli
+      nix-prefetch-scripts
+
+      ani-cli-new
     ];
 }
