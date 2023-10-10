@@ -49,7 +49,7 @@
                   exec-once = ${wlsunset}/bin/wlsunset -S 8:30 -s 19:30
                   exec-once = plasma-browser-integration-host
                   exec-once = ${blueman}/bin/blueman-applet
-                  exec-once = ${swayidle}/bin/swayidle -w timeout 300 'swaylock -f' timeout 480 'hyprctl dispatch dpms off' resume 'hyprctl dpms on' before-sleep 'swaylock -f'
+                  exec-once = ${swayidle}/bin/swayidle -w timeout 300 '${swaylock-effects}/bin/swaylock -f' timeout 480 'hyprctl dispatch dpms off' resume 'hyprctl dpms on' before-sleep '${swaylock-effects}/bin/swaylock -f'
       exec-once = ${wl-clipboard}/bin/wl-paste --type text --watch ${cliphist}/bin/cliphist store #Stores only text data
 
       exec-once = ${wl-clipboard}/bin/wl-paste --type image --watch ${cliphist}/bin/cliphist store #Stores only image data
@@ -81,7 +81,7 @@
                   bind = SUPER SHIFT, S, exec, ${grim}/bin/grim -g "$(${slurp}/bin/slurp)" - | ${swappy}/bin/swappy -f - 
 
                   bind = SUPER SHIFT, X, exec, ${inputs.hyprpicker.packages.${pkgs.system}.hyprpicker} -a -n
-                  bind = CTRL ALT, L, exec, ${swaylock}/bin/swaylock
+                  bind = CTRL ALT, L, exec, ${swaylock-effects}/bin/swaylock
                   bind = SUPER, Return, exec, ${alacritty}/bin/alacritty
                   bind = SUPER, X, exec, ${alacritty}/bin/alacritty
                   bind = SUPER, E, exec, emacsclient -c
