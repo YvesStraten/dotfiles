@@ -11,6 +11,7 @@
     ../dunst/dunst.nix
     ../rofi/rofi.nix
     ../eww/eww.nix
+    ../swappy/swappy.nix
   ];
   home = {
     sessionVariables = {
@@ -84,11 +85,12 @@
                   bind = CTRL ALT, L, exec, ${swaylock-effects}/bin/swaylock
                   bind = SUPER, Return, exec, ${alacritty}/bin/alacritty
                   bind = SUPER, X, exec, ${alacritty}/bin/alacritty
-                  bind = SUPER, E, exec, emacsclient -c
+                  bind = SUPER, E, exec, ${emacs29-pgtk}/bin/emacsclient -c
                   bind = SUPER, N, exec, ${gnome.nautilus}/bin/nautilus
                   bind = SUPER, R, exec, killall rofi || rofi -show drun
                   bind = SUPER, V, exec, ${cliphist}/bin/cliphist list | rofi -dmenu | ${cliphist}/bin/cliphist decode | ${wl-clipboard}/bin/wl-copy
                   bind = SUPER, escape, exec, ${wlogout}/bin/wlogout --protocol layer-shell -b 5 -T 400 -B 400
+                  bind = SUPER, ., exec, ${rofi}/bin/rofi -modi emoji -show emoji
 
                   general {
                   gaps_in=10

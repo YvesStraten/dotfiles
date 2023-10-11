@@ -27,23 +27,6 @@
     hfsprogs
     #    nixgl.nixGLNvidia
 
-    # x11 stuff
-    # dmenu
-    # i3status
-    # i3lock-fancy
-    # xautolock
-    # xss-lock
-    # xorg.xrandr
-    # arandr
-    # maim
-    # xclip
-    # feh
-    # polybar
-    # autotiling
-    # eww
-    # feh
-    # lxappearance
-
     # Wayland stuff
     swww
     autotiling

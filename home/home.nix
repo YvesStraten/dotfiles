@@ -17,13 +17,10 @@
     ./emacs/emacs.nix
     # ./vscode/vscode.nix
 
-    # ./kitty/kitty.nix
     ./alacritty/alacritty.nix
     ./mpv/mpv.nix
     ./tmux/tmux.nix
     ./zathura/zathura.nix
-
-    # ./picom/picom.nix
 
     ./zsh/zsh.nix
 

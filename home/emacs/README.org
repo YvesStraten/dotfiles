@@ -63,6 +63,10 @@
   :init (add-hook 'org-mode-hook 'toc-org-enable))
 #+end_src
 
+#+begin_src elisp
+  (add-hook 'org-mode-hook 'company-mode)
+#+end_src
+
 ** Bullets & Todos
 #+begin_src elisp
   (use-package org-superstar
