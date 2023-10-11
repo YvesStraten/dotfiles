@@ -72,6 +72,8 @@ in
       gnome.gnome-clocks
       gnome.pomodoro
       gnome.eog
+      gnome.geary
+      whatsapp-for-linux
       tootle
       gscan2pdf
       gimp
@@ -89,4 +91,11 @@ in
 
       ani-cli-new
     ];
+
+  programs.thunderbird = {
+    enable = true;
+    profiles.yvess = {
+      isDefault = true;
+    };
+  };
 }

@@ -80,6 +80,15 @@
   (org-superstar-restart)
 #+end_src
 
+** Presentations
+#+begin_src elisp
+  (use-package org-tree-slide
+    :bind
+    ("<f8>" . org-tree-slide-move-previous-tree)
+    ("<f9>" . org-tree-slide-move-next-tree)
+    )
+#+end_src
+
 ** Babel
 *** Code blocks
 #+begin_src elisp
@@ -526,7 +535,7 @@ Like in vscode
       "l" '(:ignore t :wk "Lsp")
       "lr" '(eglot-rename :wk "Rename reference")
       "lf" '(format-all-buffer
-	     :wk "Formats buffer"))
+             :wk "Formats buffer"))
 
     (ys/leader-keys
       "o" '(:ignore t :wk "Org")
@@ -535,6 +544,7 @@ Like in vscode
       "oi" '(org-toggle-item :wk "Org toggle Item")
       "ot" '(org-todo :wk "Org Todo")
       "oT" '(org-todo-list :wk "Org Todo List")
+      "op" '(org-tree-slide-mode :wk "Present")
       )
 
     (ys/leader-keys

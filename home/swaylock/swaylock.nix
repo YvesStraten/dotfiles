@@ -9,8 +9,7 @@
       screenshots = true;
       clock = true;
       effect-blur = "5x5";
-      # color = "1f1d2e80";
-      color = "#${config.colorScheme.colors.base00}";
+      color = "1f1d2e80";
       font = "Inter";
       indicator = true;
       indicator-radius = 200;

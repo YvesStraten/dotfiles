@@ -23,12 +23,6 @@
     };
   };
 
-  dconf.settings = {
-    "org/gnome/desktop/interface" = {
-      color-scheme = "prefer-dark";
-    };
-  };
-
   home.file.".config/hypr/scripts" = {
     source = ./scripts;
     recursive = true;
@@ -90,7 +84,7 @@
                   bind = SUPER, R, exec, killall rofi || rofi -show drun
                   bind = SUPER, V, exec, ${cliphist}/bin/cliphist list | rofi -dmenu | ${cliphist}/bin/cliphist decode | ${wl-clipboard}/bin/wl-copy
                   bind = SUPER, escape, exec, ${wlogout}/bin/wlogout --protocol layer-shell -b 5 -T 400 -B 400
-                  bind = SUPER, ., exec, ${rofi}/bin/rofi -modi emoji -show emoji
+                  bind = SUPER, period, exec, rofi -modi emoji -show emoji --action copy
 
                   general {
                   gaps_in=10

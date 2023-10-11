@@ -27,6 +27,9 @@ in
 
   gtk = {
     enable = true;
+    gtk3.bookmarks = [
+      "file:///home/yvess/Gdrive/Uni"
+    ];
     theme = {
       name = "Catppuccin-Mocha-Compact-Pink-Dark";
       package = pkgs.catppuccin-gtk.override {

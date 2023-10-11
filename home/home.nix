@@ -24,6 +24,7 @@
 
     ./zsh/zsh.nix
 
+    ./dconf/dconf.nix
     # ./sway/home.nix
     ./hypr/home.nix
     # ./gnome/home.nix
