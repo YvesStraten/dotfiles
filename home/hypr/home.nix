@@ -64,6 +64,13 @@
                   }
                   }
 
+                  gestures {
+                           workspace_swipe = true
+                           workspace_swipe_fingers = 3 
+                           workspace_swipe_numbered = true
+                  }
+
+
                   bind = SUPER, B, exec, ${brave}/bin/brave
                   bind = SUPER, F1, exec, ~/.config/hypr/scripts/keybind
                   bind = SUPER, W, exec, ${alacritty}/bin/alacritty -e ~/.config/hypr/scripts/monitors.sh

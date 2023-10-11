@@ -29,6 +29,7 @@ in
     enable = true;
     gtk3.bookmarks = [
       "file:///home/yvess/Gdrive/Uni"
+      "file:///home/yvess/org"
     ];
     theme = {
       name = "Catppuccin-Mocha-Compact-Pink-Dark";

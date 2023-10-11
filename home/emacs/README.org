@@ -366,7 +366,6 @@ Credit to Derek Taylor
       )
 #+end_src
 
-
 ** Tree-sitter
 #+begin_src elisp
 (require 'tree-sitter-langs)
@@ -446,6 +445,13 @@ Like in vscode
   :mode ("README\\.md\\'" . gfm-mode)
   :init (setq markdown-command "pandoc")
   )
+#+end_src
+
+*** Arduino
+#+begin_src elisp
+  (use-package arduino-mode
+    :mode ("\\.ino\\'" . arduino-mode)
+    )
 #+end_src
 
 * Terminal
