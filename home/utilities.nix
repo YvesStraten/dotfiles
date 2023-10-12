@@ -67,7 +67,6 @@ in
       libreoffice
       rclone
       rclone-browser
-      okular
       gnome.nautilus
       gnome.gnome-clocks
       gnome.pomodoro

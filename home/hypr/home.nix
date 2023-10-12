@@ -117,6 +117,7 @@
                      shadow_render_power = 3
                       shadow_scale = 0.97 #shadows
 
+
                      blurls =
                      gtk-layer-shell
                      # blurls = waybar
@@ -127,7 +128,7 @@
                   enabled = true
 
                   # Curves
-                  bezier = overshot, 0.05, 0.9, 0.1, 1.05
+                  bezier = overshot, 1, 0.1, 0.83, 0.67 
                   bezier = smoothOut, 0.36, 0, 0.66, -0.56
                   bezier = smoothIn, 0.25, 1, 0.5, 1
 
