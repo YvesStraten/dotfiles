@@ -49,6 +49,7 @@
 
       exec-once = ${wl-clipboard}/bin/wl-paste --type image --watch ${cliphist}/bin/cliphist store #Stores only image data
                   exec-once = ~/.config/hypr/scripts/wallpaper.sh
+                  exec-once = ${polkit_gnome}/libexec/polkit-gnome-authentication-agent-1
 
                   monitor = ,highrr,auto,1
 
@@ -82,7 +83,7 @@
 
                   bind = SUPER SHIFT, S, exec, ${grim}/bin/grim -g "$(${slurp}/bin/slurp)" - | ${swappy}/bin/swappy -f - 
 
-                  bind = SUPER SHIFT, X, exec, ${inputs.hyprpicker.packages.${pkgs.system}.hyprpicker} -a -n
+                  bind = SUPER SHIFT, X, exec, ${hyprpicker}/bin/hyprpicker | wl-copy 
                   bind = CTRL ALT, L, exec, ${swaylock-effects}/bin/swaylock
                   bind = SUPER, Return, exec, ${alacritty}/bin/alacritty
                   bind = SUPER, X, exec, ${alacritty}/bin/alacritty
@@ -128,12 +129,12 @@
                   enabled = true
 
                   # Curves
-                  bezier = overshot, 1, 0.1, 0.83, 0.67 
+                  bezier = smooth, 0, 0, 0.95, 0.44 
                   bezier = smoothOut, 0.36, 0, 0.66, -0.56
                   bezier = smoothIn, 0.25, 1, 0.5, 1
 
-                  animation = windows, 1, 5, overshot, slide
-                  animation = windowsOut, 1, 4, smoothOut, slide
+                  animation = windows, 1, 5, smooth, slide
+                  animation = windowsOut, 1, 4, smooth, slide
                   animation = windowsMove, 1, 4, default
                   animation = border, 1, 10, default
                   animation = fade, 1, 10, smoothIn

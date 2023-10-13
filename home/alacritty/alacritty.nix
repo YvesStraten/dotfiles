@@ -11,6 +11,10 @@
         size = 15.0;
       };
 
+      window = {
+        opacity = 0.8;
+      };
+
       colors = with config.colorScheme.colors; {
         primary = {
           background = "0x${base00}";

@@ -189,6 +189,14 @@ Credit to Derek Taylor
   (setq org-return-follows-link t)
 #+end_src
 
+*** Zen writing
+#+begin_src elisp
+  (use-package writeroom-mode
+    )
+#+end_src
+
+#+RESULTS:
+
 *** Further tweaks
 #+begin_src elisp
   (setq org-startup-indented t
@@ -196,7 +204,6 @@ Credit to Derek Taylor
         org-pretty-entities t
         org-image-actual-width '(300))
 #+end_src
-
 * Project management
 ** Tabs and spaces
 #+begin_src elisp
@@ -650,6 +657,12 @@ Like in vscode
 ** Disable built in UI
 #+begin_src elisp
 (scroll-bar-mode -1)
+#+end_src
+
+** Transparent emacs
+#+begin_src elisp
+  (set-frame-parameter nil 'alpha-background 85) ; For current frame
+  (add-to-list 'default-frame-alist '(alpha-background . 85)) ; For all new frames henceforth
 #+end_src
 
 * Grammar
