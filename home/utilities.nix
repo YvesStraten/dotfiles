@@ -72,8 +72,9 @@ in
       gnome.pomodoro
       gnome.eog
       gnome.geary
-      gparted
+      gnome.evince
       whatsapp-for-linux
+      gnome-disks
       tootle
       gscan2pdf
       gimp
