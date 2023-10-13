@@ -77,6 +77,7 @@
             home-manager.nixosModules.home-manager
             {
               home-manager = {
+                extraSpecialArgs = { inherit inputs; };
                 useGlobalPkgs = false;
                 useUserPackages = true;
                 users.yvess = { ... }: {
@@ -109,12 +110,14 @@
 
       homeConfigurations = {
         akali = home-manager.lib.homeManagerConfiguration {
+          extraSpecialArgs = { inherit inputs; };
           inherit pkgs;
           modules = [
             ./home/wsl.nix
           ];
         };
         yvess = home-manager.lib.homeManagerConfiguration {
+          extraSpecialArgs = { inherit inputs; };
           inherit pkgs;
           modules = [
             ./home/home.nix
