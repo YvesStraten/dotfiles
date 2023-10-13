@@ -73,8 +73,8 @@ in
       gnome.eog
       gnome.geary
       gnome.evince
+      gnome.gnome-disk-utility
       whatsapp-for-linux
-      gnome-disks
       tootle
       gscan2pdf
       gimp
