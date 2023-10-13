@@ -172,6 +172,11 @@ Credit to Derek Taylor
     (add-hook 'org-mode-hook 'org-fragtog-mode))
 #+end_src
 
+** Image drag-drop
+#+begin_src elisp
+  (use-package org-download)
+#+end_src
+
 ** Hide marks
 #+begin_src elisp
   (setq org-hide-emphasis-markers t)
