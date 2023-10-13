@@ -20,7 +20,6 @@
     ./alacritty/alacritty.nix
     ./mpv/mpv.nix
     ./tmux/tmux.nix
-    ./zathura/zathura.nix
 
     ./zsh/zsh.nix
 
