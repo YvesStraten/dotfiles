@@ -3,12 +3,31 @@
 , lib
 , ...
 }:
+let
+  sekiro = pkgs.stdenv.mkDerivation
+    {
+      name = "sekiro-grub";
+      src = pkgs.fetchFromGitHub
+        {
+          owner = "semimqmo";
+          repo = "sekiro_grub_theme";
+          rev = "main";
+          sha256 = "02gdihkd2w33qy86vs8g0pfljp919ah9c13cj4bh9fvvzm5zjfn1";
+        };
+
+      installPhase = ''
+        mkdir -p $out
+        cp -R ./Sekiro/* $out
+      '';
+    };
+in
 {
   boot.loader = {
     grub = {
       enable = true;
       efiSupport = true;
       device = "nodev";
+      theme = sekiro;
     };
     efi.canTouchEfiVariables = true;
     efi.efiSysMountPoint = "/boot/";

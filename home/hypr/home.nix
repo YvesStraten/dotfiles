@@ -28,6 +28,13 @@
     recursive = true;
   };
 
+  home.file.".config/hypr/scripts/wall" = {
+    source = pkgs.writeShellScript "wall"
+      ''
+        ${pkgs.fd}/bin/fd . --type f $(${pkgs.xdg-user-dirs}/bin/xdg-user-dir PICTURES)/Wallpapers | rofi -dmenu | xargs ${pkgs.swww}/bin/swww img
+      '';
+  };
+
   services = {
     kdeconnect = {
       enable = true;

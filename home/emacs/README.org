@@ -165,6 +165,12 @@ Credit to Derek Taylor
   (setq org-agenda-timegrid-use-ampm 1)
 #+end_src
 
+** Org roam
+#+begin_src elisp
+  (use-package org-roam
+    )
+#+end_src
+
 ** Latex fragment preview
 #+begin_src elisp
   (use-package org-fragtog
