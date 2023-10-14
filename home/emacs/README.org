@@ -55,6 +55,11 @@
   :bind ("M-/" . evilnc-comment-or-uncomment-lines))
 #+end_src
 
+** Kill buffer when quitting
+#+begin_src elisp
+  (global-set-key [remap evil-quit] 'kill-buffer-and-window)
+#+end_src
+
 * Org-mode
 ** Table of contents 
 #+begin_src elisp

@@ -105,9 +105,12 @@
                   gaps_in=10
                   gaps_out=15
                   no_border_on_floating = true
+                  allow_tearing = true
                   layout = dwindle
 
                   }
+
+                  env = WLR_DRM_NO_ATOMIC,1
 
                   decoration {
                      # Rounded windows
@@ -237,6 +240,7 @@
                   windowrule = float, title:^(Picture-in-Picture)$
                   windowrule = size 800 600, title:^(Volume Control)$
                   windowrule = move 75 44%, title:^(Volume Control)$
+                  # windowrulev2 = immediate, title:^(Heroic Games Launcher)$
 
                   # Where applications appear
                   windowrule = workspace 9, rclone-browser
