@@ -14,40 +14,43 @@
         gtk-layer-shell = true;
         height = 0;
         modules-left = [
-          "clock"
           "custom/weather"
           "idle_inhibitor"
           "hyprland/workspaces"
+          "hyprland/window"
         ];
-        modules-center = [ "hyprland/window" ];
+        modules-center = [
+          "clock"
+        ];
         modules-right = [
           "tray"
           "battery"
           "backlight"
           "pulseaudio"
           "pulseaudio#microphone"
-          "cpu"
         ];
 
         "hyprland/window" = {
           format = "{}";
         };
-        "wlr/workspaces" = {
+        "hyprland/workspaces" = {
           disable-scroll = true;
           all-outputs = true;
           on-click = "activate";
-          format = "{icon}";
+          format = "{name}: {icon}";
+          format-icons = {
+            "1" = "";
+            "2" = "󰪶";
+            "3" = "";
+            "4" = "";
+            "5" = " ";
+            "6" = " ";
+            "7" = " ";
+            "8" = " ";
+            "9" = "󰊶";
+          };
           persistent_workspaces = {
-            "1" = [ ];
-            "2" = [ ];
-            "3" = [ ];
-            "4" = [ ];
-            "5" = [ ];
-            "6" = [ ];
-            "7" = [ ];
-            "8" = [ ];
-            "9" = [ ];
-            "10" = [ ];
+            "*" = 9;
           };
         };
 
@@ -199,6 +202,10 @@
           box-shadow: inset 0 -3px #ffffff;
       }
 
+      #workspaces button.active {
+          box-shadow: inset 0 -3px #ffffff;
+       }
+
       #workspaces button.urgent {
           background-color: #eb4d4b;
       }
@@ -241,10 +248,6 @@
       /* If workspaces is the rightmost module, omit right margin */
       .modules-right > widget:last-child > #workspaces {
           margin-right: 0;
-      }
-
-      #clock {
-          background-color: #64727D;
       }
 
       #battery {
