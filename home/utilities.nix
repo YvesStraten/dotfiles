@@ -28,7 +28,6 @@
       pandoc
 
       nix-prefetch-scripts
-
       ani-cli
     ];
 

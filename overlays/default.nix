@@ -1,22 +1,10 @@
-{ pkgs, config }: {
+{ inputs, pkgs, ... }: {
   nixpkgs.overlays = [
     (
       final: prev: {
-        ani-cli = prev.ani-cli.overrideAttrs
-          (o: {
-
-            propagatedBuildInputs with pkgs; =
-              [
-                mpv
-                gnugrep
-                gnused
-                curlWithGnuTls
-                ffmpeg
-                aria
-                fzf
-              ];
-
-            desktopItem = prev.makeDesktopItem
+        ani-cli =
+          let
+            desktop = pkgs.makeDesktopItem
               {
                 name = "ani-cli";
                 desktopName = "Anime cli";
@@ -25,8 +13,16 @@
                 categories = [ "Video" ];
                 exec = "ani-cli --rofi";
               };
-          });
-      };
-    );
+          in
+          prev.ani-cli.overrideAttrs
+            (o: {
+              installPhase = ''
+                mkdir -p $out/share/applications
+                cp ${desktop}/share/applications/* $out/share/applications
+                ${o.installPhase}
+              '';
+            });
+      }
+    )
   ];
 }

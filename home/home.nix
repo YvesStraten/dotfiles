@@ -5,6 +5,7 @@
 }: {
   imports = [
     inputs.nix-colors.homeManagerModules.default
+    ../overlays/default.nix
     # Main stuff
     ./languages.nix
     ./utilities.nix
@@ -27,6 +28,7 @@
     # ./sway/home.nix
     ./hypr/home.nix
     # ./gnome/home.nix
+
   ];
 
   # targets.genericLinux.enable = true;
