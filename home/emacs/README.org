@@ -1,7 +1,7 @@
 #+Title: My Emacs config
 #+Property: header-args :tangle init.el 
 #+auto_tangle: t
-#+startup: overview
+#+startup: overview 
 * Bootstrap
 ** Package.el
 #+begin_src elisp
@@ -53,11 +53,6 @@
 #+begin_src elisp
 (use-package evil-nerd-commenter
   :bind ("M-/" . evilnc-comment-or-uncomment-lines))
-#+end_src
-
-** Kill buffer when quitting
-#+begin_src elisp
-  (global-set-key [remap evil-quit] 'kill-buffer-and-window)
 #+end_src
 
 * Org-mode
@@ -130,7 +125,7 @@
 *** Discover files
 #+begin_src elisp
   (setq org-directory "~/org")
-  (setq org-agenda-files '("Todos.org" "Timetable.org"))
+  (setq org-agenda-files '("Todos.org"))
 #+end_src
 
 *** Custom view
@@ -173,8 +168,22 @@ Credit to Derek Taylor
 ** Org roam
 #+begin_src elisp
   (use-package org-roam
+    :init
+    (setq org-roam-v2-ack t)
+    :bind (("C-c n l" . org-roam-buffer-toggle)
+           ("C-c n f" . org-roam-node-find)
+           ("C-c n i" . org-roam-node-insert))
+    :config
+    (org-roam-setup)
     )
 #+end_src
+
+*** Brain UI
+#+begin_src elisp
+  (use-package org-roam-ui
+    )
+#+end_src
+
 
 ** Latex fragment preview
 #+begin_src elisp
@@ -220,6 +229,7 @@ Credit to Derek Taylor
         org-pretty-entities t
         org-image-actual-width '(300))
 #+end_src
+
 * Project management
 ** Tabs and spaces
 #+begin_src elisp

@@ -11,12 +11,10 @@
         tree-sitter-langs
         company
         company-box
+        org-roam
+        org-roam-ui
       ];
   };
-
-  # home.file.".emacs.d/init.el" = {
-  #   source = ./init.el;
-  # };
 
   home.packages = with pkgs; [
     openjdk17
