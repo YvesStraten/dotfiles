@@ -488,6 +488,18 @@ Like in vscode
   (smartparens-global-mode 1))
 #+end_src
 
+*** Smart html tags
+#+begin_src elisp
+  (use-package emmet-mode
+    :config
+    (add-hook 'sgml-mode-hook 'emmet-mode) 
+    (add-hook 'css-mode-hook  'emmet-mode)
+    (add-hook 'emmet-jsx-major-modes 'js-mode 'typescript-mode)
+    :bind
+    (("C-v" . emmet-expand-line))
+    )
+#+end_src
+
 ** Direnv support
 #+begin_src elisp
 (use-package direnv
