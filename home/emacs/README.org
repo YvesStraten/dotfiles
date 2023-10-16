@@ -230,6 +230,15 @@ Credit to Derek Taylor
         org-image-actual-width '(300))
 #+end_src
 
+* Latex
+** Compiler settings
+#+begin_src elisp
+  (use-package auctex-latexmk
+    :config
+    (setq auctex-latexmk-inherit-TeX-PDF-mode t)
+    (auctex-latexmk-setup))
+#+end_src 
+
 * Project management
 ** Tabs and spaces
 #+begin_src elisp
