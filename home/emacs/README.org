@@ -106,6 +106,15 @@
 	 '((:dir . "/tmp/")))
 #+end_src
 
+**** JS settings
+#+begin_src elisp
+  (setq org-babel-default-header-args:js
+               '((:exports . "both") (:results . "output")))
+#+end_src
+
+#+RESULTS:
+: ((:exports . both) (:results . output))
+
 **** Syntax highlight in export
 #+begin_src elisp
   (setq org-latex-listings 'minted
@@ -113,6 +122,11 @@
 	org-latex-pdf-process
 	'("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
 	  "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+#+end_src
+
+**** No confirm
+#+begin_src elisp
+  (setq org-confirm-babel-evaluate nil)
 #+end_src
 
 *** Automatic tangle
@@ -184,6 +198,10 @@ Credit to Derek Taylor
     )
 #+end_src
 
+*** Roam export
+#+begin_src elisp
+  (require 'org-roam-export)
+#+end_src
 
 ** Latex fragment preview
 #+begin_src elisp
