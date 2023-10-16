@@ -495,8 +495,6 @@ Like in vscode
     (add-hook 'sgml-mode-hook 'emmet-mode) 
     (add-hook 'css-mode-hook  'emmet-mode)
     (add-hook 'emmet-jsx-major-modes 'js-mode 'typescript-mode)
-    :bind
-    (("C-v" . emmet-expand-line))
     )
 #+end_src
 
@@ -618,6 +616,9 @@ Like in vscode
       )
 
     (ys/leader-keys
+      "e" '(emmet-expand-line :wk "emmet"))
+
+    (ys/leader-keys
       "c" '(centaur-tabs-ace-jump :wk "Jump to tab")
       )
 
@@ -641,6 +642,9 @@ Like in vscode
       "g" '(magit :wk "Open magit"))
     )
 #+end_src
+
+#+RESULTS:
+: t
 
 * UI
 ** Icons and status bar

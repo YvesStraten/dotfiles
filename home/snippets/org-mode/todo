@@ -3,5 +3,5 @@
 # key: <tod 
 # --
 ** TODO $1
-   DEADLINE: <`(format-time-string "%Y")`-${`(format-time-string "%m")`}-${`(format-time-string "%d")`} ${`(format-time-string "%a")`} ${`(format-time-string "%R")`}>
+   DEADLINE: $2 
 $0
