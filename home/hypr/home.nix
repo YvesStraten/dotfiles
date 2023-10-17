@@ -49,6 +49,7 @@
                   exec-once = waybar
                   exec-once = ${networkmanagerapplet}/bin/nm-applet
                   exec-once = ${wlsunset}/bin/wlsunset -S 8:30 -s 19:30
+                  exec-once = ${xdg-desktop-portal-hyprland}/libexec/xdg-desktop-portal-hyprland
                   exec-once = plasma-browser-integration-host
                   exec-once = ${blueman}/bin/blueman-applet
                   exec-once = ${swayidle}/bin/swayidle -w timeout 300 '${swaylock-effects}/bin/swaylock -f' timeout 480 'hyprctl dispatch dpms off' resume 'hyprctl dpms on' before-sleep '${swaylock-effects}/bin/swaylock -f'
