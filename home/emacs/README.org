@@ -216,10 +216,12 @@ Credit to Derek Taylor
 #+end_src
 
 ** Latex fragment preview
+*** Backend
 #+begin_src elisp
-  (use-package org-fragtog
-    :hook
-    (add-hook 'org-mode-hook 'org-fragtog-mode))
+  (use-package xenops
+    :config
+    (add-hook 'LaTeX-mode-hook #'xenops-mode)
+    (add-hook 'org-mode-hook #'xenops-mode))
 #+end_src
 
 ** Image drag-drop

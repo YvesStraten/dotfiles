@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: display math 
+# key: dm 
+# --
+\[
+$1
+\]
+
+$0

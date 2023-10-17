@@ -14,6 +14,8 @@
       gnome.geary
       gnome.evince
       gnome.gnome-disk-utility
+      imagemagick
+      ghostscript_headless
       whatsapp-for-linux
       tootle
       gscan2pdf
