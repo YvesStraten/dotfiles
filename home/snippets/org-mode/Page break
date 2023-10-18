@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Page break 
+# key: pb 
+# --
+\newpage $0

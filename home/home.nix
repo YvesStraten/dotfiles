@@ -19,6 +19,7 @@
     # ./vscode/vscode.nix
 
     ./alacritty/alacritty.nix
+    ./foot/foot.nix
     ./mpv/mpv.nix
     ./tmux/tmux.nix
 
