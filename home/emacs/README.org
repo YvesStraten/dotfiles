@@ -40,6 +40,13 @@
   (evil-set-undo-system 'undo-redo))
 #+end_src
 
+** Unbind certain keys
+- RET
+#+begin_src elisp
+  (with-eval-after-load 'evil-maps
+    (define-key evil-motion-state-map (kbd "RET") nil))
+#+end_src
+
 ** Evil collection
 #+begin_src elisp
 (use-package evil-collection
@@ -221,7 +228,8 @@ Credit to Derek Taylor
   (use-package xenops
     :config
     (add-hook 'LaTeX-mode-hook #'xenops-mode)
-    (add-hook 'org-mode-hook #'xenops-mode))
+
+    (add-hook 'org-mode-hook (lambda () (xenops-mode 1))))
 #+end_src
 
 ** Image drag-drop
