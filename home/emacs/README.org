@@ -757,6 +757,13 @@ Like in vscode
   (add-to-list 'default-frame-alist '(alpha-background . 85)) ; For all new frames henceforth
 #+end_src
 
+** Centered text
+#+begin_src elisp
+  (use-package centered-window
+    :config
+    (centered-window-mode t))
+#+end_src
+
 * Grammar
 ** Language tool
 Credit to doom-emacs devs
