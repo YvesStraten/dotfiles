@@ -15,6 +15,8 @@
     ./nixos/time.nix
     ./nixos/vfio.nix
 
+    ../overlays/default.nix
+
     # Desktops
     ../home/hypr/hyprland.nix
     # ../home/sway/sway.nix

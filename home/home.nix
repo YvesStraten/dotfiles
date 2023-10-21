@@ -5,13 +5,14 @@
 }: {
   imports = [
     inputs.nix-colors.homeManagerModules.default
-    ../overlays/default.nix
     # Main stuff
     ./languages.nix
     ./utilities.nix
     ./theming.nix
     ./others.nix
     ./bin/default.nix
+
+    ../overlays/default.nix
 
     # Editors
     # ./nvim/neovim.nix

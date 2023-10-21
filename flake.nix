@@ -70,23 +70,11 @@
 
         Iso = nixpkgs.lib.nixosSystem {
           inherit system;
+          specialArgs = { inherit inputs; };
           modules = [
             "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+            nur.nixosModules.nur
             ./modules/iso.nix
-
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                extraSpecialArgs = { inherit inputs; };
-                useGlobalPkgs = false;
-                useUserPackages = true;
-                users.yvess = { ... }: {
-                  imports = [
-                    ./home/home.nix
-                  ];
-                };
-              };
-            }
           ];
         };
 

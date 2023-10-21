@@ -11,13 +11,17 @@
     ./nixos/settings.nix
     ./nixos/sound.nix
     ./nixos/time.nix
+    ./nixos/vfio.nix
 
     # Desktops
-    # ./nixos/hyprland.nix
-    # ./nixos/qtile.nix
-    # ./nixos/i3.nix
-    # ./nixos/sway.nix
-    # ./nixos/bspwm.nix
-    ./nixos/plasma.nix
+    ../home/hypr/hyprland.nix
+    # ../home/sway/sway.nix
+    # ../home/gnome/gnome.nix
   ];
+
+  isoImage.squashfsCompression = "gzip -Xcompression-level 1";
+  boot = {
+    kernelPackages = pkgs.linuxPackages_zen;
+    supportedFilesystems = lib.mkForce [ "btrfs" "reiserfs" "vfat" "f2fs" "xfs" "ntfs" "cifs" ];
+  };
 }

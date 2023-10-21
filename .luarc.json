@@ -15,5 +15,8 @@
         "/home/yvess/.local/state/nvim/lazy/readme",
         "/home/yvess/.local/share/nvim/lazy/quarto-nvim/after",
         "${3rd}/luassert/library"
+    ],
+    "diagnostics.globals": [
+        "vim"
     ]
 }

@@ -2,6 +2,14 @@
   nixpkgs.overlays = [
     (
       final: prev: {
+        sddm-themes = prev.sddm.overrideAttrs
+          (o: {
+            buildInputs = o.buildInputs ++ [
+              pkgs.libsForQt5.qt5.qtquickcontrols2
+              pkgs.libsForQt5.qt5.qtgraphicaleffects
+            ];
+          });
+
         ani-cli =
           let
             desktop = pkgs.makeDesktopItem

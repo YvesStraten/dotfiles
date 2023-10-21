@@ -604,9 +604,9 @@ Like in vscode
 
     (ys/leader-keys
       "f" '(:ignore t :wk "projectile")
-      "ff" '(projectile-find-file :wk "Find file")
-      "fb" '(projectile-switch-to-buffer :wk "Switch to buffer")
-      "fp" '(projectile-switch-project :wk "Switch project")
+      "ff" '(counsel-projectile-find-file :wk "Find file")
+      "fb" '(counsel-projectile-switch-to-buffer :wk "Switch to buffer")
+      "fp" '(counsel-projectile-switch-project :wk "Switch project")
       )
 
     (ys/leader-keys
@@ -659,31 +659,39 @@ Like in vscode
 * UI
 ** Icons and status bar
 #+begin_src elisp
-(use-package all-the-icons
-  :if (display-graphic-p))
+  (use-package all-the-icons
+    :if (display-graphic-p))
 
-(use-package doom-modeline
-  :init (doom-modeline-mode 1))
+  (use-package doom-modeline
+    :init (doom-modeline-mode 1))
 #+end_src
 
 ** Dashboard
 #+begin_src elisp
-(use-package dashboard
-  :ensure t
-  :config
-  (dashboard-setup-startup-hook))
-(setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
-(setq dashboard-banner-logo-title "Welcome to Emacs")
-(setq dashboard-startup-banner 'official)
-(setq dashboard-center-content t)
-(setq dashboard-set-file-icons t)
-(setq dashboard-set-heading-icons t)
+  (use-package dashboard
+    :ensure t
+    :config
+    (dashboard-setup-startup-hook)
+  (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
+  (setq dashboard-banner-logo-title "Welcome to Emacs")
+  (setq dashboard-startup-banner 'logo)
+  (setq dashboard-center-content t)
 
-;; Sets which dashboard items should show
-(setq dashboard-items '((recents  . 5)
-                        (bookmarks . 5)
-                        (projects . 5)
-                        (agenda . 5)))
+  ;; Sets which dashboard items should show
+  (setq dashboard-items '((recents  . 5)
+                          (bookmarks . 5)
+                          (projects . 5)
+                          (agenda . 5)))
+
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-display-icons-p t
+        dashboard-icon-type 'all-the-icons)
+  (setq dashboard-heading-icons '((recents   . "history")
+                                  (bookmarks . "bookmark")
+                                  (agenda    . "calendar")
+                                  (projects  . "rocket")
+                                  (registers . "database"))))
 #+end_src
 
 ** Theme
