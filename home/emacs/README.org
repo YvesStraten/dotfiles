@@ -308,17 +308,24 @@ Credit to Derek Taylor
 
 ** File explorer
 #+begin_src elisp
-(use-package neotree
-  :config
-  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)
-	neo-window-width 25
-	neo-smart-open t
-	neo-show-hidden-files t)
-  :bind
-  (:map evil-normal-state-map
-        ("C-n" . neotree-toggle))
-  )
+  (use-package treemacs
+    :config
+    (setq treemacs-width 23)
+    (treemacs-git-commit-diff-mode t)
+    (treemacs-filewatch-mode t))
+
+  (use-package treemacs-evil
+    :config
+    :bind
+    (:map evil-normal-state-map
+          ("C-n" . treemacs)))
+
+  (use-package treemacs-projectile
+    )
 #+end_src
+
+#+RESULTS:
+
 
 * Buffers management
 ** Tmux navigation
@@ -702,7 +709,6 @@ Like in vscode
     (load-theme 'doom-dracula t)
 
     (doom-themes-visual-bell-config)
-    (doom-themes-neotree-config)
     (doom-themes-org-config))
 #+end_src
 
