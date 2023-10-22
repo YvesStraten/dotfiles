@@ -31,6 +31,10 @@
     sessionPath = [
       "$HOME/.local/bin"
     ];
+
+    packages = with pkgs; [
+      ani-cli
+    ];
   };
 
   # Let Home Manager install and manage itself.

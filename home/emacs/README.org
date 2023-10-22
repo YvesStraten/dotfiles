@@ -607,6 +607,7 @@ Like in vscode
       "ff" '(counsel-projectile-find-file :wk "Find file")
       "fb" '(counsel-projectile-switch-to-buffer :wk "Switch to buffer")
       "fp" '(counsel-projectile-switch-project :wk "Switch project")
+      "fg" '(counsel-projectile-grep :wk "Grep for file")
       )
 
     (ys/leader-keys
@@ -652,9 +653,6 @@ Like in vscode
       "g" '(magit :wk "Open magit"))
     )
 #+end_src
-
-#+RESULTS:
-: t
 
 * UI
 ** Icons and status bar
@@ -714,6 +712,17 @@ Like in vscode
   (setq display-line-numbers-type 'relative 
         display-line-numbers-current-absolute t)
   (global-display-line-numbers-mode)
+#+end_src
+
+*** Remove line numbers in some modes
+#+begin_src elisp
+  (dolist (mode '(org-mode-hook
+                  term-mode-hook
+                  vterm-mode-hook
+                  shell-mode-hook
+                  treemacs-mode-hook
+                  eshell-mode-hook))
+    (add-hook mode (lambda() (display-line-numbers-mode 0))))
 #+end_src
 
 ** Ligatures
