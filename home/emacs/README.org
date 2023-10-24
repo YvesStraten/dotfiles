@@ -765,8 +765,6 @@ Like in vscode
   :config
   (setq beacon-blink-when-window-scrolls t)
   (beacon-mode 1))
-
-
 #+end_src
 
 ** Disable built in UI
@@ -776,9 +774,12 @@ Like in vscode
 
 ** Transparent emacs
 #+begin_src elisp
-  (set-frame-parameter nil 'alpha-background 85) ; For current frame
+  (set-frame-parameter nil 'alpha-background 80) ; For current frame
   (add-to-list 'default-frame-alist '(alpha-background . 85)) ; For all new frames henceforth
 #+end_src
+
+#+RESULTS:
+: ((alpha-background . 85) (font . JetBrainsMono NF-15) (vertical-scroll-bars))
 
 ** Centered text
 #+begin_src elisp

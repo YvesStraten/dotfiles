@@ -1,0 +1,7 @@
+# key: tempa
+# name: article
+# --
+#+Title: $1 
+#+LATEX_CLASS: ${article}
+#+OPTIONS: ${toc:nil}
+#+LATEX_CLASS_OPTIONS: [${11}pt, ${a4paper}]
