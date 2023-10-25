@@ -324,9 +324,6 @@ Credit to Derek Taylor
     )
 #+end_src
 
-#+RESULTS:
-
-
 * Buffers management
 ** Tmux navigation
 #+begin_src elisp
@@ -626,7 +623,11 @@ Like in vscode
     (ys/leader-keys
       "s" '(:ignore t :wk "window")
       "sh" '(evil-window-split :wk "Horizontal split")
-      "sv" '(evil-window-vsplit :wk "Vertical split"))
+      "sv" '(evil-window-vsplit :wk "Vertical split")
+      "sp" '(langtool-check :wk "Check with langtool")
+      "sc" '(:ignore t :wk "Correct")
+      "scp" '(langtool-correct-at-point :wk "Correct at point")
+      "scb" '(langtool-correct-buffer :wk "Correct buffer"))
 
 
     (ys/leader-keys
@@ -660,6 +661,9 @@ Like in vscode
       "g" '(magit :wk "Open magit"))
     )
 #+end_src
+
+#+RESULTS:
+: t
 
 * UI
 ** Icons and status bar
