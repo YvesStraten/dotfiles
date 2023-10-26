@@ -373,18 +373,21 @@ Credit to Derek Taylor
 
 ** Eglot
 #+begin_src elisp
-    (require 'eglot)
-    (add-hook 'c++-mode-hook 'eglot-ensure)
-    (add-hook 'typescript-mode-hook 'eglot-ensure)
-    (add-hook 'js-mode-hook 'eglot-ensure)
+  (require 'eglot)
+  (add-hook 'c++-mode-hook 'eglot-ensure)
+  (add-hook 'typescript-mode-hook 'eglot-ensure)
+  (add-hook 'js-mode-hook 'eglot-ensure)
 
-    (setq lsp-prefer-flymake nil
-          lsp-prefer-capf t
-          gc-cons-threshold 100000000
-          read-process-output-max (* 1024 1024)
-          lsp-idle-delay 0.500
-          lsp-log-io nil)
+  (setq lsp-prefer-flymake nil
+        lsp-prefer-capf t
+        gc-cons-threshold 100000000
+        read-process-output-max (* 1024 1024)
+        lsp-idle-delay 0.500
+        eglot-events-buffer-size 0
+        lsp-log-io nil)
 #+end_src
+
+#+RESULTS:
 
 ** Dap-mode
 #+begin_src elisp
