@@ -24,22 +24,8 @@
     sshfs
     pamixer
     pavucontrol
-    hfsprogs
     #    nixgl.nixGLNvidia
 
-    # Wayland stuff
-    swww
-    autotiling
-    wl-clipboard
-    swayidle
-    wlsunset
-    wdisplays
-    networkmanagerapplet
-    polkit_gnome
-    vulkan-validation-layers
-    swaynag-battery
-
-    # For plasma
     libsForQt5.plasma-browser-integration
     # latte-dock
   ];

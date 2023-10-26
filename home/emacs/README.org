@@ -3,22 +3,26 @@
 #+auto_tangle: t
 #+startup: overview 
 * Bootstrap
-** Package.el
+** Straight.el
 #+begin_src elisp
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(package-initialize)
+  (defvar bootstrap-version)
+  (let ((bootstrap-file
+         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+        (bootstrap-version 6))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+          (url-retrieve-synchronously
+           "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+           'silent 'inhibit-cookies)
+        (goto-char (point-max))
+        (eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
 #+end_src
 
-** Use-package
+** Use package 
 #+begin_src elisp
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
-(eval-when-compile
-  (require 'use-package))
-(setq use-package-always-ensure t)
+  (straight-use-package 'use-package)
+  (setq straight-use-package-by-default t)
 #+end_src
 
 ** Ability to reload configuration
@@ -222,14 +226,11 @@ Credit to Derek Taylor
   (require 'org-roam-export)
 #+end_src
 
-** Latex fragment preview
-*** Backend
+** Org fragtog
 #+begin_src elisp
-  (use-package xenops
+  (use-package org-fragtog
     :config
-    (add-hook 'LaTeX-mode-hook #'xenops-mode)
-
-    (add-hook 'org-mode-hook (lambda () (xenops-mode 1))))
+    (add-hook 'org-mode-hook 'org-fragtog-mode))
 #+end_src
 
 ** Image drag-drop
@@ -376,17 +377,18 @@ Credit to Derek Taylor
 
 ** Eglot
 #+begin_src elisp
-    (require 'eglot)
-    (add-hook 'c++-mode-hook 'eglot-ensure)
-    (add-hook 'typescript-mode-hook 'eglot-ensure)
-    (add-hook 'js-mode-hook 'eglot-ensure)
+  (require 'eglot)
+  (add-hook 'c++-mode-hook 'eglot-ensure)
+  (add-hook 'typescript-mode-hook 'eglot-ensure)
+  (add-hook 'js-mode-hook 'eglot-ensure)
 
-    (setq lsp-prefer-flymake nil
-          lsp-prefer-capf t
-          gc-cons-threshold 100000000
-          read-process-output-max (* 1024 1024)
-          lsp-idle-delay 0.500
-          lsp-log-io nil)
+  (setq lsp-prefer-flymake nil
+        lsp-prefer-capf t
+        gc-cons-threshold 100000000
+        read-process-output-max (* 1024 1024)
+        eglot-events-buffer-size 0
+        lsp-idle-delay 0.500
+        lsp-log-io nil)
 #+end_src
 
 ** Dap-mode

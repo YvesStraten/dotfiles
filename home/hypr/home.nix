@@ -21,6 +21,10 @@
       WLR_NO_HARDWARE_CURSORS = "1";
       NIXOS_OZONE_WL = "1";
     };
+
+    packages = with pkgs; [
+      swww
+    ];
   };
 
   home.file.".config/hypr/scripts" = {
@@ -46,6 +50,7 @@
     enable = true;
     systemdIntegration = true;
     extraConfig = with pkgs;  ''
+                  source = ~/.config/hypr/monitors.conf
                   exec-once = waybar
                   exec-once = ${networkmanagerapplet}/bin/nm-applet
                   exec-once = ${wlsunset}/bin/wlsunset -S 8:30 -s 19:30
@@ -56,7 +61,7 @@
       exec-once = ${wl-clipboard}/bin/wl-paste --type text --watch ${cliphist}/bin/cliphist store #Stores only text data
 
       exec-once = ${wl-clipboard}/bin/wl-paste --type image --watch ${cliphist}/bin/cliphist store #Stores only image data
-                  exec-once = ~/.config/hypr/scripts/wallpaper.sh
+                  exec-once = swww init 
                   exec-once = ${polkit_gnome}/libexec/polkit-gnome-authentication-agent-1
 
                   monitor = ,highrr,auto,1
@@ -91,7 +96,7 @@
 
                   bind = SUPER SHIFT, S, exec, ${grim}/bin/grim -g "$(${slurp}/bin/slurp)" - | ${swappy}/bin/swappy -f - 
 
-                  bind = SUPER SHIFT, X, exec, ${hyprpicker}/bin/hyprpicker | wl-copy 
+                  bind = SUPER SHIFT, X, exec, ${hyprpicker}/bin/hyprpicker | ${wl-clipboard}/bin/wl-copy 
                   bind = CTRL ALT, L, exec, ${swaylock-effects}/bin/swaylock
                   bind = SUPER, Return, exec, ${alacritty}/bin/alacritty
                   bind = SUPER, X, exec, ${alacritty}/bin/alacritty
@@ -225,6 +230,8 @@
                   windowrule = animation none,Rofi
                   windowrule = float,viewnior
                   windowrule = float,feh
+                  windowrule = float, org.gnome.Nautilus
+                  windowrule = size 1071 658, org.gnome.Nautilus 
                   windowrule = float, pavucontrol-qt
                   windowrule = float, pavucontrol
                   windowrule = float, file-roller
