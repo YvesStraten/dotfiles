@@ -309,19 +309,15 @@ Credit to Derek Taylor
 
 ** File explorer
 #+begin_src elisp
-  (use-package treemacs
+  (use-package neotree
     :config
-    (setq treemacs-width 23)
-    (treemacs-git-commit-diff-mode t)
-    (treemacs-filewatch-mode t))
-
-  (use-package treemacs-evil
-    :config
+    (setq neo-theme (if (display-graphic-p) 'icons 'arrow)
+  	neo-window-width 25
+  	neo-smart-open t
+  	neo-show-hidden-files t)
     :bind
     (:map evil-normal-state-map
-          ("C-n" . treemacs)))
-
-  (use-package treemacs-projectile
+          ("C-n" . neotree-toggle))
     )
 #+end_src
 
@@ -713,12 +709,17 @@ Like in vscode
     :ensure t
     :config
     (setq doom-themes-enable-bold t
-          doom-themes-enable-italic t)
+          doom-themes-enable-italic t
+  	doom-modeline-enable-word-count t
+  	)
     (load-theme 'doom-dracula t)
-
     (doom-themes-visual-bell-config)
+    (doom-themes-neotree-config)
     (doom-themes-org-config))
 #+end_src
+
+#+RESULTS:
+: t
 
 ** Font & relative line numbering
 #+begin_src elisp
