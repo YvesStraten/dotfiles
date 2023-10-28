@@ -25,6 +25,7 @@
     packages = with pkgs; [
       yvess.wall-switch
       swww
+      nwg-displays
     ];
   };
 
