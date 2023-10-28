@@ -62,8 +62,7 @@
 
 ** Evil commenter
 #+begin_src elisp
-(use-package evil-nerd-commenter
-  :bind ("M-/" . evilnc-comment-or-uncomment-lines))
+  (use-package evil-nerd-commenter)
 #+end_src
 
 * Org-mode
@@ -364,9 +363,13 @@ Credit to Derek Taylor
 
 *** Ivy Integration
 #+begin_src elisp
-(use-package ivy-yasnippet
-  :bind (("C-c y" . ivy-yasnippet)))
+  (use-package ivy-yasnippet
+    :bind (:map evil-insert-state-map 
+    ("C-c y" . ivy-yasnippet)))
 #+end_src
+
+#+RESULTS:
+: ivy-yasnippet
 
 ** Eglot
 #+begin_src elisp
@@ -451,29 +454,24 @@ Credit to Derek Taylor
 (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 #+end_src
 
-** Minimap
-Like in vscode
-#+begin_src elisp
-  (use-package minimap)
-#+end_src
-
 ** Formatter
 #+begin_src elisp
   (use-package format-all
-    :config
-    (add-hook 'format-all-mode-hook 'format-all-ensure-formatter)
-    (add-hook 'prog-mode-hook 'format-all-mode))
+    :hook (format-all-ensure-formatter . format-all-mode)
+    (prog-mode . format-all-mode)
+  )
 #+end_src
 
 ** Indentation and parenthesis
 *** Indent blankline
 #+begin_src elisp
-;; Indent blankline
-(use-package highlight-indent-guides
-  :config
-  (setq highlight-indent-guides-method 'character
-	highlight-indent-guides-responsive 'top)
-  (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
+  ;; Indent blankline
+  (use-package highlight-indent-guides
+    :hook (prog-mode . highlight-indent-guides-mode)
+    :config
+    (setq highlight-indent-guides-method 'character
+  	highlight-indent-guides-responsive 'top)
+    )
 #+end_src
 
 *** Colorization
@@ -505,9 +503,9 @@ Like in vscode
 
 ** Direnv support
 #+begin_src elisp
-(use-package direnv
-  :config
-  (direnv-mode))
+  (use-package direnv
+    :hook (prog-mode . direnv-mode)
+    )
 #+end_src
 
 ** Programming language modes
@@ -626,6 +624,9 @@ Like in vscode
       "scp" '(langtool-correct-at-point :wk "Correct at point")
       "scb" '(langtool-correct-buffer :wk "Correct buffer"))
 
+    (ys/leader-keys
+      "b" '(evilnc-comment-or-uncomment-lines :wk "Comment"))
+
 
     (ys/leader-keys
       "t" '(vterm-toggle :wk "vterm")
@@ -723,7 +724,7 @@ Like in vscode
   (add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-15"))
   (setq display-line-numbers-type 'relative 
         display-line-numbers-current-absolute t)
-  (global-display-line-numbers-mode)
+  (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 #+end_src
 
 *** Remove line numbers in some modes
@@ -732,7 +733,7 @@ Like in vscode
                   term-mode-hook
                   vterm-mode-hook
                   shell-mode-hook
-                  treemacs-mode-hook
+  		neotree-mode-hook
                   eshell-mode-hook))
     (add-hook mode (lambda() (display-line-numbers-mode 0))))
 #+end_src
@@ -775,23 +776,23 @@ Like in vscode
 
 ** Disable built in UI
 #+begin_src elisp
-(scroll-bar-mode -1)
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
 #+end_src
 
 ** Transparent emacs
 #+begin_src elisp
-  (set-frame-parameter nil 'alpha-background 80) ; For current frame
+  (set-frame-parameter nil 'alpha-background 70) ; For current frame
   (add-to-list 'default-frame-alist '(alpha-background . 85)) ; For all new frames henceforth
 #+end_src
-
-#+RESULTS:
-: ((alpha-background . 85) (font . JetBrainsMono NF-15) (vertical-scroll-bars))
 
 ** Centered text
 #+begin_src elisp
   (use-package centered-window
-    :config
-    (centered-window-mode t))
+    :hook
+    (org-mode . centered-window-mode)
+  )
 #+end_src
 
 * Grammar
@@ -828,20 +829,14 @@ Credit to doom-emacs devs
 
 ** Disables annoying features
 #+begin_src elisp
-;; Disable unrelated warnings
-(setq warning-minimum-level :error)
+  ;; Disable unrelated warnings
+  (setq warning-minimum-level :error)
 
-;; Disable backup files (e.g., filename~)
-(setq make-backup-files nil)
+  ;; Disable lock file creation
+  (setq create-lockfiles nil)
 
-;; Disable auto-save files (e.g., #filename#)
-(setq auto-save-default nil)
-
-;; Disable lock file creation
-(setq create-lockfiles nil)
-
-;; Removes annoying prompts
-(setq use-short-answers t)
+  ;; Removes annoying prompts
+  (setq use-short-answers t)
 #+end_src
 
 ** Backup storage location
