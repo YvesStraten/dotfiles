@@ -12,8 +12,6 @@
     ./others.nix
     ./bin/default.nix
 
-    ../overlays/default.nix
-
     # Editors
     # ./nvim/neovim.nix
     ./emacs/emacs.nix

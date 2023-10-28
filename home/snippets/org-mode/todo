@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: todo 
-# key: <tod 
+# key: tod 
 # --
 ** TODO $1
    DEADLINE: $2 

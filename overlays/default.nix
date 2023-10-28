@@ -2,6 +2,10 @@
   nixpkgs.overlays = [
     (
       final: prev: {
+        yvess =
+          (prev.yvess or { })
+          // (import ../packages/default.nix { inherit (prev) pkgs; });
+
         sddm = prev.sddm.overrideAttrs
           (o: {
             buildInputs = o.buildInputs ++ [
