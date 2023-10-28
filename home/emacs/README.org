@@ -400,7 +400,7 @@ Credit to Derek Taylor
     :config
     (setq corfu-cycle t
     corfu-auto t
-    corfu-auto-prefix 2
+    corfu-auto-prefix 1
     corfu-auto-delay 0.0
     corfu-preview-current nil
     )
@@ -414,6 +414,8 @@ Credit to Derek Taylor
     (corfu-echo-mode))
 
 #+end_src
+
+#+RESULTS:
 
 *** Icons
 #+begin_src elisp
@@ -437,6 +439,9 @@ Credit to Derek Taylor
     (setq yasnippet-capf-lookup-by 'key)
     )
 #+end_src
+
+#+RESULTS:
+: t
 
 ** Tree-sitter
 #+begin_src elisp
@@ -519,6 +524,12 @@ Like in vscode
   (setq typescript-indent-level 2))
 (setq js-indent-level 2)
 (setq css-indent-offset 2)
+#+end_src
+
+*** Prisma
+#+begin_src elisp
+  (use-package prisma-mode
+    :straight (:host github :repo "pimeys/emacs-prisma-mode" :branch "main"))
 #+end_src
 
 *** Markdown
