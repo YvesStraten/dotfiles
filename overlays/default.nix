@@ -22,25 +22,26 @@
         };
 
         ani-cli =
-          let
-            desktop = pkgs.makeDesktopItem
-              {
-                name = "ani-cli";
-                desktopName = "Anime cli";
-                comment = "A cli program to watch anime";
-                genericName = "Anime player";
-                categories = [ "Video" ];
-                exec = "ani-cli --rofi";
-              };
-          in
           prev.ani-cli.overrideAttrs
-            (o: {
+            (o: rec {
+
+              desktop = pkgs.makeDesktopItem
+                {
+                  name = "ani-cli";
+                  desktopName = "Anime cli";
+                  comment = "A cli program to watch anime";
+                  genericName = "Anime player";
+                  categories = [ "Video" ];
+                  exec = "ani-cli --rofi";
+                };
+
               installPhase = ''
                 mkdir -p $out/share/applications
                 cp ${desktop}/share/applications/* $out/share/applications
                 ${o.installPhase}
               '';
-            });
+            }
+            );
       }
     )
   ];

@@ -4,16 +4,10 @@
     [
       tesseract
       brave
+      tor-browser-bundle-bin
       libreoffice
       rclone
       rclone-browser
-      gnome.nautilus
-      gnome.gnome-clocks
-      gnome.pomodoro
-      gnome.eog
-      gnome.geary
-      gnome.evince
-      gnome.gnome-disk-utility
       imagemagick
       ghostscript_headless
       whatsapp-for-linux
@@ -24,14 +18,20 @@
       krename
       htop
 
-      # For notes
-      nb
-      nmap
       pandoc
 
       nix-prefetch-scripts
       ani-cli
-    ];
+    ]
+    ++ (with pkgs.gnome; [
+      nautilus
+      gnome-clocks
+      pomodoro
+      eog
+      geary
+      evince
+      gnome-disk-utility
+    ]);
 
   programs.thunderbird = {
     enable = true;

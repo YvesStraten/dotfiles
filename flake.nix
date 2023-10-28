@@ -39,6 +39,8 @@
     {
       defaultPackage.${system} = home-manager.defaultPackage.${system};
 
+      packages = (import ./packages/default.nix { inherit pkgs; });
+
       nixosConfigurations = {
         nitro = nixpkgs.lib.nixosSystem {
           inherit system;
