@@ -1,8 +1,8 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   programs.waybar = {
     enable = true;
     package = pkgs.waybar.overrideAttrs (oa: {
-      mesonFlags = (oa.mesonFlags or [ ]) ++ [ "-Dexperimental=true" ];
+      mesonFlags = (oa.mesonFlags or []) ++ ["-Dexperimental=true"];
     });
     settings = {
       mainBar = {
@@ -96,7 +96,7 @@
         "backlight" = {
           device = "intel_backlight";
           format = "{icon}   {percent}%";
-          format-icons = [ "󰃞" "󰃟" "󰃠" ];
+          format-icons = ["󰃞" "󰃟" "󰃠"];
           on-scroll-up = "brightnessctl set 1%+";
           on-scroll-down = "brightnessctl set 1%-";
           min-length = 6;
@@ -136,7 +136,7 @@
             phone = "";
             portable = "";
             car = "";
-            default = [ "" "" "" ];
+            default = ["" "" ""];
           };
         };
 

@@ -1,8 +1,16 @@
-{ stdenv, writeShellScript, makeDesktopItem, fd, xdg-user-dirs, rofi, swww }:
+{
+  stdenv,
+  writeShellScript,
+  makeDesktopItem,
+  fd,
+  xdg-user-dirs,
+  rofi,
+  swww,
+}:
 stdenv.mkDerivation rec {
   name = "wall-switch";
   src = writeShellScript "wall" ''
-    ${fd}/bin/fd . --type f $(${xdg-user-dirs}/bin/xdg-user-dir PICTURES)/Wallpapers | ${rofi}/bin/rofi -dmenu | xargs ${swww}/bin/swww img 
+    ${fd}/bin/fd . --type f $(${xdg-user-dirs}/bin/xdg-user-dir PICTURES)/Wallpapers | ${rofi}/bin/rofi -dmenu | xargs ${swww}/bin/swww img
   '';
 
   dontUnpack = true;
@@ -12,7 +20,7 @@ stdenv.mkDerivation rec {
     desktopName = "Wallpaper";
     comment = "Program that swaps wallpapers";
     genericName = "Wallpaper";
-    categories = [ "Utility" ];
+    categories = ["Utility"];
     exec = "${src}";
   };
 
@@ -23,4 +31,3 @@ stdenv.mkDerivation rec {
     cp ${desktop}/share/applications/* $out/share/applications
   '';
 }
-

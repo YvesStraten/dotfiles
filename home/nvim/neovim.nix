@@ -1,6 +1,7 @@
-{ pkgs
-, config
-, ...
+{
+  pkgs,
+  config,
+  ...
 }: {
   programs.neovim = {
     enable = true;
@@ -11,7 +12,6 @@
     recursive = true;
     source = pkgs.nvChad;
   };
-
 
   home.packages = with pkgs; [
     neovide

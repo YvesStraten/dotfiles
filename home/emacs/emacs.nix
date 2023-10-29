@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   programs.emacs = {
     enable = true;
     package = pkgs.emacs29-pgtk;
@@ -45,9 +45,9 @@
   services.emacs = {
     enable = true;
     defaultEditor = true;
-    client = { enable = true; };
+    client = {enable = true;};
     startWithUserSession = true;
   };
 
-  services.syncthing = { enable = true; };
+  services.syncthing = {enable = true;};
 }

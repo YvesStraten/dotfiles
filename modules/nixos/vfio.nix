@@ -4,12 +4,17 @@ let
     "10de:0fb9" # Audio
   ];
 in
-{ pkgs, lib, config, ... }: {
-  options.vfio.enable = with lib;
-    mkEnableOption "Configure the machine for VFIO";
+  {
+    pkgs,
+    lib,
+    config,
+    ...
+  }: {
+    options.vfio.enable = with lib;
+      mkEnableOption "Configure the machine for VFIO";
 
-  config =
-    let cfg = config.vfio;
+    config = let
+      cfg = config.vfio;
     in {
       boot = {
         initrd.kernelModules = [
@@ -23,10 +28,12 @@ in
           "nvidia_drm"
         ];
 
-        kernelParams = [
-          # enable IOMMU
-          "intel_iommu=on"
-        ] ++ lib.optional cfg.enable
+        kernelParams =
+          [
+            # enable IOMMU
+            "intel_iommu=on"
+          ]
+          ++ lib.optional cfg.enable
           # isolate the GPU
           ("vfio-pci.ids=" + lib.concatStringsSep "," gpuIDs);
       };
@@ -38,8 +45,8 @@ in
       ];
 
       specialisation."VFIO".configuration = {
-        system.nixos.tags = [ "with-vfio" ];
+        system.nixos.tags = ["with-vfio"];
         vfio.enable = true;
       };
     };
-}
+  }

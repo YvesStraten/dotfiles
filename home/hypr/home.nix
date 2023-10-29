@@ -1,7 +1,8 @@
-{ config
-, pkgs
-, inputs
-, ...
+{
+  config,
+  pkgs,
+  inputs,
+  ...
 }: {
   imports = [
     inputs.hyprland.homeManagerModules.default
@@ -44,7 +45,7 @@
   wayland.windowManager.hyprland = {
     enable = true;
     systemdIntegration = true;
-    extraConfig = with pkgs;  ''
+    extraConfig = with pkgs; ''
                   source = ~/.config/hypr/monitors.conf
                   exec-once = waybar
                   exec-once = ${networkmanagerapplet}/bin/nm-applet
@@ -56,7 +57,7 @@
       exec-once = ${wl-clipboard}/bin/wl-paste --type text --watch ${cliphist}/bin/cliphist store #Stores only text data
 
       exec-once = ${wl-clipboard}/bin/wl-paste --type image --watch ${cliphist}/bin/cliphist store #Stores only image data
-                  exec-once = swww init 
+                  exec-once = swww init
                   exec-once = ${polkit_gnome}/libexec/polkit-gnome-authentication-agent-1
 
                   monitor = ,highrr,auto,1
@@ -75,7 +76,7 @@
 
                   gestures {
                            workspace_swipe = true
-                           workspace_swipe_fingers = 3 
+                           workspace_swipe_fingers = 3
                            workspace_swipe_numbered = true
                   }
 
@@ -89,9 +90,9 @@
                   bind = , XF86MonBrightnessDown, exec, ${brightnessctl}/bin/brightnessctl s 10%-
 
 
-                  bind = SUPER SHIFT, S, exec, ${grim}/bin/grim -g "$(${slurp}/bin/slurp)" - | ${swappy}/bin/swappy -f - 
+                  bind = SUPER SHIFT, S, exec, ${grim}/bin/grim -g "$(${slurp}/bin/slurp)" - | ${swappy}/bin/swappy -f -
 
-                  bind = SUPER SHIFT, X, exec, ${hyprpicker}/bin/hyprpicker | ${wl-clipboard}/bin/wl-copy 
+                  bind = SUPER SHIFT, X, exec, ${hyprpicker}/bin/hyprpicker | ${wl-clipboard}/bin/wl-copy
                   bind = CTRL ALT, L, exec, ${swaylock-effects}/bin/swaylock
                   bind = SUPER, Return, exec, ${alacritty}/bin/alacritty
                   bind = SUPER, X, exec, ${alacritty}/bin/alacritty
@@ -140,7 +141,7 @@
                   enabled = true
 
                   # Curves
-                  bezier = smooth, 0, 0, 0.95, 0.44 
+                  bezier = smooth, 0, 0, 0.95, 0.44
                   bezier = smoothOut, 0.36, 0, 0.66, -0.56
                   bezier = smoothIn, 0.25, 1, 0.5, 1
 
@@ -226,7 +227,7 @@
                   windowrule = float,viewnior
                   windowrule = float,feh
                   windowrule = float, org.gnome.Nautilus
-                  windowrule = size 1071 658, org.gnome.Nautilus 
+                  windowrule = size 1071 658, org.gnome.Nautilus
                   windowrule = float, pavucontrol-qt
                   windowrule = float, pavucontrol
                   windowrule = float, file-roller

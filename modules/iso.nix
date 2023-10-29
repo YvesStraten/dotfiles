@@ -1,7 +1,8 @@
-{ config
-, pkgs
-, lib
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  ...
 }: {
   imports = [
     ./nixos/nvidia.nix
@@ -22,6 +23,6 @@
   isoImage.squashfsCompression = "gzip -Xcompression-level 1";
   boot = {
     kernelPackages = pkgs.linuxPackages_zen;
-    supportedFilesystems = lib.mkForce [ "btrfs" "reiserfs" "vfat" "f2fs" "xfs" "ntfs" "cifs" ];
+    supportedFilesystems = lib.mkForce ["btrfs" "reiserfs" "vfat" "f2fs" "xfs" "ntfs" "cifs"];
   };
 }

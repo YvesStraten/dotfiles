@@ -1,7 +1,11 @@
-{ stdenv, fetchFromGitHub }:
+{
+  stdenv,
+  fetchFromGitHub,
+}:
 stdenv.mkDerivation {
   name = "sddm-sugar-dark";
-  src = fetchFromGitHub
+  src =
+    fetchFromGitHub
     {
       owner = "MarianArlt";
       repo = "sddm-sugar-dark";
@@ -14,4 +18,3 @@ stdenv.mkDerivation {
     cp -R ./* $out/
   '';
 }
-

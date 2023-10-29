@@ -304,9 +304,9 @@ Credit to Derek Taylor
 ** Compiler settings
 #+begin_src elisp
   (use-package auctex-latexmk
+    :hook (latex-mode . auctex-latexmk-setup)
     :config
-    (setq auctex-latexmk-inherit-TeX-PDF-mode t)
-    (auctex-latexmk-setup))
+    (setq auctex-latexmk-inherit-TeX-PDF-mode t))
 #+end_src 
 
 * Project management
@@ -425,8 +425,9 @@ Credit to Derek Taylor
     :defer
     :hook
     (c++-mode . eglot-ensure)
-    (typescript-mode . eglot-ensure)
+    (tsx-ts-mode . eglot-ensure)
     (js-mode . eglot-ensure)
+    (js-jsx-mode . eglot-ensure)
     :config
     (setq lsp-prefer-flymake nil
           lsp-prefer-capf t
@@ -567,22 +568,19 @@ Credit to Derek Taylor
 #+end_src
 
 ** Programming language modes
+*** Typescript
+#+begin_src elisp
+  (use-package tsx-ts-mode
+    :elpaca nil
+    :mode
+    "\\.tsx\\'"
+    "\\.ts\\'")
+#+end_src
+
 *** Nix
 #+begin_src elisp
 (use-package nix-mode
   :mode "\\.nix\\'")
-#+end_src
-
-*** Typescript
-#+begin_src elisp
-  ;; if you use treesitter based typescript-ts-mode (emacs 29+)
-  (use-package tide
-    :ensure t
-    :after (company flycheck)
-    :hook ((typescript-ts-mode . tide-setup)
-           (tsx-ts-mode . tide-setup)
-           (typescript-ts-mode . tide-hl-identifier-mode)
-           (before-save . tide-format-before-save)))
 #+end_src
 
 *** Prisma
@@ -594,10 +592,10 @@ Credit to Derek Taylor
 
 *** Markdown
 #+begin_src elisp
-(use-package markdown-mode
-  :mode ("README\\.md\\'" . gfm-mode)
-  :init (setq markdown-command "pandoc")
-  )
+  (use-package markdown-mode
+    :mode ("README\\.md\\'" . gfm-mode)
+    :config (setq markdown-command "pandoc")
+    )
 #+end_src
 
 *** Arduino

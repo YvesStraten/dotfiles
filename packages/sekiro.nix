@@ -1,8 +1,12 @@
-{ stdenv, fetchFromGitHub }:
+{
+  stdenv,
+  fetchFromGitHub,
+}:
 stdenv.mkDerivation
 {
   name = "sekiro-grub";
-  src = fetchFromGitHub
+  src =
+    fetchFromGitHub
     {
       owner = "semimqmo";
       repo = "sekiro_grub_theme";

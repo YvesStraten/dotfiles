@@ -1,4 +1,7 @@
-{ stdenv, fetchFromGitHub }:
+{
+  stdenv,
+  fetchFromGitHub,
+}:
 stdenv.mkDerivation
 {
   name = "whitesur-cursors";
