@@ -69,6 +69,7 @@
   (load-file (expand-file-name "~/.emacs.d/init.el")))
 #+end_src
 
+
 * Evil
 #+begin_src elisp
   (use-package evil
@@ -113,6 +114,7 @@
 ** Bullets & Todos
 #+begin_src elisp
   (use-package org-superstar
+    :defer
     :hook
     (org-mode . (lambda () (org-superstar-mode 1)))
     :config
@@ -263,8 +265,8 @@ Credit to Derek Taylor
 ** Org fragtog
 #+begin_src elisp
   (use-package org-fragtog
-    :config
-    (add-hook 'org-mode-hook 'org-fragtog-mode))
+    :defer
+    :hook (org-mode . org-fragtog-mode))
 #+end_src
 
 ** Image drag-drop
@@ -280,6 +282,7 @@ Credit to Derek Taylor
 *** Show emphasis markers interactively
 #+begin_src elisp
   (use-package org-appear
+    :defer
     :hook (org-mode . org-appear-mode))
 #+end_src
 
@@ -288,14 +291,6 @@ Credit to Derek Taylor
 #+begin_src elisp
   (setq org-return-follows-link t)
 #+end_src
-
-*** Zen writing
-#+begin_src elisp
-  (use-package writeroom-mode
-    )
-#+end_src
-
-#+RESULTS:
 
 *** Further tweaks
 #+begin_src elisp
@@ -370,6 +365,7 @@ Credit to Derek Taylor
 ** Tmux navigation
 #+begin_src elisp
   (use-package tmux-pane
+    :defer 1
     :config
     (tmux-pane-mode)
     )
@@ -405,6 +401,7 @@ Credit to Derek Taylor
     :after yasnippet)
 
   (use-package yasnippet
+    :defer 1
     :config
     (yas-global-mode 1)
     )
@@ -425,6 +422,7 @@ Credit to Derek Taylor
 ** Eglot
 #+begin_src elisp
   (use-package eglot
+    :defer
     :hook
     (c++-mode . eglot-ensure)
     (typescript-mode . eglot-ensure)
@@ -509,6 +507,11 @@ Credit to Derek Taylor
     )
 #+end_src
 
+#+begin_src elisp
+  (use-package tree-sitter-langs
+    :after tree-sitter)
+#+end_src
+
 ** Formatter
 #+begin_src elisp
   (use-package format-all
@@ -572,11 +575,14 @@ Credit to Derek Taylor
 
 *** Typescript
 #+begin_src elisp
-(use-package typescript-mode
-  :config
-  (setq typescript-indent-level 2))
-(setq js-indent-level 2)
-(setq css-indent-offset 2)
+  ;; if you use treesitter based typescript-ts-mode (emacs 29+)
+  (use-package tide
+    :ensure t
+    :after (company flycheck)
+    :hook ((typescript-ts-mode . tide-setup)
+           (tsx-ts-mode . tide-setup)
+           (typescript-ts-mode . tide-hl-identifier-mode)
+           (before-save . tide-format-before-save)))
 #+end_src
 
 *** Prisma
@@ -607,6 +613,7 @@ Credit to Derek Taylor
 
   (use-package vterm-toggle
     :commands vterm-toggle
+    :defer
     :after vterm
     :config
     (setq vterm-toggle-fullscreen-p nil)
@@ -630,6 +637,7 @@ Credit to Derek Taylor
 ** Which key
 #+begin_src elisp
   (use-package which-key
+    :defer 1
     :config
     (which-key-mode 1)
     (setq which-key-side-window-location 'bottom
@@ -727,13 +735,13 @@ Credit to Derek Taylor
     :if (display-graphic-p))
 
   (use-package doom-modeline
+    :defer 1
     :config (doom-modeline-mode 1))
 #+end_src
 
 ** Dashboard
 #+begin_src elisp
   (use-package dashboard
-    :ensure t
     :config
     (dashboard-setup-startup-hook)
   (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
@@ -761,20 +769,16 @@ Credit to Derek Taylor
 ** Theme
 #+begin_src elisp
   (use-package doom-themes
-    :ensure t
     :config
     (setq doom-themes-enable-bold t
           doom-themes-enable-italic t
-  	doom-modeline-enable-word-count t
-  	)
+        doom-modeline-enable-word-count t
+        )
     (load-theme 'doom-dracula t)
     (doom-themes-visual-bell-config)
     (doom-themes-neotree-config)
     (doom-themes-org-config))
 #+end_src
-
-#+RESULTS:
-: t
 
 ** Font & relative line numbering
 #+begin_src elisp
@@ -797,35 +801,34 @@ Credit to Derek Taylor
 
 ** Ligatures
 #+begin_src elisp
-(use-package ligature
-  :config
-  ;; Enable the "www" ligature in every possible major mode
-  (ligature-set-ligatures 't '("www"))
-  ;; Enable traditional ligature support in eww-mode, if the
-  ;; `variable-pitch' face supports it
-  (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
-  ;; Enable all Cascadia Code ligatures in programming modes
-  (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
-                                       ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
-                                       "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
-                                       "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
-                                       "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
-                                       "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
-                                       "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
-                                       "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
-                                       ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
-                                       "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
-                                       "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
-                                       "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
-                                       "\\\\" "://"))
-  ;; Enables ligature checks globally in all buffers. You can also do it
-  ;; per mode with `ligature-mode'.
-  (global-ligature-mode t))
+  (use-package ligature
+    :hook (prog-mode . ligature-mode)
+    :config
+    ;; Enable the "www" ligature in every possible major mode
+    (ligature-set-ligatures 't '("www"))
+    ;; Enable traditional ligature support in eww-mode, if the
+    ;; `variable-pitch' face supports it
+    (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
+    ;; Enable all Cascadia Code ligatures in programming modes
+    (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+                                         ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+                                         "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+                                         "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+                                         "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+                                         "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+                                         "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+                                         "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+                                         ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+                                         "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+                                         "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+                                         "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
+                                         "\\\\" "://")))
 #+end_src
 
 ** Cursor highlight
 #+begin_src elisp
   (use-package beacon
+    :defer 2
     :config
     (setq beacon-blink-when-window-scrolls t)
     (beacon-mode 1))
@@ -841,7 +844,7 @@ Credit to Derek Taylor
 ** Transparent emacs
 #+begin_src elisp
   (set-frame-parameter nil 'alpha-background 70) ; For current frame
-  (add-to-list 'default-frame-alist '(alpha-background . 85)) ; For all new frames henceforth
+  (add-to-list 'default-frame-alist '(alpha-background . 70)) ; For all new frames henceforth
 #+end_src
 
 ** Centered text
