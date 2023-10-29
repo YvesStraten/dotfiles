@@ -87,7 +87,11 @@
               extraSpecialArgs = {inherit inputs;};
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.akali = import ./home/wsl.nix;
+              users.akali = {...}: {
+                imports = [
+                  ./home/wsl.nix
+                ];
+              };
             };
           }
         ];
