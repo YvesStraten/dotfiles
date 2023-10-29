@@ -107,6 +107,7 @@
 ** Table of contents 
 #+begin_src elisp
   (use-package toc-org
+    :defer
     :commands toc-org-enable
     :hook (org-mode . toc-org-enable))
 #+end_src
@@ -128,6 +129,7 @@
 ** Presentations
 #+begin_src elisp
   (use-package org-tree-slide
+    :defer
     :commands (org-tree-slide-mode)
     :bind
     ("<f8>" . org-tree-slide-move-previous-tree)
@@ -178,6 +180,7 @@
 *** Automatic tangle
 #+begin_src elisp
   (use-package org-auto-tangle
+    :defer
     :hook (org-mode . org-auto-tangle-mode))
 #+end_src
 
@@ -228,7 +231,12 @@ Credit to Derek Taylor
 ** Org roam
 #+begin_src elisp
   (use-package org-roam
+    :defer
     :after org
+    :commands (org-roam-buffer-toggle
+               org-roam-node-find
+               org-roam-node-insert
+               org-roam-node-insert-immediate)
     :bind (("C-c n l" . org-roam-buffer-toggle)
            ("C-c n f" . org-roam-node-find)
            ("C-c n i" . org-roam-node-insert)
@@ -349,12 +357,13 @@ Credit to Derek Taylor
 ** File explorer
 #+begin_src elisp
   (use-package neotree
+    :defer
     :commands neotree-toggle
     :config
     (setq neo-theme (if (display-graphic-p) 'icons 'arrow)
-  	neo-window-width 25
-  	neo-smart-open t
-  	neo-show-hidden-files t)
+        neo-window-width 25
+        neo-smart-open t
+        neo-show-hidden-files t)
     :bind
     (:map evil-normal-state-map
           ("C-n" . neotree-toggle))
@@ -374,7 +383,7 @@ Credit to Derek Taylor
 ** Tabs
 #+begin_src elisp
   (use-package centaur-tabs
-    :defer 1
+    :defer 2
     :config
     (centaur-tabs-mode t)
     (centaur-tabs-headline-match)
@@ -526,33 +535,38 @@ Credit to Derek Taylor
 #+begin_src elisp
   ;; Indent blankline
   (use-package highlight-indent-guides
+    :defer
     :hook (prog-mode . highlight-indent-guides-mode)
     :config
     (setq highlight-indent-guides-method 'character
-  	highlight-indent-guides-responsive 'top)
+        highlight-indent-guides-responsive 'top)
     )
 #+end_src
 
 *** Colorization
 #+begin_src elisp
-(use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
+  (use-package rainbow-delimiters
+    :defer
+    :hook (prog-mode . rainbow-delimiters-mode))
 
-(use-package rainbow-mode
-  :hook (prog-mode . rainbow-mode))
+  (use-package rainbow-mode
+    :defer
+    :hook (prog-mode . rainbow-mode))
 #+end_src
 
 *** Smart parentheses
 #+begin_src elisp
-(use-package smartparens
-  :config
-  (require 'smartparens-config)
-  (smartparens-global-mode 1))
+  (use-package smartparens
+    :hook
+    (prog-mode . smartparens-mode)
+    :config
+    (require 'smartparens-config))
 #+end_src
 
 *** Smart html tags
 #+begin_src elisp
   (use-package emmet-mode
+    :defer
     :config
     (add-hook 'sgml-mode-hook 'emmet-mode) 
     (add-hook 'css-mode-hook  'emmet-mode)
@@ -563,6 +577,7 @@ Credit to Derek Taylor
 ** Direnv support
 #+begin_src elisp
   (use-package direnv
+    :defer
     :hook (prog-mode . direnv-mode)
     )
 #+end_src
@@ -655,6 +670,7 @@ Credit to Derek Taylor
 ** General
 #+begin_src elisp
   (use-package general
+    :defer 2 
     :config
     (general-evil-setup)
     (general-create-definer ys/leader-keys
@@ -783,7 +799,16 @@ Credit to Derek Taylor
   (add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-15"))
   (setq display-line-numbers-type 'relative 
         display-line-numbers-current-absolute t)
-  (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+#+end_src
+
+#+begin_src elisp
+  (use-package display-line-numbers-mode
+    :elpaca nil
+    :defer
+    :hook (prog-mode . display-line-numbers-mode)
+    :config
+    (setq display-line-numbers-type 'relative
+          display-line-numbers-current-absolute t))
 #+end_src
 
 *** Remove line numbers in some modes
@@ -848,9 +873,9 @@ Credit to Derek Taylor
 ** Centered text
 #+begin_src elisp
   (use-package centered-window
+    :defer
     :hook
-    (org-mode . centered-window-mode)
-  )
+    (org-mode . centered-window-mode))
 #+end_src
 
 * Grammar
