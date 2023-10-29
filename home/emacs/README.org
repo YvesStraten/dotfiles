@@ -3,26 +3,62 @@
 #+auto_tangle: t
 #+startup: overview 
 * Bootstrap
-** Straight.el
+** Deactivate package.el
+#+begin_src elisp :tangle early-init.el
+  (setq package-enable-at-startup nil)
+#+end_src
+
+** Elpaca 
 #+begin_src elisp
-  (defvar bootstrap-version)
-  (let ((bootstrap-file
-         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-        (bootstrap-version 6))
-    (unless (file-exists-p bootstrap-file)
-      (with-current-buffer
-          (url-retrieve-synchronously
-           "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-           'silent 'inhibit-cookies)
-        (goto-char (point-max))
-        (eval-print-last-sexp)))
-    (load bootstrap-file nil 'nomessage))
+  (defvar elpaca-installer-version 0.5)
+  (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
+  (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
+  (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
+  (defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
+                                :ref nil
+                                :files (:defaults (:exclude "extensions"))
+                                :build (:not elpaca--activate-package)))
+  (let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
+         (build (expand-file-name "elpaca/" elpaca-builds-directory))
+         (order (cdr elpaca-order))
+         (default-directory repo))
+    (add-to-list 'load-path (if (file-exists-p build) build repo))
+    (unless (file-exists-p repo)
+      (make-directory repo t)
+      (when (< emacs-major-version 28) (require 'subr-x))
+      (condition-case-unless-debug err
+          (if-let ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
+                   ((zerop (call-process "git" nil buffer t "clone"
+                                         (plist-get order :repo) repo)))
+                   ((zerop (call-process "git" nil buffer t "checkout"
+                                         (or (plist-get order :ref) "--"))))
+                   (emacs (concat invocation-directory invocation-name))
+                   ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
+                                         "--eval" "(byte-recompile-directory \".\" 0 'force)")))
+                   ((require 'elpaca))
+                   ((elpaca-generate-autoloads "elpaca" repo)))
+              (progn (message "%s" (buffer-string)) (kill-buffer buffer))
+            (error "%s" (with-current-buffer buffer (buffer-string))))
+        ((error) (warn "%s" err) (delete-directory repo 'recursive))))
+    (unless (require 'elpaca-autoloads nil t)
+      (require 'elpaca)
+      (elpaca-generate-autoloads "elpaca" repo)
+      (load "./elpaca-autoloads")))
+  (add-hook 'after-init-hook #'elpaca-process-queues)
+  (elpaca `(,@elpaca-order))
 #+end_src
 
 ** Use package 
 #+begin_src elisp
-  (straight-use-package 'use-package)
-  (setq straight-use-package-by-default t)
+  ;; Install use-package support
+  (elpaca elpaca-use-package
+    ;; Enable :elpaca use-package keyword.
+    (elpaca-use-package-mode)
+    ;; Assume :elpaca t unless otherwise specified.
+    (setq elpaca-use-package-by-default t))
+
+  ;; Block until current queue processed.
+  (elpaca-wait)
 #+end_src
 
 ** Ability to reload configuration
@@ -35,13 +71,13 @@
 
 * Evil
 #+begin_src elisp
-(use-package evil
-  :init
-  (setq evil-want-C-u-scroll t
-	evil-want-keybinding nil) ;; Enable C-u for scrolling
-  :config
-  (evil-mode 1)
-  (evil-set-undo-system 'undo-redo))
+  (use-package evil
+    :init
+    (setq evil-want-C-u-scroll t
+          evil-want-keybinding nil) ;; Enable C-u for scrolling
+    :config
+    (evil-mode 1)
+    (evil-set-undo-system 'undo-redo))
 #+end_src
 
 ** Unbind certain keys
@@ -55,44 +91,42 @@
 #+begin_src elisp
 (use-package evil-collection
   :after evil
-  :ensure t
   :config
   (evil-collection-init))
 #+end_src
 
 ** Evil commenter
 #+begin_src elisp
-  (use-package evil-nerd-commenter)
+  (use-package evil-nerd-commenter
+    :after evil)
 #+end_src
+ 
 
 * Org-mode
 ** Table of contents 
 #+begin_src elisp
-(use-package toc-org
-  :commands toc-org-enable
-  :init (add-hook 'org-mode-hook 'toc-org-enable))
-#+end_src
-
-#+begin_src elisp
-  (add-hook 'org-mode-hook 'company-mode)
+  (use-package toc-org
+    :commands toc-org-enable
+    :hook (org-mode . toc-org-enable))
 #+end_src
 
 ** Bullets & Todos
 #+begin_src elisp
   (use-package org-superstar
+    :hook
+    (org-mode . (lambda () (org-superstar-mode 1)))
     :config
     (setq org-ellipsis "⤵"
-	  org-superstar-special-todo-items t
-	  org-superstar-todo-bullet-alist
-	  '(("TODO" . ?☐)
-	    ("DONE" . ?✔)))
-    (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
-  (org-superstar-restart)
+          org-superstar-special-todo-items t
+          org-superstar-todo-bullet-alist
+          '(("TODO" . ?☐)
+            ("DONE" . ?✔))))
 #+end_src
 
 ** Presentations
 #+begin_src elisp
   (use-package org-tree-slide
+    :commands (org-tree-slide-mode)
     :bind
     ("<f8>" . org-tree-slide-move-previous-tree)
     ("<f9>" . org-tree-slide-move-next-tree)
@@ -192,13 +226,13 @@ Credit to Derek Taylor
 ** Org roam
 #+begin_src elisp
   (use-package org-roam
-    :init
-    (setq org-roam-v2-ack t)
+    :after org
     :bind (("C-c n l" . org-roam-buffer-toggle)
            ("C-c n f" . org-roam-node-find)
            ("C-c n i" . org-roam-node-insert)
            ("C-c n I" . org-roam-node-insert-immediate))
     :config
+    (setq org-roam-v2-ack t)
     (org-roam-setup)
     )
 #+end_src
@@ -217,6 +251,7 @@ Credit to Derek Taylor
 *** Brain UI
 #+begin_src elisp
   (use-package org-roam-ui
+    :commands (org-roam-ui-open)
     )
 #+end_src
 
@@ -288,16 +323,24 @@ Credit to Derek Taylor
 
 ** Projectile
 #+begin_src elisp
-(use-package projectile
-  :config
-  (projectile-mode +1))
+  (use-package projectile
+    :defer 
+    :config
+    (projectile-mode +1))
 #+end_src
 
 *** Ivy Integration
 #+begin_src elisp
-(use-package counsel-projectile
-  :config
-  (counsel-projectile-mode 1))
+  (use-package counsel-projectile
+    :after projectile
+    :defer
+    :commands
+    (counsel-projectile-find-file
+     counsel-projectile-grep
+     counsel-projectile-switch-project
+     counsel-projectile-switch-to-buffer)
+    :config
+    (counsel-projectile-mode 1))
 #+end_src
 
 ** Git
@@ -305,6 +348,7 @@ Credit to Derek Taylor
   (use-package magit
     :commands magit
     )
+  (elpaca-wait)
 #+end_src
 
 ** File explorer
@@ -325,47 +369,52 @@ Credit to Derek Taylor
 * Buffers management
 ** Tmux navigation
 #+begin_src elisp
-(use-package tmux-pane
-  :config
-  (tmux-pane-mode)
-  )
+  (use-package tmux-pane
+    :config
+    (tmux-pane-mode)
+    )
 #+end_src
 
 ** Tabs
 #+begin_src elisp
   (use-package centaur-tabs
-    :demand
+    :defer 1
     :config
     (centaur-tabs-mode t)
     (centaur-tabs-headline-match)
     (setq centaur-tabs-height 40
-	  centaur-tabs-style "wave"
-	  centaur-tabs-set-icons t
-	  centaur-tabs-gray-out-icons 'buffer
-	  centaur-tabs-set-bar 'under
-	  x-underline-at-descent-line t
-	  centaur-tabs-set-modified-marker t))
+          centaur-tabs-style "wave"
+          centaur-tabs-set-icons t
+          centaur-tabs-gray-out-icons 'buffer
+          centaur-tabs-set-bar 'under
+          x-underline-at-descent-line t
+          centaur-tabs-set-modified-marker t))
 #+end_src
 
 ** Jumping in the file
 #+begin_src elisp
-(use-package avy)
+  (use-package avy
+    :defer
+    :commands (avy-goto-char-2))
 #+end_src
 
 * LSP stuff
 ** Yasnippet
 #+begin_src elisp
-(use-package yasnippet-snippets)
+  (use-package yasnippet-snippets
+    :after yasnippet)
 
-(use-package yasnippet
-  :config
-  (yas-global-mode 1)
-  )
+  (use-package yasnippet
+    :config
+    (yas-global-mode 1)
+    )
 #+end_src
 
 *** Ivy Integration
 #+begin_src elisp
   (use-package ivy-yasnippet
+    :defer
+    :commands (ivy-yasnippet)
     :bind (:map evil-insert-state-map 
     ("C-c y" . ivy-yasnippet)))
 #+end_src
@@ -375,49 +424,54 @@ Credit to Derek Taylor
 
 ** Eglot
 #+begin_src elisp
-  (require 'eglot)
-  (add-hook 'c++-mode-hook 'eglot-ensure)
-  (add-hook 'typescript-mode-hook 'eglot-ensure)
-  (add-hook 'js-mode-hook 'eglot-ensure)
-
-  (setq lsp-prefer-flymake nil
-        lsp-prefer-capf t
-        gc-cons-threshold 100000000
-        read-process-output-max (* 1024 1024)
-        lsp-idle-delay 0.5
-        eglot-events-buffer-size 0
-        lsp-log-io nil)
+  (use-package eglot
+    :hook
+    (c++-mode . eglot-ensure)
+    (typescript-mode . eglot-ensure)
+    (js-mode . eglot-ensure)
+    :config
+    (setq lsp-prefer-flymake nil
+          lsp-prefer-capf t
+          gc-cons-threshold 100000000
+          read-process-output-max (* 1024 1024)
+          lsp-idle-delay 0.5
+          eglot-events-buffer-size 0
+          lsp-log-io nil)
+    )
 #+end_src
 
 #+RESULTS:
 
 ** Dap-mode
 #+begin_src elisp
-(use-package dap-mode
-  :config
-  (setq dap-auto-configure-mode t))
+  (use-package dap-mode
+    :after eglot
+    :config
+    (setq dap-auto-configure-mode t))
 #+end_src
 
 ** Corfu
 #+begin_src elisp
   (use-package corfu
+    :defer
     ;; Optional customizations
+    :hook
+    (prog-mode . corfu-mode)
+    (org-mode . corfu-mode)
+    (corfu-mode . corfu-history-mode)
+    (corfu-mode . corfu-echo-mode)
     :config
     (setq corfu-cycle t
-    corfu-auto t
-    corfu-auto-prefix 1
-    corfu-auto-delay 0.0
-    corfu-preview-current nil
-    )
+          corfu-auto t
+          corfu-auto-prefix 1
+          corfu-auto-delay 0.0
+          corfu-preview-current nil
+          )
     :bind (:map corfu-map ("TAB" . corfu-next)
-  	      ("S-TAB" . corfu-previous)
-  	      ("RET" . nil)
-  	      )
-    :init
-    (global-corfu-mode)
-    (corfu-history-mode)
-    (corfu-echo-mode))
-
+                ("S-TAB" . corfu-previous)
+                ("RET" . nil)
+                )
+    )
 #+end_src
 
 #+RESULTS:
@@ -425,6 +479,7 @@ Credit to Derek Taylor
 *** Icons
 #+begin_src elisp
   (use-package nerd-icons-corfu
+    :after corfu
     :config
     (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter)
     )
@@ -437,16 +492,12 @@ Credit to Derek Taylor
     (add-to-list 'completion-at-point-functions #'cape-file ))
 
   (use-package yasnippet-capf
-    :after cape
-    :straight (:host github :repo "elken/yasnippet-capf")
+    :elpaca (:host github :repo "elken/yasnippet-capf")
     :config
     (add-to-list 'completion-at-point-functions #'yasnippet-capf)
     (setq yasnippet-capf-lookup-by 'key)
     )
 #+end_src
-
-#+RESULTS:
-: t
 
 ** Tree-sitter
 #+begin_src elisp
@@ -531,7 +582,8 @@ Credit to Derek Taylor
 *** Prisma
 #+begin_src elisp
   (use-package prisma-mode
-    :straight (:host github :repo "pimeys/emacs-prisma-mode" :branch "main"))
+    :mode "\\.prisma\\'"
+    :elpaca (:host github :repo "pimeys/emacs-prisma-mode" :branch "main"))
 #+end_src
 
 *** Markdown
@@ -577,21 +629,21 @@ Credit to Derek Taylor
 * Keybind management
 ** Which key
 #+begin_src elisp
-(use-package which-key
-  :init
-  (which-key-mode 1)
-  :config
-  (setq which-key-side-window-location 'bottom
-        which-key-sort-order #'which-key-key-order-alpha
-        which-key-sort-uppercase-first nil
-        which-key-add-column-padding 1
-        which-key-max-display-columns nil
-        which-key-min-display-lines 6
-        which-key-side-window-slot -10
-        which-key-side-window-max-height 0.25
-        which-key-idle-delay 0.8
-        which-key-max-description-length 25
-        which-key-allow-imprecise-window-fit t))
+  (use-package which-key
+    :config
+    (which-key-mode 1)
+    (setq which-key-side-window-location 'bottom
+          which-key-sort-order #'which-key-key-order-alpha
+          which-key-sort-uppercase-first nil
+          which-key-add-column-padding 1
+          which-key-max-display-columns nil
+          which-key-min-display-lines 6
+          which-key-side-window-slot -10
+          which-key-side-window-max-height 0.25
+          which-key-idle-delay 0.8
+          which-key-max-description-length 25
+          which-key-allow-imprecise-window-fit t))
+
 #+end_src
 
 ** General
@@ -675,7 +727,7 @@ Credit to Derek Taylor
     :if (display-graphic-p))
 
   (use-package doom-modeline
-    :init (doom-modeline-mode 1))
+    :config (doom-modeline-mode 1))
 #+end_src
 
 ** Dashboard
@@ -773,10 +825,10 @@ Credit to Derek Taylor
 
 ** Cursor highlight
 #+begin_src elisp
-(use-package beacon
-  :config
-  (setq beacon-blink-when-window-scrolls t)
-  (beacon-mode 1))
+  (use-package beacon
+    :config
+    (setq beacon-blink-when-window-scrolls t)
+    (beacon-mode 1))
 #+end_src
 
 ** Disable built in UI
