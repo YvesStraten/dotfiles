@@ -411,28 +411,10 @@
   :mode ("\\.ino\\'" . arduino-mode)
   )
 
-(use-package vterm)
-
-(use-package vterm-toggle
-  :commands vterm-toggle
-  :defer
-  :after vterm
+(use-package eshell-toggle
+  :elpaca (:host github :repo "4DA/eshell-toggle")
   :config
-  (setq vterm-toggle-fullscreen-p nil)
-  (setq vterm-toggle-scope 'project)
-  (add-to-list 'display-buffer-alist
-               '((lambda (buffer-or-name _)
-                   (let ((buffer (get-buffer buffer-or-name)))
-                     (with-current-buffer buffer
-                       (or (equal major-mode 'vterm-mode)
-                           (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
-                 (display-buffer-reuse-window display-buffer-at-bottom)
-                 ;;(display-buffer-reuse-window display-buffer-in-direction)
-                 ;;display-buffer-in-direction/direction/dedicated is added in emacs27
-                 ;;(direction . bottom)
-                 (dedicated . t) ;dedicated is supported in emacs27
-                 (reusable-frames . visible)
-                 (window-height . 0.3))))
+  (setq eshell-toggle-size-fraction 3))
 
 (use-package which-key
   :defer 1
@@ -489,7 +471,7 @@
 
 
   (ys/leader-keys
-    "t" '(vterm-toggle :wk "vterm")
+    "t" '(eshell-toggle :wk "vterm")
     )
 
   (ys/leader-keys
@@ -653,6 +635,3 @@
 
 ;; Removes annoying prompts
 (setq use-short-answers t)
-
-(setq backup-directory-alist '(("." . "~/emacs/backups/")))
-(setq auto-save-file-name-transforms '((".*" "~/emacs/auto-save-list/" t)))

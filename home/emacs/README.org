@@ -617,11 +617,18 @@ Credit to Derek Taylor
 
 * Terminal
 #+begin_src elisp
+  (use-package eshell-toggle
+    :elpaca (:host github :repo "4DA/eshell-toggle")
+    :config
+    (setq eshell-toggle-size-fraction 3))
+#+end_src
+
+#+RESULTS:
+
+#+begin_src elisp :tangle no
   (use-package vterm)
 
   (use-package vterm-toggle
-    :commands vterm-toggle
-    :defer
     :after vterm
     :config
     (setq vterm-toggle-fullscreen-p nil)
@@ -703,7 +710,7 @@ Credit to Derek Taylor
 
 
     (ys/leader-keys
-      "t" '(vterm-toggle :wk "vterm")
+      "t" '(eshell-toggle :wk "vterm")
       )
 
     (ys/leader-keys
@@ -915,11 +922,5 @@ Credit to doom-emacs devs
 
   ;; Removes annoying prompts
   (setq use-short-answers t)
-#+end_src
-
-** Backup storage location
-#+begin_src elisp
-(setq backup-directory-alist '(("." . "~/emacs/backups/")))
-(setq auto-save-file-name-transforms '((".*" "~/emacs/auto-save-list/" t)))
 #+end_src
 
