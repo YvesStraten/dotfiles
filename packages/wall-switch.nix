@@ -15,7 +15,7 @@ val=$(eval $Main)
 
     ${swww}/bin/swww img $val 
 
-printf "#!/usr/bin/env bash\nswww img $val" > ~/.config/hypr/scripts/wall.sh | chmod +x ~/.config/hypr/scripts/wall.sh
+printf "#!/usr/bin/env bash\nswww init\nswww img $val" > ~/.config/hypr/scripts/wall.sh | chmod +x ~/.config/hypr/scripts/wall.sh
 '';
 
   dontUnpack = true;

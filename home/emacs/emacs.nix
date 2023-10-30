@@ -16,16 +16,6 @@
       ];
   };
 
-  home.file = {
-    ".emacs.d/init.el" = {
-      source = ./init.el;
-    };
-
-    ".emacs.d/early-init.el" = {
-      source = ./early-init.el;
-    };
-  };
-
   home.packages = with pkgs; [
     openjdk17
     languagetool

@@ -58,6 +58,7 @@
 
       exec-once = ${wl-clipboard}/bin/wl-paste --type image --watch ${cliphist}/bin/cliphist store #Stores only image data
                   exec-once = swww init
+                  exec-once = ~/.config/hypr/scripts/wall.sh
                   exec = ~/.config/hypr/scripts/wall.sh
                   exec-once = ${polkit_gnome}/libexec/polkit-gnome-authentication-agent-1
 
