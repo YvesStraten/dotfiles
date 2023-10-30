@@ -265,11 +265,6 @@ Credit to Derek Taylor
     )
 #+end_src
 
-*** Roam export
-#+begin_src elisp
-  (require 'org-roam-export)
-#+end_src
-
 ** Org fragtog
 #+begin_src elisp
   (use-package org-fragtog

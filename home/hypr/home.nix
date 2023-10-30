@@ -58,6 +58,7 @@
 
       exec-once = ${wl-clipboard}/bin/wl-paste --type image --watch ${cliphist}/bin/cliphist store #Stores only image data
                   exec-once = swww init
+                  exec = ~/.config/hypr/scripts/wall.sh
                   exec-once = ${polkit_gnome}/libexec/polkit-gnome-authentication-agent-1
 
                   monitor = ,highrr,auto,1
@@ -96,7 +97,7 @@
                   bind = CTRL ALT, L, exec, ${swaylock-effects}/bin/swaylock
                   bind = SUPER, Return, exec, ${alacritty}/bin/alacritty
                   bind = SUPER, X, exec, ${alacritty}/bin/alacritty
-                  bind = SUPER, E, exec, ${emacs29-pgtk}/bin/emacsclient -c
+                  bind = SUPER, E, exec, ${emacs29-pgtk}/bin/emacs
                   bind = SUPER, N, exec, ${gnome.nautilus}/bin/nautilus
                   bind = SUPER, R, exec, killall rofi || rofi -show drun
                   bind = SUPER, V, exec, ${cliphist}/bin/cliphist list | rofi -dmenu | ${cliphist}/bin/cliphist decode | ${wl-clipboard}/bin/wl-copy

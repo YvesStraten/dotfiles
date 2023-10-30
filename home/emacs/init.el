@@ -179,8 +179,6 @@
   :commands (org-roam-ui-open)
   )
 
-(require 'org-roam-export)
-
 (use-package org-fragtog
   :defer
   :hook (org-mode . org-fragtog-mode))
