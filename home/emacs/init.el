@@ -264,13 +264,13 @@
   :commands (avy-goto-char-2))
 
 (use-package yasnippet-snippets
-  :after yasnippet)
+    :after yasnippet)
 
-(use-package yasnippet
-  :defer 1
-  :config
-  (yas-global-mode 1)
-  )
+  (use-package yasnippet
+    :defer 1
+    :config
+    (yas-global-mode 1)
+    )
 
 (use-package ivy-yasnippet
   :defer
