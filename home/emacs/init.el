@@ -252,6 +252,7 @@
 
 (use-package centaur-tabs
   :hook (dashboard-mode . centaur-tabs-local-mode) 
+  (calendar-mode . centaur-tabs-local-mode)
   :defer 
   :config
   (centaur-tabs-mode t)
