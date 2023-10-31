@@ -263,9 +263,10 @@
         x-underline-at-descent-line t
         centaur-tabs-set-modified-marker t))
 
-(use-package avy
+(use-package swiper
+  :commands (swiper)
   :defer
-  :commands (avy-goto-char-2))
+  :bind ("C-s" . 'swiper))
 
 (use-package yasnippet-snippets
     :after yasnippet)
@@ -346,9 +347,9 @@
   :after tree-sitter)
 
 (use-package format-all
-  :hook (format-all-ensure-formatter . format-all-mode)
+  :hook (format-all-mode . format-all-ensure-formatter)
   (prog-mode . format-all-mode)
-)
+  )
 
 ;; Indent blankline
 (use-package highlight-indent-guides
@@ -600,6 +601,8 @@
   :config
   (setq beacon-blink-when-window-scrolls t)
   (beacon-mode 1))
+
+(global-hl-line-mode t)
 
 (scroll-bar-mode -1)
 (tool-bar-mode -1)

@@ -397,9 +397,10 @@ Credit to Derek Taylor
 
 ** Jumping in the file
 #+begin_src elisp
-  (use-package avy
+  (use-package swiper
+    :commands (swiper)
     :defer
-    :commands (avy-goto-char-2))
+    :bind ("C-s" . 'swiper))
 #+end_src
 
 * LSP stuff
@@ -517,9 +518,9 @@ Credit to Derek Taylor
 ** Formatter
 #+begin_src elisp
   (use-package format-all
-    :hook (format-all-ensure-formatter . format-all-mode)
+    :hook (format-all-mode . format-all-ensure-formatter)
     (prog-mode . format-all-mode)
-  )
+    )
 #+end_src
 
 ** Indentation and parenthesis
@@ -869,6 +870,11 @@ Credit to Derek Taylor
     :config
     (setq beacon-blink-when-window-scrolls t)
     (beacon-mode 1))
+#+end_src
+
+** Current line highlight
+#+begin_src elisp
+  (global-hl-line-mode t)
 #+end_src
 
 ** Disable built in UI
