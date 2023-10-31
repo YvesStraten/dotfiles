@@ -382,7 +382,8 @@ Credit to Derek Taylor
 ** Tabs
 #+begin_src elisp
   (use-package centaur-tabs
-    :defer 2
+    :hook (dashboard-mode . centaur-tabs-local-mode) 
+    :defer 
     :config
     (centaur-tabs-mode t)
     (centaur-tabs-headline-match)
@@ -394,6 +395,8 @@ Credit to Derek Taylor
           x-underline-at-descent-line t
           centaur-tabs-set-modified-marker t))
 #+end_src
+
+#+RESULTS:
 
 ** Jumping in the file
 #+begin_src elisp

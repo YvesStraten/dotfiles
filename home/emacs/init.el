@@ -251,7 +251,8 @@
   )
 
 (use-package centaur-tabs
-  :defer 2
+  :hook (dashboard-mode . centaur-tabs-local-mode) 
+  :defer 
   :config
   (centaur-tabs-mode t)
   (centaur-tabs-headline-match)
