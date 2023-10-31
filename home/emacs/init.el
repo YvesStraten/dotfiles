@@ -203,8 +203,12 @@
   :config
   (setq auctex-latexmk-inherit-TeX-PDF-mode t))
 
-(setq tab-width 2)
-(setq-default ident-tabs-mode nil)
+(setq-default tab-width 4)
+(setq-default standard-indent 4)
+(setq c-basic-offset tab-width)
+(setq-default electric-indent-inhibit t)
+(setq-default indent-tabs-mode t)
+(setq backward-delete-char-untabify-method 'nil)
 
 (use-package projectile
   :defer 
@@ -331,13 +335,6 @@
   :config
   (add-to-list 'completion-at-point-functions #'cape-file ))
 
-(use-package yasnippet-capf
-  :elpaca (:host github :repo "elken/yasnippet-capf")
-  :config
-  (add-to-list 'completion-at-point-functions #'yasnippet-capf)
-  (setq yasnippet-capf-lookup-by 'key)
-  )
-
 (use-package tree-sitter 
   :hook
   (tree-sitter-after-on . tree-sitter-hl-mode)
@@ -416,6 +413,22 @@
   :config
   (setq eshell-toggle-size-fraction 3))
 
+(setq eshell-prompt-regexp "^[^αλ\n]*[αλ] ")
+(setq eshell-prompt-function
+      (lambda nil
+        (concat
+         (if (string= (eshell/pwd) (getenv "HOME"))
+             (propertize "~" 'face `(:foreground "#99CCFF"))
+           (replace-regexp-in-string
+            (getenv "HOME")
+            (propertize "~" 'face `(:foreground "#99CCFF"))
+            (propertize (eshell/pwd) 'face `(:foreground "#99CCFF"))))
+         (if (= (user-uid) 0)
+             (propertize " α " 'face `(:foreground "#FF6666"))
+         (propertize " λ " 'face `(:foreground "#A6E22E"))))))
+
+(setq eshell-highlight-prompt nil)
+
 (use-package which-key
   :defer 1
   :config
@@ -433,7 +446,6 @@
         which-key-allow-imprecise-window-fit t))
 
 (use-package general
-  :defer 2 
   :config
   (general-evil-setup)
   (general-create-definer ys/leader-keys
@@ -511,26 +523,23 @@
 (use-package dashboard
   :config
   (dashboard-setup-startup-hook)
-(setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
-(setq dashboard-banner-logo-title "Welcome to Emacs")
-(setq dashboard-startup-banner 'logo)
-(setq dashboard-center-content t)
+  (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
+  (setq dashboard-banner-logo-title "Welcome to Emacs")
+  (setq dashboard-startup-banner "~/.emacs.d/marivector.png")
+  (setq dashboard-center-content t)
 
-;; Sets which dashboard items should show
-(setq dashboard-items '((recents  . 5)
-                        (bookmarks . 5)
-                        (projects . 5)
-                        (agenda . 5)))
+  ;; Sets which dashboard items should show
+  (setq dashboard-items '()))
 
-(setq dashboard-set-file-icons t)
-(setq dashboard-set-heading-icons t)
-(setq dashboard-display-icons-p t
-      dashboard-icon-type 'all-the-icons)
-(setq dashboard-heading-icons '((recents   . "history")
-                                (bookmarks . "bookmark")
-                                (agenda    . "calendar")
-                                (projects  . "rocket")
-                                (registers . "database"))))
+  ;; (setq dashboard-set-file-icons t)
+  ;; (setq dashboard-set-heading-icons t)
+  ;; (setq dashboard-display-icons-p t
+  ;;       dashboard-icon-type 'all-the-icons)
+  ;; (setq dashboard-heading-icons '((recents   . "history")
+  ;;                                 (bookmarks . "bookmark")
+  ;;                                 (agenda    . "calendar")
+  ;;                                 (projects  . "rocket")
+  ;;                                 (registers . "database"))))
 
 (use-package doom-themes
   :config

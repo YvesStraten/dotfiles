@@ -66,6 +66,9 @@ require("lazy").setup({
 
 			{
 				"nvimdev/guard.nvim",
+				dependencies = {
+					"nvimdev/guard-collection",
+				},
 				config = function()
 					require("configs.lsp.guard")
 				end,
@@ -114,7 +117,7 @@ require("lazy").setup({
 		opts = {
 			close_if_last_window = true,
 			window = {
-				width = 25,
+				width = 20,
 			},
 			buffers = {
 				follow_current_file = {

@@ -16,6 +16,10 @@
       ];
   };
 
+  home.file.".emacs.d/marivector.png" = {
+    source = ./marivector.png;
+  };
+
   home.packages = with pkgs; [
     openjdk17
     languagetool
