@@ -384,6 +384,9 @@ Credit to Derek Taylor
   (use-package centaur-tabs
     :hook (dashboard-mode . centaur-tabs-local-mode) 
     (calendar-mode . centaur-tabs-local-mode)
+    (eshell-mode . centaur-tabs-local-mode)
+    (vterm-mode . centaur-tabs-local-mode)
+    (magit-mode . centaur-tabs-local-mode)
     :defer 
     :config
     (centaur-tabs-mode t)
@@ -799,6 +802,8 @@ Credit to Derek Taylor
     ;;                                 (registers . "database"))))
 #+end_src
 
+#+RESULTS:
+
 ** Theme
 #+begin_src elisp
   (use-package doom-themes
@@ -878,8 +883,14 @@ Credit to Derek Taylor
 
 ** Current line highlight
 #+begin_src elisp
-  (global-hl-line-mode t)
+  (use-package hl-line
+    :elpaca nil
+    :hook (prog-mode . hl-line-mode)
+    (org-mode . hl-line-mode)
+    )
 #+end_src
+
+#+RESULTS:
 
 ** Disable built in UI
 #+begin_src elisp

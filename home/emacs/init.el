@@ -253,6 +253,9 @@
 (use-package centaur-tabs
   :hook (dashboard-mode . centaur-tabs-local-mode) 
   (calendar-mode . centaur-tabs-local-mode)
+  (eshell-mode . centaur-tabs-local-mode)
+  (vterm-mode . centaur-tabs-local-mode)
+  (magit-mode . centaur-tabs-local-mode)
   :defer 
   :config
   (centaur-tabs-mode t)
@@ -604,7 +607,11 @@
   (setq beacon-blink-when-window-scrolls t)
   (beacon-mode 1))
 
-(global-hl-line-mode t)
+(use-package hl-line
+  :elpaca nil
+  :hook (prog-mode . hl-line-mode)
+  (org-mode . hl-line-mode)
+  )
 
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
