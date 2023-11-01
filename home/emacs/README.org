@@ -624,8 +624,10 @@ Credit to Derek Taylor
   (use-package eshell-toggle
     :elpaca (:host github :repo "4DA/eshell-toggle")
     :config
-    (setq eshell-toggle-size-fraction 3))
+    (setq eshell-toggle-size-fraction 5))
 #+end_src
+
+#+RESULTS:
 
 #+begin_src elisp
   (setq eshell-prompt-regexp "^[^αλ\n]*[αλ] ")

@@ -418,7 +418,7 @@
 (use-package eshell-toggle
   :elpaca (:host github :repo "4DA/eshell-toggle")
   :config
-  (setq eshell-toggle-size-fraction 3))
+  (setq eshell-toggle-size-fraction 5))
 
 (setq eshell-prompt-regexp "^[^αλ\n]*[αλ] ")
 (setq eshell-prompt-function
