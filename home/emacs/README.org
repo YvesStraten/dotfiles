@@ -387,6 +387,7 @@ Credit to Derek Taylor
     (eshell-mode . centaur-tabs-local-mode)
     (vterm-mode . centaur-tabs-local-mode)
     (magit-mode . centaur-tabs-local-mode)
+    (org-mode . centaur-tabs-local-mode)
     :defer 
     :config
     (centaur-tabs-mode t)
@@ -399,8 +400,6 @@ Credit to Derek Taylor
           x-underline-at-descent-line t
           centaur-tabs-set-modified-marker t))
 #+end_src
-
-#+RESULTS:
 
 ** Jumping in the file
 #+begin_src elisp

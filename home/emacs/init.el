@@ -256,6 +256,7 @@
   (eshell-mode . centaur-tabs-local-mode)
   (vterm-mode . centaur-tabs-local-mode)
   (magit-mode . centaur-tabs-local-mode)
+  (org-mode . centaur-tabs-local-mode)
   :defer 
   :config
   (centaur-tabs-mode t)
