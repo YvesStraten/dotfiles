@@ -1,8 +1,7 @@
-{
-  config,
-  pkgs,
-  inputs,
-  ...
+{ config
+, pkgs
+, inputs
+, ...
 }: {
   imports = [
     # Main stuff
@@ -16,7 +15,7 @@
     # Editors
     #./nvim/neovim.nix
     ./emacs/emacs.nix
-    #./tmux/tmux.nix
+    ./tmux/tmux.nix
 
     # Variables
     ./zsh/zsh.nix
