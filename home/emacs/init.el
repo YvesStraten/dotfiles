@@ -538,15 +538,15 @@
   ;; Sets which dashboard items should show
   (setq dashboard-items '()))
 
-  ;; (setq dashboard-set-file-icons t)
-  ;; (setq dashboard-set-heading-icons t)
-  ;; (setq dashboard-display-icons-p t
-  ;;       dashboard-icon-type 'all-the-icons)
-  ;; (setq dashboard-heading-icons '((recents   . "history")
-  ;;                                 (bookmarks . "bookmark")
-  ;;                                 (agenda    . "calendar")
-  ;;                                 (projects  . "rocket")
-  ;;                                 (registers . "database"))))
+;; (setq dashboard-set-file-icons t)
+;; (setq dashboard-set-heading-icons t)
+;; (setq dashboard-display-icons-p t
+;;       dashboard-icon-type 'all-the-icons)
+;; (setq dashboard-heading-icons '((recents   . "history")
+;;                                 (bookmarks . "bookmark")
+;;                                 (agenda    . "calendar")
+;;                                 (projects  . "rocket")
+;;                                 (registers . "database"))))
 
 (use-package doom-themes
   :config
@@ -606,6 +606,7 @@
   :defer 2
   :config
   (setq beacon-blink-when-window-scrolls t)
+  (add-to-list 'beacon-dont-blink-major-modes 'dashboard-mode )
   (beacon-mode 1))
 
 (use-package hl-line
