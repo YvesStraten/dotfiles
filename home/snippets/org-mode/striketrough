@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: striketrough 
+# key: strik 
+# --
++$1+ $0
