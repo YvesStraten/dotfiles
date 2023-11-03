@@ -275,13 +275,15 @@
   :bind ("C-s" . 'swiper))
 
 (use-package yasnippet-snippets
-    :after yasnippet)
+  :after yasnippet)
 
-  (use-package yasnippet
-    :defer 1
-    :config
-    (yas-global-mode 1)
-    )
+(use-package yasnippet
+  :defer 1
+  :config
+  (add-to-list 'yas-key-syntaxes 'yas-longest-key-from-whitespace)
+  (setq yas-indent-line (quote none))
+  (yas-global-mode 1)
+  )
 
 (use-package ivy-yasnippet
   :defer

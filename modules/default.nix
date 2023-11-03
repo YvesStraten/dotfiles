@@ -1,8 +1,7 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
+{ config
+, pkgs
+, lib
+, ...
 }: {
   imports = [
     ./nixos/bootloader.nix
@@ -20,6 +19,7 @@
 
     # Desktops
     ../home/hypr/hyprland.nix
+    ../home/plasma/plasma.nix
     # ../home/sway/sway.nix
     # ../home/gnome/gnome.nix
   ];
