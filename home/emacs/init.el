@@ -183,6 +183,9 @@
   :defer
   :hook (org-mode . org-fragtog-mode))
 
+(use-package org-ref
+  )
+
 (use-package org-download)
 
 (setq org-hide-emphasis-markers t)
@@ -629,6 +632,10 @@
   :hook
   (org-mode . centered-window-mode))
 
+(use-package visual-line-mode
+  :elpaca nil
+  :hook (org-mode . visual-line-mode))
+
 (use-package langtool
   :commands (langtool-check
 	     langtool-check-done
@@ -658,5 +665,7 @@
 ;; Disable lock file creation
 (setq create-lockfiles nil)
 
+(setq auto-save-file-name-transforms
+      `((".*" "~/.emacs-saves/" t)))
 ;; Removes annoying prompts
 (setq use-short-answers t)

@@ -1,8 +1,7 @@
-{
-  config,
-  pkgs,
-  inputs,
-  ...
+{ config
+, pkgs
+, inputs
+, ...
 }: {
   imports = [
     inputs.nix-colors.homeManagerModules.default
@@ -26,8 +25,9 @@
     ./zsh/zsh.nix
 
     ./dconf/dconf.nix
+    ./plasma/home.nix
     # ./sway/home.nix
-    ./hypr/home.nix
+    # ./hypr/home.nix
     # ./gnome/home.nix
   ];
 
@@ -41,7 +41,7 @@
     homeDirectory = "/home/yvess";
     stateVersion = "22.11"; # Please read the comment before changing.
 
-    sessionPath = ["$HOME/.local/bin"];
+    sessionPath = [ "$HOME/.local/bin" ];
   };
 
   # Let Home Manager install and manage itself.

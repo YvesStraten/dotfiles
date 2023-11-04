@@ -272,6 +272,14 @@ Credit to Derek Taylor
     :hook (org-mode . org-fragtog-mode))
 #+end_src
 
+** References
+#+begin_src elisp
+  (use-package org-ref
+    )
+#+end_src
+
+#+RESULTS:
+
 ** Image drag-drop
 #+begin_src elisp
   (use-package org-download)
@@ -913,12 +921,21 @@ Credit to Derek Taylor
   (add-to-list 'default-frame-alist '(alpha-background . 70)) ; For all new frames henceforth
 #+end_src
 
-** Centered text
+** Text
+*** Centered
 #+begin_src elisp
   (use-package centered-window
     :defer
     :hook
     (org-mode . centered-window-mode))
+
+#+end_src
+
+*** Wrapped
+#+begin_src elisp
+  (use-package visual-line-mode
+    :elpaca nil
+    :hook (org-mode . visual-line-mode))
 #+end_src
 
 * Grammar
@@ -961,6 +978,8 @@ Credit to doom-emacs devs
   ;; Disable lock file creation
   (setq create-lockfiles nil)
 
+  (setq auto-save-file-name-transforms
+        `((".*" "~/.emacs-saves/" t)))
   ;; Removes annoying prompts
   (setq use-short-answers t)
 #+end_src
