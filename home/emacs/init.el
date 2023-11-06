@@ -176,7 +176,14 @@
     (apply #'org-roam-node-insert args)))
 
 (use-package org-roam-ui
+  :defer
+  :after org-roam
   :commands (org-roam-ui-open)
+  :config
+  (setq org-roam-ui-sync-theme t
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        )
   )
 
 (use-package org-fragtog

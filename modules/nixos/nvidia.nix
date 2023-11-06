@@ -1,9 +1,9 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: let
+{ config
+, pkgs
+, lib
+, ...
+}:
+let
   prime-run = pkgs.writeShellScriptBin "prime-run" ''
     export __NV_PRIME_RENDER_OFFLOAD=1
     export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-GO
@@ -11,7 +11,8 @@
     export __VK_LAYER_NV_optimus=NVIDIA_only
     exec "$@"
   '';
-in {
+in
+{
   environment.systemPackages = with pkgs; [
     prime-run
   ];
@@ -22,7 +23,7 @@ in {
     layout = "us";
     xkbVariant = "";
   };
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
   hardware.opengl = {
     enable = true;
     driSupport = true;
@@ -41,7 +42,7 @@ in {
   hardware.nvidia.modesetting.enable = true;
 
   hardware.nvidia.prime = {
-    sync.enable = true;
+    offload.enable = true;
 
     intelBusId = "PCI:0:2:0";
     nvidiaBusId = "PCI:1:0:0";

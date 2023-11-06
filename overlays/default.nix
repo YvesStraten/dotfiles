@@ -49,10 +49,6 @@
                       exec = "ani-cli --rofi";
                     };
 
-                runtimeDependencies = o.runtimeDependencies ++ (with pkgs; [
-                  rofi
-                ]);
-
                 installPhase = ''
                   mkdir -p $out/share/applications
                   cp ${desktop}/share/applications/* $out/share/applications
