@@ -25,9 +25,9 @@
     ./zsh/zsh.nix
 
     ./dconf/dconf.nix
-    ./plasma/home.nix
+    # ./plasma/home.nix
     # ./sway/home.nix
-    # ./hypr/home.nix
+    ./hypr/home.nix
     # ./gnome/home.nix
   ];
 

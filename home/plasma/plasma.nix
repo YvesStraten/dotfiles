@@ -20,15 +20,19 @@
 
   environment.systemPackages = with pkgs; [
     config.nur.repos.mikilio.xwaylandvideobridge-hypr
-  ];
+  ]
+  ++ (with pkgs.libsForQt5; [
+    bismuth
+  ]);
 
-  environment.plasma5.excludePackages = with pkgs.libsForQt5; [
-    elisa
-    gwenview
-    dolphin
-    konsole
-    okular
-    oxygen
-    khelpcenter
-  ];
+  environment.plasma5.excludePackages = with pkgs.libsForQt5;
+    [
+      elisa
+      gwenview
+      dolphin
+      konsole
+      okular
+      oxygen
+      khelpcenter
+    ];
 }

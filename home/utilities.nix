@@ -1,7 +1,6 @@
-{
-  pkgs,
-  lib,
-  ...
+{ pkgs
+, lib
+, ...
 }: {
   home.packages = with pkgs;
     [
@@ -25,6 +24,9 @@
 
       nix-prefetch-scripts
       ani-cli
+
+      qpwgraph
+      soundwireserver
     ]
     ++ (with pkgs.gnome; [
       nautilus
