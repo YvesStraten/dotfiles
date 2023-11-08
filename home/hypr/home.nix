@@ -1,8 +1,7 @@
-{
-  config,
-  pkgs,
-  inputs,
-  ...
+{ config
+, pkgs
+, inputs
+, ...
 }: {
   imports = [
     inputs.hyprland.homeManagerModules.default
@@ -16,9 +15,8 @@
   ];
   home = {
     sessionVariables = {
-      GRIMBLAST_EDITOR = "gwenview";
       _JAVA_AWT_WM_NONREPARENTING = "1";
-      XCURSOR_SIZE = "24";
+      XCURSOR_SIZE = "30";
       WLR_NO_HARDWARE_CURSORS = "1";
       NIXOS_OZONE_WL = "1";
     };
@@ -119,7 +117,6 @@
                   decoration {
                      # Rounded windows
                      rounding = 10
-                     multisample_edges = true
 
                      #Opacity
                      active_opacity = 1.0

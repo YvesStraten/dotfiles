@@ -1,10 +1,7 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   home.packages = with pkgs; [
     (python311.withPackages (ps:
       with ps; [
-        matplotlib
-        requests
-        pygments
         yt-dlp
       ]))
 
@@ -36,7 +33,6 @@
     cargo
     sshfs
     ffmpeg
-    aria
     neofetch
     sqlite
   ];
