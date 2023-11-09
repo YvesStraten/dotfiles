@@ -555,7 +555,7 @@ Credit to Derek Taylor
     )
 #+end_src
 
-#+begin_src elisp :tangle nil
+#+begin_src elisp :tangle no 
   (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist))
 #+end_src
 
