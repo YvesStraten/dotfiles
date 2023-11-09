@@ -229,6 +229,8 @@
                   windowrule = size 1071 658, org.gnome.Nautilus
                   windowrule = float, pavucontrol-qt
                   windowrule = float, pavucontrol
+                  windowrule = float, whatsapp-for-linux
+                  windowrule = pin, whatsapp-for-linux
                   windowrule = float, file-roller
                   windowrule = fullscreen, wlogout
                   windowrule = float, title:wlogout
