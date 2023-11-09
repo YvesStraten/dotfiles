@@ -364,6 +364,7 @@
           (elisp "https://github.com/Wilfred/tree-sitter-elisp")
           (go "https://github.com/tree-sitter/tree-sitter-go")
           (html "https://github.com/tree-sitter/tree-sitter-html")
+          (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
           (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
           (jsx "https://github.com/tree-sitter/tree-sitter-javascript" "master" "jsx/src")
           (json "https://github.com/tree-sitter/tree-sitter-json")
@@ -374,6 +375,7 @@
           (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
           (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
           (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+  (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist))
   )
 
 (use-package format-all
