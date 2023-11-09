@@ -34,7 +34,6 @@
   # targets.genericLinux.enable = true;
 
   nixpkgs.config.allowUnfree = true;
-  nix.settings.trusted-users = [ yvess ];
   colorScheme = inputs.nix-colors.colorSchemes.dracula;
 
   home = {

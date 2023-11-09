@@ -12,9 +12,9 @@
       wslupgrade = "sudo nixos-rebuild switch --flake ~/Git-repos/dotfiles#wsl";
       # updatesymlinks = "home-manager switch --flake ~/Git-repos/dotfiles";
       mux = "tmuxinator";
-      web = "nix-develop ~/Git-repos/dotfiles#web --impure";
-      cpp = "nix-develop ~/Git-repos/dotfiles#cpp --impure";
-      arduino = "nix-develop ~/Git-repos/dotfiles#arduino --impure";
+      web = "nix develop ~/Git-repos/dotfiles#web --impure";
+      cpp = "nix develop ~/Git-repos/dotfiles#cpp --impure";
+      arduino = "nix develop ~/Git-repos/dotfiles#arduino --impure";
       cat = "${pkgs.bat}/bin/bat";
     };
     profileExtra = ''
