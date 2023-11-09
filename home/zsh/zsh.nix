@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
@@ -12,7 +12,9 @@
       wslupgrade = "sudo nixos-rebuild switch --flake ~/Git-repos/dotfiles#wsl";
       # updatesymlinks = "home-manager switch --flake ~/Git-repos/dotfiles";
       mux = "tmuxinator";
-      nxdev = "nix develop -c $SHELL";
+      web = "nix-develop github:YvesStraten/dotfiles#web --impure";
+      cpp = "nix-develop github:YvesStraten/dotfiles#cpp --impure";
+      arduino = "nix-develop github:YvesStraten/dotfiles#arduino --impure";
       cat = "${pkgs.bat}/bin/bat";
     };
     profileExtra = ''

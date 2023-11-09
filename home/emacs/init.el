@@ -532,6 +532,7 @@
 
   (ys/leader-keys
     "o" '(:ignore t :wk "Org")
+    "ob" '(org-mark-ring-goto :wk "Travel to origin link")
     "oa" '(org-agenda :wk "Org agenda")
     "oe" '(org-export-dispatch :wk "Org export")
     "oi" '(org-toggle-item :wk "Org toggle Item")
