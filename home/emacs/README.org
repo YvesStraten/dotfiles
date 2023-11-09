@@ -55,7 +55,8 @@
     ;; Enable :elpaca use-package keyword.
     (elpaca-use-package-mode)
     ;; Assume :elpaca t unless otherwise specified.
-    (setq elpaca-use-package-by-default t))
+    (setq elpaca-use-package-by-default t
+          use-package-always-defer t))
 
   ;; Block until current queue processed.
   (elpaca-wait)
@@ -73,6 +74,7 @@
 * Evil
 #+begin_src elisp
   (use-package evil
+    :demand
     :init
     (setq evil-want-C-u-scroll t
           evil-want-keybinding nil) ;; Enable C-u for scrolling
@@ -90,10 +92,11 @@
 
 ** Evil collection
 #+begin_src elisp
-(use-package evil-collection
-  :after evil
-  :config
-  (evil-collection-init))
+  (use-package evil-collection
+    :demand
+    :after evil
+    :config
+    (evil-collection-init))
 #+end_src
 
 ** Evil commenter
@@ -101,7 +104,7 @@
   (use-package evil-nerd-commenter
     :after evil)
 #+end_src
- 
+
 
 * Org-mode
 ** Table of contents 
@@ -528,6 +531,7 @@ Credit to Derek Taylor
 ** Tree-sitter
 #+begin_src elisp
   (use-package treesit
+    :defer
     :elpaca nil
     :config
     (setq treesit-language-source-alist
@@ -551,7 +555,7 @@ Credit to Derek Taylor
     )
 #+end_src
 
-#+begin_src elisp
+#+begin_src elisp :tangle nil
   (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist))
 #+end_src
 
@@ -723,6 +727,7 @@ Credit to Derek Taylor
 ** General
 #+begin_src elisp
   (use-package general
+    :demand
     :config
     (general-evil-setup)
     (general-create-definer ys/leader-keys
@@ -808,6 +813,7 @@ Credit to Derek Taylor
 ** Dashboard
 #+begin_src elisp
   (use-package dashboard
+    :demand
     :config
     (dashboard-setup-startup-hook)
     (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
@@ -834,12 +840,13 @@ Credit to Derek Taylor
 ** Theme
 #+begin_src elisp
   (use-package doom-themes
+    :demand
     :config
     (setq doom-themes-enable-bold t
           doom-themes-enable-italic t
         doom-modeline-enable-word-count t
         )
-    (load-theme 'doom-dracula t)
+    (load-theme 'doom-material-dark t)
     (doom-themes-visual-bell-config)
     (doom-themes-neotree-config)
     (doom-themes-org-config))

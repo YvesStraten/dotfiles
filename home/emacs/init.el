@@ -40,7 +40,8 @@
   ;; Enable :elpaca use-package keyword.
   (elpaca-use-package-mode)
   ;; Assume :elpaca t unless otherwise specified.
-  (setq elpaca-use-package-by-default t))
+  (setq elpaca-use-package-by-default t
+        use-package-always-defer t))
 
 ;; Block until current queue processed.
 (elpaca-wait)
@@ -51,6 +52,7 @@
   (load-file (expand-file-name "~/.emacs.d/init.el")))
 
 (use-package evil
+  :demand
   :init
   (setq evil-want-C-u-scroll t
         evil-want-keybinding nil) ;; Enable C-u for scrolling
@@ -62,6 +64,7 @@
   (define-key evil-motion-state-map (kbd "RET") nil))
 
 (use-package evil-collection
+  :demand
   :after evil
   :config
   (evil-collection-init))
@@ -355,6 +358,7 @@
   (add-to-list 'completion-at-point-functions #'cape-file ))
 
 (use-package treesit
+  :defer
   :elpaca nil
   :config
   (setq treesit-language-source-alist
@@ -376,8 +380,6 @@
           (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
           (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
   )
-
-(mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist))
 
 (use-package format-all
   :hook (format-all-mode . format-all-ensure-formatter)
@@ -474,6 +476,7 @@
         which-key-allow-imprecise-window-fit t))
 
 (use-package general
+  :demand
   :config
   (general-evil-setup)
   (general-create-definer ys/leader-keys
@@ -549,6 +552,7 @@
   :config (doom-modeline-mode 1))
 
 (use-package dashboard
+  :demand
   :config
   (dashboard-setup-startup-hook)
   (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
@@ -570,12 +574,13 @@
 ;;                                 (registers . "database"))))
 
 (use-package doom-themes
+  :demand
   :config
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t
       doom-modeline-enable-word-count t
       )
-  (load-theme 'doom-dracula t)
+  (load-theme 'doom-material-dark t)
   (doom-themes-visual-bell-config)
   (doom-themes-neotree-config)
   (doom-themes-org-config))
