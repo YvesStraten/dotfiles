@@ -375,8 +375,9 @@
           (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
           (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
           (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
-  (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist))
   )
+
+(mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist))
 
 (use-package format-all
   :hook (format-all-mode . format-all-ensure-formatter)
