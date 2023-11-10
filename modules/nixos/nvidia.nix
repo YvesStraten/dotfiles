@@ -2,21 +2,7 @@
 , pkgs
 , lib
 , ...
-}:
-let
-  prime-run = pkgs.writeShellScriptBin "prime-run" ''
-    export __NV_PRIME_RENDER_OFFLOAD=1
-    export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-GO
-    export __GLX_VENDOR_LIBRARY_NAME=nvidia
-    export __VK_LAYER_NV_optimus=NVIDIA_only
-    exec "$@"
-  '';
-in
-{
-  environment.systemPackages = with pkgs; [
-    prime-run
-  ];
-
+}: {
   # Configure keymap in X11
   services.xserver = {
     enable = true;
@@ -42,8 +28,7 @@ in
   hardware.nvidia.modesetting.enable = true;
 
   hardware.nvidia.prime = {
-    offload.enable = true;
-    offload.enableOffloadCmd = true;
+    sync.enable = true;
 
     intelBusId = "PCI:0:2:0";
     nvidiaBusId = "PCI:1:0:0";

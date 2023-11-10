@@ -11,7 +11,6 @@
       rclone
       rclone-browser
       imagemagick
-      ghostscript_headless
       whatsapp-for-linux
       tootle
       gscan2pdf

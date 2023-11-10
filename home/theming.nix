@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   qt = {
     enable = true;
     platformTheme = "gtk";
@@ -12,12 +12,13 @@
     enable = true;
     gtk3.bookmarks = [
       "file:///home/yvess/Gdrive/Uni"
+      "file:///home/yvess/Gdrive/Docs"
       "file:///home/yvess/org"
     ];
     theme = {
       name = "Catppuccin-Mocha-Compact-Pink-Dark";
       package = pkgs.catppuccin-gtk.override {
-        accents = ["pink"];
+        accents = [ "pink" ];
         size = "compact";
         variant = "mocha";
       };
@@ -36,12 +37,6 @@
       size = 24;
       package = pkgs.yvess.whitesur-cursors;
     };
-    gtk4.extraConfig = {
-      gtk-application-prefer-dark-theme = 1;
-    };
-    gtk3.extraConfig = {
-      gtk-application-prefer-dark-theme = 1;
-    };
   };
 
   home.packages = with pkgs; [
@@ -52,8 +47,11 @@
       ];
     })
     ubuntu_font_family
-    whitesur-icon-theme
-    catppuccin-gtk
     emacs-all-the-icons-fonts
   ];
+
+  home.file.".local/share/fonts" = {
+    source = ./fonts;
+    recursive = true;
+  };
 }

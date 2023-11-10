@@ -9,7 +9,6 @@
     ./languages.nix
     ./utilities.nix
     ./theming.nix
-    ./others.nix
     ./bin/default.nix
 
     # Editors

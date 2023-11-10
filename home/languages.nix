@@ -20,17 +20,12 @@
     gcc
     cmake
 
-    # JS
-    nodejs_20
-    yarn
-
     # C#
     dotnet-sdk
     mongosh
     mono
 
     unzip
-    cargo
     sshfs
     ffmpeg
     neofetch
