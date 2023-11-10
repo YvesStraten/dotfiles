@@ -9,7 +9,6 @@
     ./alacritty/alacritty.nix
     ./languages.nix
     ./theming.nix
-    ./others.nix
     ./bin/default.nix
 
     # Editors
