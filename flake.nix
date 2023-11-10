@@ -61,11 +61,15 @@
           ];
         };
 
-        cpp = devenv.lib.mkShell {
+        c = devenv.lib.mkShell {
           inherit inputs pkgs;
           modules = [
             ({ pkgs, ... }: {
-              languages.c.enable = true;
+              languages =
+                {
+                  c.enable = true;
+                  rust.enable = true;
+                };
             })
           ];
         };

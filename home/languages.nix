@@ -3,6 +3,7 @@
     (python311.withPackages (ps:
       with ps; [
         yt-dlp
+        pygments
       ]))
 
     (pkgs.texlive.combine {
