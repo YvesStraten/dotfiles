@@ -49,6 +49,15 @@
       formatter.${system} = pkgs.alejandra;
 
       devShells.${system} = {
+        csharp = devenv.lib.mkShell {
+          inherit inputs pkgs;
+          modules = [
+            ({ pkgs, ... }: {
+              languages.dotnet.enable = true;
+            })
+          ];
+        };
+
         web = devenv.lib.mkShell {
           inherit inputs pkgs;
           modules = [
@@ -73,6 +82,7 @@
               languages =
                 {
                   c.enable = true;
+                  cplusplus.enable = true;
                   rust.enable = true;
                 };
             })

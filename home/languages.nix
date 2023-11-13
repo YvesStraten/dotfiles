@@ -23,14 +23,12 @@
 
     # C#
     dotnet-sdk
-    mongosh
     mono
 
     unzip
     sshfs
     ffmpeg
     neofetch
-    sqlite
   ];
 
   programs.direnv = {
