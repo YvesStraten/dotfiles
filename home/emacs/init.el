@@ -354,6 +354,7 @@
   )
 
 (use-package cape
+  :after corfu
   :config
   (add-to-list 'completion-at-point-functions #'cape-file ))
 

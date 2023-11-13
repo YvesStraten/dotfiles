@@ -57,6 +57,11 @@
                 typescript.enable = true;
                 javascript.enable = true;
               };
+
+              packages = with pkgs; [
+                sqlite
+                mongosh
+              ];
             })
           ];
         };
