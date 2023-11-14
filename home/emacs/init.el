@@ -192,13 +192,7 @@
 (use-package org-fragtog
   :after org
   :defer
-  :hook (org-mode . org-fragtog-mode)
-  :custom
-  (org-format-latex-options
-   (plist-put org-format-latex-options :scale 2)
-   (plist-put org-format-latex-options :foreground 'auto)
-   (plist-put org-format-latex-options :background 'auto))
-  )
+  :hook (org-mode . org-fragtog-mode))
 
 (use-package org-ref
   )
