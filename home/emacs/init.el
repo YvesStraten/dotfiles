@@ -81,7 +81,7 @@
   :defer
   :hook
   (org-mode . (lambda () (org-superstar-mode 1)))
-  :config
+  :init
   (setq org-ellipsis "⤵"
         org-superstar-special-todo-items t
         org-superstar-todo-bullet-alist
@@ -190,8 +190,15 @@
   )
 
 (use-package org-fragtog
+  :after org
   :defer
-  :hook (org-mode . org-fragtog-mode))
+  :hook (org-mode . org-fragtog-mode)
+  :custom
+  (org-format-latex-options
+   (plist-put org-format-latex-options :scale 2)
+   (plist-put org-format-latex-options :foreground 'auto)
+   (plist-put org-format-latex-options :background 'auto))
+  )
 
 (use-package org-ref
   )
@@ -209,6 +216,7 @@
 (setq org-startup-indented t
       org-startup-with-inline-images t
       org-pretty-entities t
+      org-use-sub-superscripts "{}"
       org-image-actual-width '(300))
 
 (use-package auctex-latexmk
