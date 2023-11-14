@@ -354,8 +354,8 @@
   )
 
 (use-package cape
-  :after corfu
-  :config
+  :demand
+  :init
   (add-to-list 'completion-at-point-functions #'cape-file ))
 
 (use-package treesit

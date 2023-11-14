@@ -524,8 +524,8 @@ Credit to Derek Taylor
 *** Other useful backends 
 #+begin_src elisp
   (use-package cape
-    :after corfu
-    :config
+    :demand
+    :init
     (add-to-list 'completion-at-point-functions #'cape-file ))
 #+end_src
 
