@@ -4,6 +4,7 @@
     profiles.yvess = {
       extensions = with pkgs.nur.repos.rycee.firefox-addons; [
         darkreader
+        ublock-origin
       ];
       settings = {
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
