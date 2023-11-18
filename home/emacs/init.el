@@ -99,6 +99,7 @@
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((js . t)
+   (plantuml . t)
    (C . t)
    (java . t)
    (python . t)))
@@ -439,6 +440,14 @@
 
 (use-package arduino-mode
   :mode ("\\.ino\\'" . arduino-mode)
+  )
+
+(use-package plantuml-mode
+  :mode ("\\.plantuml\\'" . plantuml-mode)
+  :config (setq org-plantuml-executable-path (executable-find "plantuml")
+                plantuml-executable-path (executable-find "plantuml")
+                org-plantuml-exec-mode 'plantuml
+                plantuml-default-exec-mode 'executable)
   )
 
 (use-package eshell-toggle

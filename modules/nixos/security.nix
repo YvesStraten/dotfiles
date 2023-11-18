@@ -1,20 +1,19 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
+{ config
+, pkgs
+, lib
+, ...
 }: {
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.yvess = {
     isNormalUser = true;
     description = "Yves Straten";
-    extraGroups = ["networkmanager" "wheel" "audio" "libvirtd" "docker" "dialout"];
+    extraGroups = [ "networkmanager" "wheel" "audio" "libvirtd" "docker" "dialout" ];
   };
 
   programs.zsh.enable = true;
   programs.dconf.enable = true;
   users.defaultUserShell = pkgs.zsh;
-  environment.shells = [pkgs.zsh];
+  environment.shells = [ pkgs.zsh ];
 
   security.pam.services.swaylock.text = "auth include login";
   security.polkit.enable = true;
@@ -33,4 +32,6 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   networking.firewall.enable = false;
+
+  hardware.steam-hardware.enable = true;
 }

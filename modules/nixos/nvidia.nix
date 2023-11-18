@@ -28,9 +28,29 @@
   hardware.nvidia.modesetting.enable = true;
 
   hardware.nvidia.prime = {
-    sync.enable = true;
+    offload.enable = true;
+    offload.enableOffloadCmd = true;
 
     intelBusId = "PCI:0:2:0";
     nvidiaBusId = "PCI:1:0:0";
+  };
+
+  environment.systemPackages = with pkgs; [
+    gamescope
+    mangohud
+  ];
+
+  programs.gamemode = {
+    enable = true;
+    settings = {
+      general = {
+        renice = 10;
+      };
+
+      custom = {
+        start = "${pkgs.libnotify}/bin/notify-send 'GameMode started'";
+        end = "${pkgs.libnotify}/bin/notify-send 'GameMode ended'";
+      };
+    };
   };
 }

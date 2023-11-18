@@ -19,7 +19,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    config.nur.repos.mikilio.xwaylandvideobridge-hypr
+    config.nur.repos.mikilio.xwaylandvideobridge
   ]
   ++ (with pkgs.libsForQt5; [
     bismuth

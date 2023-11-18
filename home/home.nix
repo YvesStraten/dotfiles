@@ -20,6 +20,7 @@
     ./foot/foot.nix
     ./mpv/mpv.nix
     ./tmux/tmux.nix
+    ./firefox/firefox.nix
 
     ./zsh/zsh.nix
 

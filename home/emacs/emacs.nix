@@ -13,6 +13,7 @@
         company-box
         org-roam
         org-roam-ui
+        plantuml-mode
       ];
   };
 
@@ -41,6 +42,7 @@
     alejandra
     clang-tools
     nixpkgs-fmt
+    plantuml
 
     # DAP protocols
     lldb

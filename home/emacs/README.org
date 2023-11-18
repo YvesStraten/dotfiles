@@ -143,12 +143,13 @@
 ** Babel
 *** Code blocks
 #+begin_src elisp
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((js . t)
-   (C . t)
-   (java . t)
-   (python . t)))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((js . t)
+     (plantuml . t)
+     (C . t)
+     (java . t)
+     (python . t)))
 #+end_src
 
 **** Java settings
@@ -651,6 +652,20 @@ Credit to Derek Taylor
     :mode ("\\.ino\\'" . arduino-mode)
     )
 #+end_src
+
+*** Plantuml
+#+begin_src elisp
+  (use-package plantuml-mode
+    :mode ("\\.plantuml\\'" . plantuml-mode)
+    :config (setq org-plantuml-executable-path (executable-find "plantuml")
+                  plantuml-executable-path (executable-find "plantuml")
+                  org-plantuml-exec-mode 'plantuml
+                  plantuml-default-exec-mode 'executable)
+    )
+#+end_src
+
+#+RESULTS:
+
 
 * Terminal
 #+begin_src elisp
