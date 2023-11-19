@@ -699,7 +699,10 @@
 ;; Disable lock file creation
 (setq create-lockfiles nil)
 
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
-      `((".*" "~/.emacs-saves/" t)))
+      `((".*" ,temporary-file-directory t)))
+
 ;; Removes annoying prompts
 (setq use-short-answers t)
