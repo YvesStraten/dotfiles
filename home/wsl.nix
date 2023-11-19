@@ -22,7 +22,7 @@
 
   colorScheme = inputs.nix-colors.colorSchemes.dracula;
 
- 
+
   home = {
     username = "akali";
     homeDirectory = "/home/akali";
@@ -39,4 +39,9 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+  programs.git = {
+    enable = true;
+    userName = "YvesStraten";
+    userEmail = "yves.straten@gmail.com";
+  };
 }
