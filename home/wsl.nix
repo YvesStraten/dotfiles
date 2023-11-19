@@ -1,11 +1,11 @@
 { config
 , pkgs
-
+, inputs
 , ...
 }: {
   imports = [
-    # Main stuff
-   
+    # Main stuff 
+    inputs.nix-colors.homeManagerModules.default
     ./alacritty/alacritty.nix
     ./languages.nix
     ./theming.nix
@@ -19,6 +19,8 @@
     # Variables
     ./zsh/zsh.nix
   ];
+
+  colorScheme = inputs.nix-colors.colorSchemes.dracula;
 
  
   home = {

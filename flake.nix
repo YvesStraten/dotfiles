@@ -28,6 +28,7 @@
   outputs =
     { self
     , nixpkgs
+    , nix-colors
     , nixpkgs-old
     , devenv
     , home-manager
@@ -141,9 +142,11 @@
 
         wsl = nixpkgs.lib.nixosSystem {
           inherit system;
+          specialArgs = { inherit inputs; };
           modules = [
             ./modules/wsl/wsl.nix
             nixos-wsl.nixosModules.wsl
+            nur.nixosModules.nur
             home-manager.nixosModules.home-manager
             {
               home-manager = {
