@@ -8,5 +8,4 @@ in
   nvChad = callPackage ./nvchad.nix { };
   whitesur-cursors = callPackage ./whitesur-cursors.nix { };
   wall-switch = callPackage ./wall-switch.nix { };
-  ly = callPackage ./ly.nix { };
 }
