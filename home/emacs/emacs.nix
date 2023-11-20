@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs29-pgtk;
+    package = if pkgs.stdenv.isLinux then pkgs.emacs29-pgtk else pkgs.emacs29-macport;
     extraPackages = epkgs:
       with epkgs; [
         vterm
