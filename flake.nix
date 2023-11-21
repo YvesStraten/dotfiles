@@ -78,6 +78,16 @@
           ];
         };
 
+        document = devenv.lib.mkShell {
+          inherit inputs pkgs;
+          modules = [
+            ({ pkgs, ... }: {
+              languages.texlive.enable = true;
+              languages.javascript.enable = true;
+            })
+          ];
+        };
+
         c = devenv.lib.mkShell {
           inherit inputs pkgs;
           modules = [
