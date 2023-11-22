@@ -105,15 +105,15 @@
    (python . t)))
 
 (nconc org-babel-default-header-args:java
-       '((:dir . "/tmp/")))
+   '((:dir . "/tmp/")))
 
 (setq org-babel-default-header-args:js
              '((:exports . "both") (:results . "output")))
 
 (setq org-latex-listings 'minted
-      org-latex-packages-alist '(("" "minted"))
-      org-latex-pdf-process
-      '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+  org-latex-packages-alist '(("" "minted"))
+  org-latex-pdf-process
+  '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
 	"pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
 (setq org-confirm-babel-evaluate nil)
@@ -568,13 +568,27 @@
   :demand
   :config
   (dashboard-setup-startup-hook)
-  (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
-  (setq dashboard-banner-logo-title "Welcome to Emacs")
-  (setq dashboard-startup-banner "~/.emacs.d/marivector.png")
-  (setq dashboard-center-content t)
+  (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*"))
+        dashboard-banner-logo-title "Welcome to Emacs"
+        dashboard-startup-banner "~/.emacs.d/marivector.png"
+        dashboard-center-content t)
 
   ;; Sets which dashboard items should show
-  (setq dashboard-items '()))
+  (setq dashboard-init-info "")
+  (setq dashboard-banner-logo-title ""
+        dashboard-set-footer nil
+        dashboard-projects-switch-function 'counsel-projectile-switch-project
+        dashboard-items '()
+        dashboard-set-navigator t)
+
+  (setq dashboard-navigator-buttons
+        `(
+          ((nil
+            "Edit emacs config"
+            "Open the config file for emacs"
+            (lambda (&rest _) (find-file "~/dotfiles/home/emacs/README.org")
+              )
+            'default)))))
 
 ;; (setq dashboard-set-file-icons t)
 ;; (setq dashboard-set-heading-icons t)
@@ -614,7 +628,7 @@
                 term-mode-hook
                 vterm-mode-hook
                 shell-mode-hook
-  	      neotree-mode-hook
+  	  neotree-mode-hook
                 eshell-mode-hook))
   (add-hook mode (lambda() (display-line-numbers-mode 0))))
 
@@ -678,8 +692,8 @@
   :init (setq langtool-default-language "en-US")
   :config
   (unless (or langtool-bin
-	      langtool-language-tool-jar
-	      langtool-java-classpath)
+	  langtool-language-tool-jar
+	  langtool-java-classpath)
     (cond ((setq langtool-bin
 		 (or (executable-find "languagetool-commandline")
 		     (executable-find "languagetool")))))))  ; for nixpkgs.languagetool

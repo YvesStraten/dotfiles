@@ -832,13 +832,27 @@ Credit to Derek Taylor
     :demand
     :config
     (dashboard-setup-startup-hook)
-    (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
-    (setq dashboard-banner-logo-title "Welcome to Emacs")
-    (setq dashboard-startup-banner "~/.emacs.d/marivector.png")
-    (setq dashboard-center-content t)
+    (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*"))
+          dashboard-banner-logo-title "Welcome to Emacs"
+          dashboard-startup-banner "~/.emacs.d/marivector.png"
+          dashboard-center-content t)
 
     ;; Sets which dashboard items should show
-    (setq dashboard-items '()))
+    (setq dashboard-init-info "")
+    (setq dashboard-banner-logo-title ""
+          dashboard-set-footer nil
+          dashboard-projects-switch-function 'counsel-projectile-switch-project
+          dashboard-items '()
+          dashboard-set-navigator t)
+
+    (setq dashboard-navigator-buttons
+          `(
+            ((nil
+              "Edit emacs config"
+              "Open the config file for emacs"
+              (lambda (&rest _) (find-file "~/dotfiles/home/emacs/README.org")
+                )
+              'default)))))
 
   ;; (setq dashboard-set-file-icons t)
   ;; (setq dashboard-set-heading-icons t)
