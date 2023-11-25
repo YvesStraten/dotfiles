@@ -589,6 +589,11 @@
             "Open the config file for emacs"
             (lambda (&rest _) (find-file "~/dotfiles/home/emacs/README.org")
               )
+            'default)
+           (nil
+            "Open Notes"
+            "Open my notes"
+            (lambda (&rest _) (org-roam-node-find))
             'default)))))
 
 ;; (setq dashboard-set-file-icons t)
