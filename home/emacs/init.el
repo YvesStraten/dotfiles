@@ -105,15 +105,15 @@
    (python . t)))
 
 (nconc org-babel-default-header-args:java
-   '((:dir . "/tmp/")))
+       '((:dir . "/tmp/")))
 
 (setq org-babel-default-header-args:js
              '((:exports . "both") (:results . "output")))
 
 (setq org-latex-listings 'minted
-  org-latex-packages-alist '(("" "minted"))
-  org-latex-pdf-process
-  '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+      org-latex-packages-alist '(("" "minted"))
+      org-latex-pdf-process
+      '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
 	"pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
 (setq org-confirm-babel-evaluate nil)
@@ -517,6 +517,7 @@
     "sh" '(evil-window-split :wk "Horizontal split")
     "sv" '(evil-window-vsplit :wk "Vertical split")
     "sp" '(langtool-check :wk "Check with langtool")
+    "sk" '(flyspell-correct-wrapper :wk "test")
     "sc" '(:ignore t :wk "Correct")
     "scp" '(langtool-correct-at-point :wk "Correct at point")
     "scb" '(langtool-correct-buffer :wk "Correct buffer"))
@@ -628,7 +629,7 @@
                 term-mode-hook
                 vterm-mode-hook
                 shell-mode-hook
-  	  neotree-mode-hook
+  	      neotree-mode-hook
                 eshell-mode-hook))
   (add-hook mode (lambda() (display-line-numbers-mode 0))))
 
@@ -692,11 +693,21 @@
   :init (setq langtool-default-language "en-US")
   :config
   (unless (or langtool-bin
-	  langtool-language-tool-jar
-	  langtool-java-classpath)
+	      langtool-language-tool-jar
+	      langtool-java-classpath)
     (cond ((setq langtool-bin
 		 (or (executable-find "languagetool-commandline")
 		     (executable-find "languagetool")))))))  ; for nixpkgs.languagetool
+
+(use-package flyspell-mode
+  :elpaca nil
+  :hook (org-mode . flyspell-mode)
+  )
+
+(use-package flyspell-correct-ivy
+  :after flyspell-mode
+  :commands flyspell-correct-wrapper
+)
 
 ;; Automatically reverts buffers for changed files
 (global-auto-revert-mode 1)

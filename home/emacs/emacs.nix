@@ -23,6 +23,7 @@
 
   home.packages = with pkgs; [
     openjdk17
+    ispell
     languagetool
     rnix-lsp
     jdt-language-server

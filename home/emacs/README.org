@@ -774,6 +774,7 @@ Credit to Derek Taylor
       "sh" '(evil-window-split :wk "Horizontal split")
       "sv" '(evil-window-vsplit :wk "Vertical split")
       "sp" '(langtool-check :wk "Check with langtool")
+      "sk" '(flyspell-correct-wrapper :wk "test")
       "sc" '(:ignore t :wk "Correct")
       "scp" '(langtool-correct-at-point :wk "Correct at point")
       "scb" '(langtool-correct-buffer :wk "Correct buffer"))
@@ -814,6 +815,8 @@ Credit to Derek Taylor
       "g" '(magit :wk "Open magit"))
     )
 #+end_src
+
+#+RESULTS:
 
 * UI
 ** Icons and status bar
@@ -1007,6 +1010,22 @@ Credit to doom-emacs devs
 		   (or (executable-find "languagetool-commandline")
 		       (executable-find "languagetool")))))))  ; for nixpkgs.languagetool
 #+end_src
+
+** Fly-spell
+#+begin_src elisp
+  (use-package flyspell-mode
+    :elpaca nil
+    :hook (org-mode . flyspell-mode)
+    )
+
+  (use-package flyspell-correct-ivy
+    :after flyspell-mode
+    :commands flyspell-correct-wrapper
+  )
+#+end_src
+
+#+RESULTS:
+
 
 * Useful extra settings
 ** Automatic revert of buffers
