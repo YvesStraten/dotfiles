@@ -1,4 +1,4 @@
-#+Title: My Emacs config
+#+Title: My Emacs configuration 
 #+Property: header-args :tangle init.el 
 #+auto_tangle: t
 #+startup: overview 
