@@ -402,7 +402,6 @@ Credit to Derek Taylor
 ** Tmux navigation
 #+begin_src elisp
   (use-package tmux-pane
-    :defer 1
     :config
     (tmux-pane-mode)
     )
@@ -417,7 +416,6 @@ Credit to Derek Taylor
     (vterm-mode . centaur-tabs-local-mode)
     (magit-mode . centaur-tabs-local-mode)
     (org-mode . centaur-tabs-local-mode)
-    :defer 
     :config
     (centaur-tabs-mode t)
     (centaur-tabs-headline-match)
@@ -430,7 +428,7 @@ Credit to Derek Taylor
           centaur-tabs-set-modified-marker t))
 #+end_src
 
-** Jumping in the file
+** Mini buffer completion 
 #+begin_src elisp
   (use-package counsel
     :commands (swiper
@@ -593,7 +591,7 @@ Credit to Derek Taylor
 #+end_src
 
 ** Indentation and parenthesis
-*** Indent blankline
+*** Indent blank-line
 #+begin_src elisp
   ;; Indent blankline
   (use-package highlight-indent-guides
@@ -605,7 +603,7 @@ Credit to Derek Taylor
     )
 #+end_src
 
-*** Colorization
+*** Colors for brackets and hex values 
 #+begin_src elisp
   (use-package rainbow-delimiters
     :defer
@@ -621,6 +619,7 @@ Credit to Derek Taylor
   (use-package smartparens
     :hook
     (prog-mode . smartparens-mode)
+    (prog-mode . electric-pair-mode)
     :config
     (require 'smartparens-config))
 #+end_src
@@ -794,7 +793,7 @@ Credit to Derek Taylor
       "sh" '(evil-window-split :wk "Horizontal split")
       "sv" '(evil-window-vsplit :wk "Vertical split")
       "sp" '(langtool-check :wk "Check with langtool")
-      "sk" '(flyspell-correct-wrapper :wk "test")
+      "sk" '(flyspell-correct-wrapper :wk "Flyspell correct")
       "sc" '(:ignore t :wk "Correct")
       "scp" '(langtool-correct-at-point :wk "Correct at point")
       "scb" '(langtool-correct-buffer :wk "Correct buffer"))
@@ -879,7 +878,13 @@ Credit to Derek Taylor
               "Open Notes"
               "Open my notes"
               (lambda (&rest _) (org-roam-node-find))
-              'default)))))
+              'default)
+             (nil
+              "Todo list"
+              "Open todo list"
+              (lambda (&rest _) (find-file "~/org/Todos.org"))
+              'default)
+             ))))
 
   ;; (setq dashboard-set-file-icons t)
   ;; (setq dashboard-set-heading-icons t)

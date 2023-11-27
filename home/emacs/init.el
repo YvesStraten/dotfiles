@@ -266,7 +266,6 @@
   )
 
 (use-package tmux-pane
-  :defer 1
   :config
   (tmux-pane-mode)
   )
@@ -278,7 +277,6 @@
   (vterm-mode . centaur-tabs-local-mode)
   (magit-mode . centaur-tabs-local-mode)
   (org-mode . centaur-tabs-local-mode)
-  :defer 
   :config
   (centaur-tabs-mode t)
   (centaur-tabs-headline-match)
@@ -425,6 +423,7 @@
 (use-package smartparens
   :hook
   (prog-mode . smartparens-mode)
+  (prog-mode . electric-pair-mode)
   :config
   (require 'smartparens-config))
 
@@ -532,7 +531,7 @@
     "sh" '(evil-window-split :wk "Horizontal split")
     "sv" '(evil-window-vsplit :wk "Vertical split")
     "sp" '(langtool-check :wk "Check with langtool")
-    "sk" '(flyspell-correct-wrapper :wk "test")
+    "sk" '(flyspell-correct-wrapper :wk "Flyspell correct")
     "sc" '(:ignore t :wk "Correct")
     "scp" '(langtool-correct-at-point :wk "Correct at point")
     "scb" '(langtool-correct-buffer :wk "Correct buffer"))
@@ -608,7 +607,13 @@
             "Open Notes"
             "Open my notes"
             (lambda (&rest _) (org-roam-node-find))
-            'default)))))
+            'default)
+           (nil
+            "Todo list"
+            "Open todo list"
+            (lambda (&rest _) (find-file "~/org/Todos.org"))
+            'default)
+           ))))
 
 ;; (setq dashboard-set-file-icons t)
 ;; (setq dashboard-set-heading-icons t)
