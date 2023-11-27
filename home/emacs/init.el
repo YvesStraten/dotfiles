@@ -226,6 +226,10 @@
 (setq-default indent-tabs-mode t)
 (setq backward-delete-char-untabify-method 'nil)
 
+(use-package aggressive-indent
+  :hook (prog-mode . aggressive-indent-mode))
+(setq js-indent-level 2)
+
 (use-package projectile
   :defer 
   :config
@@ -575,7 +579,6 @@
         dashboard-center-content t)
 
   ;; Sets which dashboard items should show
-  (setq dashboard-init-info "")
   (setq dashboard-banner-logo-title ""
         dashboard-set-footer nil
         dashboard-projects-switch-function 'counsel-projectile-switch-project
@@ -640,14 +643,12 @@
 
 (use-package ligature
   :hook (prog-mode . ligature-mode)
+  (org-mode . ligature-mode)
   :config
   ;; Enable the "www" ligature in every possible major mode
   (ligature-set-ligatures 't '("www"))
-  ;; Enable traditional ligature support in eww-mode, if the
-  ;; `variable-pitch' face supports it
-  (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
   ;; Enable all Cascadia Code ligatures in programming modes
-  (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+  (ligature-set-ligatures 't '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
                                        ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
                                        "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
                                        "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
