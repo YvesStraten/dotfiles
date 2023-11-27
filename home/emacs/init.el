@@ -228,6 +228,7 @@
 
 (use-package aggressive-indent
   :hook (prog-mode . aggressive-indent-mode))
+
 (setq js-indent-level 2)
 
 (use-package projectile
@@ -289,10 +290,13 @@
         x-underline-at-descent-line t
         centaur-tabs-set-modified-marker t))
 
-(use-package swiper
-  :commands (swiper)
-  :defer
-  :bind ("C-s" . 'swiper))
+(use-package counsel
+  :commands (swiper
+             counsel-M-x
+             counsel-find-file)
+  :bind ("C-s" . 'swiper)
+  ("M-x" . counsel-M-x)
+  ("C-x C-f" . counsel-find-file))
 
 (use-package yasnippet-snippets
   :after yasnippet)

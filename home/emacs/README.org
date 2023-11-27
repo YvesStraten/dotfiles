@@ -348,6 +348,7 @@ Credit to Derek Taylor
 #+begin_src elisp
   (use-package aggressive-indent
     :hook (prog-mode . aggressive-indent-mode))
+
   (setq js-indent-level 2)
 #+end_src
 
@@ -431,11 +432,16 @@ Credit to Derek Taylor
 
 ** Jumping in the file
 #+begin_src elisp
-  (use-package swiper
-    :commands (swiper)
-    :defer
-    :bind ("C-s" . 'swiper))
+  (use-package counsel
+    :commands (swiper
+               counsel-M-x
+               counsel-find-file)
+    :bind ("C-s" . 'swiper)
+    ("M-x" . counsel-M-x)
+    ("C-x C-f" . counsel-find-file))
 #+end_src
+
+#+RESULTS:
 
 * LSP stuff
 ** Yasnippet
