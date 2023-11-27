@@ -423,9 +423,9 @@
 (use-package smartparens
   :hook
   (prog-mode . smartparens-mode)
-  (prog-mode . electric-pair-mode)
   :config
-  (require 'smartparens-config))
+  (require 'smartparens-config)
+  (electric-pair-mode))
 
 (use-package emmet-mode
   :defer
