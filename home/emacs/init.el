@@ -293,12 +293,17 @@
 (use-package counsel
   :commands (swiper
              counsel-M-x
-             counsel-find-file)
+             counsel-find-file
+             counsel-describe-variable
+             counsel-load-theme)
   :config (setq ivy-use-virtual-buffers t
                 ivy-count-format "(%d/%d) ")
   :bind ("C-s" . 'swiper)
   ("M-x" . counsel-M-x)
-  ("C-x C-f" . counsel-find-file))
+  ("C-x C-f" . counsel-find-file)
+  ("<f1> v" . counsel-describe-variable)
+  ("C-c t" . counsel-load-theme)
+  )
 
 (use-package yasnippet-snippets
   :after yasnippet)
