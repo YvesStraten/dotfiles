@@ -597,6 +597,7 @@
 
   (setq dashboard-navigator-buttons
         `(
+          ;; First row
           ((nil
             "Edit emacs config"
             "Open the config file for emacs"
@@ -608,7 +609,10 @@
             "Open my notes"
             (lambda (&rest _) (org-roam-node-find))
             'default)
-           (nil
+           )
+
+          ;; Second row
+          ((nil
             "Todo list"
             "Open todo list"
             (lambda (&rest _) (find-file "~/org/Todos.org"))
