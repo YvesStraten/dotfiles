@@ -203,8 +203,11 @@
 (setq org-hide-emphasis-markers t)
 
 (use-package org-appear
-  :defer
-  :hook (org-mode . org-appear-mode))
+  :hook (org-mode . org-appear-mode)
+  :config (setq org-appear-autolinks t
+                org-appear-autosubmarkers t
+                org-appear-autoentities t
+                org-appear-inside-latex t))
 
 (setq org-return-follows-link t)
 

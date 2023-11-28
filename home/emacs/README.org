@@ -305,8 +305,11 @@ Credit to Derek Taylor
 *** Show emphasis markers interactively
 #+begin_src elisp
   (use-package org-appear
-    :defer
-    :hook (org-mode . org-appear-mode))
+    :hook (org-mode . org-appear-mode)
+    :config (setq org-appear-autolinks t
+                  org-appear-autosubmarkers t
+                  org-appear-autoentities t
+                  org-appear-inside-latex t))
 #+end_src
 
 ** Tweaks
