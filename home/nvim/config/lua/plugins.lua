@@ -27,7 +27,7 @@ require("lazy").setup({
 
 	{
 		"numToStr/Comment.nvim",
-		lazy = false,
+		event = "InsertEnter",
 		opts = {},
 	},
 
@@ -130,6 +130,7 @@ require("lazy").setup({
 
 	{
 		"nvim-treesitter/nvim-treesitter",
+		lazy = false,
 		cmd = {
 			"TSInstall",
 			"TSUpdate",
@@ -223,7 +224,9 @@ require("lazy").setup({
 	{
 		"norcalli/nvim-colorizer.lua",
 		event = "VeryLazy",
-		opts = {},
+		config = function()
+			require("colorizer").setup()
+		end,
 	},
 
 	{
