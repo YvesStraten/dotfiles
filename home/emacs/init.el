@@ -346,19 +346,20 @@
   (setq dap-auto-configure-mode t))
 
 (use-package corfu
-  :defer
-  ;; Optional customizations
-  :hook
-  (prog-mode . corfu-mode)
-  (org-mode . corfu-mode)
-  (corfu-mode . corfu-history-mode)
-  (corfu-mode . corfu-echo-mode)
+  :demand
+  :init
+  (global-corfu-mode)
+  (corfu-popupinfo-mode)
   :config
   (setq corfu-cycle t
         corfu-auto t
         corfu-auto-prefix 1
         corfu-auto-delay 0.0
-        corfu-preview-current nil
+        corfu-preview-current t
+        corfu-min-width 40
+        corfu-max-width corfu-min-width
+        corfu-count 14
+        corfu-scroll-margin 4
         )
   :bind (:map corfu-map ("TAB" . corfu-next)
               ("S-TAB" . corfu-previous)
@@ -366,11 +367,16 @@
               )
   )
 
-(use-package nerd-icons-corfu
+(use-package kind-icon
+  :demand
   :after corfu
+  :custom
+  (kind-icon-default-face 'corfu-default)
+  (kind-icon-blend-background nil)
+  (kind-icon-blend-frac 0.08)
+  (kind-icon-use-icons t)
   :config
-  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter)
-  )
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
 (use-package cape
   :demand
