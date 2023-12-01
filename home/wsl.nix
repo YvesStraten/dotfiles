@@ -12,7 +12,7 @@
     ./bin/default.nix
 
     # Editors
-    #./nvim/neovim.nix
+    ./nvim/neovim.nix
     ./emacs/emacs.nix
     ./tmux/tmux.nix
 

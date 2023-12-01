@@ -140,6 +140,8 @@ require("lazy").setup({
 				"c",
 				"lua",
 				"cpp",
+				"javascript",
+				"typescript",
 			},
 			sync_install = true,
 			auto_install = true,
@@ -187,7 +189,7 @@ require("lazy").setup({
 
 	{
 		"nvim-orgmode/orgmode",
-		ft = "org",
+		event = "VeryLazy",
 		config = function()
 			require("configs.orgmode.orgmode")
 		end,

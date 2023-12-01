@@ -5,18 +5,11 @@
 }: {
   programs.neovim = {
     enable = true;
-    defaultEditor = true;
-  };
-
-  home.file.".config/nvim" = {
-    recursive = true;
-    source = pkgs.nvChad;
+    # defaultEditor = true;
   };
 
   home.packages = with pkgs; [
-    neovide
     python310Packages.pynvim
-    zulu8
     languagetool
 
     # LSP servers
