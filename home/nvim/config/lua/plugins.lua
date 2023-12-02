@@ -1,10 +1,28 @@
+local colorscheme = "dracula"
+
 require("lazy").setup({
 	{
 		"Mofiqul/dracula.nvim",
 		lazy = false,
 		init = function()
-			vim.cmd([[colorscheme dracula]])
+			vim.cmd("colorscheme " .. colorscheme)
 		end,
+	},
+
+	{
+		"VonHeikemen/fine-cmdline.nvim",
+		event = "VeryLazy",
+		keys = {
+			{
+				":",
+				"<cmd>FineCmdline<cr>",
+				desc = "Vim cmd",
+			},
+		},
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+		},
+		config = function() end,
 	},
 
 	{
@@ -82,6 +100,7 @@ require("lazy").setup({
 
 	{
 		"hrsh7th/nvim-cmp",
+		event = "InsertEnter",
 		dependencies = {
 			"neovim/nvim-lspconfig",
 			"onsails/lspkind.nvim",
@@ -197,6 +216,7 @@ require("lazy").setup({
 
 	{
 		"NeogitOrg/neogit",
+		event = "VeryLazy",
 		dependencies = {
 			"nvim-lua/plenary.nvim", -- required
 			"nvim-telescope/telescope.nvim", -- optional
@@ -276,4 +296,9 @@ require("lazy").setup({
 		event = "VeryLazy",
 		opts = {},
 	},
+}, {
+	install = {
+		colorscheme = { colorscheme },
+	},
+	lazy = true,
 })
