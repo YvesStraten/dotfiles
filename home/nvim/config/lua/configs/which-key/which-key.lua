@@ -5,7 +5,7 @@ wk.register({
 			name = "Telescope",
 			f = { ":Telescope find_files<cr>", "Find file" },
 			g = { ":Telescope live_grep<cr>", "Grep files" },
-			p = { ":Telescope project<cr>", "Project picker" }
+			p = { ":Telescope project<cr>", "Project picker" },
 		},
 
 		x = { ":BufferClose<cr>", "Close buffer" },
@@ -18,18 +18,19 @@ wk.register({
 		l = {
 			r = { ":Lspsaga rename<cr>", "Rename definition" },
 			p = { ":Lspsaga peek_definition<cr>", "Peek definition" },
+			a = { ":Lspsaga code_action<cr>", "Code action" },
 		},
 
 		g = {
-			o = { ":Neogit<cr>", "Neogit" }
+			o = { ":Neogit<cr>", "Neogit" },
 		},
 		t = {
 			l = { ":VimtexCompile<cr>", "Compiled latex document" },
-			m = { ":MarkdownPreview<cr>", "Preview Markdown" }
-		}
+			m = { ":MarkdownPreview<cr>", "Preview Markdown" },
+		},
 	},
 	["<C-n>"] = { ":Neotree toggle reveal=true<cr>", "File explorer" },
 	["<tab>"] = { ":BufferNext<cr>", "Next Buffer" },
 	["<S-tab>"] = { ":BufferPrevious<cr>", "Previous Buffer" },
-	["<esc>"] = { ":nohlsearch<cr>", "Wipes previous search" }
+	["<esc>"] = { ":nohlsearch<cr>", "Wipes previous search" },
 })
