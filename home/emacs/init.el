@@ -282,6 +282,10 @@
   (vterm-mode . centaur-tabs-local-mode)
   (magit-mode . centaur-tabs-local-mode)
   (org-mode . centaur-tabs-local-mode)
+  :bind
+  (:map evil-normal-state-map
+        ("<tab>" . centaur-tabs-forward-tab)
+        ("<backtab>" . centaur-tabs-backward-tab))
   :config
   (centaur-tabs-mode t)
   (centaur-tabs-headline-match)
