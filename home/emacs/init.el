@@ -269,8 +269,10 @@
   )
 
 (use-package tmux-pane
+  :defer 1
   :config
   (tmux-pane-mode)
+  (elpaca-wait)
   )
 
 (use-package centaur-tabs
@@ -563,7 +565,8 @@
     "l" '(:ignore t :wk "Lsp")
     "lr" '(eglot-rename :wk "Rename reference")
     "lf" '(format-all-buffer
-           :wk "Formats buffer"))
+           :wk "Formats buffer")
+    "la" '(eglot-code-actions :wk "Code actions"))
 
   (ys/leader-keys
     "o" '(:ignore t :wk "Org")

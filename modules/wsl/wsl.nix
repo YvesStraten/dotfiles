@@ -1,13 +1,18 @@
-{
-  self,
-  pkgs,
-  ...
+{ self
+, pkgs
+, ...
 }: {
   imports = [
     ../../overlays/default.nix
   ];
 
-  nix.settings.trusted-users = ["akali"];
+  nix = {
+    settings = {
+      trusted-users = [ "akali" ];
+      experimental-features = [ "nix-command" "flakes" ];
+    };
+    package = pkgs.nixFlakes;
+  };
 
   environment.systemPackages = with pkgs; [
     vim
@@ -25,7 +30,7 @@
     users.akali = {
       isNormalUser = true;
       description = "akali";
-      extraGroups = ["wheel" "docker"];
+      extraGroups = [ "wheel" "docker" ];
     };
   };
 
