@@ -1,19 +1,17 @@
-{
-  config,
-  pkgs,
-  inputs,
-  ...
+{ config
+, pkgs
+, inputs
+, ...
 }: {
   imports = [
     # Main stuff
     inputs.nix-colors.homeManagerModules.default
-    ./alacritty/alacritty.nix
     ./languages.nix
     ./theming.nix
     ./bin/default.nix
 
     # Editors
-    ./nvim/neovim.nix
+    # ./nvim/neovim.nix
     ./emacs/emacs.nix
     ./tmux/tmux.nix
 

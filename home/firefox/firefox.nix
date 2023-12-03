@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   programs.firefox = {
     enable = true;
     profiles.yvess = {
@@ -47,9 +47,9 @@
         /* want to show the URL Bar    */
         /*─────────────────────────────*/
 
-        .urlbarView {
+        /* .urlbarView {
           display: none !important;
-        }
+        } */
 
         /*─────────────────────────────*/
 
