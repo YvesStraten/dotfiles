@@ -1,10 +1,11 @@
-{ config
-, pkgs
-, inputs
-, ...
+{
+  config,
+  pkgs,
+  inputs,
+  ...
 }: {
   imports = [
-    # Main stuff 
+    # Main stuff
     inputs.nix-colors.homeManagerModules.default
     ./alacritty/alacritty.nix
     ./languages.nix
@@ -21,7 +22,6 @@
   ];
 
   colorScheme = inputs.nix-colors.colorSchemes.dracula;
-
 
   home = {
     username = "akali";

@@ -1,4 +1,8 @@
-{ pkgs, config, ... }: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   services.xserver = {
     enable = true;
     displayManager.sddm = {
@@ -18,21 +22,21 @@
     pulse.enable = true;
   };
 
-  environment.systemPackages = with pkgs; [
-    config.nur.repos.mikilio.xwaylandvideobridge
-  ]
-  ++ (with pkgs.libsForQt5; [
-    bismuth
-  ]);
-
-  environment.plasma5.excludePackages = with pkgs.libsForQt5;
+  environment.systemPackages = with pkgs;
     [
-      elisa
-      gwenview
-      dolphin
-      konsole
-      okular
-      oxygen
-      khelpcenter
-    ];
+      config.nur.repos.mikilio.xwaylandvideobridge
+    ]
+    ++ (with pkgs.libsForQt5; [
+      bismuth
+    ]);
+
+  environment.plasma5.excludePackages = with pkgs.libsForQt5; [
+    elisa
+    gwenview
+    dolphin
+    konsole
+    okular
+    oxygen
+    khelpcenter
+  ];
 }

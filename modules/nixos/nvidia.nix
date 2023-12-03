@@ -1,7 +1,8 @@
-{ config
-, pkgs
-, lib
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  ...
 }: {
   # Configure keymap in X11
   services.xserver = {
@@ -9,7 +10,7 @@
     layout = "us";
     xkbVariant = "";
   };
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = ["nvidia"];
   hardware.opengl = {
     enable = true;
     driSupport = true;

@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   qt = {
     enable = true;
     platformTheme = "gtk";
@@ -18,7 +18,7 @@
     theme = {
       name = "Catppuccin-Mocha-Compact-Pink-Dark";
       package = pkgs.catppuccin-gtk.override {
-        accents = [ "pink" ];
+        accents = ["pink"];
         size = "compact";
         variant = "mocha";
       };

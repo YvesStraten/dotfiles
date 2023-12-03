@@ -699,37 +699,7 @@ Credit to Derek Taylor
 
 
 * Terminal
-#+begin_src elisp
-  (use-package eshell-toggle
-    :elpaca (:host github :repo "4DA/eshell-toggle")
-    :config
-    (setq eshell-toggle-size-fraction 5))
-#+end_src
-
-#+RESULTS:
-
-#+begin_src elisp
-  (setq eshell-prompt-regexp "^[^αλ\n]*[αλ] ")
-  (setq eshell-prompt-function
-        (lambda nil
-          (concat
-           (if (string= (eshell/pwd) (getenv "HOME"))
-               (propertize "~" 'face `(:foreground "#99CCFF"))
-             (replace-regexp-in-string
-              (getenv "HOME")
-              (propertize "~" 'face `(:foreground "#99CCFF"))
-              (propertize (eshell/pwd) 'face `(:foreground "#99CCFF"))))
-           (if (= (user-uid) 0)
-               (propertize " α " 'face `(:foreground "#FF6666"))
-           (propertize " λ " 'face `(:foreground "#A6E22E"))))))
-
-  (setq eshell-highlight-prompt nil)
-#+end_src
-
-
-#+RESULTS:
-
-#+begin_src elisp :tangle no
+#+begin_src elisp 
   (use-package vterm)
 
   (use-package vterm-toggle
@@ -815,8 +785,7 @@ Credit to Derek Taylor
 
 
     (ys/leader-keys
-      "t" '(eshell-toggle :wk "vterm")
-      )
+      "t" '(vterm-toggle :wk "vterm"))
 
     (ys/leader-keys
       "e" '(emmet-expand-line :wk "emmet"))

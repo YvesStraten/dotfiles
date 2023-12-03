@@ -473,26 +473,26 @@
                 plantuml-default-exec-mode 'executable)
   )
 
-(use-package eshell-toggle
-  :elpaca (:host github :repo "4DA/eshell-toggle")
+(use-package vterm)
+
+(use-package vterm-toggle
+  :after vterm
   :config
-  (setq eshell-toggle-size-fraction 5))
-
-(setq eshell-prompt-regexp "^[^αλ\n]*[αλ] ")
-(setq eshell-prompt-function
-      (lambda nil
-        (concat
-         (if (string= (eshell/pwd) (getenv "HOME"))
-             (propertize "~" 'face `(:foreground "#99CCFF"))
-           (replace-regexp-in-string
-            (getenv "HOME")
-            (propertize "~" 'face `(:foreground "#99CCFF"))
-            (propertize (eshell/pwd) 'face `(:foreground "#99CCFF"))))
-         (if (= (user-uid) 0)
-             (propertize " α " 'face `(:foreground "#FF6666"))
-         (propertize " λ " 'face `(:foreground "#A6E22E"))))))
-
-(setq eshell-highlight-prompt nil)
+  (setq vterm-toggle-fullscreen-p nil)
+  (setq vterm-toggle-scope 'project)
+  (add-to-list 'display-buffer-alist
+               '((lambda (buffer-or-name _)
+                   (let ((buffer (get-buffer buffer-or-name)))
+                     (with-current-buffer buffer
+                       (or (equal major-mode 'vterm-mode)
+                           (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
+                 (display-buffer-reuse-window display-buffer-at-bottom)
+                 ;;(display-buffer-reuse-window display-buffer-in-direction)
+                 ;;display-buffer-in-direction/direction/dedicated is added in emacs27
+                 ;;(direction . bottom)
+                 (dedicated . t) ;dedicated is supported in emacs27
+                 (reusable-frames . visible)
+                 (window-height . 0.3))))
 
 (use-package which-key
   :defer 1
@@ -550,8 +550,7 @@
 
 
   (ys/leader-keys
-    "t" '(eshell-toggle :wk "vterm")
-    )
+    "t" '(vterm-toggle :wk "vterm"))
 
   (ys/leader-keys
     "e" '(emmet-expand-line :wk "emmet"))
