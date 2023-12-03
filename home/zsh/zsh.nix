@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
@@ -7,14 +7,14 @@
 
     shellAliases = {
       # neovide = "prime-run nixGLNvidia-535.86.05 neovide";
-      updatenix = "nix flake update ~/Git-repos/dotfiles";
-      upgradenix = "sudo nixos-rebuild switch --flake ~/Git-repos/dotfiles#nitro";
-      wslupgrade = "sudo nixos-rebuild switch --flake ~/Git-repos/dotfiles#wsl";
-      # updatesymlinks = "home-manager switch --flake ~/Git-repos/dotfiles";
+      updatenix = "nix flake update ~/dotfiles";
+      # upgradenix = "sudo nixos-rebuild switch --flake ~/dotfiles#nitro";
+      wslupgrade = "sudo nixos-rebuild switch --flake ~/dotfiles#wsl";
+      # updatesymlinks = "home-manager switch --flake ~/dotfiles";
       mux = "tmuxinator";
-      web = "nix develop ~/Git-repos/dotfiles#web --impure";
-      c = "nix develop ~/Git-repos/dotfiles#c --impure";
-      arduino = "nix develop ~/Git-repos/dotfiles#arduino --impure";
+      web = "nix develop ~/dotfiles#web --impure";
+      c = "nix develop ~/dotfiles#c --impure";
+      arduino = "nix develop ~/dotfiles#arduino --impure";
       cat = "${pkgs.bat}/bin/bat";
     };
     profileExtra = ''
