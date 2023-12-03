@@ -163,13 +163,25 @@
              org-roam-node-insert
              org-roam-node-insert-immediate)
   :bind (("C-c n l" . org-roam-buffer-toggle)
-         ("C-c n f" . org-roam-node-find)
          ("C-c n i" . org-roam-node-insert)
          ("C-c n I" . org-roam-node-insert-immediate))
   :config
   (setq org-roam-v2-ack t)
   (org-roam-setup)
   )
+
+(use-package consult-org-roam
+  :after org-roam
+  :config
+  (consult-org-roam-mode 1)
+  :bind
+  (
+   ("C-c n f" . consult-org-roam-file-find)
+   ("C-c n l" . consult-org-roam-backlinks)
+   )
+  :commands (consult-org-roam-file-find
+             consult-org-roam-backlinks
+             consult-org-roam-search))
 
 ;; Bind this to C-c n I
 (defun org-roam-node-insert-immediate (arg &rest args)
