@@ -1,42 +1,56 @@
-{
-  pkgs,
-  lib,
-  ...
+{ pkgs
+, ...
 }: {
-  home.packages = with pkgs;
-    [
-      tesseract
-      brave
-      tor-browser-bundle-bin
-      libreoffice
-      rclone
-      rclone-browser
-      imagemagick
-      whatsapp-for-linux
-      tootle
-      gscan2pdf
-      gimp
-      filezilla
-      krename
-      htop
+  home.packages =
+    if pkgs.stdenv.isLinux then
+      (with pkgs; [
+        tesseract
+        brave
+        tor-browser-bundle-bin
+        libreoffice
+        rclone
+        rclone-browser
+        imagemagick
+        whatsapp-for-linux
 
-      pandoc
+        gscan2pdf
+        gimp
+        filezilla
+        krename
+        htop
 
-      nix-prefetch-scripts
-      ani-cli
+        pandoc
 
-      qpwgraph
-      soundwireserver
-    ]
-    ++ (with pkgs.gnome; [
-      nautilus
-      gnome-clocks
-      pomodoro
-      eog
-      geary
-      evince
-      gnome-disk-utility
-    ]);
+        nix-prefetch-scripts
+        ani-cli-rofi
+
+        qpwgraph
+        soundwireserver
+      ] ++ (with pkgs.gnome; [
+        nautilus
+        gnome-clocks
+        pomodoro
+        eog
+        geary
+        evince
+        gnome-disk-utility
+      ])) else
+      (with pkgs; [
+        tesseract
+        tor-browser-bundle-bin
+        libreoffice
+        imagemagick
+
+        gimp
+        filezilla
+        krename
+        htop
+
+        pandoc
+
+        nix-prefetch-scripts
+        ani-cli
+      ]);
 
   programs.thunderbird = {
     enable = true;

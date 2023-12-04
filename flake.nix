@@ -25,6 +25,7 @@
     emacs-overlay.url = "github:nix-community/emacs-overlay";
   };
 
+  # Add cachix to rebuilds faster
   nixConfig = {
     experimental-features = [ "nix-command" "flakes" ];
     extra-trusted-public-keys = [

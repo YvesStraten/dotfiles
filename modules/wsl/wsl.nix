@@ -14,6 +14,7 @@
     package = pkgs.nixFlakes;
   };
 
+  nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     vim
     git
