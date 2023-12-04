@@ -401,30 +401,6 @@
   :init
   (add-to-list 'completion-at-point-functions #'cape-file ))
 
-(use-package treesit
-  :defer
-  :elpaca nil
-  :config
-  (setq treesit-language-source-alist
-        '((bash "https://github.com/tree-sitter/tree-sitter-bash")
-          (cmake "https://github.com/uyha/tree-sitter-cmake")
-          (css "https://github.com/tree-sitter/tree-sitter-css")
-          (elisp "https://github.com/Wilfred/tree-sitter-elisp")
-          (go "https://github.com/tree-sitter/tree-sitter-go")
-          (html "https://github.com/tree-sitter/tree-sitter-html")
-          (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
-          (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
-          (jsx "https://github.com/tree-sitter/tree-sitter-javascript" "master" "jsx/src")
-          (json "https://github.com/tree-sitter/tree-sitter-json")
-          (make "https://github.com/alemuller/tree-sitter-make")
-          (markdown "https://github.com/ikatyang/tree-sitter-markdown")
-          (python "https://github.com/tree-sitter/tree-sitter-python")
-          (toml "https://github.com/tree-sitter/tree-sitter-toml")
-          (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-          (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
-          (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
-  )
-
 (use-package format-all
   :hook (format-all-mode . format-all-ensure-formatter)
   (prog-mode . format-all-mode)
@@ -490,6 +466,11 @@
                 org-plantuml-exec-mode 'plantuml
                 plantuml-default-exec-mode 'executable)
   )
+
+(use-package typescript-ts-mode
+  :elpaca nil
+  :mode (("\\.ts\\'" . typescript-ts-mode)
+         ("\\.tsx\\'" . tsx-ts-mode)))
 
 (use-package vterm)
 

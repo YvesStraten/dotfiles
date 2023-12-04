@@ -29,13 +29,15 @@ let
       })
     ];
   });
-in {
+in
+{
   programs.emacs = {
     enable = true;
     package = if pkgs.stdenv.isLinux then pkgs.emacs-pgtk else emacs-mac;
     extraPackages = epkgs:
       with epkgs; [
         vterm
+        treesit-grammars.with-all-grammars
         vterm-toggle
         magit
         all-the-icons
