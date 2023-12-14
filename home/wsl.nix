@@ -7,12 +7,10 @@
     # Main stuff
     inputs.nix-colors.homeManagerModules.default
     ./languages.nix
-    ./theming.nix
     ./bin/default.nix
 
     # Editors
     # ./nvim/neovim.nix
-    ./emacs/emacs.nix
     ./tmux/tmux.nix
 
     # Variables
@@ -32,6 +30,7 @@
 
     packages = with pkgs; [
       ani-cli
+      openssh
     ];
   };
 
