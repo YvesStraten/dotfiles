@@ -6,11 +6,9 @@
     enableCompletion = true;
 
     shellAliases = {
-      # neovide = "prime-run nixGLNvidia-535.86.05 neovide";
       updatenix = "nix flake update ~/dotfiles";
       # upgradenix = "sudo nixos-rebuild switch --flake ~/dotfiles#nitro";
-      wslupgrade = "sudo nixos-rebuild switch --flake ~/dotfiles#wsl";
-      # updatesymlinks = "home-manager switch --flake ~/dotfiles";
+      updatesymlinks = "home-manager switch --flake ~/dotfiles#akali";
       mux = "tmuxinator";
       web = "nix develop ~/dotfiles#web --impure";
       c = "nix develop ~/dotfiles#c --impure";

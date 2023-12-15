@@ -8,9 +8,11 @@
     inputs.nix-colors.homeManagerModules.default
     ./languages.nix
     ./bin/default.nix
+    ./theming.nix
 
     # Editors
     # ./nvim/neovim.nix
+    ./emacs/emacs.nix
     ./tmux/tmux.nix
 
     # Variables

@@ -2,7 +2,6 @@
   description = "My Nix based systems";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-old.url = "github:nixos/nixpkgs/nixos-23.11";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -15,10 +14,6 @@
     hyprland.url = "github:hyprwm/hyprland";
     hyprpicker.url = "github:hyprwm/hyprpicker";
     hypr-contrib.url = "github:hyprwm/contrib";
-    nixos-wsl = {
-      url = "github:nix-community/NixOS-WSL";
-      inputs.nixpkgs.follows = "nixpkgs-old";
-    };
     nur.url = "github:nix-community/NUR";
     nix-colors.url = "github:misterio77/nix-colors";
     devenv.url = "github:cachix/devenv";
@@ -43,14 +38,12 @@
     , nixpkgs
     , nix-colors
     , nix-darwin
-    , nixpkgs-old
     , devenv
     , home-manager
     , hyprland
     , hyprpicker
     , hypr-contrib
     , nixos-hardware
-    , nixos-wsl
     , nur
     , ...
     } @ inputs:
@@ -174,29 +167,6 @@
                 }
               ];
             };
-
-        wsl = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = { inherit inputs; };
-          modules = [
-            ./modules/wsl/wsl.nix
-            nixos-wsl.nixosModules.wsl
-            nur.nixosModules.nur
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                extraSpecialArgs = { inherit inputs; };
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.akali = { ... }: {
-                  imports = [
-                    ./home/wsl.nix
-                  ];
-                };
-              };
-            }
-          ];
-        };
       };
 
       homeConfigurations = {
@@ -204,14 +174,8 @@
           extraSpecialArgs = { inherit inputs; };
           inherit pkgs;
           modules = [
+            ./overlays/default.nix
             ./home/wsl.nix
-          ];
-        };
-        yvess = home-manager.lib.homeManagerConfiguration {
-          extraSpecialArgs = { inherit inputs; };
-          inherit pkgs;
-          modules = [
-            ./home/home.nix
           ];
         };
       };
