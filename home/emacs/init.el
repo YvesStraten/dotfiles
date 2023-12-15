@@ -455,9 +455,8 @@
   :config (setq markdown-command "pandoc")
   )
 
-(use-package arduino-mode
-  :mode ("\\.ino\\'" . arduino-mode)
-  )
+(use-package platformio-mode 
+  :hook (c++-mode . (lambda () (platformio-conditionally-enable))))
 
 (use-package plantuml-mode
   :mode ("\\.plantuml\\'" . plantuml-mode)

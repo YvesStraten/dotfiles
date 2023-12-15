@@ -675,9 +675,8 @@ For quick note finding
 
 *** Arduino
 #+begin_src elisp
-  (use-package arduino-mode
-    :mode ("\\.ino\\'" . arduino-mode)
-    )
+  (use-package platformio-mode 
+    :hook (c++-mode . (lambda () (platformio-conditionally-enable))))
 #+end_src
 
 *** Plantuml
