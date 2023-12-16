@@ -1,4 +1,5 @@
-{pkgs, ...}: let
+{ pkgs, ... }:
+let
   encode = pkgs.writeShellScriptBin "encode-mp4" ''
     set -e
     origdir="./original"
@@ -63,12 +64,13 @@
 
     case $wsl in
         y ) export LD_LIBRARY_PATH="/usr/lib/wsl/lib"
-    	ffmpeg -hwaccel cuda -f concat -i mylist.txt -c:v h264_nvenc -crf 23 -s 1920x1080 "Playlist_$playnum.mp4" ;;
+    	ffmpeg -f concat -i mylist.txt -c:v copy -c:a copy -crf 23 -s 1920x1080 "Playlist_$playnum.mp4" ;;
         n )
-    	ffmpeg -hwaccel cuda -f concat -i mylist.txt -c:v h264_nvenc -crf 23 -s 1920x1080 "Playlist_$playnum.mp4" ;;
+    	ffmpeg -f concat -i mylist.txt -c:v copy -c:a copy -crf 23 -s 1920x1080 "Playlist_$playnum.mp4" ;;
     esac
   '';
-in {
+in
+{
   home.packages = [
     encode
     playlist
