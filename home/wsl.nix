@@ -1,8 +1,4 @@
-{ config
-, pkgs
-, inputs
-, ...
-}: {
+{ config, pkgs, inputs, ... }: {
   imports = [
     # Main stuff
     inputs.nix-colors.homeManagerModules.default
@@ -11,7 +7,7 @@
     ./theming.nix
 
     # Editors
-    # ./nvim/neovim.nix
+    ./nvim/neovim.nix
     ./emacs/emacs.nix
     ./tmux/tmux.nix
 
@@ -26,18 +22,15 @@
     homeDirectory = "/home/akali";
     stateVersion = "22.11"; # Please read the comment before changing.
 
-    sessionPath = [
-      "$HOME/.local/bin"
-    ];
+    sessionPath = [ "$HOME/.local/bin" ];
 
-    packages = with pkgs; [
-      ani-cli
-      openssh
-    ];
+    packages = with pkgs; [ ani-cli openssh ];
   };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+  targets.genericLinux.enable = true;
+
   programs.git = {
     enable = true;
     userName = "YvesStraten";

@@ -7,12 +7,8 @@
         pygments
       ]))
 
-    (pkgs.texlive.combine {
-      inherit
-        (pkgs.texlive)
-        scheme-full
-        ;
-    })
+    texlive.combined.scheme-full
+
 
     ripgrep
     fd
