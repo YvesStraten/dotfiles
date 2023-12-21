@@ -171,8 +171,6 @@ require("lazy").setup({
 				"javascript",
 				"typescript",
 			},
-			sync_install = true,
-			auto_install = true,
 			ignore_install = {
 				"latex",
 			},
