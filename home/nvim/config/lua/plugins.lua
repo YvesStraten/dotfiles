@@ -74,33 +74,9 @@ require("lazy").setup({
 	},
 
 	{
-		"neovim/nvim-lspconfig",
-		dependencies = {
-			{
-				"nvimdev/lspsaga.nvim",
-				dependencies = {
-					"nvim-treesitter/nvim-treesitter",
-					"nvim-tree/nvim-web-devicons",
-				},
-				config = function()
-					require("lspsaga").setup({
-						lightbulb = {
-							sign = false,
-						},
-					})
-				end,
-			},
-
-			{
-				"nvimdev/guard.nvim",
-				dependencies = {
-					"nvimdev/guard-collection",
-				},
-				config = function()
-					require("configs.lsp.guard")
-				end,
-			},
-		},
+		"VonHeikemen/lsp-zero.nvim",
+		branch = "v3.x",
+		dependencies = { "neovim/nvim-lspconfig" },
 		event = "BufEnter",
 		config = function()
 			require("configs.lsp.lspconfig")
@@ -116,23 +92,36 @@ require("lazy").setup({
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
-			"L3MON4D3/Luasnip",
+			-- "L3MON4D3/Luasnip",
 			"saadparwaiz1/cmp_luasnip",
+			"quangnguyen30192/cmp-nvim-ultisnips",
+			{
+				"SirVer/ultisnips",
+				dependencies = {
+					"YvesStraten/vim-snippets",
+					config = function()
+
+					end
+				},
+				config = function()
+
+				end
+			},
 		},
 		config = function()
 			require("configs.cmp.cmp")
 		end,
 	},
 
-	{
-		"L3MON4D3/Luasnip",
-		dependencies = {
-			"rafamadriz/friendly-snippets",
-		},
-		config = function()
-			require("luasnip.loaders.from_vscode").lazy_load()
-		end,
-	},
+	-- {
+	-- 	"L3MON4D3/Luasnip",
+	-- 	dependencies = {
+	-- 		"rafamadriz/friendly-snippets",
+	-- 	},
+	-- 	config = function()
+	-- 		require("luasnip.loaders.from_vscode").lazy_load()
+	-- 	end,
+	-- },
 
 	{
 		"nvim-neo-tree/neo-tree.nvim",
@@ -225,10 +214,10 @@ require("lazy").setup({
 		"NeogitOrg/neogit",
 		event = "VeryLazy",
 		dependencies = {
-			"nvim-lua/plenary.nvim", -- required
+			"nvim-lua/plenary.nvim",      -- required
 			"nvim-telescope/telescope.nvim", -- optional
-			"sindrets/diffview.nvim", -- optional
-			"ibhagwan/fzf-lua", -- optional
+			"sindrets/diffview.nvim",     -- optional
+			"ibhagwan/fzf-lua",           -- optional
 		},
 		config = true,
 	},

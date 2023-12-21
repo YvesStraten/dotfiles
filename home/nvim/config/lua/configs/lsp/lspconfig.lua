@@ -1,20 +1,10 @@
+local lsp_zero = require("lsp-zero")
 local lspconfig = require("lspconfig")
 
-lspconfig.tsserver.setup {
-}
+lsp_zero.on_attach(function(client, bufnr)
+	lsp_zero.default_keymaps({
+		buffer = bufnr,
+	})
+end)
 
-lspconfig.lua_ls.setup {
-}
-
-lspconfig.texlab.setup {
-}
-
-lspconfig.clangd.setup {
-}
-
-lspconfig.omnisharp.setup {
-	cmd = { "OmniSharp" }
-}
-
-lspconfig.pyright.setup {
-}
+lspconfig.lua_ls.setup({})
