@@ -38,6 +38,15 @@ require("lazy").setup({
 	},
 
 	{
+		"akinsho/toggleterm.nvim",
+		opts = {
+			size = 20,
+			start_in_insert = true,
+			direction = "float",
+		},
+	},
+
+	{
 		"windwp/nvim-autopairs",
 		event = "InsertEnter",
 		opts = {},
@@ -263,17 +272,6 @@ require("lazy").setup({
 			},
 			globalstatus = true,
 		},
-	},
-
-	{
-		"nvimdev/dashboard-nvim",
-		event = "VimEnter",
-		dependencies = {
-			"nvim-tree/nvim-web-devicons",
-		},
-		config = function()
-			require("configs.dashboard.dashboard")
-		end,
 	},
 
 	{
