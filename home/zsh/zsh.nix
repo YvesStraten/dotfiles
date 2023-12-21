@@ -24,17 +24,15 @@
 
     oh-my-zsh = {
       enable = true;
-      plugins = [
-        "git"
-        "common-aliases"
-      ];
+      plugins = [ "git" "common-aliases" ];
     };
   };
 
   programs.bash = {
     enable = true;
     profileExtra = ''
-      export XDG_DATA_DIRS=\"$HOME/.nix-profile/share:$XDG_DATA_DIRS\"
+            export XDG_DATA_DIRS=\"$HOME/.nix-profile/share:$XDG_DATA_DIRS\"
+      			. ~/.nix-profile/etc/profile.d/nix.sh
     '';
   };
 
