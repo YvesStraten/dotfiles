@@ -10,6 +10,25 @@ require("lazy").setup({
 	},
 
 	{
+		"ThePrimeagen/harpoon",
+		branch = "harpoon2",
+		dependencies = {
+			"nvim-lua/plenary.nvim"
+		},
+		config = function()
+			require("configs.harpoon")
+		end
+	},
+
+	{
+		"mbbill/undotree",
+		event = "VeryLazy",
+		config = function()
+
+		end
+	},
+
+	{
 		"VonHeikemen/fine-cmdline.nvim",
 		event = "VeryLazy",
 		keys = {
@@ -76,7 +95,12 @@ require("lazy").setup({
 	{
 		"VonHeikemen/lsp-zero.nvim",
 		branch = "v3.x",
-		dependencies = { "neovim/nvim-lspconfig" },
+		dependencies = { "neovim/nvim-lspconfig", {
+			"nvim-lua/lsp-status.nvim",
+			config = function()
+
+			end
+		} },
 		event = "BufEnter",
 		config = function()
 			require("configs.lsp.lspconfig")
@@ -248,6 +272,14 @@ require("lazy").setup({
 	},
 
 	{
+		"kylechui/nvim-surround",
+		event = "VeryLazy",
+		config = function()
+			require("nvim-surround").setup()
+		end
+	},
+
+	{
 		"nvim-lualine/lualine.nvim",
 		event = "VeryLazy",
 		dependencies = {
@@ -255,7 +287,20 @@ require("lazy").setup({
 		},
 		opts = {
 			sections = {
-				lualine_x = { "fileformat" },
+				lualine_a = { 'mode' },
+				lualine_b = { 'branch', 'diff', 'diagnostics' },
+				lualine_c = { 'filename', "os.date('%a')" },
+				lualine_x = { 'filetype' },
+				lualine_y = { 'progress' },
+				lualine_z = { 'location' }
+			},
+			inactive_sections = {
+				lualine_a = {},
+				lualine_b = {},
+				lualine_c = {},
+				lualine_x = { "encoding", "fileformat" },
+				lualine_y = {},
+				lualine_z = {}
 			},
 			globalstatus = true,
 		},
@@ -274,12 +319,6 @@ require("lazy").setup({
 			"LanguageToolCheck",
 		},
 		config = function() end,
-	},
-
-	{
-		"folke/flash.nvim",
-		event = "VeryLazy",
-		opts = {},
 	},
 }, {
 	install = {
