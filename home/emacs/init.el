@@ -706,8 +706,8 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 
-(set-frame-parameter nil 'alpha-background 70) ; For current frame
-(add-to-list 'default-frame-alist '(alpha-background . 70)) ; For all new frames henceforth
+(set-frame-parameter nil 'alpha-background 100) ; For current frame
+(add-to-list 'default-frame-alist '(alpha-background . 100)) ; For all new frames henceforth
 
 (use-package centered-window
   :defer

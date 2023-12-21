@@ -989,9 +989,12 @@ Attaching modes as Emacs does not seem to realize that they do exist.
 
 ** Transparent emacs
 #+begin_src elisp
-  (set-frame-parameter nil 'alpha-background 70) ; For current frame
-  (add-to-list 'default-frame-alist '(alpha-background . 70)) ; For all new frames henceforth
+  (set-frame-parameter nil 'alpha-background 100) ; For current frame
+  (add-to-list 'default-frame-alist '(alpha-background . 100)) ; For all new frames henceforth
 #+end_src
+
+#+RESULTS:
+: ((alpha-background . 100) (alpha-background . 70) (font . JetBrainsMono NF-15) (vertical-scroll-bars))
 
 ** Text
 *** Centered
