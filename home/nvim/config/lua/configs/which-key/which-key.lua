@@ -1,6 +1,24 @@
 local wk = require("which-key")
+local harpoon = require("harpoon")
+
+harpoon:setup()
+
 wk.register({
 	["<leader>"] = {
+		a = {
+			function()
+				harpoon:list():append()
+			end,
+			"Harpoon append"
+		},
+		h = {
+			function()
+				harpoon.ui:toggle_quick_menu(harpoon:list())
+			end,
+			"Harpoon list"
+		},
+
+
 		f = {
 			name = "Telescope",
 			f = { ":Telescope find_files<cr>", "Find file" },
@@ -33,4 +51,26 @@ wk.register({
 	["<tab>"] = { ":BufferNext<cr>", "Next Buffer" },
 	["<S-tab>"] = { ":BufferPrevious<cr>", "Previous Buffer" },
 	["<esc>"] = { ":nohlsearch<cr>", "Wipes previous search" },
+	["<C-t>"] = { function()
+		harpoon:list():select(1)
+	end, "1" },
+
+	["<C-y>"] = { function()
+		harpoon:list():select(2)
+	end, "2" },
+
+	["<C-p>"] = {
+		function()
+			harpoon:list():select(3)
+		end,
+		"3"
+	},
+
+	["<C-s>"] = {
+		function()
+			harpoon:list():select(4)
+		end,
+		"4"
+	},
+
 })
