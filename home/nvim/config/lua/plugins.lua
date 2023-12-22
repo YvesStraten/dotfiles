@@ -15,9 +15,6 @@ require("lazy").setup({
 		dependencies = {
 			"nvim-lua/plenary.nvim"
 		},
-		config = function()
-			require("configs.harpoon")
-		end
 	},
 
 	{
@@ -116,6 +113,7 @@ require("lazy").setup({
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-nvim-lua",
 			-- "L3MON4D3/Luasnip",
 			"saadparwaiz1/cmp_luasnip",
 			"quangnguyen30192/cmp-nvim-ultisnips",
@@ -311,15 +309,7 @@ require("lazy").setup({
 		ft = "markdown",
 		build = "cd app && yarn install",
 		config = function() end,
-	},
-
-	{
-		"dpelle/vim-LanguageTool",
-		cmd = {
-			"LanguageToolCheck",
-		},
-		config = function() end,
-	},
+	}
 }, {
 	install = {
 		colorscheme = { colorscheme },

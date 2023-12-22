@@ -25,14 +25,13 @@ cmp.setup({
 	},
 	formatting = {
 		format = lspkind.cmp_format({
-			mode = "symbol",
-			maxwidth = 50,
-			ellipsis_char = "...",
-
-			---@diagnostic disable-next-line: unused-local
-			before = function(entry, vim_item)
-				return vim_item
-			end,
+			mode = "symbol_text",
+			menu = ({
+				nvim_lsp = "[LSP]",
+				ultisnips = "[US]",
+				path = "[Path]",
+				buffer = "[Buffer]"
+			})
 		}),
 	},
 	mapping = cmp.mapping.preset.insert({
@@ -82,6 +81,7 @@ cmp.setup({
 		{ name = "nvim_lsp" },
 		{ name = "buffer" },
 		{ name = "path" },
+		{ name = "nvim_lua"},
 		-- { name = 'vsnip' }, -- For vsnip users.
 		-- { name = "luasnip" }, -- For luasnip users.
 		{ name = 'ultisnips' }, -- For ultisnips users.
