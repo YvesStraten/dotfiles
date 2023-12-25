@@ -40,6 +40,7 @@
       (with pkgs; [
         tesseract
         imagemagick
+				inkscape
 
         gimp
         htop

@@ -4,8 +4,8 @@ alt - j : yabai -m window --focus south
 alt - k : yabai -m window --focus north
 alt - l : yabai -m window --focus east
 
-alt - return : open -na Alacritty 
-alt - e : open -a Finder 
+alt - return : open -na Alacritty
+alt - n : open -a Finder
 alt - b : open -na Firefox
 
 # move window
