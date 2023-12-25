@@ -52,7 +52,6 @@ in {
 
   home.file.".emacs.d/marivector.png" = {source = ./marivector.png;};
   home.file.".emacs.d/init.el" = {source = ./init.el;};
-  home.file.".emacs.d/early-init.el" = {source = ./early-init.el;};
 
   home.packages = with pkgs; [
     openjdk17

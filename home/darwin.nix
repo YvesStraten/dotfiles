@@ -14,7 +14,6 @@
 
     # Editors
     ./nvim/neovim.nix
-    ./emacs/emacs.nix
     ./vscode/vscode.nix
 
     ./alacritty/alacritty.nix

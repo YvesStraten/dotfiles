@@ -1,50 +1,14 @@
-(defvar elpaca-installer-version 0.5)
-(defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
-(defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
-(defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
-(defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
-                              :ref nil
-                              :files (:defaults (:exclude "extensions"))
-                              :build (:not elpaca--activate-package)))
-(let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
-       (build (expand-file-name "elpaca/" elpaca-builds-directory))
-       (order (cdr elpaca-order))
-       (default-directory repo))
-  (add-to-list 'load-path (if (file-exists-p build) build repo))
-  (unless (file-exists-p repo)
-    (make-directory repo t)
-    (when (< emacs-major-version 28) (require 'subr-x))
-    (condition-case-unless-debug err
-        (if-let ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
-                 ((zerop (call-process "git" nil buffer t "clone"
-                                       (plist-get order :repo) repo)))
-                 ((zerop (call-process "git" nil buffer t "checkout"
-                                       (or (plist-get order :ref) "--"))))
-                 (emacs (concat invocation-directory invocation-name))
-                 ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
-                                       "--eval" "(byte-recompile-directory \".\" 0 'force)")))
-                 ((require 'elpaca))
-                 ((elpaca-generate-autoloads "elpaca" repo)))
-            (progn (message "%s" (buffer-string)) (kill-buffer buffer))
-          (error "%s" (with-current-buffer buffer (buffer-string))))
-      ((error) (warn "%s" err) (delete-directory repo 'recursive))))
-  (unless (require 'elpaca-autoloads nil t)
-    (require 'elpaca)
-    (elpaca-generate-autoloads "elpaca" repo)
-    (load "./elpaca-autoloads")))
-(add-hook 'after-init-hook #'elpaca-process-queues)
-(elpaca `(,@elpaca-order))
+(require 'package)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+	(add-to-list 'package-archives '("gnu"   . "https://elpa.gnu.org/packages/"))
+(package-initialize)
 
-;; Install use-package support
-(elpaca elpaca-use-package
-  ;; Enable :elpaca use-package keyword.
-  (elpaca-use-package-mode)
-  ;; Assume :elpaca t unless otherwise specified.
-  (setq elpaca-use-package-by-default t
-        use-package-always-defer t))
-
-;; Block until current queue processed.
-(elpaca-wait)
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(eval-and-compile
+  (setq use-package-always-defer t
+	use-package-always-ensure t))
 
 (defun reload-init-file ()
   "Reload the `init.el` configuration file."
@@ -265,7 +229,6 @@
 (use-package magit
   :commands magit
   )
-(elpaca-wait)
 
 (use-package neotree
   :defer
@@ -284,7 +247,6 @@
   :defer 1
   :config
   (tmux-pane-mode)
-  (elpaca-wait)
   )
 
 (use-package centaur-tabs
@@ -448,7 +410,7 @@
 
 (use-package prisma-mode
   :mode "\\.prisma\\'"
-  :elpaca (:host github :repo "pimeys/emacs-prisma-mode" :branch "main"))
+  :straight (:host github :repo "pimeys/emacs-prisma-mode" :branch "main"))
 
 (use-package markdown-mode
   :mode ("README\\.md\\'" . gfm-mode)
@@ -467,7 +429,7 @@
   )
 
 (use-package typescript-ts-mode
-  :elpaca nil
+  :straight nil
   :mode (("\\.ts\\'" . typescript-ts-mode)
          ("\\.tsx\\'" . tsx-ts-mode)))
 
@@ -648,12 +610,12 @@
   (doom-themes-neotree-config)
   (doom-themes-org-config))
 
-(add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-15"))
+(add-to-list 'default-frame-alist '(font . "JetBrainsMono Nerd Font-15"))
 (setq display-line-numbers-type 'relative 
       display-line-numbers-current-absolute t)
 
 (use-package display-line-numbers-mode
-  :elpaca nil
+  :straight nil
   :defer
   :hook (prog-mode . display-line-numbers-mode)
   :config
@@ -697,7 +659,7 @@
   (beacon-mode 1))
 
 (use-package hl-line
-  :elpaca nil
+  :straight nil
   :hook (prog-mode . hl-line-mode)
   (org-mode . hl-line-mode)
   )
@@ -706,8 +668,8 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 
-(set-frame-parameter nil 'alpha-background 100) ; For current frame
-(add-to-list 'default-frame-alist '(alpha-background . 100)) ; For all new frames henceforth
+(set-frame-parameter nil 'alpha-background 85) ; For current frame
+(add-to-list 'default-frame-alist '(alpha-background . 85)) ; For all new frames henceforth
 
 (use-package centered-window
   :defer
@@ -715,7 +677,7 @@
   (org-mode . centered-window-mode))
 
 (use-package visual-line-mode
-  :elpaca nil
+  :straight nil
   :hook (org-mode . visual-line-mode))
 
 (use-package langtool
@@ -733,7 +695,7 @@
 		     (executable-find "languagetool")))))))  ; for nixpkgs.languagetool
 
 (use-package flyspell-mode
-  :elpaca nil
+  :straight nil
   :hook (org-mode . flyspell-mode)
   )
 
