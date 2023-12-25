@@ -41,6 +41,7 @@
         tesseract
         imagemagick
 				inkscape
+				yazi
 
         gimp
         htop
