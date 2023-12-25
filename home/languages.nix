@@ -9,7 +9,6 @@
 
     texlive.combined.scheme-full
 
-
     ripgrep
     fd
     fzf

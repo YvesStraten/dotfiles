@@ -6,4 +6,5 @@ in {
   nvChad = callPackage ./nvchad.nix {};
   whitesur-cursors = callPackage ./whitesur-cursors.nix {};
   wall-switch = callPackage ./wall-switch.nix {};
+	drive = callPackage ./drive.nix {};
 }

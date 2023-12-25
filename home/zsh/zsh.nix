@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
@@ -9,6 +9,7 @@
       updatenix = "nix flake update ~/dotfiles";
       # upgradenix = "sudo nixos-rebuild switch --flake ~/dotfiles#nitro";
       updatesymlinks = "home-manager switch --flake ~/dotfiles#akali";
+      rebuild = "darwin-rebuild switch --flake ~/dotfiles --impure";
       mux = "tmuxinator";
       web = "nix develop ~/dotfiles#web --impure";
       c = "nix develop ~/dotfiles#c --impure";
@@ -24,15 +25,15 @@
 
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" "common-aliases" ];
+      plugins = ["git" "common-aliases"];
     };
   };
 
   programs.bash = {
     enable = true;
     profileExtra = ''
-            export XDG_DATA_DIRS=\"$HOME/.nix-profile/share:$XDG_DATA_DIRS\"
-      			. ~/.nix-profile/etc/profile.d/nix.sh
+         export XDG_DATA_DIRS=\"$HOME/.nix-profile/share:$XDG_DATA_DIRS\"
+      . ~/.nix-profile/etc/profile.d/nix.sh
     '';
   };
 

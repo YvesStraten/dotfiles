@@ -10,6 +10,7 @@
       url = "github:LnL7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     hyprland.url = "github:hyprwm/hyprland";
     hyprpicker.url = "github:hyprwm/hyprpicker";
@@ -22,121 +23,133 @@
 
   # Add cachix to rebuilds faster
   nixConfig = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = ["nix-command" "flakes"];
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
     ];
-    extra-substituters =
-      [ "https://devenv.cachix.org" "https://nix-community.cachix.org" ];
+    extra-substituters = ["https://devenv.cachix.org" "https://nix-community.cachix.org"];
   };
 
-  outputs = { self, nixpkgs, nix-colors, nix-darwin, devenv, home-manager
-    , hyprland, hyprpicker, hypr-contrib, nixos-hardware, nur, ... }@inputs:
-    let pkgs = nixpkgs.legacyPackages."x86_64-linux";
-    in {
-      packages."x86_64-linux" = import ./packages/default.nix { inherit pkgs; };
+  outputs = {
+    self,
+    nixpkgs,
+    nix-colors,
+    nix-darwin,
+    devenv,
+    home-manager,
+    hyprland,
+    hyprpicker,
+    hypr-contrib,
+    nixos-hardware,
+    nur,
+    ...
+  } @ inputs: let
+    pkgs = nixpkgs.legacyPackages."x86_64-linux";
+  in {
+    packages."x86_64-linux" = import ./packages/default.nix {inherit pkgs;};
 
-      devShells."x86_64-linux" = {
-        csharp = devenv.lib.mkShell {
-          inherit inputs pkgs;
-          modules = [ ({ pkgs, ... }: { languages.dotnet.enable = true; }) ];
-        };
-
-        web = devenv.lib.mkShell {
-          inherit inputs pkgs;
-          modules = [
-            ({ pkgs, ... }: {
-              languages = {
-                typescript.enable = true;
-                javascript.enable = true;
-              };
-
-              packages = with pkgs; [ sqlite mongosh ];
-            })
-          ];
-        };
-
-        document = devenv.lib.mkShell {
-          inherit inputs pkgs;
-          modules = [
-            ({ pkgs, ... }: {
-              languages.texlive.enable = true;
-              languages.javascript.enable = true;
-            })
-          ];
-        };
-
-        c = devenv.lib.mkShell {
-          inherit inputs pkgs;
-          modules = [
-            ({ pkgs, ... }: {
-              languages = {
-                c.enable = true;
-                cplusplus.enable = true;
-                rust.enable = true;
-              };
-            })
-          ];
-        };
-
-        arduino = devenv.lib.mkShell {
-          inherit inputs pkgs;
-          modules = [
-            ({ pkgs, ... }: { packages = with pkgs; [ arduino arduino-cli ]; })
-          ];
-        };
+    devShells."x86_64-linux" = {
+      csharp = devenv.lib.mkShell {
+        inherit inputs pkgs;
+        modules = [({pkgs, ...}: {languages.dotnet.enable = true;})];
       };
 
-      darwinConfigurations = {
-        "Macbook" = nix-darwin.lib.darwinSystem {
-          system = "aarch64-darwin";
-          specialArgs = { inherit inputs; };
-          modules = [
-            ./modules/darwin/configuration.nix
-            home-manager.darwinModules.home-manager
-            {
-              home-manager = {
-                extraSpecialArgs = { inherit inputs; };
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.yvess = { ... }: { imports = [ ./home/darwin.nix ]; };
-              };
-            }
-          ];
-        };
+      web = devenv.lib.mkShell {
+        inherit inputs pkgs;
+        modules = [
+          ({pkgs, ...}: {
+            languages = {
+              typescript.enable = true;
+              javascript.enable = true;
+            };
+
+            packages = with pkgs; [sqlite mongosh];
+          })
+        ];
       };
 
-      nixosConfigurations = {
-        nitro = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = { inherit inputs; };
-          modules = [
-            nur.nixosModules.nur
-            ./hosts/nixos/hardware-configuration.nix
-            ./modules/default.nix
-            nixos-hardware.nixosModules.common-pc-laptop-ssd
-            nixos-hardware.nixosModules.common-pc-laptop
-
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                extraSpecialArgs = { inherit inputs; };
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.yvess = { ... }: { imports = [ ./home/home.nix ]; };
-              };
-            }
-          ];
-        };
+      document = devenv.lib.mkShell {
+        inherit inputs pkgs;
+        modules = [
+          ({pkgs, ...}: {
+            languages.texlive.enable = true;
+            languages.javascript.enable = true;
+          })
+        ];
       };
 
-      homeConfigurations = {
-        akali = home-manager.lib.homeManagerConfiguration {
-          extraSpecialArgs = { inherit inputs; };
-          inherit pkgs;
-          modules = [ ./home/wsl.nix ./overlays/default.nix ];
-        };
+      c = devenv.lib.mkShell {
+        inherit inputs pkgs;
+        modules = [
+          ({pkgs, ...}: {
+            languages = {
+              c.enable = true;
+              cplusplus.enable = true;
+              rust.enable = true;
+            };
+          })
+        ];
+      };
+
+      arduino = devenv.lib.mkShell {
+        inherit inputs pkgs;
+        modules = [
+          ({pkgs, ...}: {packages = with pkgs; [arduino arduino-cli];})
+        ];
       };
     };
+
+    darwinConfigurations = {
+      "shaco" = nix-darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        specialArgs = {inherit inputs;};
+        modules = [
+          ./modules/darwin/configuration.nix
+          ./overlays/default.nix
+          home-manager.darwinModules.home-manager
+          {
+            home-manager = {
+              extraSpecialArgs = {inherit inputs;};
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.yvess = {...}: {imports = [./home/darwin.nix];};
+            };
+          }
+        ];
+      };
+    };
+
+    nixosConfigurations = {
+      nitro = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {inherit inputs;};
+        modules = [
+          nur.nixosModules.nur
+          ./hosts/nixos/hardware-configuration.nix
+          ./modules/default.nix
+          nixos-hardware.nixosModules.common-pc-laptop-ssd
+          nixos-hardware.nixosModules.common-pc-laptop
+
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              extraSpecialArgs = {inherit inputs;};
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.yvess = {...}: {imports = [./home/home.nix];};
+            };
+          }
+        ];
+      };
+    };
+
+    homeConfigurations = {
+      akali = home-manager.lib.homeManagerConfiguration {
+        extraSpecialArgs = {inherit inputs;};
+        inherit pkgs;
+        modules = [./home/wsl.nix ./overlays/default.nix];
+      };
+    };
+  };
 }

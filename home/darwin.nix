@@ -1,19 +1,20 @@
-{ config
-, pkgs
-, inputs
-, ...
+{
+  config,
+  pkgs,
+  inputs,
+  ...
 }: {
   imports = [
     inputs.nix-colors.homeManagerModules.default
     # Main stuff
     ./languages.nix
     ./utilities.nix
-    ./theming.nix
+    ./theming-darwin.nix
     ./bin/default.nix
 
     # Editors
-    # ./nvim/neovim.nix
-    ./emacs/emacs.nix
+    ./nvim/neovim.nix
+    # ./emacs/emacs.nix
     ./vscode/vscode.nix
 
     ./alacritty/alacritty.nix
@@ -32,10 +33,10 @@
 
   home = {
     username = "yvess";
-    homeDirectory = "/home/yvess";
+    homeDirectory = "/Users/yvess";
     stateVersion = "22.11"; # Please read the comment before changing.
 
-    sessionPath = [ "$HOME/.local/bin" ];
+    sessionPath = ["$HOME/.local/bin"];
   };
 
   # Let Home Manager install and manage itself.
