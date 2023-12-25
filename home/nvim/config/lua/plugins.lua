@@ -25,21 +25,21 @@ require("lazy").setup({
 		end
 	},
 
-	{
-		"VonHeikemen/fine-cmdline.nvim",
-		event = "VeryLazy",
-		keys = {
-			{
-				":",
-				"<cmd>FineCmdline<cr>",
-				desc = "Vim cmd",
-			},
-		},
-		dependencies = {
-			"MunifTanjim/nui.nvim",
-		},
-		config = function() end,
-	},
+	-- {
+	-- 	"VonHeikemen/fine-cmdline.nvim",
+	-- 	event = "VeryLazy",
+	-- 	keys = {
+	-- 		{
+	-- 			":",
+	-- 			"<cmd>FineCmdline<cr>",
+	-- 			desc = "Vim cmd",
+	-- 		},
+	-- 	},
+	-- 	dependencies = {
+	-- 		"MunifTanjim/nui.nvim",
+	-- 	},
+	-- 	config = function() end,
+	-- },
 
 	{
 		"folke/which-key.nvim",
