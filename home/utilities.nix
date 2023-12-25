@@ -42,6 +42,9 @@
         imagemagick
 				inkscape
 				yazi
+				spotify
+				discord
+				iina
 
         gimp
         htop
