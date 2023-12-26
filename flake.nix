@@ -46,8 +46,11 @@
     ...
   } @ inputs: let
     pkgs = nixpkgs.legacyPackages."x86_64-linux";
+		pkgs-darwin = nixpkgs.legacyPackages."aarch64-darwin";
   in {
     packages."x86_64-linux" = import ./packages/default.nix {inherit pkgs;};
+
+		packages."aarch64-darwin" = import ./packages/default-darwin.nix {inherit pkgs-darwin;};
 
     devShells."x86_64-linux" = {
       csharp = devenv.lib.mkShell {
