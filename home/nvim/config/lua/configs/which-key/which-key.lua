@@ -37,6 +37,7 @@ wk.register({
 			r = { ":Lspsaga rename<cr>", "Rename definition" },
 			p = { ":Lspsaga peek_definition<cr>", "Peek definition" },
 			a = { ":Lspsaga code_action<cr>", "Code action" },
+			f = { ":LspZeroFormat<cr>", "Format"};
 		},
 
 		g = {
@@ -73,4 +74,8 @@ wk.register({
 		"4"
 	},
 
+	["<C-o>"] = {
+		":Ouroboros<cr>",
+		"Change to header or implementation"
+	}
 })

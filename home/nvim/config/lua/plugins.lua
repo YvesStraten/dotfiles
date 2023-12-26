@@ -18,6 +18,22 @@ require("lazy").setup({
 	},
 
 	{
+		"jakemason/ouroboros",
+		dependencies = {
+			"nvim-lua/plenary.nvim"
+		},
+		ft = {
+			"c",
+			"cpp",
+			"h",
+			"hpp"
+		},
+		config = function ()
+			
+		end
+	},
+
+	{
 		"mbbill/undotree",
 		event = "VeryLazy",
 		config = function()
@@ -218,6 +234,13 @@ require("lazy").setup({
 
 	{
 		"lervag/vimtex",
+		tag = "v1.6",
+		dependencies = {
+			"KeitaNakamura/tex-conceal.vim",
+			config = function()
+
+			end
+		},
 		ft = "tex",
 		config = function()
 			require("configs.vimtex.vimtex")
@@ -233,15 +256,10 @@ require("lazy").setup({
 	},
 
 	{
-		"NeogitOrg/neogit",
+		"tpope/vim-fugitive",
 		event = "VeryLazy",
-		dependencies = {
-			"nvim-lua/plenary.nvim",      -- required
-			"nvim-telescope/telescope.nvim", -- optional
-			"sindrets/diffview.nvim",     -- optional
-			"ibhagwan/fzf-lua",           -- optional
-		},
-		config = true,
+		config = function ()
+		end
 	},
 
 	{
