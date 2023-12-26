@@ -2,6 +2,8 @@
 stdenv.mkDerivation rec {
 name = "Skim";
 version = "1.6.21";
+src = "./Skim-1.6.21.dmg";
+
 src = fetchurl {
 url = "https://udomain.dl.sourceforge.net/project/skim-app/Skim/Skim-${version}/Skim-${version}.dmg";
 };
@@ -11,8 +13,8 @@ phases = ["unpackPhase" "installPhase"];
 buildInputs = [ undmg ];
 
 installPhase = ''
-mkdir -p $out 
-cp -R $src/* $out
+undmg ${src}
+ls
 '';
 }
 
