@@ -41,7 +41,8 @@ wk.register({
 		},
 
 		g = {
-			o = { ":Neogit<cr>", "Neogit" },
+			o = { ":Git<cr>", "Fugitive" },
+			p = { ":Git push<cr>", "Git push"}
 		},
 		t = {
 			l = { ":VimtexCompile<cr>", "Compiled latex document" },
