@@ -9,18 +9,6 @@
 
     texlive.combined.scheme-full
 
-    ripgrep
-    fd
-    fzf
-
-    # Cpp
-    gcc
-    cmake
-
-    # C#
-    dotnet-sdk
-    mono
-
     unzip
     sshfs
     ffmpeg
