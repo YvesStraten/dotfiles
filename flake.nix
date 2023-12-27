@@ -45,15 +45,16 @@
     , ...
     } @ inputs:
     let
+      forAllSystems = function:
+        nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-darwin" ] (system: function nixpkgs.legacyPackages.${system});
       pkgs = nixpkgs.legacyPackages."x86_64-linux";
       pkgs-darwin = nixpkgs.legacyPackages."aarch64-darwin";
     in
     {
-      packages."x86_64-linux" = import ./packages/default.nix { inherit pkgs; };
+      ## TODO: split packages by platform
+      packages = forAllSystems (pkgs: import ./packages/default.nix { inherit pkgs; });
 
-      packages."aarch64-darwin" = import ./packages/default-darwin.nix { inherit pkgs-darwin; };
-
-      devShells."aarch64-darwin" = {
+      devShells = forAllSystems (pkgs: {
         csharp = devenv.lib.mkShell {
           inherit inputs pkgs;
           modules = [ ({ pkgs, ... }: { languages.dotnet.enable = true; }) ];
@@ -78,7 +79,6 @@
           modules = [
             ({ pkgs, ... }: {
               languages.texlive.enable = true;
-              languages.javascript.enable = true;
             })
           ];
         };
@@ -95,14 +95,7 @@
             })
           ];
         };
-
-        arduino = devenv.lib.mkShell {
-          inherit inputs pkgs;
-          modules = [
-            ({ pkgs, ... }: { packages = with pkgs; [ arduino arduino-cli ]; })
-          ];
-        };
-      };
+      });
 
       darwinConfigurations = {
         "shaco" = nix-darwin.lib.darwinSystem {
