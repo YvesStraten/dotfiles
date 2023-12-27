@@ -191,23 +191,34 @@ require("lazy").setup({
 
 	{
 		"nvim-treesitter/nvim-treesitter",
+		dependencies = {
+			"windwp/nvim-ts-autotag",
+			config = function()
+				require("nvim-ts-autotag").setup()
+			end,
+		},
 		lazy = false,
 		cmd = {
 			"TSInstall",
 			"TSUpdate",
 		},
-		opts = {
-			ensure = {
-				"c",
-				"lua",
-				"cpp",
-				"javascript",
-				"typescript",
-			},
-			ignore_install = {
-				"latex",
-			},
-		},
+		config = function()
+			require("nvim-treesitter.configs").setup({
+				autotag = {
+					enable = true,
+				},
+				ensure = {
+					"c",
+					"lua",
+					"cpp",
+					"javascript",
+					"typescript",
+				},
+				ignore_install = {
+					"latex",
+				},
+			})
+		end,
 	},
 
 	{
