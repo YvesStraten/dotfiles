@@ -30,5 +30,6 @@ stdenv.mkDerivation rec {
     license = licenses.bsd0;
     mainProgram = "Skim.app";
     maintainers = with maintainers; [ YvesStraten ];
+    platforms = [ "x86_64-darwin" "aarch64-darwin" ];
   };
 }
