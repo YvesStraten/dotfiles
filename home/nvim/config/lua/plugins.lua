@@ -1,10 +1,14 @@
-local colorscheme = "dracula"
+local colorscheme = "gruvbox"
 
 require("lazy").setup({
 	{
-		"Mofiqul/dracula.nvim",
-		lazy = false,
-		init = function()
+		"ellisonleao/gruvbox.nvim",
+		priority = 1000,
+		config = function()
+			require("gruvbox").setup({
+				transparent_mode = true,
+			})
+
 			vim.cmd("colorscheme " .. colorscheme)
 		end,
 	},
@@ -13,32 +17,28 @@ require("lazy").setup({
 		"ThePrimeagen/harpoon",
 		branch = "harpoon2",
 		dependencies = {
-			"nvim-lua/plenary.nvim"
+			"nvim-lua/plenary.nvim",
 		},
 	},
 
 	{
 		"jakemason/ouroboros",
 		dependencies = {
-			"nvim-lua/plenary.nvim"
+			"nvim-lua/plenary.nvim",
 		},
 		ft = {
 			"c",
 			"cpp",
 			"h",
-			"hpp"
+			"hpp",
 		},
-		config = function ()
-			
-		end
+		config = function() end,
 	},
 
 	{
 		"mbbill/undotree",
 		event = "VeryLazy",
-		config = function()
-
-		end
+		config = function() end,
 	},
 
 	-- {
@@ -108,20 +108,22 @@ require("lazy").setup({
 	{
 		"VonHeikemen/lsp-zero.nvim",
 		branch = "v3.x",
-		dependencies = { "neovim/nvim-lspconfig", {
-			"nvim-lua/lsp-status.nvim",
-			config = function()
-
-			end
-		}, {
-			"nvimtools/none-ls.nvim",
-			dependencies = {
-				"nvim-lua/plenary.nvim"
+		dependencies = {
+			"neovim/nvim-lspconfig",
+			{
+				"nvim-lua/lsp-status.nvim",
+				config = function() end,
 			},
-			config = function ()
-				require("configs.lsp.none_ls")
-			end
-		} },
+			{
+				"nvimtools/none-ls.nvim",
+				dependencies = {
+					"nvim-lua/plenary.nvim",
+				},
+				config = function()
+					require("configs.lsp.none_ls")
+				end,
+			},
+		},
 		event = "BufEnter",
 		config = function()
 			require("configs.lsp.lspconfig")
@@ -145,13 +147,9 @@ require("lazy").setup({
 				"SirVer/ultisnips",
 				dependencies = {
 					"YvesStraten/vim-snippets",
-					config = function()
-
-					end
+					config = function() end,
 				},
-				config = function()
-
-				end
+				config = function() end,
 			},
 		},
 		config = function()
@@ -245,9 +243,7 @@ require("lazy").setup({
 		tag = "v1.6",
 		dependencies = {
 			"KeitaNakamura/tex-conceal.vim",
-			config = function()
-
-			end
+			config = function() end,
 		},
 		ft = "tex",
 		config = function()
@@ -266,8 +262,7 @@ require("lazy").setup({
 	{
 		"tpope/vim-fugitive",
 		event = "VeryLazy",
-		config = function ()
-		end
+		config = function() end,
 	},
 
 	{
@@ -300,7 +295,7 @@ require("lazy").setup({
 		event = "VeryLazy",
 		config = function()
 			require("nvim-surround").setup()
-		end
+		end,
 	},
 
 	{
@@ -311,12 +306,12 @@ require("lazy").setup({
 		},
 		opts = {
 			sections = {
-				lualine_a = { 'mode' },
-				lualine_b = { 'branch', 'diff', 'diagnostics' },
-				lualine_c = { 'filename', "os.date('%a')" },
-				lualine_x = { 'filetype' },
-				lualine_y = { 'progress' },
-				lualine_z = { 'location' }
+				lualine_a = { "mode" },
+				lualine_b = { "branch", "diff", "diagnostics" },
+				lualine_c = { "filename", "os.date('%a')" },
+				lualine_x = { "filetype" },
+				lualine_y = { "progress" },
+				lualine_z = { "location" },
 			},
 			inactive_sections = {
 				lualine_a = {},
@@ -324,7 +319,7 @@ require("lazy").setup({
 				lualine_c = {},
 				lualine_x = { "encoding", "fileformat" },
 				lualine_y = {},
-				lualine_z = {}
+				lualine_z = {},
 			},
 			globalstatus = true,
 		},
@@ -335,7 +330,7 @@ require("lazy").setup({
 		ft = "markdown",
 		build = "cd app && yarn install",
 		config = function() end,
-	}
+	},
 }, {
 	install = {
 		colorscheme = { colorscheme },

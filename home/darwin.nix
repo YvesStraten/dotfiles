@@ -1,8 +1,7 @@
-{
-  config,
-  pkgs,
-  inputs,
-  ...
+{ config
+, pkgs
+, inputs
+, ...
 }: {
   imports = [
     inputs.nix-colors.homeManagerModules.default
@@ -27,14 +26,14 @@
   # targets.genericLinux.enable = true;
 
   nixpkgs.config.allowUnfree = true;
-  colorScheme = inputs.nix-colors.colorSchemes.dracula;
+  colorScheme = inputs.nix-colors.colorSchemes.gruvbox-light-medium;
 
   home = {
     username = "yvess";
     homeDirectory = "/Users/yvess";
     stateVersion = "22.11"; # Please read the comment before changing.
 
-    sessionPath = ["$HOME/.local/bin"];
+    sessionPath = [ "$HOME/.local/bin" ];
   };
 
   # Let Home Manager install and manage itself.
