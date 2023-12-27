@@ -4,6 +4,8 @@
     home = "/Users/yvess";
   };
 
+  nix.settings.sandbox = true;
+
   nixpkgs.config = {
     allowUnfree = true;
     packageOverrides = pkgs: {
