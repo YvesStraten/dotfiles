@@ -53,7 +53,7 @@
 
       packages."aarch64-darwin" = import ./packages/default-darwin.nix { inherit pkgs-darwin; };
 
-      devShells."x86_64-linux" = {
+      devShells."aarch64-darwin" = {
         csharp = devenv.lib.mkShell {
           inherit inputs pkgs;
           modules = [ ({ pkgs, ... }: { languages.dotnet.enable = true; }) ];
