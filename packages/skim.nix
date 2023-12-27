@@ -1,23 +1,25 @@
-{
-  stdenv,
-  fetchurl,
-  undmg,
+{ stdenv
+, undmg
+, fetchurl
+,
 }:
 stdenv.mkDerivation rec {
-  name = "Skim";
-  version = "1.6.21";
-  src = "./Skim-1.6.21.dmg";
+  name = "Skim-${version}";
 
   src = fetchurl {
-    url = "https://udomain.dl.sourceforge.net/project/skim-app/Skim/Skim-${version}/Skim-${version}.dmg";
+    name = "Skim-${version}.dmg";
+    url = "mirror://sourceforge/project/skim-app/Skim/Skim-${version}/Skim-${version}.dmg";
+    sha256 = "0SeS41ExCZfGmjiK2KvvdFpP7IVzm7xHKCaKmEUYQAY=";
   };
 
+  nativeBuildInputs = [ undmg ];
+  version = "1.6.21";
+
   sourceRoot = ".";
-  phases = ["unpackPhase" "installPhase"];
-  buildInputs = [undmg];
+  phases = [ "unpackPhase" "installPhase" ];
 
   installPhase = ''
-    undmg ${src}
-    ls
+    mkdir -p $out/Applications
+    cp -R *.app $out/Applications
   '';
 }
