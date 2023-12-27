@@ -113,6 +113,14 @@ require("lazy").setup({
 			config = function()
 
 			end
+		}, {
+			"nvimtools/none-ls.nvim",
+			dependencies = {
+				"nvim-lua/plenary.nvim"
+			},
+			config = function ()
+				require("configs.lsp.none_ls")
+			end
 		} },
 		event = "BufEnter",
 		config = function()

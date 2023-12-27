@@ -5,7 +5,7 @@
 }: {
   programs.neovim = {
     enable = true;
-    # defaultEditor = true;
+    defaultEditor = true;
   };
 
   home.packages = with pkgs; [
