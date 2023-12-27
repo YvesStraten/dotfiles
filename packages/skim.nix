@@ -1,4 +1,5 @@
 { stdenv
+, lib
 , undmg
 , fetchurl
 ,
@@ -22,4 +23,12 @@ stdenv.mkDerivation rec {
     mkdir -p $out/Applications
     cp -R *.app $out/Applications
   '';
+
+  meta = with lib; {
+    description = "Skim is a PDF reader and note-taker for OS X";
+    homepage = "https://skim-app.sourceforge.io/";
+    license = licenses.bsd0;
+    mainProgram = "Skim.app";
+    maintainers = with maintainers; [ YvesStraten ];
+  };
 }
