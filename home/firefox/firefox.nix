@@ -16,11 +16,11 @@
       # Copyright goes to Miguel Avila for
       # Userchrome and content
       userChrome = ''
-			${builtins.readFile ./userChrome.css}
+        ${builtins.readFile ./userChrome.css}
       '';
 
       userContent = ''
-			${builtins.readFile ./userContent.css}
+        ${builtins.readFile ./userContent.css}
       '';
     };
   };

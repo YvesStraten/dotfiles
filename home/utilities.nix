@@ -40,12 +40,12 @@
       (with pkgs; [
         tesseract
         imagemagick
-				inkscape
-				yazi
-				spotify
-				discord
-				iina
-				xcbuild
+        inkscape
+        yazi
+        spotify
+        discord
+        iina
+        xcbuild
 
         gimp
         htop
