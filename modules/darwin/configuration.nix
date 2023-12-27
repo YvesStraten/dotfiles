@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   users.users.yvess = {
     name = "yvess";
     home = "/Users/yvess";
@@ -8,12 +8,14 @@
     allowUnfree = true;
     packageOverrides = pkgs: {
       nur =
-        import (
-          builtins.fetchTarball
-          "https://github.com/nix-community/NUR/archive/master.tar.gz"
-        ) {
-          inherit pkgs;
-        };
+        import
+          (
+            builtins.fetchTarball
+              "https://github.com/nix-community/NUR/archive/master.tar.gz"
+          )
+          {
+            inherit pkgs;
+          };
     };
   };
 
@@ -42,6 +44,7 @@
 
     extraConfig = ''
       yabai -m rule --add app='System Settings' manage=off
+      yabai -m rule --add app="Discord" manage=off
     '';
   };
 
