@@ -7,11 +7,6 @@
     inputs.nur.overlay
     inputs.firefox-darwin.overlay
 
-    (import (builtins.fetchTarball {
-      url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
-      sha256 = "1fmwbnzdkxpf5631syqqcx4wpi5qd8406gvdqzb7pkc40ll5yskx";
-    }))
-
     (final: prev: {
       yvess =
         (prev.yvess or {})

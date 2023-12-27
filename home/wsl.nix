@@ -13,7 +13,6 @@
 
     # Editors
     ./nvim/neovim.nix
-    ./emacs/emacs.nix
     ./tmux/tmux.nix
 
     # Variables

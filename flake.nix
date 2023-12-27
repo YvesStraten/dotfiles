@@ -18,7 +18,6 @@
     nur.url = "github:nix-community/NUR";
     nix-colors.url = "github:misterio77/nix-colors";
     devenv.url = "github:cachix/devenv";
-    emacs-overlay.url = "github:nix-community/emacs-overlay";
   };
 
   # Add cachix to rebuilds faster nixConfig = {
