@@ -45,6 +45,7 @@
 				spotify
 				discord
 				iina
+				xcbuild
 
         gimp
         htop
