@@ -4,7 +4,11 @@
     home = "/Users/yvess";
   };
 
-  nix.settings.sandbox = true;
+  # nix.settings.sandbox = true;
+  nix.settings.trusted-users = [
+    "root"
+    "yvess"
+  ];
 
   nixpkgs.config = {
     allowUnfree = true;

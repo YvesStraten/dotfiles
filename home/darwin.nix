@@ -13,10 +13,8 @@
 
     # Editors
     ./nvim/neovim.nix
-    ./vscode/vscode.nix
 
     ./alacritty/alacritty.nix
-    # ./foot/foot.nix
     ./tmux/tmux.nix
     ./firefox/firefox.nix
 
