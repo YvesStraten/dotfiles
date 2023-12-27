@@ -9,15 +9,14 @@ wk.register({
 			function()
 				harpoon:list():append()
 			end,
-			"Harpoon append"
+			"Harpoon append",
 		},
 		h = {
 			function()
 				harpoon.ui:toggle_quick_menu(harpoon:list())
 			end,
-			"Harpoon list"
+			"Harpoon list",
 		},
-
 
 		f = {
 			name = "Telescope",
@@ -37,12 +36,12 @@ wk.register({
 			r = { ":Lspsaga rename<cr>", "Rename definition" },
 			p = { ":Lspsaga peek_definition<cr>", "Peek definition" },
 			a = { ":Lspsaga code_action<cr>", "Code action" },
-			f = { ":LspZeroFormat<cr>", "Format"};
+			f = { ":LspZeroFormat<cr>", "Format" },
 		},
 
 		g = {
 			o = { ":Git<cr>", "Fugitive" },
-			p = { ":Git push<cr>", "Git push"}
+			p = { ":Git push<cr>", "Git push" },
 		},
 		t = {
 			l = { ":VimtexCompile<cr>", "Compiled latex document" },
@@ -53,30 +52,41 @@ wk.register({
 	["<tab>"] = { ":BufferNext<cr>", "Next Buffer" },
 	["<S-tab>"] = { ":BufferPrevious<cr>", "Previous Buffer" },
 	["<esc>"] = { ":nohlsearch<cr>", "Wipes previous search" },
-	["<C-t>"] = { function()
-		harpoon:list():select(1)
-	end, "1" },
+	["<C-t>"] = {
+		function()
+			harpoon:list():select(1)
+		end,
+		"1",
+	},
 
-	["<C-y>"] = { function()
-		harpoon:list():select(2)
-	end, "2" },
+	["<C-y>"] = {
+		function()
+			harpoon:list():select(2)
+		end,
+		"2",
+	},
 
 	["<C-p>"] = {
 		function()
 			harpoon:list():select(3)
 		end,
-		"3"
+		"3",
 	},
 
 	["<C-s>"] = {
 		function()
 			harpoon:list():select(4)
 		end,
-		"4"
+		"4",
 	},
 
 	["<C-o>"] = {
 		":Ouroboros<cr>",
-		"Change to header or implementation"
-	}
+		"Change to header or implementation",
+	},
+
+	["<C-c>"] = {
+		":VimtexTocToggle<cr>",
+		"Toggle toc for current latex file",
+	},
 })
