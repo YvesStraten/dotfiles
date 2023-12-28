@@ -8,7 +8,7 @@ require("lazy").setup({
 			require("gruvbox").setup({
 				transparent_mode = true,
 			})
-
+			vim.opt.background = "dark"
 			vim.cmd("colorscheme " .. colorscheme)
 		end,
 	},
@@ -19,6 +19,12 @@ require("lazy").setup({
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 		},
+	},
+
+	{
+		"direnv/direnv.vim",
+		event = "VeryLazy",
+		config = function() end,
 	},
 
 	{

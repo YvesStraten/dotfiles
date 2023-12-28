@@ -24,7 +24,7 @@
   # targets.genericLinux.enable = true;
 
   nixpkgs.config.allowUnfree = true;
-  colorScheme = inputs.nix-colors.colorSchemes.gruvbox-light-medium;
+  colorScheme = inputs.nix-colors.colorSchemes.gruvbox-dark-medium;
 
   home = {
     username = "yvess";
