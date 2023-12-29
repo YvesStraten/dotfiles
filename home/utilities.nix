@@ -1,4 +1,7 @@
-{ pkgs, ... }: {
+{ pkgs
+, inputs
+, ...
+}: {
   home.packages =
     if pkgs.stdenv.isLinux
     then
@@ -45,6 +48,7 @@
         spotify
         discord
         iina
+        inputs.tomato.defaultPackage.aarch64-darwin
         xcbuild
         yvess.skim
 

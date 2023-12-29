@@ -1,7 +1,6 @@
-{
-  pkgs,
-  config,
-  ...
+{ pkgs
+, config
+, ...
 }: {
   programs.neovim = {
     enable = true;
@@ -10,6 +9,8 @@
 
   home.packages = with pkgs; [
     python310Packages.pynvim
+    ripgrep
+    fzf
     languagetool
 
     # LSP servers
@@ -17,6 +18,8 @@
     omnisharp-roslyn
     sumneko-lua-language-server
     stylua
+    rust-analyzer
+    rustfmt
     nodePackages_latest.prettier
     nodePackages_latest.vscode-html-languageserver-bin
     nodePackages_latest.typescript-language-server

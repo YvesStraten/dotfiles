@@ -4,6 +4,26 @@ local harpoon = require("harpoon")
 harpoon:setup()
 
 wk.register({
+	["<C-e>"] = {
+		":ToggleTerm<cr>",
+		"Toggle terminal",
+	},
+	{
+		mode = "t",
+	},
+})
+
+wk.register({
+	["<C-e>"] = {
+		":ToggleTerm<cr>",
+		"Toggle terminal",
+	},
+	{
+		mode = "i",
+	},
+})
+
+wk.register({
 	["<leader>"] = {
 		a = {
 			function()
@@ -36,7 +56,6 @@ wk.register({
 			r = { ":Lspsaga rename<cr>", "Rename definition" },
 			p = { ":Lspsaga peek_definition<cr>", "Peek definition" },
 			a = { ":Lspsaga code_action<cr>", "Code action" },
-			f = { ":LspZeroFormat<cr>", "Format" },
 		},
 
 		g = {

@@ -1,12 +1,6 @@
-local lsp_zero = require("lsp-zero")
 local lspconfig = require("lspconfig")
 
-lsp_zero.on_attach(function(client, bufnr)
-	lsp_zero.default_keymaps({
-		buffer = bufnr,
-	})
-end)
-
+require("lspsaga").setup({})
 lspconfig.lua_ls.setup({
 	on_init = function(client)
 		local path = client.workspace_folders[1].name
@@ -41,3 +35,4 @@ lspconfig.clangd.setup({})
 lspconfig.tsserver.setup({})
 lspconfig.texlab.setup({})
 lspconfig.rnix.setup({})
+lspconfig.rust_analyzer.setup({})

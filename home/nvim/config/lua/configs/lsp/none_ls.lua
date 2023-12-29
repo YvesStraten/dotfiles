@@ -8,6 +8,7 @@ null_ls.setup({
 		formatting.alejandra,
 		formatting.prettierd,
 		formatting.stylua,
+		formatting.rustfmt,
 
 		diagnostics.cppcheck,
 	},
