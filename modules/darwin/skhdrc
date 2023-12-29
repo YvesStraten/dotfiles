@@ -7,6 +7,7 @@ alt - l : yabai -m window --focus east
 alt - return : open -na Alacritty
 alt - e : open -na Alacritty --args -e yazi 
 alt - b : open -na Firefox
+alt + shift - s : open -a Screenshot
 
 # move window
 alt + shift - h : yabai -m window --warp west
