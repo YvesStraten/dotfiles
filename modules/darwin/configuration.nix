@@ -40,10 +40,10 @@
       mouse_follows_focus = "on";
       window_placement = "second_child";
       window_opacity = "off";
-      top_padding = 10;
-      bottom_padding = 10;
-      left_padding = 10;
-      right_padding = 10;
+      # top_padding = 10;
+      # bottom_padding = 10;
+      # left_padding = 10;
+      # right_padding = 10;
       window_gap = 10;
       layout = "bsp";
     };

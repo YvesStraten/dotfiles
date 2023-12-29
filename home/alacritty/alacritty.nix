@@ -6,12 +6,12 @@
     enable = true;
     settings = {
       font = {
-        normal.family = "JetBrainsMono NF";
-        bold.family = "JetBrainsMono NF";
-        italic.family = "JetBrainsMono NF";
-        bold_italic.family = "JetBrainsMono NF";
+        normal.family = "JetBrainsMono Nerd Font";
+        bold.family = "JetBrainsMono Nerd Font";
+        italic.family = "JetBrainsMono Nerd Font";
+        bold_italic.family = "JetBrainsMono Nerd Font";
 
-        size = 15.0;
+        size = 23;
       };
 
       window = {
@@ -44,7 +44,7 @@
           yellow = "0x${base0A}";
         };
         primary = {
-          background = "0x${base00}";
+          background = "0x${base01}";
           foreground = "0x${base06}";
         };
       };
