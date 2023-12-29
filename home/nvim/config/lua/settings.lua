@@ -8,6 +8,7 @@ vim.opt.termguicolors = true
 
 vim.g.mapleader = " "
 vim.opt.clipboard = "unnamedplus"
+vim.opt.signcolumn = "yes"
 
 vim.cmd([[
 set backupdir=~/nvim/backup//
