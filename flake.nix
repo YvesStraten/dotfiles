@@ -11,6 +11,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
+    tomato.url = "github:gabrielzschmitz/Tomato.C";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     hyprland.url = "github:hyprwm/hyprland";
     hyprpicker.url = "github:hyprwm/hyprpicker";
@@ -34,6 +35,7 @@
     { self
     , nixpkgs
     , nix-colors
+    , tomato
     , nix-darwin
     , devenv
     , home-manager
