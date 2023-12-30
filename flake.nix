@@ -2,6 +2,7 @@
   description = "My Nix based systems";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/23.11";
+    nvchad.url = "github:YvesStraten/NvChad";
     home-manager = {
       url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -43,6 +44,7 @@
     , hyprpicker
     , hypr-contrib
     , nixos-hardware
+    , nvchad
     , nur
     , ...
     } @ inputs:

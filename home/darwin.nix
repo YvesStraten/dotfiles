@@ -5,6 +5,7 @@
 }: {
   imports = [
     inputs.nix-colors.homeManagerModules.default
+    inputs.nvchad.homeManagerModules.default
     # Main stuff
     ./languages.nix
     ./utilities.nix
@@ -22,6 +23,10 @@
   ];
 
   # targets.genericLinux.enable = true;
+
+  programs.nvchad.enable = true;
+  programs.nvchad.customConfig = ./custom;
+  programs.nvchad.defaultEditor = true;
 
   nixpkgs.config.allowUnfree = true;
   colorScheme = inputs.nix-colors.colorSchemes.gruvbox-dark-medium;
