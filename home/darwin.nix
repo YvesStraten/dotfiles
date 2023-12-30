@@ -15,7 +15,8 @@
     # Editors
     ./nvim/neovim.nix
 
-    ./alacritty/alacritty.nix
+    # ./alacritty/alacritty.nix
+    ./kitty/kitty.nix
     ./tmux/tmux.nix
     ./firefox/firefox.nix
 
@@ -24,9 +25,9 @@
 
   # targets.genericLinux.enable = true;
 
-  programs.nvchad.enable = true;
-  programs.nvchad.customConfig = ./custom;
-  programs.nvchad.defaultEditor = true;
+  # programs.nvchad.enable = true;
+  # programs.nvchad.customConfig = ./custom;
+  # programs.nvchad.defaultEditor = true;
 
   nixpkgs.config.allowUnfree = true;
   colorScheme = inputs.nix-colors.colorSchemes.gruvbox-dark-medium;
