@@ -58,7 +58,7 @@
         pandoc
 
         nix-prefetch-scripts
-        ani-cli
+        inputs.ani-cli.packages.aarch64-darwin.default
       ]);
 
   #  programs.thunderbird = {

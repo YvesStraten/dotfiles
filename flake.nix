@@ -3,6 +3,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/23.11";
     nvchad.url = "github:YvesStraten/NvChad";
+    ani-cli.url = "github:YvesStraten/ani-cli";
     home-manager = {
       url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -39,6 +40,7 @@
     , tomato
     , nix-darwin
     , devenv
+    , ani-cli
     , home-manager
     , hyprland
     , hyprpicker
