@@ -1,15 +1,15 @@
 local function lowercase_mode()
 	local mode_map = {
-		n = "normal",
-		i = "insert",
-		v = "visual",
-		V = "v-line",
-		c = "command",
-		R = "replace",
-		s = "select",
-		S = "s-line",
-		[""] = "empty",
-		t = "terminal",
+		n = "Normal",
+		i = "Insert",
+		v = "Visual",
+		V = "V-line",
+		c = "Command",
+		R = "Replace",
+		s = "Select",
+		S = "S-line",
+		[""] = "Empty",
+		t = "Terminal",
 	}
 
 	local mode = vim.fn.mode()
