@@ -48,6 +48,7 @@
         spotify
         discord
         iina
+        ani-cli
         inputs.tomato.defaultPackage.aarch64-darwin
         xcbuild
         yvess.skim
@@ -58,7 +59,6 @@
         pandoc
 
         nix-prefetch-scripts
-        inputs.ani-cli.packages.aarch64-darwin.default
       ]);
 
   #  programs.thunderbird = {
