@@ -577,11 +577,11 @@
         "nixpkgs": "nixpkgs_8"
       },
       "locked": {
-        "lastModified": 1703904790,
-        "narHash": "sha256-kJ3usWTPBxWzWD4TkogLG6PDAv5gzN2fnd7szpMpI90=",
+        "lastModified": 1704180904,
+        "narHash": "sha256-wk+usuL/oeeIE4UPCw/EUdZTJiobyNiTG4HbLn1dkAo=",
         "owner": "YvesStraten",
         "repo": "NvChad",
-        "rev": "0dab74a96563c076fb005f57821c692bb571f7aa",
+        "rev": "7d4d37bea77f34213a0c992ee9669f6cf6b9c04b",
         "type": "github"
       },
       "original": {
