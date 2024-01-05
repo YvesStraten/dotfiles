@@ -4,26 +4,6 @@ local harpoon = require("harpoon")
 harpoon:setup()
 
 wk.register({
-	["<C-e>"] = {
-		":ToggleTerm<cr>",
-		"Toggle terminal",
-	},
-	{
-		mode = "t",
-	},
-})
-
-wk.register({
-	["<C-e>"] = {
-		":ToggleTerm<cr>",
-		"Toggle terminal",
-	},
-	{
-		mode = "i",
-	},
-})
-
-wk.register({
 	["<leader>"] = {
 		a = {
 			function()
@@ -62,15 +42,7 @@ wk.register({
 			o = { ":Git<cr>", "Fugitive" },
 			p = { ":Git push<cr>", "Git push" },
 		},
-		t = {
-			l = { ":VimtexCompile<cr>", "Compiled latex document" },
-			m = { ":MarkdownPreview<cr>", "Preview Markdown" },
-		},
 	},
-	["<C-n>"] = { ":Neotree toggle reveal=true<cr>", "File explorer" },
-	["<tab>"] = { ":BufferNext<cr>", "Next Buffer" },
-	["<S-tab>"] = { ":BufferPrevious<cr>", "Previous Buffer" },
-	["<esc>"] = { ":nohlsearch<cr>", "Wipes previous search" },
 	["<C-t>"] = {
 		function()
 			harpoon:list():select(1)
@@ -97,15 +69,5 @@ wk.register({
 			harpoon:list():select(4)
 		end,
 		"4",
-	},
-
-	["<C-o>"] = {
-		":Ouroboros<cr>",
-		"Change to header or implementation",
-	},
-
-	["<C-c>"] = {
-		":VimtexTocToggle<cr>",
-		"Toggle toc for current latex file",
 	},
 })

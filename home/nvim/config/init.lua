@@ -13,3 +13,4 @@ vim.opt.rtp:prepend(lazypath)
 
 require("settings")
 require("plugins")
+vim.notify("Config loaded")

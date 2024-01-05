@@ -18,8 +18,6 @@
     omnisharp-roslyn
     sumneko-lua-language-server
     stylua
-    rust-analyzer
-    rustfmt
     nodePackages_latest.prettier
     nodePackages_latest.vscode-html-languageserver-bin
     nodePackages_latest.typescript-language-server

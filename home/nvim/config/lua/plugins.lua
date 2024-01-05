@@ -1,12 +1,14 @@
-local colorscheme = "gruvbox"
+local colorscheme = "kanagawa"
 
 require("lazy").setup({
 	{
-		"ellisonleao/gruvbox.nvim",
+		"rebelot/kanagawa.nvim",
 		priority = 1000,
 		config = function()
-			require("gruvbox").setup({
-				transparent_mode = true,
+			require("kanagawa").setup({
+				compile = true,
+				transparent = true,
+				theme = "dragon",
 			})
 			vim.opt.background = "dark"
 			vim.cmd("colorscheme " .. colorscheme)
@@ -22,15 +24,28 @@ require("lazy").setup({
 	},
 
 	{
-		"direnv/direnv.vim",
-		event = "VeryLazy",
-		config = function() end,
+		"rcarriga/nvim-notify",
+		lazy = false,
+		config = function()
+			local notify = require("notify")
+			vim.notify = notify
+			require("notify").setup({
+				render = "compact",
+			})
+		end,
 	},
 
 	{
 		"jakemason/ouroboros",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
+		},
+		keys = {
+			{
+				"<C-o>",
+				":Ouroboros<cr>",
+				desc = "Change to h or cpp",
+			},
 		},
 		ft = {
 			"c",
@@ -43,6 +58,14 @@ require("lazy").setup({
 
 	{
 		"mbbill/undotree",
+		keys = {
+			{
+				"<leader>u",
+				":UndotreeShow<CR>",
+				desc = "Undotree",
+				true,
+			},
+		},
 		event = "VeryLazy",
 		config = function() end,
 	},
@@ -208,6 +231,14 @@ require("lazy").setup({
 			"nvim-tree/nvim-web-devicons",
 			"MunifTanjim/nui.nvim",
 		},
+		keys = {
+			{
+				"<C-n>",
+				":Neotree toggle reveal=true<cr>",
+				desc = "File explorer",
+				true,
+			},
+		},
 		opts = {
 			close_if_last_window = true,
 			window = {
@@ -224,24 +255,13 @@ require("lazy").setup({
 
 	{
 		"nvim-treesitter/nvim-treesitter",
-		dependencies = {
-			"windwp/nvim-ts-autotag",
-			config = function()
-				require("nvim-ts-autotag").setup()
-			end,
-		},
-		lazy = false,
-		cmd = {
-			"TSInstall",
-			"TSUpdate",
-		},
+		build = ":TSUpdate",
 		config = function()
-			require("nvim-treesitter.configs").setup({
-				autotag = {
-					enable = true,
-				},
-				ensure = {
+			local configs = require("nvim-treesitter.configs")
+			configs.setup({
+				ensure_installed = {
 					"c",
+					"cpp",
 					"lua",
 					"cpp",
 					"javascript",
@@ -250,6 +270,8 @@ require("lazy").setup({
 				ignore_install = {
 					"latex",
 				},
+				highlight = { enable = true },
+				indent = { enable = true },
 			})
 		end,
 	},
@@ -260,6 +282,20 @@ require("lazy").setup({
 		dependencies = {
 			"lewis6991/gitsigns.nvim",
 			"nvim-tree/nvim-web-devicons",
+		},
+		keys = {
+			{
+				"<tab>",
+				":BufferNext<cr>",
+				desc = "Next Buffer",
+				true,
+			},
+			{
+				"<S-tab>",
+				":BufferPrevious<cr>",
+				desc = "Previous Buffer",
+				true,
+			},
 		},
 		init = function()
 			vim.g.barbar_auto_setup = false
@@ -284,6 +320,20 @@ require("lazy").setup({
 
 	{
 		"lervag/vimtex",
+		keys = {
+			{
+				"<leader>tl",
+				"<cmd>VimtexCompile<cr>",
+				desc = "Compile tex",
+				true,
+			},
+			{
+				"<C-c>",
+				":VimtexTocToggle<cr>",
+				desc = "Toggle toc for latex",
+				true,
+			},
+		},
 		tag = "v1.6",
 		dependencies = {
 			"KeitaNakamura/tex-conceal.vim",
@@ -357,6 +407,14 @@ require("lazy").setup({
 		"iamcco/markdown-preview.nvim",
 		ft = "markdown",
 		build = "cd app && yarn install",
+		keys = {
+			{
+				"<leader>tm",
+				"<cmd>MarkdownPreview<cr>",
+				"Preview markdown",
+				true,
+			},
+		},
 		config = function() end,
 	},
 }, {
