@@ -49,8 +49,9 @@
     };
 
     extraConfig = ''
-      yabai -m rule --add app='System Settings' manage=off
-      yabai -m rule --add app="Discord" manage=off
+         yabai -m rule --add app='System Settings' manage=off
+         yabai -m rule --add app="Discord" manage=off
+      yabai -m rule --add app="WhatsApp" manage=off
     '';
   };
 

@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   home.packages = with pkgs; [
     (python311.withPackages (ps:
       with ps; [
@@ -8,6 +8,10 @@
       ]))
 
     texlive.combined.scheme-full
+    gcc
+    nodejs_21
+    rustup
+    yarn
 
     unzip
     sshfs
