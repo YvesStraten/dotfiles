@@ -7,25 +7,25 @@ git clone --recurse-submodules -j8 https://github.com/ItsMindstorm/dotfiles
 ```
 
 The hyprland dotfiles are from [ChrisTitus](https://github.com/ChrisTitusTech/hyprland-titus) which I modified for my own use.
-The zathura colorscheme is from [Catpuccin](https://github.com/catppuccin/zathura).
+The zathura colorscheme is from [Catpuccin](https://github.com/catppuccin/zathura). Meanwhile the polybar themse are from [Polybar themes](https://github.com/adi1090x/polybar-themes) 
 
-This also uses [Home manager](https://github.com/nix-community/home-manager#installation) in combination with [Nix](https://nixos.org/download.html) package manager, to be able to use zsh as default shell, add the shell to the /etc/shells file.
-
-``` 
-chsh -s /home/youruser/.nix-profile/bin/zsh
+I use nixos flakes to manage my system and home manager. To rebuild the system (NixOS), you do:
+```
+sudo nixos-rebuild switch --flake <flake-location>#profile
 ```
 
-To restore your system from package list (assuming you use paru)
+To apply the home manager config, use,
 ```
-yay -S - < ~/Git-repos/dotfiles/pkglist/pkglist.txt
-```
-
-Make a new backup from packagelist
-
-```
-rm -r ~/Git-repos/dotfiles/pkglist/pkglist.txt
+home-manager switch --flake <flake-location>
 ```
 
+Meanwhile on non-NixOS, clone the repository, install the [nix ](https://nixos.org/download.html) package manager, allow flakes by using the command: 
+```shell 
+mkdir -p ~/.config/nix
+echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
 ```
-pacman -Qqe > ~/Git-repos/dotfiles/pkglist/pkglist.txt
+
+Then run: 
+```shell 
+nix run . -- switch --flake .
 ```

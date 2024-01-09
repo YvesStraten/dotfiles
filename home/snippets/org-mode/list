@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: list
+# key: list
+# --
+- Progress [/] [%]
+  - [ ] $1

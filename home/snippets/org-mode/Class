@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Class 
+# key: cla
+# --
+** ${class name}
+   <${`(format-time-string "%Y")`}-${`(format-time-string "%m")`}-${`(format-time-string "%d")`} ${`(format-time-string "%a")`} ${from time e.g 8:00}-${time to e.g 13:00} +1w>
+
+$0

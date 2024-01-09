@@ -1,0 +1,47 @@
+{ config
+, pkgs
+, inputs
+, ...
+}: {
+  imports = [
+    # Main stuff
+    inputs.nix-colors.homeManagerModules.default
+    inputs.nvchad.homeManagerModules.default
+    ./languages.nix
+    ./bin/default.nix
+    ./theming.nix
+
+    # Editors
+    ./nvim/neovim.nix
+    ./tmux/tmux.nix
+
+    # Variables
+    ./zsh/zsh.nix
+  ];
+
+  colorScheme = inputs.nix-colors.colorSchemes.dracula;
+  programs.nvchad = {
+    enable = true;
+    defaultEditor = true;
+  };
+
+  home = {
+    username = "akali";
+    homeDirectory = "/home/akali";
+    stateVersion = "22.11"; # Please read the comment before changing.
+
+    sessionPath = [ "$HOME/.local/bin" ];
+
+    packages = with pkgs; [ ani-cli openssh ];
+  };
+
+  # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
+  targets.genericLinux.enable = true;
+
+  programs.git = {
+    enable = true;
+    userName = "YvesStraten";
+    userEmail = "yves.straten@gmail.com";
+  };
+}

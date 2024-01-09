@@ -1,3 +1,0 @@
-#!/bin/sh
-cd ~/Pictures/Wallpapers/
-fd | fzf | xargs swaybg -m fill -i  
