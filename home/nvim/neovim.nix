@@ -1,7 +1,7 @@
-{
-  pkgs,
-  config,
-  ...
+{ pkgs
+, config
+, inputs
+, ...
 }: {
   programs.neovim = {
     enable = true;
@@ -22,6 +22,12 @@
       }
 
       {
+        plugin = nvim-notify;
+        type = "lua";
+        config = "${builtins.readFile ./configs/notify.lua}";
+      }
+
+      {
         plugin = nvim-lspconfig;
         type = "lua";
         config = "${builtins.readFile ./configs/lsp/lspconfig.lua}";
@@ -33,12 +39,6 @@
         plugin = none-ls-nvim;
         type = "lua";
         config = "${builtins.readFile ./configs/lsp/none_ls.lua}";
-      }
-
-      {
-        plugin = nvim-notify;
-        type = "lua";
-        config = "${builtins.readFile ./configs/notify.lua}";
       }
 
       plenary-nvim
@@ -81,6 +81,12 @@
         config = "${builtins.readFile ./configs/lualine.lua}";
       }
 
+      {
+        plugin = toggleterm-nvim;
+        type = "lua";
+        config = "${builtins.readFile ./configs/toggleterm.lua}";
+      }
+
       bullets-vim
       {
         plugin = nvim-treesitter.withAllGrammars;
@@ -110,6 +116,12 @@
       cmp-nvim-lsp
       cmp-buffer
       ultisnips
+      vim-snippets
+      {
+        plugin = ouroboros;
+        type = "lua";
+        config = "vim.keymap.set('n', '<C-o>', ':Ouroboros<cr>')";
+      }
       cmp-nvim-ultisnips
     ];
   };

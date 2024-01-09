@@ -47,6 +47,8 @@ vim.opt.clipboard = ""
 
 vim.opt.signcolumn = "yes"
 
+vim.notify("Config loaded")
+
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.cmd([[
 set backupdir=~/nvim/backup//

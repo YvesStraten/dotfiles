@@ -590,6 +590,22 @@
         "type": "github"
       }
     },
+    "ouroboros": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1704427485,
+        "narHash": "sha256-XtOARiQrvKIJUvHGbgq7x8OpyutHeb7SC49J6N1EKIo=",
+        "owner": "jakemason",
+        "repo": "ouroboros.nvim",
+        "rev": "91f0caff774ac919adbe3da9f48917025b594131",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jakemason",
+        "repo": "ouroboros.nvim",
+        "type": "github"
+      }
+    },
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": [
@@ -633,7 +649,9 @@
         "nixpkgs": "nixpkgs_7",
         "nur": "nur",
         "nvchad": "nvchad",
-        "tomato": "tomato"
+        "ouroboros": "ouroboros",
+        "tomato": "tomato",
+        "vim-snippets": "vim-snippets"
       }
     },
     "systems": {
@@ -712,6 +730,22 @@
       "original": {
         "owner": "gabrielzschmitz",
         "repo": "Tomato.C",
+        "type": "github"
+      }
+    },
+    "vim-snippets": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1682390735,
+        "narHash": "sha256-yeGEfjcnYRrNE0HONuafVGPmZ4uDiREJBOu1x+IECN4=",
+        "owner": "YvesStraten",
+        "repo": "vim-snippets",
+        "rev": "36ac8695091806789a695237885f8baff9444e0f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "YvesStraten",
+        "repo": "vim-snippets",
         "type": "github"
       }
     },
