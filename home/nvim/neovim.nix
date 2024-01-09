@@ -1,10 +1,117 @@
-{ pkgs
-, config
-, ...
+{
+  pkgs,
+  config,
+  ...
 }: {
   programs.neovim = {
     enable = true;
     defaultEditor = true;
+
+    viAlias = true;
+    vimAlias = true;
+    vimdiffAlias = true;
+
+    extraLuaConfig = ''
+      ${builtins.readFile ./settings.lua}
+    '';
+
+    plugins = with pkgs.vimPlugins; [
+      {
+        plugin = kanagawa-nvim;
+        config = "colorscheme kanagawa";
+      }
+
+      {
+        plugin = nvim-lspconfig;
+        type = "lua";
+        config = "${builtins.readFile ./configs/lsp/lspconfig.lua}";
+      }
+
+      undotree
+
+      {
+        plugin = none-ls-nvim;
+        type = "lua";
+        config = "${builtins.readFile ./configs/lsp/none_ls.lua}";
+      }
+
+      {
+        plugin = nvim-notify;
+        type = "lua";
+        config = "${builtins.readFile ./configs/notify.lua}";
+      }
+
+      plenary-nvim
+      nvim-web-devicons
+      lspsaga-nvim
+      lspkind-nvim
+
+      {
+        plugin = nvim-autopairs;
+        type = "lua";
+        config = "require('nvim-autopairs').setup({})";
+      }
+
+      {
+        plugin = indent-blankline-nvim;
+        type = "lua";
+        config = "require('ibl').setup({})";
+      }
+
+      vim-fugitive
+      vim-tmux-navigator
+
+      {
+        plugin = neo-tree-nvim;
+        type = "lua";
+        config = "${builtins.readFile ./configs/neotree.lua}";
+      }
+
+      telescope-nvim
+      {
+        plugin = comment-nvim;
+        type = "lua";
+        config = "require('Comment').setup()";
+      }
+      barbar-nvim
+
+      {
+        plugin = lualine-nvim;
+        type = "lua";
+        config = "${builtins.readFile ./configs/lualine.lua}";
+      }
+
+      bullets-vim
+      {
+        plugin = nvim-treesitter.withAllGrammars;
+        type = "lua";
+        config = "${builtins.readFile ./configs/treesitter.lua}";
+      }
+
+      {
+        plugin = nvim-cmp;
+        type = "lua";
+        config = "${builtins.readFile ./configs/cmp/cmp.lua}";
+      }
+
+      {
+        plugin = vimtex;
+        type = "lua";
+        config = "${builtins.readFile ./configs/vimtex/vimtex.lua}";
+      }
+
+      {
+        plugin = which-key-nvim;
+        type = "lua";
+        config = "${builtins.readFile ./configs/which-key/which-key.lua}";
+      }
+
+      cmp-path
+      cmp-nvim-lsp
+      cmp-buffer
+      ultisnips
+      cmp-nvim-ultisnips
+    ];
   };
 
   home.packages = with pkgs; [

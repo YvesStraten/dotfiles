@@ -31,7 +31,17 @@ vim.keymap.set("n", "<leader>y", '"+y')
 vim.keymap.set("v", "<leader>y", '"+y')
 vim.keymap.set("n", "<leader>Y", '"+Y')
 
-vim.keymap.set("n", "<esc>", ":nohlsearch<cr>")
+-- Buffer management
+vim.keymap.set("n", "<leader>x", ":BufferClose<cr>")
+vim.keymap.set("n", "<leader>X", ":BufferCloseAllButCurrent<cr>")
+-- Splits
+vim.keymap.set("n", "<leader>sh", ":split<cr>")
+vim.keymap.set("n", "<leader>sv", ":vsplit<cr>")
+
+-- Spelling
+vim.keymap.set("n", "<leader>sp", ":set spell<cr> <bar> set spelllang=en_gb<cr>")
+
+vim.keymap.set("n", "<esc>", ":nohlsearch<cr>", { silent = true })
 
 vim.opt.clipboard = ""
 

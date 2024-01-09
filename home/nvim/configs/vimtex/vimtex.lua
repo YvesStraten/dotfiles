@@ -14,10 +14,13 @@ end
 -- Options needed to get minted to work
 vim.g.vimtex_compiler_latexmk = {
 	options = {
-		'-verbose',
-		'-file-line-error',
-		'-synctex=1',
-		'-interaction=nonstopmode',
-		'-shell-escape',
+		"-verbose",
+		"-file-line-error",
+		"-synctex=1",
+		"-interaction=nonstopmode",
+		"-shell-escape",
 	},
 }
+
+vim.keymap.set("n", "<leader>tl", "<cmd>VimtexCompile<cr>")
+vim.keymap.set("n", "<C-c>", "<cmd>VimtexTocToggle<cr>")
