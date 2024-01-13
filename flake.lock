@@ -736,11 +736,11 @@
     "vim-snippets": {
       "flake": false,
       "locked": {
-        "lastModified": 1682390735,
-        "narHash": "sha256-yeGEfjcnYRrNE0HONuafVGPmZ4uDiREJBOu1x+IECN4=",
+        "lastModified": 1704968982,
+        "narHash": "sha256-QIvfoEmorMIoa+xQdN0iZVG0x7lJhNmA+5AJ2jfN39k=",
         "owner": "YvesStraten",
         "repo": "vim-snippets",
-        "rev": "36ac8695091806789a695237885f8baff9444e0f",
+        "rev": "c4ae9d89f0fac0034f7b7dd50a5e134abc20e917",
         "type": "github"
       },
       "original": {

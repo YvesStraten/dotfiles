@@ -1,7 +1,8 @@
-{ pkgs
-, config
-, inputs
-, ...
+{
+  pkgs,
+  config,
+  inputs,
+  ...
 }: {
   programs.neovim = {
     enable = true;
@@ -123,6 +124,12 @@
         config = "vim.keymap.set('n', '<C-o>', ':Ouroboros<cr>')";
       }
       cmp-nvim-ultisnips
+
+      {
+        plugin = nvim-colorizer-lua;
+        type = "lua";
+        config = "${builtins.readFile ./configs/colorizer.lua}";
+      }
     ];
   };
 
