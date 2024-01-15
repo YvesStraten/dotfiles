@@ -1,44 +1,45 @@
-{ pkgs
-, inputs
-, ...
+{
+  pkgs,
+  inputs,
+  ...
 }: {
   home.packages =
     if pkgs.stdenv.isLinux
     then
       (with pkgs;
-      [
-        tesseract
-        brave
-        tor-browser-bundle-bin
-        libreoffice
-        rclone
-        rclone-browser
-        imagemagick
-        whatsapp-for-linux
+        [
+          tesseract
+          brave
+          tor-browser-bundle-bin
+          libreoffice
+          rclone
+          rclone-browser
+          imagemagick
+          whatsapp-for-linux
 
-        gscan2pdf
-        gimp
-        filezilla
-        krename
-        htop
+          gscan2pdf
+          gimp
+          filezilla
+          krename
+          htop
 
-        pandoc
+          pandoc
 
-        nix-prefetch-scripts
-        ani-cli-rofi
+          nix-prefetch-scripts
+          ani-cli-rofi
 
-        qpwgraph
-        soundwireserver
-      ]
-      ++ (with pkgs.gnome; [
-        nautilus
-        gnome-clocks
-        pomodoro
-        eog
-        geary
-        evince
-        gnome-disk-utility
-      ]))
+          qpwgraph
+          soundwireserver
+        ]
+        ++ (with pkgs.gnome; [
+          nautilus
+          gnome-clocks
+          pomodoro
+          eog
+          geary
+          evince
+          gnome-disk-utility
+        ]))
     else
       (with pkgs; [
         tesseract
@@ -52,6 +53,7 @@
         inputs.tomato.defaultPackage.aarch64-darwin
         xcbuild
         yvess.skim
+        yvess.alt-tab
 
         gimp
         htop
