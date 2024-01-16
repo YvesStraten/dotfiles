@@ -90,6 +90,22 @@
         "type": "github"
       }
     },
+    "flake-compat_2": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1673956053,
+        "narHash": "sha256-4gtG9iQuiKITOjNQQeQIpoIB6b16fm+504Ch3sNKLd8=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "35bb57c0c8d8b62bbfd284272c928ceb64ddbde9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": "systems"
@@ -129,6 +145,24 @@
     "flake-utils_3": {
       "inputs": {
         "systems": "systems_4"
+      },
+      "locked": {
+        "lastModified": 1681202837,
+        "narHash": "sha256-H+Rh19JDwRtpVPAWp64F+rlEtxUWBAQW28eAi3SRSzg=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "cfacdce06f30d2b68473a46042957675eebb3401",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "flake-utils_4": {
+      "inputs": {
+        "systems": "systems_5"
       },
       "locked": {
         "lastModified": 1689068808,
@@ -350,6 +384,26 @@
         "type": "github"
       }
     },
+    "nix-minecraft": {
+      "inputs": {
+        "flake-compat": "flake-compat_2",
+        "flake-utils": "flake-utils_3",
+        "nixpkgs": "nixpkgs_7"
+      },
+      "locked": {
+        "lastModified": 1705281805,
+        "narHash": "sha256-DohjncIOMplg5bPSZcbBA3odIyiFqnXUscbZNZD2q+I=",
+        "owner": "Infinidoge",
+        "repo": "nix-minecraft",
+        "rev": "679cf5dbdab97ab63bd50593bf1ea6538e48389a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Infinidoge",
+        "repo": "nix-minecraft",
+        "type": "github"
+      }
+    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1703879120,
@@ -425,6 +479,22 @@
       "original": {
         "owner": "NixOS",
         "ref": "nixos-23.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_10": {
+      "locked": {
+        "lastModified": 1692174805,
+        "narHash": "sha256-xmNPFDi/AUMIxwgOH/IVom55Dks34u1g7sFKKebxUm0=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "caac0eb6bdcad0b32cb2522e03e4002c8975c62e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -511,16 +581,16 @@
     },
     "nixpkgs_7": {
       "locked": {
-        "lastModified": 1701282334,
-        "narHash": "sha256-MxCVrXY6v4QmfTwIysjjaX0XUhqBbxTWWB4HXtDYsdk=",
-        "owner": "NixOS",
+        "lastModified": 1698318101,
+        "narHash": "sha256-gUihHt3yPD7bVqg+k/UVHgngyaJ3DMEBchbymBMvK1E=",
+        "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "057f9aecfb71c4437d2b27d3323df7f93c010b7e",
+        "rev": "63678e9f3d3afecfeafa0acead6239cdb447574c",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "23.11",
+        "owner": "nixos",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -543,16 +613,16 @@
     },
     "nixpkgs_9": {
       "locked": {
-        "lastModified": 1692174805,
-        "narHash": "sha256-xmNPFDi/AUMIxwgOH/IVom55Dks34u1g7sFKKebxUm0=",
-        "owner": "nixos",
+        "lastModified": 1701282334,
+        "narHash": "sha256-MxCVrXY6v4QmfTwIysjjaX0XUhqBbxTWWB4HXtDYsdk=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "caac0eb6bdcad0b32cb2522e03e4002c8975c62e",
+        "rev": "057f9aecfb71c4437d2b27d3323df7f93c010b7e",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable",
+        "owner": "NixOS",
+        "ref": "23.11",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -574,7 +644,7 @@
     },
     "nvchad": {
       "inputs": {
-        "nixpkgs": "nixpkgs_8"
+        "nixpkgs": "nixpkgs_9"
       },
       "locked": {
         "lastModified": 1704180904,
@@ -587,6 +657,22 @@
       "original": {
         "owner": "YvesStraten",
         "repo": "NvChad",
+        "type": "github"
+      }
+    },
+    "ouroboros": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1704427485,
+        "narHash": "sha256-XtOARiQrvKIJUvHGbgq7x8OpyutHeb7SC49J6N1EKIo=",
+        "owner": "jakemason",
+        "repo": "ouroboros.nvim",
+        "rev": "91f0caff774ac919adbe3da9f48917025b594131",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jakemason",
+        "repo": "ouroboros.nvim",
         "type": "github"
       }
     },
@@ -629,11 +715,14 @@
         "hyprpicker": "hyprpicker",
         "nix-colors": "nix-colors",
         "nix-darwin": "nix-darwin",
+        "nix-minecraft": "nix-minecraft",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_7",
+        "nixpkgs": "nixpkgs_8",
         "nur": "nur",
         "nvchad": "nvchad",
-        "tomato": "tomato"
+        "ouroboros": "ouroboros",
+        "tomato": "tomato",
+        "vim-snippets": "vim-snippets"
       }
     },
     "systems": {
@@ -696,10 +785,25 @@
         "type": "github"
       }
     },
+    "systems_5": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
     "tomato": {
       "inputs": {
-        "flake-utils": "flake-utils_3",
-        "nixpkgs": "nixpkgs_9"
+        "flake-utils": "flake-utils_4",
+        "nixpkgs": "nixpkgs_10"
       },
       "locked": {
         "lastModified": 1703316495,
@@ -712,6 +816,22 @@
       "original": {
         "owner": "gabrielzschmitz",
         "repo": "Tomato.C",
+        "type": "github"
+      }
+    },
+    "vim-snippets": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1704968982,
+        "narHash": "sha256-QIvfoEmorMIoa+xQdN0iZVG0x7lJhNmA+5AJ2jfN39k=",
+        "owner": "YvesStraten",
+        "repo": "vim-snippets",
+        "rev": "c4ae9d89f0fac0034f7b7dd50a5e134abc20e917",
+        "type": "github"
+      },
+      "original": {
+        "owner": "YvesStraten",
+        "repo": "vim-snippets",
         "type": "github"
       }
     },
