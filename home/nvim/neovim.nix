@@ -130,6 +130,12 @@
         type = "lua";
         config = "${builtins.readFile ./configs/colorizer.lua}";
       }
+
+      {
+        plugin = presence-nvim;
+        type = "lua";
+        config = "require('presence').setup({})";
+      }
     ];
   };
 
