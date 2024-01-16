@@ -20,18 +20,25 @@ cmp.setup({
 		end,
 	},
 	window = {
-		-- completion = cmp.config.window.bordered(),
-		documentation = cmp.config.window.bordered(),
+		completion = { -- rounded border; thin-style scrollbar
+			border = "rounded",
+			scrollbar = "║",
+		},
+		documentation = { -- no border; native-style scrollbar
+			border = "rounded",
+			scrollbar = "",
+			-- other options
+		},
 	},
 	formatting = {
 		format = lspkind.cmp_format({
 			mode = "symbol_text",
-			menu = ({
+			menu = {
 				nvim_lsp = "[LSP]",
 				ultisnips = "[US]",
 				path = "[Path]",
-				buffer = "[Buffer]"
-			})
+				buffer = "[Buffer]",
+			},
 		}),
 	},
 	mapping = cmp.mapping.preset.insert({
@@ -40,18 +47,18 @@ cmp.setup({
 		["<C-Space>"] = cmp.mapping.complete(),
 		["<C-e>"] = cmp.mapping.abort(),
 		["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-		["<Tab>"] = cmp.mapping(
-			function(fallback)
-				ultisnip.expand_or_jump_forwards(fallback)
-			end,
-			{ "i", "s", --[[ "c" (to enable the mapping in command mode) ]] }
-		),
-		["<S-Tab>"] = cmp.mapping(
-			function(fallback)
-				ultisnip.jump_backwards(fallback)
-			end,
-			{ "i", "s", --[[ "c" (to enable the mapping in command mode) ]] }
-		),
+		["<Tab>"] = cmp.mapping(function(fallback)
+			ultisnip.expand_or_jump_forwards(fallback)
+		end, {
+			"i",
+			"s", --[[ "c" (to enable the mapping in command mode) ]]
+		}),
+		["<S-Tab>"] = cmp.mapping(function(fallback)
+			ultisnip.jump_backwards(fallback)
+		end, {
+			"i",
+			"s", --[[ "c" (to enable the mapping in command mode) ]]
+		}),
 
 		-- ["<Tab>"] = cmp.mapping(function(fallback)
 		-- 	if cmp.visible() then
@@ -81,10 +88,10 @@ cmp.setup({
 		{ name = "nvim_lsp" },
 		{ name = "buffer" },
 		{ name = "path" },
-		{ name = "nvim_lua"},
+		{ name = "nvim_lua" },
 		-- { name = 'vsnip' }, -- For vsnip users.
 		-- { name = "luasnip" }, -- For luasnip users.
-		{ name = 'ultisnips' }, -- For ultisnips users.
+		{ name = "ultisnips" }, -- For ultisnips users.
 		-- { name = 'snippy' }, -- For snippy users.
 	}),
 })
