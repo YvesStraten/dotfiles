@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
     (python311.withPackages (ps:
       with ps; [
@@ -12,6 +12,7 @@
     nodejs_21
     rustup
     yarn
+    openjdk19
 
     unzip
     sshfs

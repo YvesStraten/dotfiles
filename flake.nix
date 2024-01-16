@@ -22,6 +22,8 @@
     nix-colors.url = "github:misterio77/nix-colors";
     devenv.url = "github:cachix/devenv";
 
+    nix-minecraft.url = "github:Infinidoge/nix-minecraft";
+
     vim-snippets = {
       url = "github:YvesStraten/vim-snippets";
       flake = false;
