@@ -1,7 +1,8 @@
-{ config
-, pkgs
-, inputs
-, ...
+{
+  config,
+  pkgs,
+  inputs,
+  ...
 }: {
   imports = [
     inputs.nix-colors.homeManagerModules.default
@@ -19,6 +20,7 @@
     ./kitty/kitty.nix
     ./tmux/tmux.nix
     ./firefox/firefox.nix
+    ./alt-tab/alt-tab.nix
 
     ./zsh/zsh.nix
   ];
@@ -39,7 +41,7 @@
     homeDirectory = "/Users/yvess";
     stateVersion = "22.11"; # Please read the comment before changing.
 
-    sessionPath = [ "$HOME/.local/bin" ];
+    sessionPath = ["$HOME/.local/bin"];
   };
 
   # Let Home Manager install and manage itself.

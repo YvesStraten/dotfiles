@@ -50,10 +50,8 @@
         discord
         iina
         ani-cli
-        inputs.tomato.defaultPackage.aarch64-darwin
         xcbuild
         yvess.skim
-        yvess.alt-tab
 
         gimp
         htop
