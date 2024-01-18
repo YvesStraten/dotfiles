@@ -1,11 +1,11 @@
 {
   description = "My Nix based systems";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/23.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nvchad.url = "github:YvesStraten/NvChad";
     ani-cli.url = "github:YvesStraten/ani-cli";
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-darwin = {
