@@ -29,14 +29,6 @@
           };
         };
 
-      iina = prev.iina.overrideAttrs (o: rec {
-        installPhase = ''
-          ${o.installPhase}
-          mkdir -p $out/bin
-          ln -s "$out/Applications/IINA.app/Contents/MacOS/iina-cli" "$out/bin/iina"
-        '';
-      });
-
       sddm = prev.sddm.overrideAttrs (o: {
         buildInputs =
           o.buildInputs
