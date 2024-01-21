@@ -60,12 +60,13 @@
       direction = "float";
       hideNumbers = true;
       openMapping = "<C-e>";
+
+      floatOpts.border = "curved";
     };
     vimtex = {
       enable = true;
       viewMethod = "zathura_simple";
     };
-    rainbow-delimiters.enable = true;
   };
 
   colorschemes.kanagawa = {

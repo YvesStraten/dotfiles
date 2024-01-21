@@ -74,11 +74,13 @@
         "aarch64-darwin"
       ];
 
-      perSystem = {
-        pkgs,
-        system,
-        ...
-      }: let
+      perSystem = {system, ...}: let
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [
+            (import ./overlays/vim.nix {inherit inputs;})
+          ];
+        };
         nixvimLib = nixvim.lib.${system};
         nixvim' = nixvim.legacyPackages.${system};
         nvim = nixvim'.makeNixvimWithModule {
