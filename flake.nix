@@ -1,9 +1,9 @@
 {
   description = "My Nix based systems";
   inputs = {
+    flake-parts.url = "github:hercules-ci/flake-parts";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nvchad.url = "github:YvesStraten/NvChad";
-    ani-cli.url = "github:YvesStraten/ani-cli";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -13,7 +13,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
-    tomato.url = "github:gabrielzschmitz/Tomato.C";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     hyprland.url = "github:hyprwm/hyprland";
     hyprpicker.url = "github:hyprwm/hyprpicker";
@@ -23,6 +22,7 @@
     devenv.url = "github:cachix/devenv";
 
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
+    nixvim.url = "github:nix-community/nixvim";
 
     vim-snippets = {
       url = "github:YvesStraten/vim-snippets";
@@ -46,15 +46,14 @@
   };
 
   outputs = {
-    self,
     nixpkgs,
     nix-colors,
-    tomato,
+    nixvim,
     nix-darwin,
     vim-snippets,
     ouroboros,
+    flake-parts,
     devenv,
-    ani-cli,
     home-manager,
     hyprland,
     hyprpicker,
@@ -64,107 +63,102 @@
     nur,
     ...
   } @ inputs: let
-    forAllSystems = function:
-      nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-darwin"] (system: function nixpkgs.legacyPackages.${system});
-    pkgs = nixpkgs.legacyPackages."x86_64-linux";
-    pkgs-darwin = nixpkgs.legacyPackages."aarch64-darwin";
-  in {
-    ## TODO: split packages by platform
-    packages = forAllSystems (pkgs: import ./packages/default.nix {inherit pkgs;});
+    config = import ./home/nvim/config/default.nix;
+  in
+    flake-parts.lib.mkFlake {inherit inputs;}
+    {
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
 
-    devShells = forAllSystems (pkgs: {
-      csharp = devenv.lib.mkShell {
-        inherit inputs pkgs;
-        modules = [({pkgs, ...}: {languages.dotnet.enable = true;})];
+      perSystem = {
+        pkgs,
+        system,
+        ...
+      }: let
+        nixvimLib = nixvim.lib.${system};
+        nixvim' = nixvim.legacyPackages.${system};
+        nvim = nixvim'.makeNixvimWithModule {
+          inherit pkgs;
+          module = config;
+          # You can use `extraSpecialArgs` to pass additional arguments to your module files
+          extraSpecialArgs = {
+            # inherit (inputs) foo;
+          };
+        };
+      in {
+        checks = {
+          # Run `nix flake check .` to verify that your config is not broken
+          default = nixvimLib.check.mkTestDerivationFromNvim {
+            inherit nvim;
+            name = "A nixvim configuration";
+          };
+        };
+
+        packages = {
+          default = nvim;
+        };
       };
 
-      web = devenv.lib.mkShell {
-        inherit inputs pkgs;
-        modules = [
-          ({pkgs, ...}: {
-            languages = {
-              typescript.enable = true;
-              javascript.enable = true;
-            };
+      #     ## TODO: split packages by platform
 
-            packages = with pkgs; [sqlite mongosh];
-          })
-        ];
-      };
+      flake = {
+        darwinConfigurations = {
+          "shaco" = nix-darwin.lib.darwinSystem {
+            system = "aarch64-darwin";
+            specialArgs = {inherit inputs;};
+            modules = [
+              ./modules/darwin/configuration.nix
+              ./overlays/default.nix
+              home-manager.darwinModules.home-manager
+              {
+                home-manager = {
+                  extraSpecialArgs = {inherit inputs;};
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  users.yvess = {...}: {imports = [./home/darwin.nix];};
+                };
+              }
+            ];
+          };
+        };
 
-      document = devenv.lib.mkShell {
-        inherit inputs pkgs;
-        modules = [
-          ({pkgs, ...}: {
-            languages.texlive.enable = true;
-          })
-        ];
-      };
+        nixosConfigurations = {
+          nitro = nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            specialArgs = {inherit inputs;};
+            modules = [
+              nur.nixosModules.nur
+              ./hosts/nixos/hardware-configuration.nix
+              ./modules/default.nix
+              nixos-hardware.nixosModules.common-pc-laptop-ssd
+              nixos-hardware.nixosModules.common-pc-laptop
 
-      c = devenv.lib.mkShell {
-        inherit inputs pkgs;
-        modules = [
-          ({pkgs, ...}: {
-            languages = {
-              c.enable = true;
-              cplusplus.enable = true;
-              rust.enable = true;
-            };
-          })
-        ];
-      };
-    });
+              home-manager.nixosModules.home-manager
+              {
+                home-manager = {
+                  extraSpecialArgs = {inherit inputs;};
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  users.yvess = {...}: {imports = [./home/home.nix];};
+                };
+              }
+            ];
+          };
+        };
 
-    darwinConfigurations = {
-      "shaco" = nix-darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        specialArgs = {inherit inputs;};
-        modules = [
-          ./modules/darwin/configuration.nix
-          ./overlays/default.nix
-          home-manager.darwinModules.home-manager
-          {
-            home-manager = {
-              extraSpecialArgs = {inherit inputs;};
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              users.yvess = {...}: {imports = [./home/darwin.nix];};
-            };
-          }
-        ];
-      };
-    };
-
-    nixosConfigurations = {
-      nitro = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = {inherit inputs;};
-        modules = [
-          nur.nixosModules.nur
-          ./hosts/nixos/hardware-configuration.nix
-          ./modules/default.nix
-          nixos-hardware.nixosModules.common-pc-laptop-ssd
-          nixos-hardware.nixosModules.common-pc-laptop
-
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              extraSpecialArgs = {inherit inputs;};
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              users.yvess = {...}: {imports = [./home/home.nix];};
-            };
-          }
-        ];
-      };
-    };
-
-    homeConfigurations = {
-      akali = home-manager.lib.homeManagerConfiguration {
-        extraSpecialArgs = {inherit inputs;};
-        inherit pkgs;
-        modules = [./home/wsl.nix ./overlays/default.nix];
+        homeConfigurations = let
+          pkgs = nixpkgs.legacyPackages."x86_64-linux";
+        in {
+          akali = home-manager.lib.homeManagerConfiguration {
+            extraSpecialArgs = {inherit inputs;};
+            inherit pkgs;
+            modules = [./home/wsl.nix ./overlays/default.nix];
+          };
+        };
       };
     };
-  };
 }

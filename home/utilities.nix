@@ -61,6 +61,9 @@
         nix-prefetch-scripts
       ]);
 
+  services.syncthing = {
+    enable = true;
+  };
   #  programs.thunderbird = {
   #    enable = true;
   #    profiles.yvess = {
