@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   programs.firefox = {
     enable = true;
     package = pkgs.firefox-bin;
@@ -7,6 +7,7 @@
       extensions = with pkgs.nur.repos.rycee.firefox-addons; [
         darkreader
         ublock-origin
+        tree-style-tab
       ];
       settings = {
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;

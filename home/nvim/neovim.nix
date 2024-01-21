@@ -23,9 +23,9 @@
       }
 
       {
-        plugin = nvim-notify;
+        plugin = noice-nvim;
         type = "lua";
-        config = "${builtins.readFile ./configs/notify.lua}";
+        config = "${builtins.readFile ./configs/noice.lua}";
       }
 
       {
@@ -163,6 +163,7 @@
     clang-tools
     # nixpkgs-fmt
     nixfmt
+    jdt-language-server
 
     # DAP protocols
     lldb

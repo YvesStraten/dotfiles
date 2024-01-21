@@ -7,7 +7,6 @@ vim.notify = function(msg, ...)
 
 	notify(msg, ...)
 end
-
 require("lspsaga").setup({})
 lspconfig.lua_ls.setup({
 	settings = {
@@ -36,3 +35,4 @@ lspconfig.tsserver.setup({})
 lspconfig.texlab.setup({})
 lspconfig.rnix.setup({})
 lspconfig.rust_analyzer.setup({})
+lspconfig.jdtls.setup({ cmd = { "jdt-language-server" } })

@@ -36,7 +36,6 @@ in {
         LegacyTimers = true;
         LimitLoadToSessionType = "Aqua";
         RunAtLoad = true;
-        KeepAlive = true;
       };
     };
   };
