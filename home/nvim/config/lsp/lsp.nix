@@ -17,8 +17,8 @@
     lspsaga.enable = true;
     nvim-jdtls = {
       enable = true;
-      configuration = "~/.cache/jdtls/config";
-      data = "~/.cache/jdtls/workspace";
+      configuration = "/Users/yvess/.cache/jdtls/config";
+      data = "/Users/yvess/.cache/jdtls/workspace";
     };
   };
 }
