@@ -14,11 +14,10 @@
 
     # Editors
     # ./nvim/neovim.nix
-    ./emacs/emacs.nix
+    # ./emacs/emacs.nix
     # ./vscode/vscode.nix
 
     ./alacritty/alacritty.nix
-    ./foot/foot.nix
     ./mpv/mpv.nix
     ./tmux/tmux.nix
     ./firefox/firefox.nix

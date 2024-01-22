@@ -1,7 +1,12 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  firefox =
+    if pkgs.stdenv.isDarwin
+    then pkgs.firefox-bin
+    else null;
+in {
   programs.firefox = {
     enable = true;
-    package = pkgs.firefox-bin;
+    package = firefox;
     profiles.yvess = {
       isDefault = true;
       extensions = with pkgs.nur.repos.rycee.firefox-addons; [

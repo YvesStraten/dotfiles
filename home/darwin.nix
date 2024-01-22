@@ -6,7 +6,6 @@
 }: {
   imports = [
     inputs.nix-colors.homeManagerModules.default
-    inputs.nvchad.homeManagerModules.default
     # Main stuff
     ./languages.nix
     ./utilities.nix
