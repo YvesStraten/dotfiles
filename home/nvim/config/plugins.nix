@@ -42,7 +42,13 @@
     # noice.enable = true;
 
     notify.enable = true;
-    nvim-colorizer.enable = true;
+    nvim-colorizer = {
+      enable = true;
+      userDefaultOptions = {
+        tailwind = true;
+        sass.enable = true;
+      };
+    };
     nvim-autopairs.enable = true;
     neo-tree = {
       enable = true;

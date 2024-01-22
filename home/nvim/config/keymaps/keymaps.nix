@@ -133,23 +133,5 @@
       action = "Nzzzv";
       options.silent = true;
     }
-
-    {
-      mode = "x";
-      key = "<leader>p";
-      action = "'\" _dP'";
-    }
-
-    {
-      mode = "v";
-      key = "<leader>y";
-      action = "'\"+y'";
-    }
-
-    {
-      mode = "n";
-      key = "<leader>Y";
-      action = "'\"+Y'";
-    }
   ];
 }

@@ -3,7 +3,6 @@
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nvchad.url = "github:YvesStraten/NvChad";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,7 +20,6 @@
     nix-colors.url = "github:misterio77/nix-colors";
     devenv.url = "github:cachix/devenv";
 
-    nix-minecraft.url = "github:Infinidoge/nix-minecraft";
     nixvim.url = "github:nix-community/nixvim";
 
     vim-snippets = {
@@ -59,8 +57,8 @@
     hyprpicker,
     hypr-contrib,
     nixos-hardware,
-    nvchad,
     nur,
+    self,
     ...
   } @ inputs: let
     config = import ./home/nvim/config/default.nix;
@@ -102,10 +100,9 @@
 
         packages = {
           default = nvim;
+          nvim = nvim;
         };
       };
-
-      #     ## TODO: split packages by platform
 
       flake = {
         darwinConfigurations = {
@@ -118,7 +115,7 @@
               home-manager.darwinModules.home-manager
               {
                 home-manager = {
-                  extraSpecialArgs = {inherit inputs;};
+                  extraSpecialArgs = {inherit inputs self;};
                   useGlobalPkgs = true;
                   useUserPackages = true;
                   users.yvess = {...}: {imports = [./home/darwin.nix];};
