@@ -27,9 +27,10 @@
     };
 
     extraConfigLuaPre = ''
-
       local cmp_ultisnips_mappings = require("cmp_nvim_ultisnips.mappings")
 
+      vim.opt.undodir = os.getenv('HOME') .. '/.vim/undodir';
+      vim.opt.backupdir = os.getenv('HOME') .. '/.vim/backup';
     '';
   };
 }

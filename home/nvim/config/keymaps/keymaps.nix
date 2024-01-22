@@ -121,5 +121,35 @@
       action = ":vsplit<cr>";
       options.silent = true;
     }
+
+    {
+      key = "n";
+      action = "nzzzv";
+      options.silent = true;
+    }
+
+    {
+      key = "N";
+      action = "Nzzzv";
+      options.silent = true;
+    }
+
+    {
+      mode = "x";
+      key = "<leader>p";
+      action = "'\" _dP'";
+    }
+
+    {
+      mode = "v";
+      key = "<leader>y";
+      action = "'\"+y'";
+    }
+
+    {
+      mode = "n";
+      key = "<leader>Y";
+      action = "'\"+Y'";
+    }
   ];
 }

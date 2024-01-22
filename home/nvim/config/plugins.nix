@@ -20,19 +20,26 @@
     treesitter = {
       enable = true;
       ensureInstalled = "all";
+      indent = true;
       disabledLanguages = [
         "latex"
+        "tex"
       ];
+      nixvimInjections = true;
     };
     which-key.enable = true;
 
-    lualine.enable = true;
+    lualine = {
+      enable = true;
+      globalstatus = true;
+    };
     comment-nvim.enable = true;
 
     tmux-navigator.enable = true;
     indent-blankline.enable = true;
+    ts-autotag.enable = true;
 
-    noice.enable = true;
+    # noice.enable = true;
 
     notify.enable = true;
     nvim-colorizer.enable = true;
