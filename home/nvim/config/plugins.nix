@@ -109,6 +109,17 @@
     vimtex = {
       enable = true;
       viewMethod = "zathura_simple";
+      extraConfig = {
+        compiler_latexmk = {
+          options = [
+            "-verbose"
+            "-file-line-error"
+            "-synctex=1"
+            "-interaction=nonstopmode"
+            "-shell-escape"
+          ];
+        };
+      };
     };
   };
 
