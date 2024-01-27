@@ -38,6 +38,19 @@
       vim.keymap.set("n", "<leader>y", '"+y')
       vim.keymap.set("v", "<leader>y", '"+y')
       vim.keymap.set("n", "<leader>Y", '"+Y')
+
+    '';
+
+    extraConfigLuaPost = ''
+       vim.g.vimtex_compiler_latexmk = {
+       	options = {
+      "-shell-escape",
+       		"-verbose",
+       		"-file-line-error",
+       		"-synctex=1",
+       		"-interaction=nonstopmode",
+       	},
+       }
     '';
   };
 }
