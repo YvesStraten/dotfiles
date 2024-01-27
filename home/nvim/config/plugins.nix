@@ -9,6 +9,7 @@
     ./lsp/nvim-cmp.nix
     ./lsp/dap.nix
     ./gitsigns/gitsigns.nix
+    ./lualine.nix
     # ./dashboard/dashboard.nix
   ];
 
@@ -27,41 +28,6 @@
       nixvimInjections = true;
     };
     which-key.enable = true;
-
-    lualine = {
-      enable = true;
-      globalstatus = true;
-      sections = {
-        lualine_a = [
-          {
-            name.__raw = ''
-              function()
-              	local mode_map = {
-              		n = "Normal",
-              		i = "Insert",
-              		v = "Visual",
-              		V = "V-line",
-              		c = "Command",
-              		R = "Replace",
-              		s = "Select",
-              		S = "S-line",
-              		[""] = "Empty",
-              		t = "Terminal",
-              	}
-
-              	local mode = vim.fn.mode()
-              	return mode_map[mode] or mode
-              end
-            '';
-          }
-        ];
-        lualine_b = [ "branch" "diff" "diagnostics" ];
-        lualine_c = [ "filename" ];
-        lualine_x = [ "filetype" ];
-        lualine_y = [ "progress" ];
-        lualine_z = [ ''" " .. os.date("%R")'' ];
-      };
-    };
 
     comment-nvim.enable = true;
 
@@ -105,6 +71,10 @@
       openMapping = "<C-e>";
 
       floatOpts.border = "curved";
+    };
+    markdown-preview = {
+      enable = true;
+      autoStart = true;
     };
     vimtex = {
       enable = true;
