@@ -92,6 +92,13 @@
     }
 
     {
+      key = "<leader>la";
+      action = ":Lspsaga code_action<CR>";
+      options.desc = "Rename definition";
+      options.silent = true;
+    }
+
+    {
       key = "<leader>lp";
       action = ":Lspsaga preview_definition<CR>";
       options.desc = "Previews definition";

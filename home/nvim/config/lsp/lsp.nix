@@ -11,6 +11,7 @@
         texlab.enable = true;
 
         pyright.enable = true;
+        rust-analyzer.enable = true;
       };
     };
     lsp-lines.enable = true;
