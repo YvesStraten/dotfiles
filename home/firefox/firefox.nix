@@ -1,4 +1,8 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  inputs,
+  ...
+}: let
   firefox =
     if pkgs.stdenv.isDarwin
     then pkgs.firefox-bin
@@ -13,6 +17,7 @@ in {
         darkreader
         ublock-origin
         tree-style-tab
+        sidebery
       ];
       settings = {
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
@@ -23,11 +28,7 @@ in {
       # Copyright goes to Miguel Avila for
       # Userchrome and content
       userChrome = ''
-        ${builtins.readFile ./userChrome.css}
-      '';
-
-      userContent = ''
-        ${builtins.readFile ./userContent.css}
+        ${builtins.readFile "${pkgs.yvess.theme}/userChrome.css"}
       '';
     };
   };
