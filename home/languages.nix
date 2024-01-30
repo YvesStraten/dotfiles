@@ -8,7 +8,6 @@
       ]))
 
     texlive.combined.scheme-full
-    gcc
     nodejs_21
     rustup
     yarn
@@ -18,6 +17,7 @@
     sshfs
     ffmpeg
     neofetch
+    clang
   ];
 
   programs.direnv = {

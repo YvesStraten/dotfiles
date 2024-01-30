@@ -1,8 +1,7 @@
-{
-  config,
-  pkgs,
-  inputs,
-  ...
+{ config
+, pkgs
+, inputs
+, ...
 }: {
   imports = [
     inputs.nix-colors.homeManagerModules.default
@@ -13,7 +12,8 @@
     ./bin/default.nix
 
     # Editors
-    ./nvim/neovim.nix
+    # ./nvim/neovim.nix
+    ./emacs/emacs.nix
 
     # ./alacritty/alacritty.nix
     ./kitty/kitty.nix
@@ -40,7 +40,7 @@
     homeDirectory = "/Users/yvess";
     stateVersion = "22.11"; # Please read the comment before changing.
 
-    sessionPath = ["$HOME/.local/bin"];
+    sessionPath = [ "$HOME/.local/bin" ];
   };
 
   # Let Home Manager install and manage itself.

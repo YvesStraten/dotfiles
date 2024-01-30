@@ -1,7 +1,6 @@
-{
-  pkgs,
-  fetchpatch,
-  ...
+{ pkgs
+, fetchpatch
+, ...
 }: {
   programs.emacs = {
     enable = true;
@@ -13,20 +12,14 @@
       with epkgs; [
         vterm
         treesit-grammars.with-all-grammars
-        auctex-latexmk
-        vterm-toggle
-        magit
         all-the-icons
-        org-roam
-        org-roam-ui
       ];
   };
 
-  home.file.".emacs.d/marivector.png" = {source = ./marivector.png;};
-  home.file.".emacs.d/init.el" = {source = ./init.el;};
-
   home.packages = with pkgs; [
-    openjdk17
+    ripgrep
+    fd
+
     ispell
     languagetool
     rnix-lsp
@@ -53,5 +46,5 @@
     lldb
   ];
 
-  services.syncthing = {enable = true;};
+  services.syncthing = { enable = true; };
 }
