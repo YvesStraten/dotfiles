@@ -105,3 +105,6 @@
 
 (use-package! xenops
   :hook (LaTeX-mode . xenops-mode))
+
+(use-package! centered-cursor-mode
+  :config (global-centered-cursor-mode))
