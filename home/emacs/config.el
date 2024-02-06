@@ -80,10 +80,14 @@
   (setq elcord-editor-icon 'emacs_icon))
 
 (use-package! beacon
-  :config (beacon-mode))
+  :config
+  (add-to-list 'beacon-dont-blink-major-modes 'vterm-mode)
+  (beacon-mode))
 
 (map! :leader
-      :desc "Kill buffer" "x" #'kill-current-buffer)
+      :desc "Kill buffer" "x" #'centaur-tabs--kill-this-buffer-dont-ask
+      :desc "Kill all other buffers" "X" #'centaur-tabs-kill-other-buffers-in-current-group
+      )
 
 (map! :leader
       :desc "Look definition" "ld" #'lsp-find-references

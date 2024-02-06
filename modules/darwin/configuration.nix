@@ -54,6 +54,7 @@
       yabai -m rule --add app="WhatsApp" manage=off
       yabai -m rule --add app="Finder" manage=off
       yabai -m rule --add app="Thunderbird" manage=off
+      yabai -m rule --add app="IINA" manage=off
     '';
   };
 
