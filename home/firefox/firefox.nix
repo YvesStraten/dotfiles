@@ -25,8 +25,6 @@ in {
         "gfx.webrender.all" = true;
         "svg.context-properties.content.enabled" = true;
       };
-      # Copyright goes to Miguel Avila for
-      # Userchrome and content
       userChrome = ''
         ${builtins.readFile "${pkgs.yvess.theme}/userChrome.css"}
       '';

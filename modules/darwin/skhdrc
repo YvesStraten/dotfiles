@@ -5,9 +5,10 @@ alt - k : yabai -m window --focus north
 alt - l : yabai -m window --focus east
 
 alt - return : open -na Kitty 
-alt - e : open -na Kitty --args -e yazi 
+alt - n : open -na Kitty --args -e yazi
 alt - b : open -na Firefox
 alt + shift - s : open -a Screenshot
+alt - e : open -na Emacs
 
 # move window
 alt + shift - h : yabai -m window --warp west

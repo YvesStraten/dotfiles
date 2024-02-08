@@ -40,7 +40,7 @@
     homeDirectory = "/Users/yvess";
     stateVersion = "22.11"; # Please read the comment before changing.
 
-    sessionPath = [ "$HOME/.local/bin" ];
+    sessionPath = [ "$HOME/.config/emacs/bin" ];
   };
 
   # Let Home Manager install and manage itself.

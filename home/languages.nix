@@ -17,7 +17,7 @@
     sshfs
     ffmpeg
     neofetch
-    clang
+    gcc
   ];
 
   programs.direnv = {

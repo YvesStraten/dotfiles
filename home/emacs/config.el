@@ -80,10 +80,14 @@
   (setq elcord-editor-icon 'emacs_icon))
 
 (use-package! beacon
-  :config (beacon-mode))
+  :config
+  (add-to-list 'beacon-dont-blink-major-modes 'vterm-mode)
+  (beacon-mode))
 
 (map! :leader
-      :desc "Kill buffer" "x" #'kill-current-buffer)
+      :desc "Kill buffer" "x" #'centaur-tabs--kill-this-buffer-dont-ask
+      :desc "Kill all other buffers" "X" #'centaur-tabs-kill-other-buffers-in-current-group
+      )
 
 (map! :leader
       :desc "Look definition" "ld" #'lsp-find-references
@@ -95,8 +99,12 @@
       :desc "vsplit" "sv" #'split-window-vertically)
 
 (after! neotree
-  (setq neo-smart-open t
-        neo-window-width 20))
+  (setq neo-smart-open 1
+        neo-window-width 20
+        neo-autorefresh 1
+        neo-show-hidden-files 1)
+  (map! :leader
+        :desc "File manager" "op" #'neotree-toggle))
 
 (use-package! rainbow-mode
   :config (rainbow-mode 1))
