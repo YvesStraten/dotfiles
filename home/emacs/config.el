@@ -103,8 +103,12 @@
 
 (setq fancy-splash-image "~/dotfiles/home/emacs/marivector.png")
 
-(use-package! xenops
-  :hook (LaTeX-mode . xenops-mode))
+;; (use-package! xenops
+;;   :hook (LaTeX-mode . xenops-mode))
 
 (use-package! centered-cursor-mode
   :config (global-centered-cursor-mode))
+
+(setq TeX-command-extra-options "-shell-escape")
+(setq shell-escape-mode "-shell-escape")
+(setq-default TeX-master nil)
