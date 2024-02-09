@@ -5,6 +5,7 @@
         yt-dlp
         spotdl
         pygments
+        tkinter
       ]))
 
     texlive.combined.scheme-full
