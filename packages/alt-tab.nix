@@ -9,7 +9,7 @@ stdenv.mkDerivation rec {
     fetchzip
       {
         url = "https://github.com/lwouis/alt-tab-macos/releases/download/v${version}/AltTab-${version}.zip";
-        sha256 = "DLQ/szVeEMdpWQ9JLv0pEJ92Z1glUPV62OKBzIJF/tA=";
+        sha256 = "d0BicCr/OL+8EGhiDQ82Aj0dKKI2oQILPqHHmWGQ28Y=";
       };
 
   installPhase = ''

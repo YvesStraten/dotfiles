@@ -6,31 +6,12 @@
   imports = [
     inputs.nix-colors.homeManagerModules.default
     # Main stuff
-    ./languages.nix
-    ./utilities.nix
     ./theming-darwin.nix
     ./bin/default.nix
 
-    # Editors
-    # ./nvim/neovim.nix
-    ./emacs/emacs.nix
-
-    # ./alacritty/alacritty.nix
-    ./kitty/kitty.nix
-    ./tmux/tmux.nix
-    ./firefox/firefox.nix
-    ./alt-tab/alt-tab.nix
-
-    ./zsh/zsh.nix
+    ./dev
+    ./utils
   ];
-
-  # targets.genericLinux.enable = true;
-
-  # programs.nvchad = {
-  #   enable = true;
-  # customConfig = ./custom;
-  # defaultEditor = true;
-  # };
 
   nixpkgs.config.allowUnfree = true;
   colorScheme = inputs.nix-colors.colorSchemes.gruvbox-dark-medium;
