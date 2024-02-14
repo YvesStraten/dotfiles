@@ -106,6 +106,11 @@
   (map! :leader
         :desc "File manager" "op" #'neotree-toggle))
 
+(after! drag-stuff
+  (define-key evil-visual-state-map (kbd "K") 'drag-stuff-up)
+  (define-key evil-visual-state-map (kbd "J") 'drag-stuff-down)
+)
+
 (use-package! rainbow-mode
   :config (rainbow-mode 1))
 
@@ -113,9 +118,6 @@
 
 ;; (use-package! xenops
 ;;   :hook (LaTeX-mode . xenops-mode))
-
-(use-package! centered-cursor-mode
-  :config (global-centered-cursor-mode))
 
 (setq TeX-command-extra-options "-shell-escape")
 (setq shell-escape-mode "-shell-escape")

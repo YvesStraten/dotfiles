@@ -56,4 +56,3 @@
 (package! rainbow-mode)
 (package! evil-tutor)
 ;; (package! xenops)
-(package! centered-cursor-mode)
