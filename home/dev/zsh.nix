@@ -6,14 +6,6 @@
     enableCompletion = true;
 
     shellAliases = {
-      updatenix = "nix flake update ~/dotfiles";
-      # upgradenix = "sudo nixos-rebuild switch --flake ~/dotfiles#nitro";
-      updatesymlinks = "home-manager switch --flake ~/dotfiles#akali";
-      rebuild = "darwin-rebuild switch --flake ~/dotfiles --impure";
-      mux = "tmuxinator";
-      web = "nix develop ~/dotfiles#web --impure";
-      c = "nix develop ~/dotfiles#c --impure";
-      arduino = "nix develop ~/dotfiles#arduino --impure";
       cat = "${pkgs.bat}/bin/bat";
     };
     profileExtra = ''
