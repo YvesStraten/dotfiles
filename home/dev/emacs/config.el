@@ -36,7 +36,10 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+(setq display-line-numbers-type 'relative)
+
+(set-frame-parameter (selected-frame) 'alpha '(95 . 95))
+(add-to-list 'default-frame-alist '(alpha . (95 . 95)))
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -81,7 +84,8 @@
 
 (use-package! beacon
   :config
-  (add-to-list 'beacon-dont-blink-major-modes 'vterm-mode)
+  (setq beacon-dont-blink-major-modes
+        (append '(vterm-mode +doom-dashboard-mode) beacon-dont-blink-major-modes))
   (beacon-mode))
 
 (map! :leader
@@ -114,8 +118,6 @@
 (use-package! rainbow-mode
   :config (rainbow-mode 1))
 
-(setq fancy-splash-image "~/dotfiles/home/emacs/marivector.png")
-
 ;; (use-package! xenops
 ;;   :hook (LaTeX-mode . xenops-mode))
 
@@ -125,4 +127,5 @@
 
 (if (not (eq system-type 'windows-nt))
     (use-package! all-the-icons-dired
+      :defer t
       :hook (dired-mode . all-the-icons-dired-mode)))
