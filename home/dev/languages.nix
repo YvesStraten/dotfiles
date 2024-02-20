@@ -14,6 +14,8 @@
     yarn
     openjdk19
 
+    sqlite
+
     unzip
     sshfs
     ffmpeg
