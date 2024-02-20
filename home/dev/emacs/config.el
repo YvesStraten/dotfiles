@@ -125,7 +125,6 @@
 (setq shell-escape-mode "-shell-escape")
 (setq-default TeX-master nil)
 
-(if (not (eq system-type 'windows-nt))
-    (use-package! all-the-icons-dired
-      :defer t
-      :hook (dired-mode . all-the-icons-dired-mode)))
+(use-package! all-the-icons-dired
+  :defer t
+  :hook (dired-mode . all-the-icons-dired-mode))
