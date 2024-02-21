@@ -128,3 +128,29 @@
 (use-package! all-the-icons-dired
   :defer t
   :hook (dired-mode . all-the-icons-dired-mode))
+
+(after! pdf-tools
+  (use-package! pdf-tools
+    :hook (pdf-view-mode . pdf-view-midnight-minor-mode)))
+
+(after! centaur-tabs
+  (use-package! pdf-tools
+    :hook
+    (pdf-view-mode . centaur-tabs-local-mode)
+    (LaTeX-mode . centaur-tabs-local-mode)
+    (dired-mode . centaur-tabs-local-mode)
+    ))
+
+(after! tex
+  (use-package! tex
+    :config
+    (setq TeX-view-program-selection '((output-pdf "PDF Tools")))
+    :hook
+    (LaTeX-mode .
+                (lambda ()
+                  (add-hook 'after-save-hook
+                              (lambda ()
+                                  (TeX-save-document (TeX-master-file))
+                                  (TeX-command-run-all nil))
+                              ) 0 t)
+                )))
