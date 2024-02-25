@@ -7,7 +7,7 @@
     package =
       if pkgs.stdenv.isLinux
       then pkgs.emacs-pgtk
-      else pkgs.emacs-macport;
+      else pkgs.emacs29-macport;
     extraPackages = epkgs:
       with epkgs; [
         vterm

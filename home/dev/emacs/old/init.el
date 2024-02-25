@@ -1,50 +1,22 @@
-(defvar elpaca-installer-version 0.5)
-(defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
-(defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
-(defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
-(defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
-                              :ref nil
-                              :files (:defaults (:exclude "extensions"))
-                              :build (:not elpaca--activate-package)))
-(let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
-       (build (expand-file-name "elpaca/" elpaca-builds-directory))
-       (order (cdr elpaca-order))
-       (default-directory repo))
-  (add-to-list 'load-path (if (file-exists-p build) build repo))
-  (unless (file-exists-p repo)
-    (make-directory repo t)
-    (when (< emacs-major-version 28) (require 'subr-x))
-    (condition-case-unless-debug err
-        (if-let ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
-                 ((zerop (call-process "git" nil buffer t "clone"
-                                       (plist-get order :repo) repo)))
-                 ((zerop (call-process "git" nil buffer t "checkout"
-                                       (or (plist-get order :ref) "--"))))
-                 (emacs (concat invocation-directory invocation-name))
-                 ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
-                                       "--eval" "(byte-recompile-directory \".\" 0 'force)")))
-                 ((require 'elpaca))
-                 ((elpaca-generate-autoloads "elpaca" repo)))
-            (progn (message "%s" (buffer-string)) (kill-buffer buffer))
-          (error "%s" (with-current-buffer buffer (buffer-string))))
-      ((error) (warn "%s" err) (delete-directory repo 'recursive))))
-  (unless (require 'elpaca-autoloads nil t)
-    (require 'elpaca)
-    (elpaca-generate-autoloads "elpaca" repo)
-    (load "./elpaca-autoloads")))
-(add-hook 'after-init-hook #'elpaca-process-queues)
-(elpaca `(,@elpaca-order))
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-;; Install use-package support
-(elpaca elpaca-use-package
-  ;; Enable :elpaca use-package keyword.
-  (elpaca-use-package-mode)
-  ;; Assume :elpaca t unless otherwise specified.
-  (setq elpaca-use-package-by-default t
-        use-package-always-defer t))
-
-;; Block until current queue processed.
-(elpaca-wait)
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
+(setq use-package-always-defer t)
 
 (defun reload-init-file ()
   "Reload the `init.el` configuration file."
@@ -68,6 +40,77 @@
 
 (use-package evil-nerd-commenter
   :after evil)
+
+(use-package general
+  :demand
+  :config
+  (general-evil-setup)
+  (general-create-definer ys/leader-keys
+    :states '(normal insert visual emacs)
+    :keymaps 'override
+    :prefix "SPC"
+    :global-prefix "M-SPC")
+
+
+  (ys/leader-keys
+    "f" '(:ignore t :wk "projectile")
+    "ff" '(counsel-projectile-find-file :wk "Find file")
+    "fb" '(counsel-projectile-switch-to-buffer :wk "Switch to buffer")
+    "fp" '(counsel-projectile-switch-project :wk "Switch project")
+    "fg" '(counsel-projectile-grep :wk "Grep for file")
+    )
+
+  (ys/leader-keys
+    "x" '(kill-this-buffer :wk "Kill buffer"))
+
+  (ys/leader-keys
+    "j" '(avy-goto-char-2 :wk "Search buffer"))
+
+  (ys/leader-keys
+    "s" '(:ignore t :wk "window")
+    "sh" '(evil-window-split :wk "Horizontal split")
+    "sv" '(evil-window-vsplit :wk "Vertical split")
+    "sp" '(langtool-check :wk "Check with langtool")
+    "sk" '(flyspell-correct-wrapper :wk "Flyspell correct")
+    "sc" '(:ignore t :wk "Correct")
+    "scp" '(langtool-correct-at-point :wk "Correct at point")
+    "scb" '(langtool-correct-buffer :wk "Correct buffer"))
+
+  (ys/leader-keys
+    "b" '(evilnc-comment-or-uncomment-lines :wk "Comment"))
+
+
+  (ys/leader-keys
+    "t" '(vterm-toggle :wk "vterm"))
+
+  (ys/leader-keys
+    "e" '(emmet-expand-line :wk "emmet"))
+
+  (ys/leader-keys
+    "c" '(centaur-tabs-ace-jump :wk "Jump to tab")
+    )
+
+  (ys/leader-keys
+    "l" '(:ignore t :wk "Lsp")
+    "lr" '(eglot-rename :wk "Rename reference")
+    "lf" '(format-all-buffer
+           :wk "Formats buffer")
+    "la" '(eglot-code-actions :wk "Code actions"))
+
+  (ys/leader-keys
+    "o" '(:ignore t :wk "Org")
+    "ob" '(org-mark-ring-goto :wk "Travel to origin link")
+    "oa" '(org-agenda :wk "Org agenda")
+    "oe" '(org-export-dispatch :wk "Org export")
+    "oi" '(org-toggle-item :wk "Org toggle Item")
+    "ot" '(org-todo :wk "Org Todo")
+    "oT" '(org-todo-list :wk "Org Todo List")
+    "op" '(org-tree-slide-mode :wk "Present")
+    )
+
+  (ys/leader-keys
+    "g" '(magit :wk "Open magit"))
+  )
 
 (use-package toc-org
   :defer
@@ -171,25 +214,31 @@
       org-use-sub-superscripts "{}"
       org-image-actual-width '(300))
 
-(use-package latex
-  :mode
-  ("\\.tex\\'" . LaTeX-mode)
+(with-eval-after-load 'tex
+
+  (add-hook 'LaTeX-mode-hook (lambda () (electric-indent-local-mode -1)))
+  (add-hook 'LaTeX-mode-hook (lambda () (prettify-symbols-mode 1)))
+  (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
+  (add-to-list
+   'TeX-view-program-selection
+   '(output-pdf "PDF Tools"))
+  (add-hook 'LaTeX-mode-hook
+  		      (lambda ()
+   			(add-hook 'after-save-hook
+   					      (lambda ()
+   						(TeX-save-document (TeX-master-file))
+   						(TeX-command-run-all nil))
+   					      ) 0 t)))
+
+(use-package auctex
+  :hook
+  (LaTeX-mode . LaTeX-math-mode)
   :config
   (setq TeX-parse-self t
-       TeX-auto-save t
-       TeX-save-query nil
-       TeX-electric-sub-and-superscript t
-       TeX-command-extra-options "-shell-escape")
-
-  :ensure (auctex :pre-build (("./autogen.sh")
-                              ("./configure"
-                               "--without-texmf-dir"
-                               "--with-packagelispdir=./"
-                               "--with-packagedatadir=./")
-                              ("make"))
-                  :build (:not elpaca--compile-info) ;; Make will take care of this step
-                  :files ("*.el" "doc/*.info*" "etc" "images" "latex" "style")
-                  :version (lambda (_) (require 'tex-site) AUCTeX-version)))
+        TeX-auto-save t
+        TeX-save-query nil
+   	      TeX-source-correlate-start-server t
+        TeX-command-extra-options "-shell-escape"))
 
 (use-package evil-tex
   :hook
@@ -199,6 +248,59 @@
   :demand
   :config
   (pdf-loader-install))
+
+(defun LaTeX-indent-item ()
+  "Provide proper indentation for LaTeX \"itemize\",\"enumerate\", and
+\"description\" environments.
+
+  \"\\item\" is indented `LaTeX-indent-level' spaces relative to
+  the the beginning of the environment.
+
+  Continuation lines are indented either twice
+  `LaTeX-indent-level', or `LaTeX-indent-level-item-continuation'
+  if the latter is bound."
+  (save-match-data
+    (let* ((offset LaTeX-indent-level)
+           (contin (or (and (boundp 'LaTeX-indent-level-item-continuation)
+                            LaTeX-indent-level-item-continuation)
+                       (* 2 LaTeX-indent-level)))
+           (re-beg "\\\\begin{")
+           (re-end "\\\\end{")
+           (re-env "\\(itemize\\|\\enumerate\\|description\\)")
+           (indent (save-excursion
+                     (when (looking-at (concat re-beg re-env "}"))
+                       (end-of-line))
+                     (LaTeX-find-matching-begin)
+                     (current-column))))
+      (cond ((looking-at (concat re-beg re-env "}"))
+             (or (save-excursion
+                   (beginning-of-line)
+                   (ignore-errors
+                     (LaTeX-find-matching-begin)
+                     (+ (current-column)
+                        (if (looking-at (concat re-beg re-env "}"))
+                            contin
+                          offset))))
+                 indent))
+             ((looking-at (concat re-end re-env "}"))
+              indent)
+            ((looking-at "\\\\item")
+             (+ offset indent))
+            (t
+             (+ contin indent))))))
+
+(defcustom LaTeX-indent-level-item-continuation 4
+  "*Indentation of continuation lines for items in itemize-like
+environments."
+  :group 'LaTeX-indentation
+  :type 'integer)
+
+(eval-after-load "latex"
+  '(setq LaTeX-indent-environment-list
+         (nconc '(("itemize" LaTeX-indent-item)
+                  ("enumerate" LaTeX-indent-item)
+                  ("description" LaTeX-indent-item))
+                LaTeX-indent-environment-list)))
 
 (setq-default tab-width 4)
 (setq-default standard-indent 4)
@@ -227,7 +329,6 @@
 (use-package magit
   :commands magit
   )
-(elpaca-wait)
 
 (use-package neotree
   :defer
@@ -301,6 +402,9 @@
 
 (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
 
+(use-package lsp-java
+  :hook (java-mode . lsp))
+
 (use-package dap-mode
   :config
   (setq dap-auto-configure-mode t))
@@ -339,12 +443,10 @@
   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
 (use-package cape
-  :demand
+  :commands ((cape-file))
   :config
   (define-key evil-insert-state-map (kbd "C-x C-f") #'cape-file)
-  :init
-  (add-to-list 'completion-at-point-functions #'cape-file)
-  (add-to-list 'completion-at-point-functions #'cape-tex))
+  )
 
 (use-package format-all
   :hook (format-all-mode . format-all-ensure-formatter)
@@ -386,10 +488,6 @@
 (use-package nix-mode
   :mode "\\.nix\\'")
 
-(use-package prisma-mode
-  :mode "\\.prisma\\'"
-  :elpaca (:host github :repo "pimeys/emacs-prisma-mode" :branch "main"))
-
 (use-package markdown-mode
   :mode ("README\\.md\\'" . gfm-mode)
   :config (setq markdown-command "pandoc")
@@ -413,10 +511,10 @@
 (use-package tree-sitter-langs)
 
 (if (not (eq system-type 'windows-nt))
-
-    (use-package vterm)
+      (use-package vterm
+  	:demand)
   (use-package vterm-toggle
-    :after vterm
+      :demand
     :config
     (setq vterm-toggle-fullscreen-p nil)
     (setq vterm-toggle-scope 'project)
@@ -449,77 +547,6 @@
         which-key-idle-delay 0.8
         which-key-max-description-length 25
         which-key-allow-imprecise-window-fit t))
-
-(use-package general
-  :demand
-  :config
-  (general-evil-setup)
-  (general-create-definer ys/leader-keys
-    :states '(normal insert visual emacs)
-    :keymaps 'override
-    :prefix "SPC"
-    :global-prefix "M-SPC")
-
-
-  (ys/leader-keys
-    "f" '(:ignore t :wk "projectile")
-    "ff" '(counsel-projectile-find-file :wk "Find file")
-    "fb" '(counsel-projectile-switch-to-buffer :wk "Switch to buffer")
-    "fp" '(counsel-projectile-switch-project :wk "Switch project")
-    "fg" '(counsel-projectile-grep :wk "Grep for file")
-    )
-
-  (ys/leader-keys
-    "x" '(kill-this-buffer :wk "Kill buffer"))
-
-  (ys/leader-keys
-    "j" '(avy-goto-char-2 :wk "Search buffer"))
-
-  (ys/leader-keys
-    "s" '(:ignore t :wk "window")
-    "sh" '(evil-window-split :wk "Horizontal split")
-    "sv" '(evil-window-vsplit :wk "Vertical split")
-    "sp" '(langtool-check :wk "Check with langtool")
-    "sk" '(flyspell-correct-wrapper :wk "Flyspell correct")
-    "sc" '(:ignore t :wk "Correct")
-    "scp" '(langtool-correct-at-point :wk "Correct at point")
-    "scb" '(langtool-correct-buffer :wk "Correct buffer"))
-
-  (ys/leader-keys
-    "b" '(evilnc-comment-or-uncomment-lines :wk "Comment"))
-
-
-  (ys/leader-keys
-    "t" '(vterm-toggle :wk "vterm"))
-
-  (ys/leader-keys
-    "e" '(emmet-expand-line :wk "emmet"))
-
-  (ys/leader-keys
-    "c" '(centaur-tabs-ace-jump :wk "Jump to tab")
-    )
-
-  (ys/leader-keys
-    "l" '(:ignore t :wk "Lsp")
-    "lr" '(eglot-rename :wk "Rename reference")
-    "lf" '(format-all-buffer
-           :wk "Formats buffer")
-    "la" '(eglot-code-actions :wk "Code actions"))
-
-  (ys/leader-keys
-    "o" '(:ignore t :wk "Org")
-    "ob" '(org-mark-ring-goto :wk "Travel to origin link")
-    "oa" '(org-agenda :wk "Org agenda")
-    "oe" '(org-export-dispatch :wk "Org export")
-    "oi" '(org-toggle-item :wk "Org toggle Item")
-    "ot" '(org-todo :wk "Org Todo")
-    "oT" '(org-todo-list :wk "Org Todo List")
-    "op" '(org-tree-slide-mode :wk "Present")
-    )
-
-  (ys/leader-keys
-    "g" '(magit :wk "Open magit"))
-  )
 
 (use-package all-the-icons
   :if (display-graphic-p))
@@ -590,12 +617,12 @@
   (doom-themes-neotree-config)
   (doom-themes-org-config))
 
-(add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-15"))
+(add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-21"))
 (setq display-line-numbers-type 'relative 
       display-line-numbers-current-absolute t)
 
 (use-package display-line-numbers-mode
-  :elpaca nil
+  :straight nil
   :defer
   :hook (prog-mode . display-line-numbers-mode)
   :config
@@ -631,6 +658,11 @@
                                        "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
                                        "\\\\" "://")))
 
+(use-package elcord
+  :config (elcord-mode)
+  (setq elcord-editor-icon 'emacs_icon)
+  )
+
 (use-package beacon
   :defer 2
   :config
@@ -639,7 +671,7 @@
   (beacon-mode 1))
 
 (use-package hl-line
-  :elpaca nil
+  :straight nil
   :hook (prog-mode . hl-line-mode)
   (org-mode . hl-line-mode)
   )
@@ -657,7 +689,7 @@
   (org-mode . centered-window-mode))
 
 (use-package visual-line-mode
-  :elpaca nil
+  :straight
   :hook (org-mode . visual-line-mode))
 
 (use-package langtool
@@ -675,7 +707,7 @@
 		     (executable-find "languagetool")))))))  ; for nixpkgs.languagetool
 
 (use-package flyspell-mode
-  :elpaca nil
+  :straight nil
   :hook (org-mode . flyspell-mode)
   )
 
@@ -683,6 +715,8 @@
   :after flyspell-mode
   :commands flyspell-correct-wrapper
 )
+
+(setq ns-use-native-fullscreen nil)
 
 ;; Automatically reverts buffers for changed files
 (global-auto-revert-mode 1)
