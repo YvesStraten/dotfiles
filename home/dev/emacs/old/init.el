@@ -1,14 +1,50 @@
-(require 'package)
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-	(add-to-list 'package-archives '("gnu"   . "https://elpa.gnu.org/packages/"))
-(package-initialize)
+(defvar elpaca-installer-version 0.5)
+(defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
+(defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
+(defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
+(defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
+                              :ref nil
+                              :files (:defaults (:exclude "extensions"))
+                              :build (:not elpaca--activate-package)))
+(let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
+       (build (expand-file-name "elpaca/" elpaca-builds-directory))
+       (order (cdr elpaca-order))
+       (default-directory repo))
+  (add-to-list 'load-path (if (file-exists-p build) build repo))
+  (unless (file-exists-p repo)
+    (make-directory repo t)
+    (when (< emacs-major-version 28) (require 'subr-x))
+    (condition-case-unless-debug err
+        (if-let ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
+                 ((zerop (call-process "git" nil buffer t "clone"
+                                       (plist-get order :repo) repo)))
+                 ((zerop (call-process "git" nil buffer t "checkout"
+                                       (or (plist-get order :ref) "--"))))
+                 (emacs (concat invocation-directory invocation-name))
+                 ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
+                                       "--eval" "(byte-recompile-directory \".\" 0 'force)")))
+                 ((require 'elpaca))
+                 ((elpaca-generate-autoloads "elpaca" repo)))
+            (progn (message "%s" (buffer-string)) (kill-buffer buffer))
+          (error "%s" (with-current-buffer buffer (buffer-string))))
+      ((error) (warn "%s" err) (delete-directory repo 'recursive))))
+  (unless (require 'elpaca-autoloads nil t)
+    (require 'elpaca)
+    (elpaca-generate-autoloads "elpaca" repo)
+    (load "./elpaca-autoloads")))
+(add-hook 'after-init-hook #'elpaca-process-queues)
+(elpaca `(,@elpaca-order))
 
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-(eval-and-compile
-  (setq use-package-always-defer t
-	use-package-always-ensure t))
+;; Install use-package support
+(elpaca elpaca-use-package
+  ;; Enable :elpaca use-package keyword.
+  (elpaca-use-package-mode)
+  ;; Assume :elpaca t unless otherwise specified.
+  (setq elpaca-use-package-by-default t
+        use-package-always-defer t))
+
+;; Block until current queue processed.
+(elpaca-wait)
 
 (defun reload-init-file ()
   "Reload the `init.el` configuration file."
@@ -23,9 +59,6 @@
   :config
   (evil-mode 1)
   (evil-set-undo-system 'undo-redo))
-
-(with-eval-after-load 'evil-maps
-  (define-key evil-motion-state-map (kbd "RET") nil))
 
 (use-package evil-collection
   :demand
@@ -119,61 +152,6 @@
 
 (setq org-agenda-timegrid-use-ampm 1)
 
-(use-package org-roam
-  :defer
-  :after org
-  :commands (org-roam-buffer-toggle
-             org-roam-node-find
-             org-roam-node-insert
-             org-roam-node-insert-immediate)
-  :bind (("C-c n l" . org-roam-buffer-toggle)
-         ("C-c n i" . org-roam-node-insert)
-         ("C-c n I" . org-roam-node-insert-immediate))
-  :config
-  (setq org-roam-v2-ack t)
-  (org-roam-setup)
-  )
-
-(use-package consult-org-roam
-  :after org-roam
-  :config
-  (consult-org-roam-mode 1)
-  :bind
-  (
-   ("C-c n f" . consult-org-roam-file-find)
-   ("C-c n l" . consult-org-roam-backlinks)
-   )
-  :commands (consult-org-roam-file-find
-             consult-org-roam-backlinks
-             consult-org-roam-search))
-
-;; Bind this to C-c n I
-(defun org-roam-node-insert-immediate (arg &rest args)
-  (interactive "P")
-  (let ((args (cons arg args))
-        (org-roam-capture-templates (list (append (car org-roam-capture-templates)
-                                                  '(:immediate-finish t)))))
-    (apply #'org-roam-node-insert args)))
-
-(use-package org-roam-ui
-  :defer
-  :after org-roam
-  :commands (org-roam-ui-open)
-  :config
-  (setq org-roam-ui-sync-theme t
-        org-roam-ui-follow t
-        org-roam-ui-update-on-save t
-        )
-  )
-
-(use-package org-fragtog
-  :after org
-  :defer
-  :hook (org-mode . org-fragtog-mode))
-
-(use-package org-ref
-  )
-
 (use-package org-download)
 
 (setq org-hide-emphasis-markers t)
@@ -193,20 +171,40 @@
       org-use-sub-superscripts "{}"
       org-image-actual-width '(300))
 
-(use-package auctex-latexmk
-  :hook (latex-mode . auctex-latexmk-setup)
+(use-package latex
+  :mode
+  ("\\.tex\\'" . LaTeX-mode)
   :config
-  (setq auctex-latexmk-inherit-TeX-PDF-mode t))
+  (setq TeX-parse-self t
+       TeX-auto-save t
+       TeX-save-query nil
+       TeX-electric-sub-and-superscript t
+       TeX-command-extra-options "-shell-escape")
+
+  :ensure (auctex :pre-build (("./autogen.sh")
+                              ("./configure"
+                               "--without-texmf-dir"
+                               "--with-packagelispdir=./"
+                               "--with-packagedatadir=./")
+                              ("make"))
+                  :build (:not elpaca--compile-info) ;; Make will take care of this step
+                  :files ("*.el" "doc/*.info*" "etc" "images" "latex" "style")
+                  :version (lambda (_) (require 'tex-site) AUCTeX-version)))
+
+(use-package evil-tex
+  :hook
+  (LaTeX-mode . #'evil-tex-mode))
+
+(use-package pdf-tools
+  :demand
+  :config
+  (pdf-loader-install))
 
 (setq-default tab-width 4)
 (setq-default standard-indent 4)
 (setq c-basic-offset tab-width)
-(setq-default electric-indent-inhibit t)
 (setq-default indent-tabs-mode t)
 (setq backward-delete-char-untabify-method 'nil)
-
-(use-package aggressive-indent
-  :hook (prog-mode . aggressive-indent-mode))
 
 (setq js-indent-level 2)
 
@@ -229,6 +227,7 @@
 (use-package magit
   :commands magit
   )
+(elpaca-wait)
 
 (use-package neotree
   :defer
@@ -243,12 +242,6 @@
         ("C-n" . neotree-toggle))
   )
 
-(use-package tmux-pane
-  :defer 1
-  :config
-  (tmux-pane-mode)
-  )
-
 (use-package centaur-tabs
   :hook (dashboard-mode . centaur-tabs-local-mode) 
   (calendar-mode . centaur-tabs-local-mode)
@@ -256,10 +249,6 @@
   (vterm-mode . centaur-tabs-local-mode)
   (magit-mode . centaur-tabs-local-mode)
   (org-mode . centaur-tabs-local-mode)
-  :bind
-  (:map evil-normal-state-map
-        ("<tab>" . centaur-tabs-forward-tab)
-        ("<backtab>" . centaur-tabs-backward-tab))
   :config
   (centaur-tabs-mode t)
   (centaur-tabs-headline-match)
@@ -303,25 +292,16 @@
   :bind (:map evil-insert-state-map 
   ("C-c y" . ivy-yasnippet)))
 
-(use-package eglot
-  :defer
-  :hook
-  (c++-mode . eglot-ensure)
-  (tsx-ts-mode . eglot-ensure)
-  (js-mode . eglot-ensure)
-  (js-jsx-mode . eglot-ensure)
-  :config
-  (setq lsp-prefer-flymake nil
-        lsp-prefer-capf t
-        gc-cons-threshold 100000000
-        read-process-output-max (* 1024 1024)
-        lsp-idle-delay 0.5
-        eglot-events-buffer-size 0
-        lsp-log-io nil)
-  )
+(use-package lsp-mode
+  :hook (prog-mode . lsp-deferred)
+  (lsp-mode . lsp-enable-which-key-integration)
+  :commands lsp)
+
+(use-package lsp-ui :commands lsp-ui-mode)
+
+(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
 
 (use-package dap-mode
-  :after eglot
   :config
   (setq dap-auto-configure-mode t))
 
@@ -336,14 +316,14 @@
         corfu-auto-prefix 1
         corfu-auto-delay 0.0
         corfu-preview-current t
-        corfu-min-width 40
+        corfu-min-width 50
         corfu-max-width corfu-min-width
-        corfu-count 14
-        corfu-scroll-margin 4
+        corfu-count 10
+        corfu-scroll-margin 2
         )
-  :bind (:map corfu-map ("TAB" . corfu-next)
-              ("S-TAB" . corfu-previous)
-              ("RET" . nil)
+  :bind (:map corfu-map ("C-n" . corfu-next)
+              ("C-p" . corfu-previous)
+              ("RET" . corfu-insert)
               )
   )
 
@@ -360,8 +340,11 @@
 
 (use-package cape
   :demand
+  :config
+  (define-key evil-insert-state-map (kbd "C-x C-f") #'cape-file)
   :init
-  (add-to-list 'completion-at-point-functions #'cape-file ))
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-tex))
 
 (use-package format-all
   :hook (format-all-mode . format-all-ensure-formatter)
@@ -388,37 +371,33 @@
 (use-package smartparens
   :hook
   (prog-mode . smartparens-mode)
+  (LaTeX-mode . smartparens-mode)
   :config
-  (require 'smartparens-config)
-  (electric-pair-mode))
+  (require 'smartparens-config))
 
-(use-package emmet-mode
-  :defer
-  :config
-  (add-hook 'sgml-mode-hook 'emmet-mode) 
-  (add-hook 'css-mode-hook  'emmet-mode)
-  (add-hook 'emmet-jsx-major-modes 'js-mode 'typescript-mode)
-  )
+(if (not (eq system-type 'windows-nt))
+    (use-package direnv
+      :defer
+      :hook (prog-mode . direnv-mode)
+      ))
 
-(use-package direnv
-  :defer
-  :hook (prog-mode . direnv-mode)
-  )
+(use-package typescript-mode)
 
 (use-package nix-mode
   :mode "\\.nix\\'")
 
 (use-package prisma-mode
   :mode "\\.prisma\\'"
-  :straight (:host github :repo "pimeys/emacs-prisma-mode" :branch "main"))
+  :elpaca (:host github :repo "pimeys/emacs-prisma-mode" :branch "main"))
 
 (use-package markdown-mode
   :mode ("README\\.md\\'" . gfm-mode)
   :config (setq markdown-command "pandoc")
   )
 
-(use-package platformio-mode 
-  :hook (c++-mode . (lambda () (platformio-conditionally-enable))))
+(use-package arduino-mode
+  :mode ("\\.ino\\'" . arduino-mode)
+  )
 
 (use-package plantuml-mode
   :mode ("\\.plantuml\\'" . plantuml-mode)
@@ -428,31 +407,32 @@
                 plantuml-default-exec-mode 'executable)
   )
 
-(use-package typescript-ts-mode
-  :straight nil
-  :mode (("\\.ts\\'" . typescript-ts-mode)
-         ("\\.tsx\\'" . tsx-ts-mode)))
+(use-package tree-sitter
+  :config (global-tree-sitter-mode))
 
-(use-package vterm)
+(use-package tree-sitter-langs)
 
-(use-package vterm-toggle
-  :after vterm
-  :config
-  (setq vterm-toggle-fullscreen-p nil)
-  (setq vterm-toggle-scope 'project)
-  (add-to-list 'display-buffer-alist
-               '((lambda (buffer-or-name _)
-                   (let ((buffer (get-buffer buffer-or-name)))
-                     (with-current-buffer buffer
-                       (or (equal major-mode 'vterm-mode)
-                           (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
-                 (display-buffer-reuse-window display-buffer-at-bottom)
-                 ;;(display-buffer-reuse-window display-buffer-in-direction)
-                 ;;display-buffer-in-direction/direction/dedicated is added in emacs27
-                 ;;(direction . bottom)
-                 (dedicated . t) ;dedicated is supported in emacs27
-                 (reusable-frames . visible)
-                 (window-height . 0.3))))
+(if (not (eq system-type 'windows-nt))
+
+    (use-package vterm)
+  (use-package vterm-toggle
+    :after vterm
+    :config
+    (setq vterm-toggle-fullscreen-p nil)
+    (setq vterm-toggle-scope 'project)
+    (add-to-list 'display-buffer-alist
+                 '((lambda (buffer-or-name _)
+                     (let ((buffer (get-buffer buffer-or-name)))
+                       (with-current-buffer buffer
+                         (or (equal major-mode 'vterm-mode)
+                             (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
+                   (display-buffer-reuse-window display-buffer-at-bottom)
+                   ;;(display-buffer-reuse-window display-buffer-in-direction)
+                   ;;display-buffer-in-direction/direction/dedicated is added in emacs27
+                   ;;(direction . bottom)
+                   (dedicated . t) ;dedicated is supported in emacs27
+                   (reusable-frames . visible)
+                   (window-height . 0.3)))))
 
 (use-package which-key
   :defer 1
@@ -570,7 +550,7 @@
           ((nil
             "Edit emacs config"
             "Open the config file for emacs"
-            (lambda (&rest _) (find-file "~/dotfiles/home/emacs/README.org")
+            (lambda (&rest _) (find-file "~/dotfiles/home/dev/emacs/old/README.org")
               )
             'default)
            (nil
@@ -610,12 +590,12 @@
   (doom-themes-neotree-config)
   (doom-themes-org-config))
 
-(add-to-list 'default-frame-alist '(font . "JetBrainsMono Nerd Font-15"))
+(add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-15"))
 (setq display-line-numbers-type 'relative 
       display-line-numbers-current-absolute t)
 
 (use-package display-line-numbers-mode
-  :straight nil
+  :elpaca nil
   :defer
   :hook (prog-mode . display-line-numbers-mode)
   :config
@@ -659,7 +639,7 @@
   (beacon-mode 1))
 
 (use-package hl-line
-  :straight nil
+  :elpaca nil
   :hook (prog-mode . hl-line-mode)
   (org-mode . hl-line-mode)
   )
@@ -668,8 +648,8 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 
-(set-frame-parameter nil 'alpha-background 85) ; For current frame
-(add-to-list 'default-frame-alist '(alpha-background . 85)) ; For all new frames henceforth
+(set-frame-parameter nil 'alpha-background 70) ; For current frame
+(add-to-list 'default-frame-alist '(alpha-background . 70)) ; For all new frames henceforth
 
 (use-package centered-window
   :defer
@@ -677,7 +657,7 @@
   (org-mode . centered-window-mode))
 
 (use-package visual-line-mode
-  :straight nil
+  :elpaca nil
   :hook (org-mode . visual-line-mode))
 
 (use-package langtool
@@ -695,7 +675,7 @@
 		     (executable-find "languagetool")))))))  ; for nixpkgs.languagetool
 
 (use-package flyspell-mode
-  :straight nil
+  :elpaca nil
   :hook (org-mode . flyspell-mode)
   )
 
