@@ -27,6 +27,86 @@
   :demand
   )
 
+(use-package evil
+  :demand
+  :init
+  (setq evil-want-C-u-scroll t
+        evil-want-keybinding nil) ;; Enable C-u for scrolling
+  :config
+  (evil-mode 1)
+  (evil-set-undo-system 'undo-redo))
+
+(use-package evil-collection
+  :demand
+  :after evil
+  :config
+  (evil-collection-init))
+
+(use-package evil-nerd-commenter
+  :after evil)
+
+(use-package general
+  :demand
+  :config
+  (general-evil-setup)
+  (general-create-definer ys/leader-keys
+    :states '(normal insert visual emacs)
+    :keymaps 'override
+    :prefix "SPC"
+    :global-prefix "M-SPC")
+
+  (ys/leader-keys
+    "x" '(kill-this-buffer :wk "Kill buffer"))
+
+  (ys/leader-keys
+    "j" '(avy-goto-char-2 :wk "Search buffer"))
+
+  (ys/leader-keys
+    "s" '(:ignore t :wk "window")
+    "sh" '(evil-window-split :wk "Horizontal split")
+    "sv" '(evil-window-vsplit :wk "Vertical split")
+    "sp" '(langtool-check :wk "Check with langtool")
+    "sk" '(flyspell-correct-wrapper :wk "Flyspell correct")
+    "sc" '(:ignore t :wk "Correct")
+    "scp" '(langtool-correct-at-point :wk "Correct at point")
+    "scb" '(langtool-correct-buffer :wk "Correct buffer"))
+
+  (ys/leader-keys
+    "c" '(centaur-tabs-ace-jump :wk "Jump to tab"))
+
+  (ys/leader-keys
+    "l" '(:ignore t :wk "Lsp")
+    "lr" '(lsp-rename :wk "Rename reference")
+    "lf" '(format-all-buffer :wk "Formats buffer")
+    "la" '(lsp-code-actions-at-point :wk "Code actions"))
+
+  (ys/leader-keys
+    "o" '(:ignore t :wk "Org")
+    "ob" '(org-mark-ring-goto :wk "Travel to origin link")
+    "oa" '(org-agenda :wk "Org agenda")
+    "oe" '(org-export-dispatch :wk "Org export")
+    "oi" '(org-toggle-item :wk "Org toggle Item")
+    "ot" '(org-todo :wk "Org Todo")
+    "oT" '(org-todo-list :wk "Org Todo List")
+    "op" '(org-tree-slide-mode :wk "Present")))
+
+(use-package hydra
+  :general-config (ys/leader-keys "=" '(hydra-text-scale/body :wk "Scale text")
+  				      "on" '(hydra-org-nav/body :wk "Navigate org"))
+  :defer 1)
+
+(defhydra hydra-text-scale (:timeout 4)
+  "Scale Text"
+  ("j" text-scale-increase "in")
+  ("k" text-scale-decrease "out")
+  ("q" nil "finished" :exit t))
+
+(defhydra hydra-org-nav (:timeout 4)
+  "Navigate org headings"
+  ("j" org-next-visible-heading "next")
+  ("k" org-previous-visible-heading "previous")
+  ("q" nil "Stop" :exit t))
+
 (use-package persp-mode
   :ensure t
   :init (add-hook 'after-init-hook #'persp-mode)
@@ -105,12 +185,12 @@
         doom-themes-enable-italic t
       doom-modeline-enable-word-count t
       )
-  (load-theme 'doom-material-dark t)
+  (load-theme 'doom-nord t)
   (doom-themes-visual-bell-config)
   (doom-themes-neotree-config)
   (doom-themes-org-config))
 
-(add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-21"))
+(add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-20"))
 (setq display-line-numbers-type 'relative 
       display-line-numbers-current-absolute t)
 
@@ -169,17 +249,15 @@
   (org-mode . hl-line-mode)
   )
 
-(if (not (eq 'system-type 'darwin))
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+
+(if (eq system-type 'darwin)
       (progn
-	(scroll-bar-mode nil)
-	(tool-bar-mode nil)
-	(menu-bar-mode nil)
-	)
-  (progn
-      (tool-bar-mode t)
-      (menu-bar-mode t)
-      (scroll-bar-mode nil)
-      ))
+  	(message "Is darwin")
+  	(tool-bar-mode t)
+  	(menu-bar-mode t)))
 
 (set-frame-parameter nil 'alpha-background 70) ; For current frame
 (add-to-list 'default-frame-alist '(alpha-background . 70)) ; For all new frames henceforth
@@ -192,69 +270,6 @@
 (use-package visual-line-mode
   :straight
   :hook (org-mode . visual-line-mode))
-
-(use-package evil
-  :demand
-  :init
-  (setq evil-want-C-u-scroll t
-        evil-want-keybinding nil) ;; Enable C-u for scrolling
-  :config
-  (evil-mode 1)
-  (evil-set-undo-system 'undo-redo))
-
-(use-package evil-collection
-  :demand
-  :after evil
-  :config
-  (evil-collection-init))
-
-(use-package evil-nerd-commenter
-  :after evil)
-
-(use-package general
-  :demand
-  :config
-  (general-evil-setup)
-  (general-create-definer ys/leader-keys
-    :states '(normal insert visual emacs)
-    :keymaps 'override
-    :prefix "SPC"
-    :global-prefix "M-SPC")
-
-  (ys/leader-keys
-    "x" '(kill-this-buffer :wk "Kill buffer"))
-
-  (ys/leader-keys
-    "j" '(avy-goto-char-2 :wk "Search buffer"))
-
-  (ys/leader-keys
-    "s" '(:ignore t :wk "window")
-    "sh" '(evil-window-split :wk "Horizontal split")
-    "sv" '(evil-window-vsplit :wk "Vertical split")
-    "sp" '(langtool-check :wk "Check with langtool")
-    "sk" '(flyspell-correct-wrapper :wk "Flyspell correct")
-    "sc" '(:ignore t :wk "Correct")
-    "scp" '(langtool-correct-at-point :wk "Correct at point")
-    "scb" '(langtool-correct-buffer :wk "Correct buffer"))
-
-  (ys/leader-keys
-    "c" '(centaur-tabs-ace-jump :wk "Jump to tab"))
-
-  (ys/leader-keys
-    "l" '(:ignore t :wk "Lsp")
-    "lr" '(lsp-rename :wk "Rename reference")
-    "lf" '(format-all-buffer :wk "Formats buffer")
-    "la" '(lsp-code-actions-at-point :wk "Code actions"))
-
-  (ys/leader-keys
-    "o" '(:ignore t :wk "Org")
-    "ob" '(org-mark-ring-goto :wk "Travel to origin link")
-    "oa" '(org-agenda :wk "Org agenda")
-    "oe" '(org-export-dispatch :wk "Org export")
-    "oi" '(org-toggle-item :wk "Org toggle Item")
-    "ot" '(org-todo :wk "Org Todo")
-    "oT" '(org-todo-list :wk "Org Todo List")
-    "op" '(org-tree-slide-mode :wk "Present")))
 
 (use-package toc-org
   :defer
@@ -455,17 +470,11 @@ environments."
 (setq js-indent-level 2)
 
 (use-package projectile
-  :defer 
   :config
   (projectile-mode +1))
 
 (use-package counsel-projectile
   :after projectile
-  :defer
-  :general
-  (ys/leader-keys
-      "SPC" '(counsel-projectile-find-file :wk "Find file")
-      "/" '(counsel-projectile-grep :wk "Grep"))
   :commands
   (counsel-projectile-find-file
    counsel-projectile-grep
@@ -527,22 +536,19 @@ environments."
   ("C-c t" . counsel-load-theme)
   )
 
-(use-package yasnippet-snippets
-  :after yasnippet)
+(use-package doom-snippets 
+  :after yasnippet
+  :straight (doom-snippets :type git :host github
+  						 :repo "doomemacs/snippets"
+  						 :files ("*.el" "*")))
 
 (use-package yasnippet
   :defer 1
   :config
-  (add-to-list 'yas-key-syntaxes 'yas-longest-key-from-whitespace)
-  (setq yas-indent-line (quote none))
+  (add-to-list 'yas-snippet-dirs '"~/dotfiles/home/dev/emacs/snippets")
+  (setq yas-verbosity 2)
   (yas-global-mode 1)
   )
-
-(use-package ivy-yasnippet
-  :defer
-  :commands (ivy-yasnippet)
-  :bind (:map evil-insert-state-map 
-  ("C-c y" . ivy-yasnippet)))
 
 (use-package lsp-mode
   :hook (prog-mode . lsp-deferred)
@@ -561,10 +567,22 @@ environments."
   (setq dap-auto-configure-mode t))
 
 (use-package company
+  :config
+  (global-set-key (kbd "C-c y") 'company-yasnippet)
   :init
+  (setq company-auto-commit nil
+  	      company-minimum-prefix-length 2
+  	      company-tooltip-limit 14
+  	      company-tooltip-align-annotations t
+  	      company-require-match 'never
+  	      company-frontends '(company-pseudo-tooltip-frontend
+  						      company-echo-metadata-frontend))
   (global-company-mode))
 
 (use-package company-box
+  :config
+  (setq company-box-show-single-candidate t
+  	      company-box-backends-colors nil)
   :hook (company-mode . company-box-mode))
 
 (use-package company-math
@@ -613,6 +631,8 @@ environments."
 
 (use-package typescript-mode)
 
+(use-package rust-mode)
+
 (use-package python-mode)
 
 (use-package pyvenv
@@ -645,6 +665,7 @@ environments."
 
 (if (not (eq system-type 'windows-nt))
       (progn
+  	(message "unix")
       (use-package vterm
   	      :defer 1)
       (use-package vterm-toggle
@@ -667,22 +688,21 @@ environments."
     					 ;;(direction . bottom)
     					 (dedicated . t) ;dedicated is supported in emacs27
     					 (reusable-frames . visible)
-    					 (window-height . 0.3))))
-    	)
+    					 (window-height . 0.3)))))
 
   (progn
+      (message "eshell")
+      (use-package eshell
+  	:straight nil
+  	:defer 1)
       (use-package eshell-toggle
+  	:custom
+    	(eshell-toggle-size-fraction 3)
+  	:after eshell
     	:config
-    	(setq eshell-toggle-size-fraction 3
-    		      eshell-toggle-use-projectile-root t
-    		      eshell-toggle-run-command nil
-    		      eshell-toggle-init-function #'eshell-toggle-init-ansi-term)
   	:general (ys/leader-keys
-  			       "t" '(eshell-toggle :wk "Vterm"))
-
-    	))
-
-  )
+  			       "t" '(eshell-toggle :wk "Eshell"))
+    	)))
 
 (use-package which-key
   :defer 1
