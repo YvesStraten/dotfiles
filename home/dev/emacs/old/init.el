@@ -23,6 +23,176 @@
   (interactive)
   (load-file (expand-file-name "~/.emacs.d/init.el")))
 
+(use-package bug-hunter
+  :demand
+  )
+
+(use-package persp-mode
+  :ensure t
+  :init (add-hook 'after-init-hook #'persp-mode)
+  :config
+  (setq persp-auto-save-opt 1
+  	      persp-autokill-buffer-on-remove 'kill-weak
+  	      persp-auto-resume-time -1))
+
+(use-package all-the-icons
+  :if (display-graphic-p))
+
+(use-package doom-modeline
+  :ensure t
+  :hook (after-init . doom-modeline-mode)
+  :config
+  (setq doom-modeline-persp-name t
+  	      doom-modeline-display-default-persp-name t
+  	      doom-modeline-buffer-encoding nil
+  	      )
+  )
+
+(use-package dashboard
+  :demand
+  :config
+  (dashboard-setup-startup-hook)
+  (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*"))
+        dashboard-banner-logo-title "Welcome to Emacs"
+        dashboard-startup-banner "~/.emacs.d/marivector.png"
+        dashboard-center-content t)
+
+  ;; Sets which dashboard items should show
+  (setq dashboard-banner-logo-title ""
+        dashboard-set-footer nil
+        dashboard-projects-switch-function 'counsel-projectile-switch-project
+        dashboard-items '()
+        dashboard-set-navigator t)
+
+  (setq dashboard-navigator-buttons
+        `(
+          ;; First row
+          ((nil
+            "Edit emacs config"
+            "Open the config file for emacs"
+            (lambda (&rest _) (find-file "~/dotfiles/home/dev/emacs/old/README.org")
+              )
+            'default)
+           (nil
+            "Open Notes"
+            "Open my notes"
+            (lambda (&rest _) (org-roam-node-find))
+            'default)
+           )
+
+          ;; Second row
+          ((nil
+            "Todo list"
+            "Open todo list"
+            (lambda (&rest _) (find-file "~/org/Todos.org"))
+            'default)
+           ))))
+
+;; (setq dashboard-set-file-icons t)
+;; (setq dashboard-set-heading-icons t)
+;; (setq dashboard-display-icons-p t
+;;       dashboard-icon-type 'all-the-icons)
+;; (setq dashboard-heading-icons '((recents   . "history")
+;;                                 (bookmarks . "bookmark")
+;;                                 (agenda    . "calendar")
+;;                                 (projects  . "rocket")
+;;                                 (registers . "database"))))
+
+(use-package doom-themes
+  :demand
+  :config
+  (setq doom-themes-enable-bold t
+        doom-themes-enable-italic t
+      doom-modeline-enable-word-count t
+      )
+  (load-theme 'doom-material-dark t)
+  (doom-themes-visual-bell-config)
+  (doom-themes-neotree-config)
+  (doom-themes-org-config))
+
+(add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-21"))
+(setq display-line-numbers-type 'relative 
+      display-line-numbers-current-absolute t)
+
+(use-package display-line-numbers-mode
+  :straight nil
+  :defer
+  :hook (prog-mode . display-line-numbers-mode)
+  :config
+  (setq display-line-numbers-type 'relative
+        display-line-numbers-current-absolute t))
+
+(dolist (mode '(org-mode-hook
+		term-mode-hook
+		vterm-mode-hook
+		shell-mode-hook
+	      neotree-mode-hook
+		eshell-mode-hook))
+  (add-hook mode (lambda() (display-line-numbers-mode 0))))
+
+(use-package ligature
+  :hook (prog-mode . ligature-mode)
+  (org-mode . ligature-mode)
+  :config
+  ;; Enable the "www" ligature in every possible major mode
+  (ligature-set-ligatures 't '("www"))
+  ;; Enable all Cascadia Code ligatures in programming modes
+  (ligature-set-ligatures 't '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+                                       ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+                                       "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+                                       "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+                                       "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+                                       "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+                                       "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+                                       "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+                                       ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+                                       "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+                                       "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+                                       "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
+                                       "\\\\" "://")))
+
+(use-package elcord
+  :config (elcord-mode)
+  (setq elcord-editor-icon 'emacs_icon)
+  )
+
+(use-package beacon
+  :defer 2
+  :config
+  (setq beacon-blink-when-window-scrolls t)
+  (add-to-list 'beacon-dont-blink-major-modes 'dashboard-mode )
+  (beacon-mode 1))
+
+(use-package hl-line
+  :straight nil
+  :hook (prog-mode . hl-line-mode)
+  (org-mode . hl-line-mode)
+  )
+
+(if (not (eq 'system-type 'darwin))
+      (progn
+	(scroll-bar-mode nil)
+	(tool-bar-mode nil)
+	(menu-bar-mode nil)
+	)
+  (progn
+      (tool-bar-mode t)
+      (menu-bar-mode t)
+      (scroll-bar-mode nil)
+      ))
+
+(set-frame-parameter nil 'alpha-background 70) ; For current frame
+(add-to-list 'default-frame-alist '(alpha-background . 70)) ; For all new frames henceforth
+
+(use-package centered-window
+  :defer
+  :hook
+  (org-mode . centered-window-mode))
+
+(use-package visual-line-mode
+  :straight
+  :hook (org-mode . visual-line-mode))
+
 (use-package evil
   :demand
   :init
@@ -51,15 +221,6 @@
     :prefix "SPC"
     :global-prefix "M-SPC")
 
-
-  (ys/leader-keys
-    "f" '(:ignore t :wk "projectile")
-    "ff" '(counsel-projectile-find-file :wk "Find file")
-    "fb" '(counsel-projectile-switch-to-buffer :wk "Switch to buffer")
-    "fp" '(counsel-projectile-switch-project :wk "Switch project")
-    "fg" '(counsel-projectile-grep :wk "Grep for file")
-    )
-
   (ys/leader-keys
     "x" '(kill-this-buffer :wk "Kill buffer"))
 
@@ -77,25 +238,13 @@
     "scb" '(langtool-correct-buffer :wk "Correct buffer"))
 
   (ys/leader-keys
-    "b" '(evilnc-comment-or-uncomment-lines :wk "Comment"))
-
-
-  (ys/leader-keys
-    "t" '(vterm-toggle :wk "vterm"))
-
-  (ys/leader-keys
-    "e" '(emmet-expand-line :wk "emmet"))
-
-  (ys/leader-keys
-    "c" '(centaur-tabs-ace-jump :wk "Jump to tab")
-    )
+    "c" '(centaur-tabs-ace-jump :wk "Jump to tab"))
 
   (ys/leader-keys
     "l" '(:ignore t :wk "Lsp")
-    "lr" '(eglot-rename :wk "Rename reference")
-    "lf" '(format-all-buffer
-           :wk "Formats buffer")
-    "la" '(eglot-code-actions :wk "Code actions"))
+    "lr" '(lsp-rename :wk "Rename reference")
+    "lf" '(format-all-buffer :wk "Formats buffer")
+    "la" '(lsp-code-actions-at-point :wk "Code actions"))
 
   (ys/leader-keys
     "o" '(:ignore t :wk "Org")
@@ -105,12 +254,7 @@
     "oi" '(org-toggle-item :wk "Org toggle Item")
     "ot" '(org-todo :wk "Org Todo")
     "oT" '(org-todo-list :wk "Org Todo List")
-    "op" '(org-tree-slide-mode :wk "Present")
-    )
-
-  (ys/leader-keys
-    "g" '(magit :wk "Open magit"))
-  )
+    "op" '(org-tree-slide-mode :wk "Present")))
 
 (use-package toc-org
   :defer
@@ -318,6 +462,10 @@ environments."
 (use-package counsel-projectile
   :after projectile
   :defer
+  :general
+  (ys/leader-keys
+      "SPC" '(counsel-projectile-find-file :wk "Find file")
+      "/" '(counsel-projectile-grep :wk "Grep"))
   :commands
   (counsel-projectile-find-file
    counsel-projectile-grep
@@ -327,8 +475,11 @@ environments."
   (counsel-projectile-mode 1))
 
 (use-package magit
-  :commands magit
-  )
+  :general (ys/leader-keys
+		       "g" '(:ignore t :wk "Magit")
+		       "gg" '(magit :wk "Open magit")
+		       "gp" '(magit-push :wk "Push commits"))
+  :commands magit)
 
 (use-package neotree
   :defer
@@ -409,43 +560,20 @@ environments."
   :config
   (setq dap-auto-configure-mode t))
 
-(use-package corfu
-  :demand
+(use-package company
   :init
-  (global-corfu-mode)
-  (corfu-popupinfo-mode)
-  :config
-  (setq corfu-cycle t
-        corfu-auto t
-        corfu-auto-prefix 1
-        corfu-auto-delay 0.0
-        corfu-preview-current t
-        corfu-min-width 50
-        corfu-max-width corfu-min-width
-        corfu-count 10
-        corfu-scroll-margin 2
-        )
-  :bind (:map corfu-map ("C-n" . corfu-next)
-              ("C-p" . corfu-previous)
-              ("RET" . corfu-insert)
-              )
-  )
+  (global-company-mode))
 
-(use-package kind-icon
-  :demand
-  :after corfu
-  :custom
-  (kind-icon-default-face 'corfu-default)
-  (kind-icon-blend-background nil)
-  (kind-icon-blend-frac 0.08)
-  (kind-icon-use-icons t)
-  :config
-  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+(use-package company-box
+  :hook (company-mode . company-box-mode))
 
-(use-package cape
-  :commands ((cape-file))
+(use-package company-math
   :config
-  (define-key evil-insert-state-map (kbd "C-x C-f") #'cape-file)
+  (defun my-latex-mode-setup ()
+      (setq-local company-backends
+  			      (append '((company-math-symbols-latex company-latex-commands))
+  					      company-backends)))
+  (add-hook 'LaTeX-mode-hook 'my-latex-mode-setup)
   )
 
 (use-package format-all
@@ -485,6 +613,11 @@ environments."
 
 (use-package typescript-mode)
 
+(use-package python-mode)
+
+(use-package pyvenv
+  :mode "\\.py\\'")
+
 (use-package nix-mode
   :mode "\\.nix\\'")
 
@@ -511,26 +644,45 @@ environments."
 (use-package tree-sitter-langs)
 
 (if (not (eq system-type 'windows-nt))
+      (progn
       (use-package vterm
-  	:demand)
-  (use-package vterm-toggle
-      :demand
-    :config
-    (setq vterm-toggle-fullscreen-p nil)
-    (setq vterm-toggle-scope 'project)
-    (add-to-list 'display-buffer-alist
-                 '((lambda (buffer-or-name _)
-                     (let ((buffer (get-buffer buffer-or-name)))
-                       (with-current-buffer buffer
-                         (or (equal major-mode 'vterm-mode)
-                             (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
-                   (display-buffer-reuse-window display-buffer-at-bottom)
-                   ;;(display-buffer-reuse-window display-buffer-in-direction)
-                   ;;display-buffer-in-direction/direction/dedicated is added in emacs27
-                   ;;(direction . bottom)
-                   (dedicated . t) ;dedicated is supported in emacs27
-                   (reusable-frames . visible)
-                   (window-height . 0.3)))))
+  	      :defer 1)
+      (use-package vterm-toggle
+  	      :after vterm
+  	      :general (ys/leader-keys
+  				 "t" '(vterm-toggle :wk "Vterm"))
+    	      :after vterm
+    	      :config
+    	      (setq vterm-toggle-fullscreen-p nil)
+    	      (setq vterm-toggle-scope 'project)
+    	      (add-to-list 'display-buffer-alist
+    				       '((lambda (buffer-or-name _)
+    					       (let ((buffer (get-buffer buffer-or-name)))
+    						 (with-current-buffer buffer
+    						       (or (equal major-mode 'vterm-mode)
+    							       (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
+    					 (display-buffer-reuse-window display-buffer-at-bottom)
+    					 ;;(display-buffer-reuse-window display-buffer-in-direction)
+    					 ;;display-buffer-in-direction/direction/dedicated is added in emacs27
+    					 ;;(direction . bottom)
+    					 (dedicated . t) ;dedicated is supported in emacs27
+    					 (reusable-frames . visible)
+    					 (window-height . 0.3))))
+    	)
+
+  (progn
+      (use-package eshell-toggle
+    	:config
+    	(setq eshell-toggle-size-fraction 3
+    		      eshell-toggle-use-projectile-root t
+    		      eshell-toggle-run-command nil
+    		      eshell-toggle-init-function #'eshell-toggle-init-ansi-term)
+  	:general (ys/leader-keys
+  			       "t" '(eshell-toggle :wk "Vterm"))
+
+    	))
+
+  )
 
 (use-package which-key
   :defer 1
@@ -547,150 +699,6 @@ environments."
         which-key-idle-delay 0.8
         which-key-max-description-length 25
         which-key-allow-imprecise-window-fit t))
-
-(use-package all-the-icons
-  :if (display-graphic-p))
-
-(use-package doom-modeline
-  :defer 1
-  :config (doom-modeline-mode 1))
-
-(use-package dashboard
-  :demand
-  :config
-  (dashboard-setup-startup-hook)
-  (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*"))
-        dashboard-banner-logo-title "Welcome to Emacs"
-        dashboard-startup-banner "~/.emacs.d/marivector.png"
-        dashboard-center-content t)
-
-  ;; Sets which dashboard items should show
-  (setq dashboard-banner-logo-title ""
-        dashboard-set-footer nil
-        dashboard-projects-switch-function 'counsel-projectile-switch-project
-        dashboard-items '()
-        dashboard-set-navigator t)
-
-  (setq dashboard-navigator-buttons
-        `(
-          ;; First row
-          ((nil
-            "Edit emacs config"
-            "Open the config file for emacs"
-            (lambda (&rest _) (find-file "~/dotfiles/home/dev/emacs/old/README.org")
-              )
-            'default)
-           (nil
-            "Open Notes"
-            "Open my notes"
-            (lambda (&rest _) (org-roam-node-find))
-            'default)
-           )
-
-          ;; Second row
-          ((nil
-            "Todo list"
-            "Open todo list"
-            (lambda (&rest _) (find-file "~/org/Todos.org"))
-            'default)
-           ))))
-
-;; (setq dashboard-set-file-icons t)
-;; (setq dashboard-set-heading-icons t)
-;; (setq dashboard-display-icons-p t
-;;       dashboard-icon-type 'all-the-icons)
-;; (setq dashboard-heading-icons '((recents   . "history")
-;;                                 (bookmarks . "bookmark")
-;;                                 (agenda    . "calendar")
-;;                                 (projects  . "rocket")
-;;                                 (registers . "database"))))
-
-(use-package doom-themes
-  :demand
-  :config
-  (setq doom-themes-enable-bold t
-        doom-themes-enable-italic t
-      doom-modeline-enable-word-count t
-      )
-  (load-theme 'doom-material-dark t)
-  (doom-themes-visual-bell-config)
-  (doom-themes-neotree-config)
-  (doom-themes-org-config))
-
-(add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-21"))
-(setq display-line-numbers-type 'relative 
-      display-line-numbers-current-absolute t)
-
-(use-package display-line-numbers-mode
-  :straight nil
-  :defer
-  :hook (prog-mode . display-line-numbers-mode)
-  :config
-  (setq display-line-numbers-type 'relative
-        display-line-numbers-current-absolute t))
-
-(dolist (mode '(org-mode-hook
-                term-mode-hook
-                vterm-mode-hook
-                shell-mode-hook
-  	      neotree-mode-hook
-                eshell-mode-hook))
-  (add-hook mode (lambda() (display-line-numbers-mode 0))))
-
-(use-package ligature
-  :hook (prog-mode . ligature-mode)
-  (org-mode . ligature-mode)
-  :config
-  ;; Enable the "www" ligature in every possible major mode
-  (ligature-set-ligatures 't '("www"))
-  ;; Enable all Cascadia Code ligatures in programming modes
-  (ligature-set-ligatures 't '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
-                                       ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
-                                       "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
-                                       "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
-                                       "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
-                                       "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
-                                       "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
-                                       "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
-                                       ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
-                                       "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
-                                       "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
-                                       "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
-                                       "\\\\" "://")))
-
-(use-package elcord
-  :config (elcord-mode)
-  (setq elcord-editor-icon 'emacs_icon)
-  )
-
-(use-package beacon
-  :defer 2
-  :config
-  (setq beacon-blink-when-window-scrolls t)
-  (add-to-list 'beacon-dont-blink-major-modes 'dashboard-mode )
-  (beacon-mode 1))
-
-(use-package hl-line
-  :straight nil
-  :hook (prog-mode . hl-line-mode)
-  (org-mode . hl-line-mode)
-  )
-
-(scroll-bar-mode -1)
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-
-(set-frame-parameter nil 'alpha-background 70) ; For current frame
-(add-to-list 'default-frame-alist '(alpha-background . 70)) ; For all new frames henceforth
-
-(use-package centered-window
-  :defer
-  :hook
-  (org-mode . centered-window-mode))
-
-(use-package visual-line-mode
-  :straight
-  :hook (org-mode . visual-line-mode))
 
 (use-package langtool
   :commands (langtool-check
