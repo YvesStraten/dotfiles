@@ -503,18 +503,24 @@ environments."
 		       "gp" '(magit-push :wk "Push commits"))
   :commands magit)
 
-(use-package neotree
-  :defer
-  :commands neotree-toggle
-  :config
-  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)
-      neo-window-width 25
-      neo-smart-open t
-      neo-show-hidden-files t)
+(use-package dirvish
+  :init (dirvish-override-dired-mode)
+  :hook (dirvish-side . dirvish-side-follow-mode)
+  :custom
+  (dirvish-quick-access-entries
+   '(("h" "~/" "Home")
+       ("d" "~/Downloads" "Downloads")
+       ))
   :bind
   (:map evil-normal-state-map
-        ("C-n" . neotree-toggle))
-  )
+  	      ("C-n" . dirvish-side))
+  (:map dirvish-mode-map
+      ("q" . dirvish-quit)
+      ("a" . dirvish-quick-access)
+      ("TAB" . dirvish-subtree-toggle)
+      )
+  :config (setq dirvish-attributes
+  			      '(vc-state subtree-state all-the-icons collapse git-msg file-time file-size)))
 
 (use-package centaur-tabs
   :hook (dashboard-mode . centaur-tabs-local-mode) 
