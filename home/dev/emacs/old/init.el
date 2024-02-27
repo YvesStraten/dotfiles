@@ -191,7 +191,10 @@
   (doom-themes-org-config))
 
 (add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-20"))
-(setq display-line-numbers-type 'relative 
+(if (eq 'system-type 'windows-nt)
+      (add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-18"))
+  )
+(setq display-line-numbers-type 'relative
       display-line-numbers-current-absolute t)
 
 (use-package display-line-numbers-mode
@@ -374,8 +377,8 @@
       org-image-actual-width '(300))
 
 (with-eval-after-load 'tex
-
   (add-hook 'LaTeX-mode-hook (lambda () (electric-indent-local-mode -1)))
+  (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
   (add-hook 'LaTeX-mode-hook (lambda () (prettify-symbols-mode 1)))
   (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
   (add-to-list
@@ -386,12 +389,11 @@
    			(add-hook 'after-save-hook
    					      (lambda ()
    						(TeX-save-document (TeX-master-file))
+  						(split-window-right)
    						(TeX-command-run-all nil))
    					      ) 0 t)))
 
 (use-package auctex
-  :hook
-  (LaTeX-mode . LaTeX-math-mode)
   :config
   (setq TeX-parse-self t
         TeX-auto-save t
@@ -401,7 +403,7 @@
 
 (use-package evil-tex
   :hook
-  (LaTeX-mode . #'evil-tex-mode))
+  (LaTeX-mode . evil-tex-mode))
 
 (use-package pdf-tools
   :demand
@@ -586,13 +588,18 @@ environments."
   :hook (company-mode . company-box-mode))
 
 (use-package company-math
+  :after company
   :config
   (defun my-latex-mode-setup ()
       (setq-local company-backends
   			      (append '((company-math-symbols-latex company-latex-commands))
   					      company-backends)))
-  (add-hook 'LaTeX-mode-hook 'my-latex-mode-setup)
+  (add-hook 'TeX-mode-hook 'my-latex-mode-setup)
   )
+
+(use-package company-auctex
+  :after company
+  :config (company-auctex-init))
 
 (use-package format-all
   :hook (format-all-mode . format-all-ensure-formatter)

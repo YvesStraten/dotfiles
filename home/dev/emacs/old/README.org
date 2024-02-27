@@ -261,9 +261,15 @@
 ** Font & relative line numbering
 #+begin_src elisp
   (add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-20"))
-  (setq display-line-numbers-type 'relative 
+  (if (eq 'system-type 'windows-nt)
+  	(add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-18"))
+    )
+  (setq display-line-numbers-type 'relative
         display-line-numbers-current-absolute t)
 #+end_src
+
+#+RESULTS:
+: t
 
 #+begin_src elisp
   (use-package display-line-numbers-mode
@@ -543,8 +549,8 @@ Credit to Derek Taylor
 * Latex
 #+begin_src elisp
   (with-eval-after-load 'tex
-
     (add-hook 'LaTeX-mode-hook (lambda () (electric-indent-local-mode -1)))
+    (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
     (add-hook 'LaTeX-mode-hook (lambda () (prettify-symbols-mode 1)))
     (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
     (add-to-list
@@ -555,12 +561,11 @@ Credit to Derek Taylor
    			  (add-hook 'after-save-hook
    						(lambda ()
    						  (TeX-save-document (TeX-master-file))
+  						  (split-window-right)
    						  (TeX-command-run-all nil))
    						) 0 t)))
 
   (use-package auctex
-    :hook
-    (LaTeX-mode . LaTeX-math-mode)
     :config
     (setq TeX-parse-self t
           TeX-auto-save t
@@ -570,7 +575,7 @@ Credit to Derek Taylor
 
   (use-package evil-tex
     :hook
-    (LaTeX-mode . #'evil-tex-mode))
+    (LaTeX-mode . evil-tex-mode))
 
   (use-package pdf-tools
     :demand
@@ -830,14 +835,21 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
 *** Extra Backends
 #+begin_src elisp
   (use-package company-math
+    :after company
     :config
     (defun my-latex-mode-setup ()
   	(setq-local company-backends
   				(append '((company-math-symbols-latex company-latex-commands))
   						company-backends)))
-    (add-hook 'LaTeX-mode-hook 'my-latex-mode-setup)
+    (add-hook 'TeX-mode-hook 'my-latex-mode-setup)
     )
+
+  (use-package company-auctex
+    :after company
+    :config (company-auctex-init))
 #+end_src
+
+#+RESULTS:
 
 
 ** Corfu
@@ -1007,6 +1019,22 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
     :config (global-tree-sitter-mode))
 
   (use-package tree-sitter-langs)
+#+end_src
+
+#+begin_src elisp :tangle no
+  (use-package treesit-auto
+    :demand
+    :custom (treesit-auto-install t)
+    :config
+    (add-to-list 'auto-mode-alist '("[/\\]\\(?:Containerfile\\|Dockerfile\\)\\(?:\\.[^/\\]*\\)?\\'" . dockerfile-ts-mode))
+    (add-to-list 'auto-mode-alist '("CMakeLists\\'" . cmake-ts-mode))
+    (add-to-list 'auto-mode-alist '("\\.go\\'"      . go-ts-mode))
+    (add-to-list 'auto-mode-alist '("/go\\.mod\\'"  . go-mod-ts-mode))
+    (add-to-list 'auto-mode-alist '("\\.ts\\'"      . typescript-ts-mode))
+    (add-to-list 'auto-mode-alist '("\\.tsx\\'"     . tsx-ts-mode))
+    (add-to-list 'auto-mode-alist '("\\.rs\\'"      . rust-ts-mode))
+    (add-to-list 'auto-mode-alist '("\\.ya?ml\\'"   . yaml-ts-mode))
+    (global-treesit-auto-mode))
 #+end_src
 
 
