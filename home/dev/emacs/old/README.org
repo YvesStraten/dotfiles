@@ -958,7 +958,6 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
 #+begin_src elisp
   (if (not (eq system-type 'windows-nt))
       (use-package direnv
-        :defer
         :hook (prog-mode . direnv-mode)
         ))
 #+end_src

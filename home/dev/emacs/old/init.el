@@ -643,7 +643,6 @@ environments."
 
 (if (not (eq system-type 'windows-nt))
     (use-package direnv
-      :defer
       :hook (prog-mode . direnv-mode)
       ))
 
