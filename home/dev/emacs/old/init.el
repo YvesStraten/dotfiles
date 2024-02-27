@@ -190,9 +190,9 @@
   (doom-themes-neotree-config)
   (doom-themes-org-config))
 
-(add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-20"))
-(if (eq 'system-type 'windows-nt)
-      (add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-18"))
+(if (eq system-type 'windows-nt)
+      (add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-19"))
+  (add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-20"))
   )
 (setq display-line-numbers-type 'relative
       display-line-numbers-current-absolute t)
@@ -206,11 +206,11 @@
         display-line-numbers-current-absolute t))
 
 (dolist (mode '(org-mode-hook
-		term-mode-hook
-		vterm-mode-hook
-		shell-mode-hook
-	      neotree-mode-hook
-		eshell-mode-hook))
+  		term-mode-hook
+  		vterm-mode-hook
+  		shell-mode-hook
+  		neotree-mode-hook
+  		eshell-mode-hook))
   (add-hook mode (lambda() (display-line-numbers-mode 0))))
 
 (use-package ligature
@@ -235,6 +235,7 @@
                                        "\\\\" "://")))
 
 (use-package elcord
+  :defer 2
   :config (elcord-mode)
   (setq elcord-editor-icon 'emacs_icon)
   )
@@ -388,10 +389,12 @@
   		      (lambda ()
    			(add-hook 'after-save-hook
    					      (lambda ()
+  						(setq-local split-height-threshold 90)
+  						(setq-local split-width-threshold 60)
    						(TeX-save-document (TeX-master-file))
-  						(split-window-right)
    						(TeX-command-run-all nil))
-   					      ) 0 t)))
+   					      0 t))))
+
 
 (use-package auctex
   :config
@@ -407,6 +410,8 @@
 
 (use-package pdf-tools
   :demand
+  :hook
+  (pdf-view-mode . pdf-view-midnight-minor-mode)
   :config
   (pdf-loader-install))
 
@@ -472,11 +477,17 @@ environments."
 (setq js-indent-level 2)
 
 (use-package projectile
+  :defer 1
   :config
   (projectile-mode +1))
 
 (use-package counsel-projectile
   :after projectile
+  :general (ys/leader-keys
+  		       "SPC" '(counsel-projectile-find-file :wk "Find file")
+  		       "/" '(counsel-projectile-grep :wk "Grep Project")
+  		       "bb" '(counsel-projectile-switch-to-buffer :wk "Project buffers")
+  		       "bB" '(counsel-switch-buffer :wk "Buffers"))
   :commands
   (counsel-projectile-find-file
    counsel-projectile-grep
@@ -510,6 +521,7 @@ environments."
   (calendar-mode . centaur-tabs-local-mode)
   (eshell-mode . centaur-tabs-local-mode)
   (vterm-mode . centaur-tabs-local-mode)
+  (pdf-view-mode . centaur-tabs-local-mode)
   (magit-mode . centaur-tabs-local-mode)
   (org-mode . centaur-tabs-local-mode)
   :config
@@ -524,17 +536,16 @@ environments."
         centaur-tabs-set-modified-marker t))
 
 (use-package counsel
-  :commands (swiper
-             counsel-M-x
+  :commands (counsel-M-x
              counsel-find-file
              counsel-describe-variable
              counsel-load-theme)
   :config (setq ivy-use-virtual-buffers t
                 ivy-count-format "(%d/%d) ")
-  :bind ("C-s" . 'swiper)
+  :bind
   ("M-x" . counsel-M-x)
   ("C-x C-f" . counsel-find-file)
-  ("<f1> v" . counsel-describe-variable)
+  ("C-h v" . counsel-describe-variable)
   ("C-c t" . counsel-load-theme)
   )
 
@@ -632,7 +643,6 @@ environments."
 
 (if (not (eq system-type 'windows-nt))
     (use-package direnv
-      :defer
       :hook (prog-mode . direnv-mode)
       ))
 
