@@ -162,24 +162,17 @@
     (switch-to-buffer "*dashboard*")
     )
 
-  (defun my/persp-switch-num (num)
-    (interactive)
-    (persp-switch (nth (- num 1) persps))
-    ;; XXX: Have to force the modestring to update in this case, since the call
-    ;; inside persp-switch happens too early. Otherwise, it may be inconsistent
-    ;; with persp-sort.
-    (persp-update-modestring))
-
   (use-package perspective
     :general (ys/leader-keys
-  			 "TAB" '(:ignore t :wk "Workspaces")
-  			 "TAB n" '(my/persp-switch :wk "New Workspace")
-  			 "TAB TAB" '(persp-switch :wk "Switch workspace")
-  			 ;; "TAB 1" '(my/persp-switch-num 1 :wk "Workspace 1")
-  			 ;; "TAB 2" '(my/persp-switch-num 2 :wk "Workspace 2")
-  			 ;; "TAB 3" '(my/persp-switch-num 3 :wk "Workspace 3")
-  			 ;; "TAB d" '(persp-kill :wk "Delete Workspace")
-  			 )
+    			 "TAB" '(:ignore t :wk "Workspaces")
+    			 "TAB n" '(my/persp-switch :wk "New Workspace")
+    			 "TAB d" '(persp-kill :wk "Kill workspace")
+    			 "TAB 1" '(lambda () (interactive) (persp-switch-by-number 1) :wk "Switch to workspace 1")
+    			 "TAB 2" '(lambda () (interactive) (persp-switch-by-number 2) :wk "Switch to workspace 2")
+    			 "TAB 3" '(lambda () (interactive) (persp-switch-by-number 3) :wk "Switch to workspace 3")
+    			 "TAB 4" '(lambda () (interactive) (persp-switch-by-number 4) :wk "Switch to workspace 4")
+    			 "TAB 5" '(lambda () (interactive) (persp-switch-by-number 5) :wk "Switch to workspace 5")
+    			 )
     :init (persp-mode))
 #+end_src
 
@@ -1127,6 +1120,8 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
   				 "t" '(eshell-toggle :wk "Eshell"))
     	  )))
 #+end_src
+
+#+RESULTS:
 
 * Keybind management
 ** Which key

@@ -13,6 +13,7 @@
         vterm
         treesit-grammars.with-all-grammars
         all-the-icons
+        pdf-tools
       ];
   };
 
