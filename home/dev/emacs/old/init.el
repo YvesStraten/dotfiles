@@ -107,13 +107,31 @@
   ("k" org-previous-visible-heading "previous")
   ("q" nil "Stop" :exit t))
 
-(use-package persp-mode
-  :ensure t
-  :init (add-hook 'after-init-hook #'persp-mode)
-  :config
-  (setq persp-auto-save-opt 1
-  	      persp-autokill-buffer-on-remove 'kill-weak
-  	      persp-auto-resume-time -1))
+(defun my/persp-switch (name)
+  (interactive "s")
+  (persp-switch name)
+  (switch-to-buffer "*dashboard*")
+  )
+
+(defun my/persp-switch-num (num)
+  (interactive)
+  (persp-switch (nth (- num 1) persps))
+  ;; XXX: Have to force the modestring to update in this case, since the call
+  ;; inside persp-switch happens too early. Otherwise, it may be inconsistent
+  ;; with persp-sort.
+  (persp-update-modestring))
+
+(use-package perspective
+  :general (ys/leader-keys
+  		       "TAB" '(:ignore t :wk "Workspaces")
+  		       "TAB n" '(my/persp-switch :wk "New Workspace")
+  		       "TAB TAB" '(persp-switch :wk "Switch workspace")
+  		       ;; "TAB 1" '(my/persp-switch-num 1 :wk "Workspace 1")
+  		       ;; "TAB 2" '(my/persp-switch-num 2 :wk "Workspace 2")
+  		       ;; "TAB 3" '(my/persp-switch-num 3 :wk "Workspace 3")
+  		       ;; "TAB d" '(persp-kill :wk "Delete Workspace")
+  		       )
+  :init (persp-mode))
 
 (use-package all-the-icons
   :if (display-graphic-p))
