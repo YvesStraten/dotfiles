@@ -7,10 +7,20 @@ read playnum
 echo "Are you in wsl? (y/n)"
 read wsl
 
+echo "Windows? (y/n)"
+read windows
+
 # Create directories
-mkdir -p Videos/Playlist\ $playnum
-cd Videos/Playlist\ $playnum
-mkdir L J Y Final
+if [ "$windows" = "y" ];
+then
+	mkdir -p /d/Videos/Playlist\ $playnum
+	cd /d/Videos/Playlist\ $playnum
+	mkdir L J Y Final
+else
+	mkdir -p Videos/Playlist\ $playnum
+	cd Videos/Playlist\ $playnum
+	mkdir L J Y Final
+fi
 
 # Read Links from stdin
 echo "J Link"
