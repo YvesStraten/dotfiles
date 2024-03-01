@@ -23,9 +23,9 @@
   (interactive)
   (load-file (expand-file-name "~/.emacs.d/init.el")))
 
-(use-package bug-hunter
-  :demand
-  )
+(use-package bug-hunter)
+
+(use-package esup)
 
 (use-package evil
   :demand
@@ -592,6 +592,11 @@ environments."
 (use-package lsp-java
   :hook (java-mode . lsp))
 
+(use-package lsp-pyright
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-pyright)
+                          (lsp-deferred))))  ; or lsp-deferred
+
 (use-package dap-mode
   :config
   (setq dap-auto-configure-mode t))
@@ -669,8 +674,7 @@ environments."
 
 (use-package python-mode)
 
-(use-package pyvenv
-  :mode "\\.py\\'")
+(use-package pyvenv)
 
 (use-package nix-mode
   :mode "\\.nix\\'")
