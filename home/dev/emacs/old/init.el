@@ -670,6 +670,8 @@ environments."
 
 (use-package typescript-mode)
 
+(use-package web-mode)
+
 (use-package rust-mode)
 
 (use-package python-mode)

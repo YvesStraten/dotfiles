@@ -1005,6 +1005,8 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
 *** Typescript
 #+begin_src elisp
   (use-package typescript-mode)
+
+  (use-package web-mode)
 #+end_src
 
 *** Rust
