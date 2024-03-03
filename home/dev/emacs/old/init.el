@@ -580,22 +580,8 @@ environments."
   (yas-global-mode 1)
   )
 
-(use-package lsp-mode
-  :hook (prog-mode . lsp-deferred)
-  (lsp-mode . lsp-enable-which-key-integration)
-  :commands lsp)
-
-(use-package lsp-ui :commands lsp-ui-mode)
-
-(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
-
-(use-package lsp-java
-  :hook (java-mode . lsp))
-
-(use-package lsp-pyright
-  :hook (python-mode . (lambda ()
-                          (require 'lsp-pyright)
-                          (lsp-deferred))))  ; or lsp-deferred
+(use-package eglot
+  :hook (prog-mode . eglot-ensure))
 
 (use-package dap-mode
   :config
@@ -669,7 +655,6 @@ environments."
       ))
 
 (use-package typescript-mode)
-
 (use-package web-mode)
 
 (use-package rust-mode)

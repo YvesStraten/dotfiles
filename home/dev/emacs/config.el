@@ -79,7 +79,8 @@
 ;; they are implemented.
 ;;
 (use-package! elcord
-  :config (elcord-mode)
+  :hook (doom-first-buffer . elcord-mode)
+  :config
   (setq elcord-editor-icon 'emacs_icon))
 
 (use-package! beacon
@@ -110,13 +111,8 @@
   (map! :leader
         :desc "File manager" "op" #'neotree-toggle))
 
-(after! drag-stuff
-  (define-key evil-visual-state-map (kbd "K") 'drag-stuff-up)
-  (define-key evil-visual-state-map (kbd "J") 'drag-stuff-down)
-)
-
 (use-package! rainbow-mode
-  :config (rainbow-mode 1))
+  :hook (doom-first-buffer . rainbow-mode))
 
 ;; (use-package! xenops
 ;;   :hook (LaTeX-mode . xenops-mode))
@@ -152,5 +148,5 @@
                               (lambda ()
                                   (TeX-save-document (TeX-master-file))
                                   (TeX-command-run-all nil))
-                              ) 0 t)
+                              0 t))
                 )))

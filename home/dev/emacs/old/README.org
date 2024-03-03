@@ -829,7 +829,7 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
 : ivy-yasnippet
 
 ** Lsp-mode
-#+begin_src elisp
+#+begin_src elisp :tangle no
   (use-package lsp-mode
     :hook (prog-mode . lsp-deferred)
     (lsp-mode . lsp-enable-which-key-integration)
@@ -851,6 +851,10 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
 #+RESULTS:
 | (lambda nil (require 'lsp-pyright) (lsp-deferred)) | doom-modeline-env-setup-python | evil-collection-python-set-evil-shift-width |
 
+#+begin_src elisp
+  (use-package eglot
+    :hook (prog-mode . eglot-ensure))
+#+end_src
 ** Dap-mode
 #+begin_src elisp
   (use-package dap-mode
@@ -1005,9 +1009,10 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
 *** Typescript
 #+begin_src elisp
   (use-package typescript-mode)
-
   (use-package web-mode)
 #+end_src
+
+#+RESULTS:
 
 *** Rust
 #+begin_src elisp

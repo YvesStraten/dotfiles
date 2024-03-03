@@ -57,3 +57,8 @@
 (package! evil-tutor)
 ;; (package! xenops)
 (package! all-the-icons-dired)
+
+(package! latex-preview-pane :disable t)
+(package! doom-dashboard :disable t)
+(package! dashboard)
+(package! dirvish)
