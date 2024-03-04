@@ -6,6 +6,7 @@
   nixpkgs.overlays = [
     inputs.nur.overlay
     inputs.firefox-darwin.overlay
+    inputs.emacs-overlay.overlay
 
     (final: prev: {
       yvess =

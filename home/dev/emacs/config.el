@@ -130,6 +130,12 @@
     :hook (pdf-view-mode . pdf-view-midnight-minor-mode)))
 
 (after! centaur-tabs
+  (use-package! centaur-tabs
+    :bind
+    (:map evil-normal-state-map
+          ("C-1" . centaur-tabs-forward)
+          ("C-2" . centaur-tabs-backward)))
+
   (use-package! pdf-tools
     :hook
     (pdf-view-mode . centaur-tabs-local-mode)

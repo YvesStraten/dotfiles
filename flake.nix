@@ -30,6 +30,7 @@
     devenv.url = "github:cachix/devenv";
 
     nixvim.url = "github:nix-community/nixvim";
+    emacs-overlay.url = "github:nix-community/emacs-overlay";
 
     vim-snippets = {
       url = "github:YvesStraten/vim-snippets";
@@ -58,6 +59,7 @@
     , nixos-wsl
     , home-manager-stable
     , nix-colors
+    , emacs-overlay
     , nixvim
     , nix-darwin
     , vim-snippets
