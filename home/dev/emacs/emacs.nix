@@ -39,12 +39,10 @@ let
     extraPackages = epkgs:
       with epkgs; [
         vterm
+        all-the-icons
+        nerd-icons
         # treesit-grammars.with-all-grammars
-        # all-the-icons
         pdf-tools
-        # lsp-mode
-        # direnv
-        # lsp-java
       ];
   };
 

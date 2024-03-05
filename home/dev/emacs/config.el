@@ -32,7 +32,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+(setq doom-theme 'doom-nord)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -86,7 +86,7 @@
 (use-package! beacon
   :config
   (setq beacon-dont-blink-major-modes
-        (append '(vterm-mode +doom-dashboard-mode) beacon-dont-blink-major-modes))
+        (append '(vterm-mode +doom-dashboard-mode dap-mode pdf-view-mode) beacon-dont-blink-major-modes))
   (beacon-mode))
 
 (map! :leader
@@ -121,10 +121,6 @@
 (setq shell-escape-mode "-shell-escape")
 (setq-default TeX-master nil)
 
-(use-package! all-the-icons-dired
-  :defer t
-  :hook (dired-mode . all-the-icons-dired-mode))
-
 (after! pdf-tools
   (use-package! pdf-tools
     :hook (pdf-view-mode . pdf-view-midnight-minor-mode)))
@@ -152,7 +148,25 @@
                 (lambda ()
                   (add-hook 'after-save-hook
                               (lambda ()
+                                (setq-local split-height-threshold 90)
+                                (setq-local split-width-threshold 60)
                                   (TeX-save-document (TeX-master-file))
                                   (TeX-command-run-all nil))
-                              0 t))
-                )))
+                              0 t)))))
+
+(after! dired
+  (use-package! dirvish
+    :hook (dirvish-side . dirvish-side-follow-mode)
+    :init (dirvish-override-dired-mode)
+    :config
+    (setq dirvish-attributes
+          '(vc-state subtree-state all-the-icons
+            collapse git-msg file-time file-size))
+    (setq dired-mouse-drag-files t
+          mouse-drag-and-drop-region-cross-program t)
+    :bind
+    (:map evil-normal-state-map
+          ("C-n" . dirvish-side)
+     :map dirvish-mode-map
+          ("y" . dirvish-yank-menu)
+          ("TAB" . dirvish-subtree-toggle))))

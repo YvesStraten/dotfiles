@@ -62,3 +62,6 @@
 (package! doom-dashboard :disable t)
 (package! dashboard)
 (package! dirvish)
+
+(if (not (eq system-type 'windows-nt ))
+    (package! pdf-tools :built-in 'prefer))
