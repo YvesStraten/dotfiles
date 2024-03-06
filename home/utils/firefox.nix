@@ -24,6 +24,7 @@ in {
         "layers.acceleration.force-enabled" = true;
         "gfx.webrender.all" = true;
         "svg.context-properties.content.enabled" = true;
+        "app.update.auto" = false;
       };
       userChrome = ''
         ${builtins.readFile "${pkgs.yvess.theme}/userChrome.css"}

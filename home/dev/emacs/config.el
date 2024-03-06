@@ -104,12 +104,14 @@
       :desc "vsplit" "sv" #'split-window-vertically)
 
 (after! neotree
-  (setq neo-smart-open 1
+  (use-package! neotree
+    :config
+    (setq neo-smart-open 1
         neo-window-width 20
         neo-autorefresh 1
         neo-show-hidden-files 1)
-  (map! :leader
-        :desc "File manager" "op" #'neotree-toggle))
+  :bind (:map evil-normal-state-map
+              ("C-n" . neotree-toggle))))
 
 (use-package! rainbow-mode
   :hook (doom-first-buffer . rainbow-mode))
@@ -154,19 +156,25 @@
                                   (TeX-command-run-all nil))
                               0 t)))))
 
-(after! dired
-  (use-package! dirvish
-    :hook (dirvish-side . dirvish-side-follow-mode)
-    :init (dirvish-override-dired-mode)
-    :config
-    (setq dirvish-attributes
-          '(vc-state subtree-state all-the-icons
-            collapse git-msg file-time file-size))
-    (setq dired-mouse-drag-files t
-          mouse-drag-and-drop-region-cross-program t)
-    :bind
-    (:map evil-normal-state-map
-          ("C-n" . dirvish-side)
-     :map dirvish-mode-map
-          ("y" . dirvish-yank-menu)
-          ("TAB" . dirvish-subtree-toggle))))
+;; (after! dired
+;;   (use-package! dirvish
+;;     :hook (dirvish-side . dirvish-side-follow-mode)
+;;     :init (dirvish-override-dired-mode)
+;;     :config
+;;     (setq dirvish-attributes
+;;           '(vc-state subtree-state all-the-icons
+;;             collapse git-msg file-time file-size))
+;;     (setq dired-mouse-drag-files t
+;;           mouse-drag-and-drop-region-cross-program t)
+;;     :bind
+;;     (:map evil-normal-state-map
+;;           ("C-n" . dirvish-side)
+;;      :map dirvish-mode-map
+;;           ("y" . dirvish-yank-menu)
+;;           ("TAB" . dirvish-subtree-toggle))))
+
+(defun startup-with-elcord ()
+  (interactive)
+  (if (yes-or-no-p "Do you want to start with elcord?")
+      (cl-return)
+    (remove-hook! 'doom-first-buffer-hook 'elcord-mode)))

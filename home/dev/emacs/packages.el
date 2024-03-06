@@ -63,5 +63,8 @@
 (package! dashboard)
 (package! dirvish)
 
+(package! screenshot
+  :recipe (:host github :repo "tecosaur/screenshot"))
+
 (if (not (eq system-type 'windows-nt ))
     (package! pdf-tools :built-in 'prefer))
