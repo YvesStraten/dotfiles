@@ -178,3 +178,5 @@
   (if (yes-or-no-p "Do you want to start with elcord?")
       (cl-return)
     (remove-hook! 'doom-first-buffer-hook 'elcord-mode)))
+
+(add-hook! 'after-init-hook 'startup-with-elcord)
