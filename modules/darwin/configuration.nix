@@ -1,14 +1,12 @@
 { pkgs, ... }: {
+  imports = [
+    ../nixos/settings.nix
+  ];
+
   users.users.yvess = {
     name = "yvess";
     home = "/Users/yvess";
   };
-
-  # nix.settings.sandbox = true;
-  nix.settings.trusted-users = [
-    "root"
-    "yvess"
-  ];
 
   nixpkgs.config = {
     allowUnfree = true;
