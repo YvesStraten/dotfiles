@@ -21,6 +21,7 @@
     sshfs
     ffmpeg
     neofetch
+    (hiPrio gcc)
     clang
   ];
 

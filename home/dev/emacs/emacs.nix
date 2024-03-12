@@ -5,6 +5,7 @@ let
   macport = pkgs.emacs-unstable.overrideAttrs (old: {
     configureFlags = old.configureFlags ++ [
       "--with-cairo"
+      "--with-json"
     ];
     patches =
       (old.patches or [ ])
