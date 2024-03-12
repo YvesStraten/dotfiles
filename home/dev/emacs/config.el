@@ -78,10 +78,7 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 ;;
-(use-package! elcord
-  :hook (doom-first-buffer . elcord-mode)
-  :config
-  (setq elcord-editor-icon 'emacs_icon))
+
 
 (use-package! beacon
   :config
@@ -107,11 +104,11 @@
   (use-package! neotree
     :config
     (setq neo-smart-open 1
-        neo-window-width 20
-        neo-autorefresh 1
-        neo-show-hidden-files 1)
-  :bind (:map evil-normal-state-map
-              ("C-n" . neotree-toggle))))
+          neo-window-width 20
+          neo-autorefresh 1
+          neo-show-hidden-files 1)
+    :bind (:map evil-normal-state-map
+                ("C-n" . neotree-toggle))))
 
 (use-package! rainbow-mode
   :hook (doom-first-buffer . rainbow-mode))
@@ -149,12 +146,12 @@
     (LaTeX-mode .
                 (lambda ()
                   (add-hook 'after-save-hook
-                              (lambda ()
-                                (setq-local split-height-threshold 90)
-                                (setq-local split-width-threshold 60)
-                                  (TeX-save-document (TeX-master-file))
-                                  (TeX-command-run-all nil))
-                              0 t)))))
+                            (lambda ()
+                              (setq-local split-height-threshold 90)
+                              (setq-local split-width-threshold 60)
+                              (TeX-save-document (TeX-master-file))
+                              (TeX-command-run-all nil))
+                            0 t)))))
 
 ;; (after! dired
 ;;   (use-package! dirvish
@@ -173,10 +170,21 @@
 ;;           ("y" . dirvish-yank-menu)
 ;;           ("TAB" . dirvish-subtree-toggle))))
 
-(defun startup-with-elcord ()
-  (interactive)
-  (if (yes-or-no-p "Do you want to start with elcord?")
-      (cl-return)
-    (remove-hook! 'doom-first-buffer-hook 'elcord-mode)))
+(if (not (daemonp))
+    (progn
+      (use-package! elcord
+        :hook (doom-first-buffer . elcord-mode)
+        :config
+        (setq elcord-editor-icon 'emacs_icon))
+      (defun startup-with-elcord ()
+        (interactive)
+        (if (yes-or-no-p "Do you want to start with elcord?")
+            (message "Starting with elcord")
+          (remove-hook! 'doom-first-buffer-hook 'elcord-mode)))
+      (add-hook! 'after-init-hook 'startup-with-elcord)))
 
-(add-hook! 'after-init-hook 'startup-with-elcord)
+(when (modulep! :term eshell)
+  (map! :leader
+        :desc "Eshell" "ot" #'eshell))
+
+(setq large-file-warning-threshold nil)
