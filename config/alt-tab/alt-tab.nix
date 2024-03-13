@@ -31,7 +31,7 @@ in {
         ProgramArguments = [
           "${pkgs.yvess.alt-tab}/Applications/AltTab.app/Contents/MacOS/AltTab"
         ];
-        Label = "com.lwouis.alt-tab-macos";
+        Label = "org.nix-community.home.alt-tab";
         ProcessType = "Interactive";
         LegacyTimers = true;
         LimitLoadToSessionType = "Aqua";

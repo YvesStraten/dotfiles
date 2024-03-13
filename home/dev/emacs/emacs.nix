@@ -32,14 +32,17 @@ let
         })
       ];
   });
+
+  emacs =
+    if pkgs.stdenv.isLinux
+    then pkgs.emacs-pgtk
+    else macport;
 in
 {
   programs.emacs = {
     enable = true;
     package =
-      if pkgs.stdenv.isLinux
-      then pkgs.emacs-pgtk
-      else macport;
+      emacs;
     extraPackages = epkgs:
       with epkgs; [
         vterm
@@ -78,5 +81,7 @@ in
     lldb
   ];
 
-  services.syncthing = { enable = true; };
+  services.syncthing = {
+    enable = true;
+  };
 }
