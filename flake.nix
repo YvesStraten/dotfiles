@@ -76,7 +76,7 @@
     , ...
     } @ inputs:
     let
-      config = import ./home/nvim/config/default.nix;
+      config = import ./home/dev/nvim/config;
     in
     flake-parts.lib.mkFlake { inherit inputs; }
       {
@@ -115,10 +115,7 @@
               };
             };
 
-            packages = {
-              default = nvim;
-              nvim = nvim;
-            };
+            packages = (import ./packages { inherit pkgs nvim; });
           };
 
         flake = {

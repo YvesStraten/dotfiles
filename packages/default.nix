@@ -1,4 +1,6 @@
-{ pkgs, ... }: {
+{ pkgs, nvim, ... }: {
+  default = nvim;
+  nvim = nvim;
   sugar-dark = pkgs.callPackage ./sugar-dark.nix { };
   sekiro = pkgs.callPackage ./sekiro.nix { };
   whitesur-cursors = pkgs.callPackage ./whitesur-cursors.nix { };
