@@ -115,7 +115,10 @@
               };
             };
 
-            packages = (import ./packages { inherit pkgs nvim; });
+            packages = {
+              default = nvim;
+              nvim = nvim;
+            } // (import ./packages {inherit pkgs; });
           };
 
         flake = {

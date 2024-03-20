@@ -21,7 +21,10 @@
     homeDirectory = "/Users/yvess";
     stateVersion = "22.11"; # Please read the comment before changing.
 
-    sessionPath = [ "$HOME/.config/emacs/bin" ];
+    sessionPath = [
+      "$HOME/.config/emacs/bin"
+      "/Applications/XAMPP/bin"
+    ];
   };
 
   # Let Home Manager install and manage itself.

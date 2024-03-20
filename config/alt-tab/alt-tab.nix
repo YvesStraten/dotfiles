@@ -22,14 +22,14 @@ in {
 
   config = mkIf cfg.enable {
     home.packages = [
-      pkgs.yvess.alt-tab
+      pkgs.alt-tab-macos
     ];
 
     launchd.agents.alt-tab = {
       enable = true;
       config = {
         ProgramArguments = [
-          "${pkgs.yvess.alt-tab}/Applications/AltTab.app/Contents/MacOS/AltTab"
+          "${pkgs.alt-tab-macos}/Applications/AltTab.app/Contents/MacOS/AltTab"
         ];
         Label = "org.nix-community.home.alt-tab";
         ProcessType = "Interactive";
