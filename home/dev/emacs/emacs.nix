@@ -59,7 +59,7 @@ in
 
     ispell
     languagetool
-    rnix-lsp
+    nixd
     texlab
     sumneko-lua-language-server
     stylua
@@ -68,7 +68,6 @@ in
     nodePackages_latest.typescript-language-server
     nodePackages_latest.eslint
     html-tidy
-    rnix-lsp
     shellcheck
     nodePackages_latest.pyright
     cppcheck

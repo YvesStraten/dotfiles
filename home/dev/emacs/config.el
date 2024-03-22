@@ -121,8 +121,7 @@
 (setq-default TeX-master nil)
 
 (after! pdf-tools
-  (use-package! pdf-tools
-    :hook (pdf-view-mode . pdf-view-midnight-minor-mode)))
+  (add-hook 'pdf-view-mode-hook 'pdf-view-midnight-colors))
 
 (after! centaur-tabs
   (use-package! centaur-tabs
@@ -152,23 +151,6 @@
                               (TeX-save-document (TeX-master-file))
                               (TeX-command-run-all nil))
                             0 t)))))
-
-;; (after! dired
-;;   (use-package! dirvish
-;;     :hook (dirvish-side . dirvish-side-follow-mode)
-;;     :init (dirvish-override-dired-mode)
-;;     :config
-;;     (setq dirvish-attributes
-;;           '(vc-state subtree-state all-the-icons
-;;             collapse git-msg file-time file-size))
-;;     (setq dired-mouse-drag-files t
-;;           mouse-drag-and-drop-region-cross-program t)
-;;     :bind
-;;     (:map evil-normal-state-map
-;;           ("C-n" . dirvish-side)
-;;      :map dirvish-mode-map
-;;           ("y" . dirvish-yank-menu)
-;;           ("TAB" . dirvish-subtree-toggle))))
 
 (if (not (daemonp))
     (progn
