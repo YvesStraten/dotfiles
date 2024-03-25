@@ -53,6 +53,7 @@
       yabai -m rule --add app="Finder" manage=off
       yabai -m rule --add app="Thunderbird" manage=off
       yabai -m rule --add app="IINA" manage=off
+      yabai -m rule --add title="yazi" manage=off
     '';
   };
 

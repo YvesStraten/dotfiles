@@ -35,6 +35,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    yazi.url = "github:sxyazi/yazi";
+
     vim-snippets = {
       url = "github:YvesStraten/vim-snippets";
       flake = false;
@@ -75,6 +77,7 @@
     , hypr-contrib
     , nixos-hardware
     , nur
+    , yazi
     , self
     , ...
     } @ inputs:
