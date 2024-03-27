@@ -1,9 +1,9 @@
-{ stdenv
+{ stdenvNoCC
 , p7zip
 , fetchurl
 ,
 }:
-stdenv.mkDerivation {
+stdenvNoCC.mkDerivation {
   name = "Shina-fox";
   src = fetchurl {
     url = "https://github.com/Shina-SG/Shina-Fox/releases/download/release/Shina.Fox.0.1.-.Frieren.Edition.7z";
@@ -16,7 +16,7 @@ stdenv.mkDerivation {
 
   installPhase = ''
     mkdir -p $out
-       7z x $src .
-          cp -R * $out
+    7z x $src .
+    cp -R * $out
   '';
 }

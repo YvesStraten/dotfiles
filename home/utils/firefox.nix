@@ -14,13 +14,13 @@ in
     package = firefox;
     policies = {
       AppAutoUpdate = false;
+      DisablePocket = true;
     };
     profiles.yvess = {
       isDefault = true;
       extensions = with pkgs.nur.repos.rycee.firefox-addons; [
         darkreader
         ublock-origin
-        tree-style-tab
         sidebery
       ];
       settings = {
