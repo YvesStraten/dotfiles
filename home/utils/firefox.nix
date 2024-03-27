@@ -13,12 +13,14 @@ in
     enable = true;
     package = firefox;
     policies = {
-      AppAutoUpdate = false;
+      DisableAppUpdate = true;
       DisablePocket = true;
+      DisableTelemetry = true;
     };
     profiles.yvess = {
       isDefault = true;
       extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        react-devtools
         darkreader
         ublock-origin
         sidebery
@@ -29,8 +31,8 @@ in
         "gfx.webrender.all" = true;
         "svg.context-properties.content.enabled" = true;
 
-        "app.update.auto" = false;
-        "app.update.silent" = true;
+        "pdfjs.disabled" = true;
+
         "browser.aboutConfig.showWarning" = false;
       };
       userChrome = ''
