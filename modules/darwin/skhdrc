@@ -9,6 +9,7 @@ alt - n : open -na Kitty --args -e yazi
 alt - b : open -na Firefox
 alt + shift - s : open -a Screenshot
 alt - e : open -na Emacs
+alt - m : open -na Kitty --args -e btop
 
 # move window
 alt + shift - h : yabai -m window --warp west
