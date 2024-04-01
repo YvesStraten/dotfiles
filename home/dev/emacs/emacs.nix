@@ -56,6 +56,7 @@ in
   home.packages = with pkgs; [
     ripgrep
     fd
+    jq
 
     ispell
     languagetool
@@ -67,14 +68,20 @@ in
     nodePackages_latest.vscode-html-languageserver-bin
     nodePackages_latest.typescript-language-server
     nodePackages_latest.eslint
+    python311Packages.pytest
+    python311Packages.pyflakes
+    python311Packages.debugpy
+
     html-tidy
     shellcheck
     nodePackages_latest.pyright
     cppcheck
-    alejandra
     clang-tools
-    nixpkgs-fmt
+    nixfmt
     plantuml
+    black
+
+    shfmt
 
     # DAP protocols
     lldb

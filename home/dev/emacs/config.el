@@ -170,3 +170,14 @@
         :desc "Eshell" "ot" #'eshell))
 
 (setq large-file-warning-threshold nil)
+
+(after! corfu
+  ; Workaround as corfu seems to write the entire type
+  ; e.g System.int will complete into
+  ; System.in : PrintStream
+  (add-hook 'java-mode-hook (lambda ()
+                              (setq-local corfu-preview-current nil))
+            ))
+
+(after! dap-mode
+  (setq dap-python-debugger 'debugpy))
