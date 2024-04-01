@@ -1,13 +1,14 @@
 {
-  stdenv,
+  stdenvNoCC,
   writeShellScript,
   makeDesktopItem,
+  lib,
   fd,
   xdg-user-dirs,
   rofi,
   swww,
 }:
-stdenv.mkDerivation rec {
+stdenvNoCC.mkDerivation rec {
   name = "wall-switch";
   src = writeShellScript "wall" ''
         Main="${fd}/bin/fd . --type f $(${xdg-user-dirs}/bin/xdg-user-dir PICTURES)/Wallpapers | ${rofi}/bin/rofi -dmenu"
@@ -35,4 +36,8 @@ stdenv.mkDerivation rec {
     cp $src $out/bin
     cp ${desktop}/share/applications/* $out/share/applications
   '';
+
+  meta = with lib; {
+    platforms = with platforms; linux;
+  };
 }

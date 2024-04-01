@@ -1,6 +1,9 @@
 { config
 , pkgs
+, gitUser
+, email
 , inputs
+, user
 , ...
 }: {
   imports = [
@@ -17,8 +20,8 @@
   colorScheme = inputs.nix-colors.colorSchemes.gruvbox-dark-medium;
 
   home = {
-    username = "yvess";
-    homeDirectory = "/Users/yvess";
+    username = user;
+    homeDirectory = "/Users/${user}";
     stateVersion = "22.11"; # Please read the comment before changing.
 
     sessionPath = [
@@ -29,10 +32,4 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-
-  programs.git = {
-    enable = true;
-    userName = "YvesStraten";
-    userEmail = "yves.straten@gmail.com";
-  };
 }

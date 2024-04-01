@@ -7,6 +7,7 @@
     extraConfig = ''
       macos_quit_when_last_window_closed yes
       hide_window_decorations yes
+      titlebar-only yes
       confirm_os_window_close 0
       background_opacity 0.8
     '';

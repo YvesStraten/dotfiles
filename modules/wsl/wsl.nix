@@ -1,15 +1,8 @@
-{ pkgs, ... }: {
+{ pkgs, user, shell, ... }: {
   imports = [
     ../../overlays/default.nix
+    ../nixos/settings.nix
   ];
-
-  nix = {
-    settings = {
-      trusted-users = [ "akali" ];
-      experimental-features = [ "nix-command" "flakes" ];
-    };
-    package = pkgs.nixFlakes;
-  };
 
   environment.systemPackages = with pkgs; [
     vim
@@ -21,13 +14,13 @@
   system.stateVersion = "22.11";
   networking.hostName = "wsl";
 
-  programs.zsh.enable = true;
+  programs.${shell}.enable = true;
 
   users = {
-    defaultUserShell = pkgs.zsh;
-    users.akali = {
+    defaultUserShell = pkgs.${shell};
+    users.${user} = {
       isNormalUser = true;
-      description = "akali";
+      description = "${user}";
       extraGroups = [ "wheel" "docker" ];
     };
   };
@@ -37,7 +30,7 @@
   wsl = {
     enable = true;
     wslConf.automount.root = "/mnt";
-    defaultUser = "akali";
+    defaultUser = "${user}";
     nativeSystemd = true;
 
     startMenuLaunchers = true;

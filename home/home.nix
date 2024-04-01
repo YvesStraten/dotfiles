@@ -2,6 +2,7 @@
   config,
   pkgs,
   inputs,
+  user,
   ...
 }: {
   imports = [
@@ -31,14 +32,12 @@
     # ./gnome/home.nix
   ];
 
-  # targets.genericLinux.enable = true;
-
   nixpkgs.config.allowUnfree = true;
   colorScheme = inputs.nix-colors.colorSchemes.dracula;
 
   home = {
-    username = "yvess";
-    homeDirectory = "/home/yvess";
+    username = user;
+    homeDirectory = "/home/${user}";
     stateVersion = "22.11"; # Please read the comment before changing.
 
     sessionPath = ["$HOME/.local/bin"];
@@ -46,10 +45,4 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-
-  programs.git = {
-    enable = true;
-    userName = "YvesStraten";
-    userEmail = "yves.straten@gmail.com";
-  };
 }

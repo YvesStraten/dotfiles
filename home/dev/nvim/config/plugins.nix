@@ -74,12 +74,12 @@
     };
     markdown-preview = {
       enable = true;
-      autoStart = true;
+      settings.auto_start = true;
     };
     vimtex = {
       enable = true;
-      viewMethod = "zathura_simple";
-      extraConfig = {
+      settings = {
+        view_method = "zathura_simple";
         compiler_latexmk = {
           options = [
             "-verbose"

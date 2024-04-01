@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, shell, ... }: {
   imports = [
     # ./alacritty.nix
     ./kitty.nix
@@ -6,8 +6,9 @@
     # ./nvim/neovim.nix
     # ./vscode.nix
     # ./tmux/tmux.nix
-    ./zsh.nix
+    ./${shell}.nix
 
     ./languages.nix
+    ./git.nix
   ];
 }

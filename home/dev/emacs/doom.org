@@ -55,7 +55,7 @@ Doom exposes five (optional) variables for controlling fonts in Doom:
 See 'C-h v doom-font' for documentation and more examples of what they accept. For example:
 
 #+begin_src emacs-lisp
-(setq doom-font (font-spec :family "JetBrainsMono NF" :size 21 :weight 'semi-light)
+(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 21 :weight 'semi-light)
       doom-variable-pitch-font (font-spec :family "JetBrainsMono NF" :size 19))
 #+end_src
 

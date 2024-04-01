@@ -1,11 +1,11 @@
-{ pkgs, ... }: {
+{ pkgs, user, shell, ... }: {
   imports = [
     ../nixos/settings.nix
   ];
 
-  users.users.yvess = {
-    name = "yvess";
-    home = "/Users/yvess";
+  users.users.${user} = {
+    name = user;
+    home = "/Users/${user}";
   };
 
   nixpkgs.config = {
@@ -23,7 +23,7 @@
     };
   };
 
-  programs.zsh.enable = true;
+  programs.${shell}.enable = true;
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
