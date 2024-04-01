@@ -1,0 +1,225 @@
+#+title: My Doom config
+
+* Configuration
+#+begin_src emacs-lisp
+;; Whenever you reconfigure a package, make sure to wrap your config in an
+;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
+;;
+;;   (after! PACKAGE
+;;     (setq x y))
+;;
+;; The exceptions to this rule:
+;;
+;;   - Setting file/directory variables (like `org-directory')
+;;   - Setting variables which explicitly tell you to set them before their
+;;     package is loaded (see 'C-h v VARIABLE' to look up their documentation).
+;;   - Setting doom variables (which start with 'doom-' or '+').
+;;
+;; Here are some additional functions/macros that will help you configure Doom.
+;;
+;; - `load!' for loading external *.el files relative to this one
+;; - `use-package!' for configuring packages
+;; - `after!' for running code after a package has loaded
+;; - `add-load-path!' for adding directories to the `load-path', relative to
+;;   this file. Emacs searches the `load-path' when you load packages with
+;;   `require' or `use-package'.
+;; - `map!' for binding new keys
+;;
+;; To get information about any of these functions/macros, move the cursor over
+;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
+;; This will open documentation for it, including demos of how they are used.
+;; Alternatively, use `C-h o' to look up a symbol (functions, variables, faces,
+;; etc).
+;;
+;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
+;; they are implemented.
+;;
+#+end_src
+
+** Doom confs
+*** Personal info
+#+begin_src emacs-lisp
+(setq user-full-name "Yves Straten"
+      user-mail-address "yves.straten@gmail.com")
+#+end_src
+
+*** Font
+Doom exposes five (optional) variables for controlling fonts in Doom:
+- `doom-font' -- the primary font to use
+- `doom-variable-pitch-font' -- a non-monospace font (where applicable)
+- `doom-big-font' -- used for `doom-big-font-mode'; use this for
+  presentations or streaming.
+- `doom-symbol-font' -- for symbols
+- `doom-serif-font' -- for the `fixed-pitch-serif' face
+
+See 'C-h v doom-font' for documentation and more examples of what they accept. For example:
+
+#+begin_src emacs-lisp
+(setq doom-font (font-spec :family "JetBrainsMono NF" :size 21 :weight 'semi-light)
+      doom-variable-pitch-font (font-spec :family "JetBrainsMono NF" :size 19))
+#+end_src
+
+*** Theme & Line numbers
+#+begin_src emacs-lisp
+(setq doom-theme 'doom-nord)
+
+(set-frame-parameter (selected-frame) 'alpha '(95 . 95))
+(add-to-list 'default-frame-alist '(alpha . (95 . 95)))
+
+(setq display-line-numbers-type 'relative)
+#+end_src
+
+
+** Custom confs
+*** Corfu
+Workaround as corfu seems to write the entire type, e.g System.int will complete into System.in : PrintStream
+
+#+begin_src emacs-lisp
+(after! corfu
+  (add-hook 'java-mode-hook (lambda ()
+                              (setq-local corfu-preview-current nil))
+            ))
+#+end_src
+
+*** Rainbow-mode
+#+begin_src emacs-lisp
+(use-package! rainbow-mode
+  :hook (doom-first-buffer . rainbow-mode))
+#+end_src
+
+*** Beacon on cursor
+#+begin_src emacs-lisp
+(use-package! beacon
+  :config
+  (setq beacon-dont-blink-major-modes
+        (append '(vterm-mode +doom-dashboard-mode dap-mode pdf-view-mode) beacon-dont-blink-major-modes))
+  (beacon-mode))
+#+end_src
+
+*** Neotree
+#+begin_src emacs-lisp
+(after! neotree
+  (use-package! neotree
+    :config
+    (setq neo-smart-open 1
+          neo-window-width 20
+          neo-autorefresh 1
+          neo-show-hidden-files 1)
+    :bind (:map evil-normal-state-map
+                ("C-n" . neotree-toggle))))
+#+end_src
+
+*** LaTeX
+**** Pdf tools
+#+begin_src emacs-lisp
+(after! pdf-tools
+  (add-hook 'pdf-view-mode-hook 'pdf-view-midnight-colors))
+
+(after! centaur-tabs
+  (use-package! pdf-tools
+    :hook
+    (pdf-view-mode . centaur-tabs-local-mode)
+    (LaTeX-mode . centaur-tabs-local-mode)
+    (dired-mode . centaur-tabs-local-mode)))
+
+(setq large-file-warning-threshold nil)
+#+end_src
+
+**** Auto-compile
+#+begin_src emacs-lisp
+(after! tex
+  (use-package! tex
+    :config
+    (setq TeX-view-program-selection '((output-pdf "PDF Tools")))
+    :hook
+    (LaTeX-mode .
+                (lambda ()
+                  (add-hook 'after-save-hook
+                            (lambda ()
+                              (setq-local split-height-threshold 90)
+                              (setq-local split-width-threshold 60)
+                              (TeX-save-document (TeX-master-file))
+                              (TeX-command-run-all nil))
+                            0 t)))))
+#+end_src
+
+**** Settings
+#+begin_src emacs-lisp
+(setq TeX-command-extra-options "-shell-escape")
+(setq shell-escape-mode "-shell-escape")
+(setq-default TeX-master nil)
+#+end_src
+
+*** Discord
+#+begin_src emacs-lisp
+(if (not (daemonp))
+    (progn
+      (use-package! elcord
+        :hook (doom-first-buffer . elcord-mode)
+        :config
+        (setq elcord-editor-icon 'emacs_icon))
+      (defun startup-with-elcord ()
+        (interactive)
+        (if (yes-or-no-p "Do you want to start with elcord?")
+            (message "Starting with elcord")
+          (remove-hook! 'doom-first-buffer-hook 'elcord-mode)))
+      (add-hook! 'after-init-hook 'startup-with-elcord)))
+
+#+end_src
+
+*** Keymaps
+**** Centaur
+#+begin_src emacs-lisp
+(map! :leader
+      :desc "Kill buffer" "x" #'centaur-tabs--kill-this-buffer-dont-ask
+      :desc "Kill all other buffers" "X" #'centaur-tabs-kill-other-buffers-in-current-group
+      )
+#+end_src
+
+**** Lsp
+#+begin_src emacs-lisp
+(map! :leader
+      :desc "Look definition" "ld" #'lsp-find-references
+      :desc "Format" "lf" #'lsp-format-buffer
+      :desc "Rename" "lr" #'lsp-rename)
+#+end_src
+
+**** Evil windows
+#+begin_src emacs-lisp
+(map! :leader
+      :desc "Split" "sh" #'split-window-horizontally
+      :desc "vsplit" "sv" #'split-window-vertically)
+#+end_src
+
+*** Eshell (windows)
+#+begin_src emacs-lisp
+(when (modulep! :term eshell)
+  (map! :leader
+        :desc "Eshell" "ot" #'eshell))
+#+end_src
+
+* Main packages
+#+begin_src emacs-lisp :tangle packages.el
+;; -*- no-byte-compile: t; -*-
+;;; $DOOMDIR/packages.el
+
+(package! elcord)
+
+(package! beacon)
+
+(package! rainbow-mode)
+(package! evil-tutor)
+;; (package! xenops)
+(package! all-the-icons-dired)
+
+(package! latex-preview-pane :disable t)
+(package! doom-dashboard :disable t)
+(package! dashboard)
+(package! dirvish)
+
+(package! screenshot
+  :recipe (:host github :repo "tecosaur/screenshot"))
+
+(if (not (eq system-type 'windows-nt ))
+    (package! pdf-tools :built-in 'prefer))
+#+end_src
