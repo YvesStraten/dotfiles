@@ -113,7 +113,9 @@ Workaround as corfu seems to write the entire type, e.g System.int will complete
 **** Pdf tools
 #+begin_src emacs-lisp
 (after! pdf-tools
-  (add-hook 'pdf-view-mode-hook 'pdf-view-midnight-colors))
+  (use-package! pdf-tools
+    :hook
+    (pdf-view-mode . pdf-view-midnight-minor-mode)))
 
 (after! centaur-tabs
   (use-package! pdf-tools
