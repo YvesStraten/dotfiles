@@ -81,6 +81,19 @@ Workaround as corfu seems to write the entire type, e.g System.int will complete
             ))
 #+end_src
 
+*** LSP
+#+begin_src emacs-lisp
+(after! lsp-java
+  (use-package! lsp-java
+    :config
+    (setq lsp-java-server-install-dir (getenv "JDTLS_PATH"))
+    (defun lsp-java--ls-command ()
+      (list "jdtls"
+          "-configuration" (concat (getenv "HOME") "/.cache/jdtls/")
+          "-data" (concat (getenv "HOME") "/.jdtls"))
+    )))
+#+end_src
+
 *** Rainbow-mode
 #+begin_src emacs-lisp
 (use-package! rainbow-mode
