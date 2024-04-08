@@ -1,0 +1,6 @@
+[manager]
+
+append_keymap = [
+       { on = [ "g", "n" ], run = "cd ~/Notes/", desc = "Go to Notes" },
+       { on = [ "g", "a" ], run = "cd ~/Assignments/", desc = "Go to Assignments" },
+]
