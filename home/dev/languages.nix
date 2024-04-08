@@ -1,4 +1,10 @@
 { pkgs, ... }: {
+  imports = [
+    ../../config/jupyter/jupyter.nix
+  ];
+
+  services.jupyter-notebook.enable = true;
+
   home.packages = with pkgs; [
     (python311.withPackages (ps:
       with ps; [

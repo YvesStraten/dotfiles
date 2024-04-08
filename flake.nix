@@ -189,6 +189,8 @@
             modules = [ ./home/wsl.nix ./overlays/default.nix ];
           };
         };
+
+        homeManagerModules = (import ./config);
       };
     };
 }
