@@ -1,4 +1,5 @@
-{pkgs, ...}: let
+{ pkgs, ... }:
+let
   encode = pkgs.writeShellScriptBin "encode-mp4" ''
     set -e
     origdir="./original"
@@ -20,9 +21,9 @@
   playlist = pkgs.writeShellScriptBin "playlist" ''
     ${builtins.readFile ./playlist.sh}
   '';
-in {
-  home.packages = [
-    encode
-    playlist
-  ];
-}
+
+  toCode = pkgs.writeShellScriptBin "toCode" ''
+    ${builtins.readFile ./toCode.sh}
+  '';
+
+in { home.packages = [ encode playlist toCode ]; }

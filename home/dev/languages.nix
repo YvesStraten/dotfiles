@@ -13,6 +13,7 @@
         pygments
         tkinter
         jupyter
+        pillow
       ]))
 
     texlive.combined.scheme-full

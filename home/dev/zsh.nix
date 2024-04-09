@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{pkgs, lib, config, ...}: {
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;
@@ -6,7 +6,7 @@
     enableCompletion = true;
 
     shellAliases = {
-      cat = "${pkgs.bat}/bin/bat";
+      cat = "${lib.getExe pkgs.bat} \"$@\"";
     };
     profileExtra = ''
       export QT_QPA_PLATFORMTHEME=qt5ct
