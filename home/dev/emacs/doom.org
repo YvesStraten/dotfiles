@@ -140,12 +140,19 @@ Workaround as corfu seems to write the entire type, e.g System.int will complete
 (setq large-file-warning-threshold nil)
 #+end_src
 
-**** Auto-compile
+**** Default pdf program
 #+begin_src emacs-lisp
 (after! tex
   (use-package! tex
     :config
     (setq TeX-view-program-selection '((output-pdf "PDF Tools")))
+    ))
+#+end_src
+
+**** Auto-compile
+#+begin_src emacs-lisp :tangle no
+(after! tex
+  (use-package! tex
     :hook
     (LaTeX-mode .
                 (lambda ()
@@ -168,17 +175,10 @@ Workaround as corfu seems to write the entire type, e.g System.int will complete
 *** Discord
 #+begin_src emacs-lisp
 (if (not (daemonp))
-    (progn
       (use-package! elcord
-        :hook (doom-first-buffer . elcord-mode)
         :config
         (setq elcord-editor-icon 'emacs_icon))
-      (defun startup-with-elcord ()
-        (interactive)
-        (if (yes-or-no-p "Do you want to start with elcord?")
-            (message "Starting with elcord")
-          (remove-hook! 'doom-first-buffer-hook 'elcord-mode)))
-      (add-hook! 'after-init-hook 'startup-with-elcord)))
+  )
 
 #+end_src
 
@@ -235,6 +235,6 @@ Workaround as corfu seems to write the entire type, e.g System.int will complete
 (package! screenshot
   :recipe (:host github :repo "tecosaur/screenshot"))
 
-(if (not (eq system-type 'windows-nt ))
-    (package! pdf-tools :built-in 'prefer))
+;; (if (not (eq system-type 'windows-nt ))
+;;     (package! pdf-tools :built-in 'prefer))
 #+end_src

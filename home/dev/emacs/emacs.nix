@@ -1,5 +1,9 @@
 { pkgs, ... }:
 let
+  jdt = if pkgs.system == "x86-64-linux" then
+    pkgs.jdt-language-server-wsl
+  else
+    pkgs.jdt-language-server;
   macport = pkgs.emacs-unstable.overrideAttrs (old: {
     configureFlags = old.configureFlags ++ [ "--with-cairo" "--with-json" ];
     patches = (old.patches or [ ]) ++ [
@@ -41,13 +45,12 @@ in {
         all-the-icons
         nerd-icons
         # treesit-grammars.with-all-grammars
-        pdf-tools
       ];
   };
 
   home = {
     sessionVariables = {
-      JDTLS_PATH = "${pkgs.jdt-language-server}/share/java/jdtls";
+      JDTLS_PATH = "${jdt}/share/java/jdtls/";
     };
 
     packages = with pkgs; [
@@ -60,7 +63,7 @@ in {
       nixd
       texlab
       sumneko-lua-language-server
-      jdt-language-server
+      jdt
       stylua
       nodePackages_latest.prettier
       nodePackages_latest.vscode-html-languageserver-bin

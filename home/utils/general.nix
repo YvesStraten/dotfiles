@@ -45,7 +45,6 @@
         inkscape
         yazi
         spotify
-        discord
         iina
         ani-cli
         xcbuild
