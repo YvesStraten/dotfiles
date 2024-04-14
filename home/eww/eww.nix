@@ -1,7 +1,7 @@
 {pkgs, ...}: {
-  programs.eww = {
+  hm.programs.eww = {
     enable = true;
-    package = pkgs.eww-wayland;
+    package = pkgs.eww;
     configDir = ./config;
   };
 }

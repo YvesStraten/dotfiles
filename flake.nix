@@ -64,10 +64,9 @@
       [ "https://devenv.cachix.org" "https://nix-community.cachix.org" ];
   };
 
-  outputs = { nixpkgs, nixpkgs-stable, nixos-wsl, home-manager-stable
-    , nix-colors, emacs-overlay, nixvim, nix-darwin, vim-snippets, ouroboros
-    , flake-parts, devenv, home-manager, hyprland, hyprpicker, hypr-contrib
-    , nixos-hardware, nur, yazi, self, ... }@inputs:
+  outputs = { nixpkgs, nixpkgs-stable, nixos-hardware, nur, nixvim, nixos-wsl
+    , home-manager, home-manager-stable, flake-parts, nix-darwin, self, ...
+    }@inputs:
     let
       email = "yves.straten@gmail.com";
       gitUser = "YvesStraten";
@@ -106,12 +105,21 @@
           packages = {
             default = nvim;
             nvim = nvim;
-          } // (import ./packages { inherit pkgs; });
+            theme = pkgs.callPackage ./packages/theme.nix { };
+          };
         };
 
       flake = {
+        packages = {
+          "aarch64-darwin" =
+            let pkgs = nixpkgs.legacyPackages."aarch64-darwin";
+            in { } // (import ./packages/packages-darwin.nix { inherit pkgs; });
+          "x86_64-linux" = let pkgs = nixpkgs.legacyPackages."x86_64-linux";
+          in { } // (import ./packages { inherit pkgs; });
+        };
         darwinConfigurations = {
-          "shaco" = nix-darwin.lib.darwinSystem {
+          "shaco" = let shell = "zsh";
+          in nix-darwin.lib.darwinSystem {
             system = "aarch64-darwin";
             specialArgs = { inherit inputs user shell; };
             modules = [
@@ -142,11 +150,18 @@
               ./modules/default.nix
               nixos-hardware.nixosModules.common-pc-laptop-ssd
               nixos-hardware.nixosModules.common-pc-laptop
+              (nixpkgs.lib.mkAliasOptionModule [ "hm" ] [
+                "home-manager"
+                "users"
+                user
+              ])
 
               home-manager.nixosModules.home-manager
               {
                 home-manager = {
-                  extraSpecialArgs = { inherit inputs gitUser email user; };
+                  extraSpecialArgs = {
+                    inherit inputs gitUser email user shell self;
+                  };
                   useGlobalPkgs = true;
                   useUserPackages = true;
                   users.${user} = { ... }: { imports = [ ./home/home.nix ]; };

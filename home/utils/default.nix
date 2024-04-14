@@ -4,8 +4,9 @@
   imports = [
     ./general.nix
     ./firefox.nix
-    ./alt-tab.nix
     ./yazi/yazi.nix
-    # ./mpv.nix
+    ./mpv.nix
+    ./zathura.nix
+    ./thunderbird.nix
   ];
 }

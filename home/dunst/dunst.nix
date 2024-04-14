@@ -1,5 +1,5 @@
 {config, ...}: {
-  services.dunst = {
+  hm.services.dunst = {
     enable = true;
     settings = {
       global = {

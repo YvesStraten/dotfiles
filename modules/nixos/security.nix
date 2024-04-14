@@ -1,20 +1,18 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: {
+{ config, pkgs, lib, user, shell, ... }: {
+  programs.${shell}.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.yvess = {
-    isNormalUser = true;
-    description = "Yves Straten";
-    extraGroups = ["networkmanager" "wheel" "audio" "libvirtd" "docker" "dialout"];
+  users = {
+    defaultUserShell = pkgs.${shell};
+    users.${user} = {
+      isNormalUser = true;
+      description = "${user}";
+      extraGroups =
+        [ "networkmanager" "wheel" "audio" "libvirtd" "docker" "dialout" ];
+    };
   };
 
-  programs.zsh.enable = true;
   programs.dconf.enable = true;
-  users.defaultUserShell = pkgs.zsh;
-  environment.shells = [pkgs.zsh];
 
   security.pam.services.swaylock.text = "auth include login";
   security.polkit.enable = true;
@@ -35,4 +33,23 @@
   networking.firewall.enable = false;
 
   hardware.steam-hardware.enable = true;
+  hardware.cpu.x86.msr.enable = true;
+
+  # TODO: make this more robust
+  systemd.services.bdprochot = let
+    script = pkgs.writeShellScriptBin "bdprochot" ''
+      ${pkgs.msr-tools}/bin/rdmsr -a -d 0x1FC
+      ${pkgs.msr-tools}/bin/wrmsr 0x1FC 2359386
+    '';
+    toRun = "${lib.getExe script}";
+  in {
+    wantedBy = [ "multi-user.target" ];
+
+    description = "Disabled bd-prochot";
+
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = toRun;
+    };
+  };
 }

@@ -7,8 +7,7 @@
   # Configure keymap in X11
   services.xserver = {
     enable = true;
-    layout = "us";
-    xkbVariant = "";
+    xkb.layout = "us";
   };
   services.xserver.videoDrivers = ["nvidia"];
   hardware.opengl = {
@@ -25,7 +24,6 @@
       vaapiIntel
     ];
   };
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
   hardware.nvidia.modesetting.enable = true;
 
   hardware.nvidia.prime = {

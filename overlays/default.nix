@@ -9,7 +9,6 @@
       yvess = (prev.yvess or { })
         // (import ../packages/default.nix { inherit (prev) pkgs; });
 
-      nwg-displays = prev.nwg-displays.override { hyprlandSupport = true; };
       jdt-language-server-wsl =
         assert (lib.assertMsg (prev.jdt-language-server.version == "1.31.0" )
           "Wsl? is this still needed?");

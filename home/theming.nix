@@ -27,16 +27,6 @@
       name = "WhiteSur-dark";
       package = pkgs.whitesur-icon-theme;
     };
-    font = {
-      name = "Cantarell Regular";
-      package = pkgs.cantarell-fonts;
-      size = 11;
-    };
-    cursorTheme = {
-      name = "WhiteSur-cursors";
-      size = 24;
-      package = pkgs.yvess.whitesur-cursors;
-    };
   };
 
   home.packages = with pkgs; [

@@ -1,12 +1,13 @@
 { pkgs
 , inputs
+, self
 , ...
 }:
 let
   firefox =
     if pkgs.stdenv.isDarwin
     then pkgs.firefox-bin
-    else null;
+    else pkgs.firefox;
 in
 {
   programs.firefox = {
@@ -36,7 +37,7 @@ in
         "browser.aboutConfig.showWarning" = false;
       };
       userChrome = ''
-        ${builtins.readFile "${pkgs.yvess.theme}/userChrome.css"}
+        ${builtins.readFile "${self.packages.${pkgs.system}.theme}/userChrome.css"}
       '';
     };
   };

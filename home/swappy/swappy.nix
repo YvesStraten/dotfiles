@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  home.file.".config/swappy/config" = {
+  hm.home.file.".config/swappy/config" = {
     text = ''
       [Default]
       save_dir=$HOME/Pictures

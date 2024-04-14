@@ -10,6 +10,8 @@
       titlebar-only yes
       confirm_os_window_close 0
       background_opacity 0.8
+
+      enable_audio_bell no
     '';
     theme = "kanagawabones";
   };

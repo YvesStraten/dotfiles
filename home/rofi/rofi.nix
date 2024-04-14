@@ -1,12 +1,8 @@
-{pkgs, ...}: {
-  programs.rofi = {
+{ pkgs, lib, ... }: {
+  hm.programs.rofi = {
     enable = true;
     package = pkgs.rofi-wayland;
-    plugins = [pkgs.rofi-emoji];
-    theme = "android_notification";
+    plugins = [ pkgs.rofi-emoji ];
+    terminal = "${lib.getExe pkgs.kitty}";
   };
-
-  home.packages = [
-    pkgs.wtype
-  ];
 }

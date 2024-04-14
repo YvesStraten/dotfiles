@@ -1,4 +1,5 @@
 { pkgs
+, self
 , ...
 }: {
   home.packages =
@@ -7,13 +8,11 @@
       (with pkgs;
       [
         tesseract
-        brave
         tor-browser-bundle-bin
         libreoffice
         rclone
         rclone-browser
         imagemagick
-        whatsapp-for-linux
 
         gscan2pdf
         gimp
@@ -28,17 +27,7 @@
 
         qpwgraph
         soundwireserver
-      ]
-      ++ (with pkgs.gnome; [
-        nautilus
-        gnome-clocks
-        pomodoro
-        eog
-        geary
-        evince
-        gnome-disk-utility
-      ]))
-    else
+      ]) else
       (with pkgs; [
         tesseract
         imagemagick
@@ -48,7 +37,7 @@
         iina
         ani-cli
         xcbuild
-        yvess.skim
+        self.packages."aarch64-darwin".skim
 
         gimp
         btop

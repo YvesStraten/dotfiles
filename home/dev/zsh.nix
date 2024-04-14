@@ -23,10 +23,10 @@
 
   programs.bash = {
     enable = true;
-    profileExtra = ''
-         export XDG_DATA_DIRS=\"$HOME/.nix-profile/share:$XDG_DATA_DIRS\"
-      . ~/.nix-profile/etc/profile.d/nix.sh
-    '';
+    # profileExtra = ''
+    #      export XDG_DATA_DIRS=\"$HOME/.nix-profile/share:$XDG_DATA_DIRS\"
+    #   . ~/.nix-profile/etc/profile.d/nix.sh
+    # '';
   };
 
   programs.starship = {

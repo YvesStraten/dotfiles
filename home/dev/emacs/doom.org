@@ -82,7 +82,7 @@ Workaround as corfu seems to write the entire type, e.g System.int will complete
 #+end_src
 
 *** LSP
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
 (after! lsp-java
   (use-package! lsp-java
     :config
@@ -176,6 +176,7 @@ Workaround as corfu seems to write the entire type, e.g System.int will complete
 #+begin_src emacs-lisp
 (if (not (daemonp))
       (use-package! elcord
+        :init (elcord-mode)
         :config
         (setq elcord-editor-icon 'emacs_icon))
   )
@@ -218,7 +219,9 @@ Workaround as corfu seems to write the entire type, e.g System.int will complete
 ;; -*- no-byte-compile: t; -*-
 ;;; $DOOMDIR/packages.el
 
-(package! elcord)
+(package! elcord
+  :recipe (:host github :repo "Mstrodl/elcord")
+  )
 
 (package! beacon)
 

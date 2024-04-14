@@ -8,27 +8,15 @@
   imports = [
     inputs.nix-colors.homeManagerModules.default
     # Main stuff
-    ./languages.nix
-    ./utilities.nix
+    ./utils
     ./theming.nix
-    ./bin/default.nix
+    # ./bin
 
-    # Editors
-    # ./nvim/neovim.nix
-    # ./emacs/emacs.nix
-    # ./vscode/vscode.nix
-
-    ./alacritty/alacritty.nix
-    ./mpv/mpv.nix
-    ./tmux/tmux.nix
-    ./firefox/firefox.nix
-
-    ./zsh/zsh.nix
+    ./dev
 
     ./dconf/dconf.nix
     # ./plasma/home.nix
     # ./sway/home.nix
-    ./hypr/home.nix
     # ./gnome/home.nix
   ];
 
