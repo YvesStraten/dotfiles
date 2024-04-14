@@ -48,8 +48,7 @@ in {
         "browser.aboutConfig.showWarning" = false;
       };
       userChrome = ''
-        ${builtins.readFile
-        "${theme}/userChrome.css"}
+        ${builtins.readFile "${theme}/userChrome.css"}
       '';
     };
   };

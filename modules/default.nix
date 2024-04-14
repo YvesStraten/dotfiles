@@ -14,14 +14,19 @@
     ./nixos/settings.nix
     ./nixos/sound.nix
     ./nixos/time.nix
-    ./nixos/vfio.nix
 
     ../overlays/default.nix
 
     # Desktops
-    ../home/hypr/hyprland.nix
+    # ../home/hypr/hyprland.nix
+    ../home/i3/i3.nix
     # ../home/plasma/plasma.nix
     # ../home/sway/sway.nix
     # ../home/gnome/gnome.nix
   ];
+
+  fileSystems = {
+    "/data".device = "/dev/nvme0n1p5";
+
+  };
 }

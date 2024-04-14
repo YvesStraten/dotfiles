@@ -12,7 +12,7 @@
       background_opacity 0.8
 
       enable_audio_bell no
+      include ~/.cache/wal/colors-kitty.conf
     '';
-    theme = "kanagawabones";
   };
 }

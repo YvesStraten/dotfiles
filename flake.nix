@@ -105,6 +105,7 @@
           packages = {
             default = nvim;
             nvim = nvim;
+            theme = pkgs.callPackage ./packages/theme.nix { };
           };
         };
 
@@ -147,8 +148,6 @@
               nur.nixosModules.nur
               ./hosts/nixos/hardware-configuration.nix
               ./modules/default.nix
-              nixos-hardware.nixosModules.common-pc-laptop-ssd
-              nixos-hardware.nixosModules.common-pc-laptop
               (nixpkgs.lib.mkAliasOptionModule [ "hm" ] [
                 "home-manager"
                 "users"

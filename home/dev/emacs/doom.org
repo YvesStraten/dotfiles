@@ -173,7 +173,7 @@ Workaround as corfu seems to write the entire type, e.g System.int will complete
 #+end_src
 
 *** Discord
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
 (if (not (daemonp))
       (use-package! elcord
         :init (elcord-mode)

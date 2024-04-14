@@ -11,8 +11,8 @@
         tor-browser-bundle-bin
         libreoffice
         rclone
-        rclone-browser
         imagemagick
+        spotify
 
         gscan2pdf
         gimp

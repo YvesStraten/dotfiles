@@ -34,7 +34,7 @@ let
     ];
   });
 
-  emacs = if pkgs.stdenv.isLinux then pkgs.emacs-pgtk else macport;
+  emacs = if pkgs.stdenv.isLinux then pkgs.emacs29 else macport;
 in {
   programs.emacs = {
     enable = true;
