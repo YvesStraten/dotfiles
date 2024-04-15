@@ -10,7 +10,10 @@
         texlab.enable = true;
 
         pyright.enable = true;
-        rust-analyzer.enable = true;
+        rust-analyzer = {
+          enable = true;
+          installRustc = false;
+        };
       };
     };
     lsp-lines.enable = true;

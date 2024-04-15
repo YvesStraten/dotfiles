@@ -1,7 +1,4 @@
-{ pkgs
-, inputs
-, ...
-}: {
+{ pkgs, inputs, ... }: {
   imports = [
     ./telescope/telescope.nix
     ./lsp/lsp.nix
@@ -22,14 +19,12 @@
       enable = true;
       ensureInstalled = "all";
       indent = true;
-      disabledLanguages = [
-        "tex"
-      ];
+      disabledLanguages = [ "tex" ];
       nixvimInjections = true;
     };
     which-key.enable = true;
 
-    comment-nvim.enable = true;
+    comment.enable = true;
 
     tmux-navigator.enable = true;
     indent-blankline.enable = true;
@@ -95,8 +90,10 @@
 
   colorschemes.kanagawa = {
     enable = true;
-    compile = true;
-    transparent = true;
+    settings = {
+      compile = true;
+      transparent = true;
+    };
   };
 
   extraPlugins = with pkgs.vimPlugins; [
