@@ -4,6 +4,7 @@
   lib,
   ...
 }: {
+  boot.supportedFilesystems = [ "ntfs" ];
   boot.loader = {
     grub = {
       enable = true;

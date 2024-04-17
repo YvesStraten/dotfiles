@@ -44,6 +44,7 @@ with lib; {
       packages = with pkgs; [
         yvess.wall-switch
         wl-clipboard
+        selectdefaultapplication
         swww
         hyprlock
         hypridle
@@ -278,6 +279,7 @@ with lib; {
         bind = SUPERSHIFT, grave, movetoworkspace, special
 
         windowrule = float, file_progress
+        windowrule = float, yazi
         windowrule = float, blueman-manager
         windowrule = float, confirm
         windowrule = float, dialog

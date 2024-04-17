@@ -10,6 +10,7 @@
     xkb.layout = "us";
   };
   services.xserver.videoDrivers = ["nvidia"];
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.latest;
   hardware.opengl = {
     enable = true;
     driSupport = true;
@@ -33,11 +34,6 @@
     intelBusId = "PCI:0:2:0";
     nvidiaBusId = "PCI:1:0:0";
   };
-
-  environment.systemPackages = with pkgs; [
-    gamescope
-    mangohud
-  ];
 
   programs.gamemode = {
     enable = true;
