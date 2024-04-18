@@ -35,6 +35,7 @@
         yazi
         spotify
         iina
+        rclone
         ani-cli
         xcbuild
         self.packages."aarch64-darwin".skim
