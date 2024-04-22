@@ -1,15 +1,26 @@
-{ pkgs
-, inputs
-, self
-, ...
-}:
+{ pkgs, inputs, ... }:
 let
-  firefox =
-    if pkgs.stdenv.isDarwin
-    then pkgs.firefox-bin
-    else pkgs.firefox;
-in
-{
+  firefox = if pkgs.stdenv.isDarwin then pkgs.firefox-bin else pkgs.firefox;
+
+  theme = pkgs.stdenvNoCC.mkDerivation {
+    name = "Shina-fox";
+    src = pkgs.fetchurl {
+      url =
+        "https://github.com/Shina-SG/Shina-Fox/releases/download/release/Shina.Fox.0.1.-.Frieren.Edition.7z";
+      sha256 = "uLQjluSuz8iXO9M0AQE4N1C6qHv9wvO8Dv4TjweLuRw=";
+    };
+
+    sourceRoot = ".";
+
+    buildInputs = [ pkgs.p7zip ];
+
+    installPhase = ''
+      mkdir -p $out
+      7z x $src .
+      cp -R * $out
+    '';
+  };
+in {
   programs.firefox = {
     enable = true;
     package = firefox;
@@ -37,7 +48,8 @@ in
         "browser.aboutConfig.showWarning" = false;
       };
       userChrome = ''
-        ${builtins.readFile "${self.packages.${pkgs.system}.theme}/userChrome.css"}
+        ${builtins.readFile
+        "${theme}/userChrome.css"}
       '';
     };
   };

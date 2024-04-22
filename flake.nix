@@ -105,7 +105,6 @@
           packages = {
             default = nvim;
             nvim = nvim;
-            theme = pkgs.callPackage ./packages/theme.nix { };
           };
         };
 
