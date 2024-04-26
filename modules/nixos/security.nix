@@ -8,11 +8,12 @@
       isNormalUser = true;
       description = "${user}";
       extraGroups =
-        [ "networkmanager" "wheel" "audio" "libvirtd" "docker" "dialout" ];
+        [ "networkmanager" "wheel" "audio" "libvirtd" "docker" "dialout" "fuse" ];
     };
   };
 
   programs.dconf.enable = true;
+  services.usbmuxd.enable = true;
 
   security.pam.services.swaylock.text = "auth include login";
   security.polkit.enable = true;
