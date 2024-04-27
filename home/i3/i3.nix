@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 
 {
-  imports = [ ../dunst/dunst.nix ../rofi/rofi.nix ];
+  imports = [ ../dunst/dunst.nix ../rofi/rofi.nix ../polybar/polybar.nix ../picom/picom.nix ];
 
   environment.pathsToLink = [ "/libexec" ];
 
@@ -15,11 +15,14 @@
       package = pkgs.i3-gaps;
       enable = true;
       extraPackages = with pkgs; [
-        polybar
         pamixer
         feh
         pywal
         picom
+        maim
+        autorandr
+        xdotool
+        xclip
       ];
     };
   };
@@ -53,10 +56,8 @@
       };
     };
 
-    xsession.windowManager.i3 = {
-      config = {
-
-      };
+    home.file.".config/i3/config" = {
+      source = ./config;
     };
   };
 }
