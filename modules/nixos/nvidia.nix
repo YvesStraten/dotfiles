@@ -49,29 +49,29 @@
     };
   };
 
-  programs.gamescope = {
-    enable = true;
-  };
-
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    gamescopeSession.enable = true;
-
-    extraCompatPackages = [
-      pkgs.proton-ge-bin
-    ];
-  };
+#  programs.gamescope = {
+#    enable = true;
+#  };
+#
+#  programs.steam = {
+#    enable = true;
+#    remotePlay.openFirewall = true;
+#    gamescopeSession.enable = true;
+#
+#    extraCompatPackages = [
+#      pkgs.proton-ge-bin
+#    ];
+#  };
 
   environment.systemPackages = with pkgs; [
     vesktop
-    (lutris.override {
-      extraPkgs = pkgs: [
-        wine
-        winetricks
-      ];
-    })
-
-    mangohud
+#    (lutris.override {
+#      extraPkgs = pkgs: [
+#        wine
+#        winetricks
+#      ];
+#    })
+#
+#    mangohud
   ];
 }

@@ -14,6 +14,10 @@
 
   programs.dconf.enable = true;
   services.usbmuxd.enable = true;
+  programs.nh = {
+    enable = true;
+    flake = "/home/${user}/dotfiles";
+  };
 
   security.pam.services.swaylock.text = "auth include login";
   security.polkit.enable = true;
