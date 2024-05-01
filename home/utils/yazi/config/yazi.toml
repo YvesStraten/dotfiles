@@ -31,7 +31,7 @@ edit = [
 	{ run = 'code -w "%*"', block = true,  desc = "code (block)", for = "windows" },
 ]
 open = [
-	{ run = 'xdg-open "$@"',                desc = "Open", for = "linux" },
+	{ run = 'xdg-open "$@"', orphan = true, desc = "Open", for = "linux" },
 	{ run = 'open "$@"',                    desc = "Open", for = "macos" },
 	{ run = 'start "" "%1"', orphan = true, desc = "Open", for = "windows" },
 ]
@@ -39,6 +39,10 @@ reveal = [
 	{ run = 'open -R "$1"',                          desc = "Reveal", for = "macos" },
 	{ run = 'explorer /select, "%1"', orphan = true, desc = "Reveal", for = "windows" },
 	{ run = '''exiftool "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show EXIF", for = "unix" },
+]
+code = [
+	 { run = 'pygmentize -f rtf -O "fontface=Courier New,fontsize=20" "$1" | xclip -selection clipboard -t text/rtf', desc = "Code block", for = "linux" },
+	 { run = 'pygmentize -f rtf -O "fontface=Courier New,fontsize=20" "$1" | pbcopy', desc = "Code block", for = "macos" },
 ]
 extract = [
 	{ run = 'unar "$1"', desc = "Extract here", for = "unix" },
@@ -54,7 +58,7 @@ play = [
 rules = [
 	{ name = "*/", use = [ "edit", "open", "reveal" ] },
 
-	{ mime = "text/*",  use = [ "edit", "reveal" ] },
+	{ mime = "text/*",  use = [ "edit", "reveal", "code" ] },
 	{ mime = "image/*", use = [ "open", "reveal" ] },
 	{ mime = "video/*", use = [ "play", "reveal" ] },
 	{ mime = "audio/*", use = [ "play", "reveal" ] },
