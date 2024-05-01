@@ -16,13 +16,11 @@
         pillow
       ]))
 
-    texlive.combined.scheme-full
-    nodejs_21
+    texlive.combined.scheme-medium
+    nodejs
     rustup
     yarn
     openjdk19
-
-    sqlite
 
     unzip
     sshfs
@@ -30,6 +28,7 @@
     neofetch
     (hiPrio gcc)
     clang
+    gnumake
   ];
 
   programs.direnv = {

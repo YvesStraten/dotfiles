@@ -1,56 +1,47 @@
-{ pkgs
-, self
-, ...
-}: {
-  home.packages =
-    if pkgs.stdenv.isLinux
-    then
-      (with pkgs;
-      [
-        tesseract
-        tor-browser-bundle-bin
-        libreoffice
-        rclone
-        imagemagick
-        spotify
+{ pkgs, self, ... }: {
+  home.packages = if pkgs.stdenv.isLinux then
+    (with pkgs; [
+      tesseract
+      libreoffice
+      rclone
+      imagemagick
+      spotify
+      obs-studio
 
-        gscan2pdf
-        gimp
-        filezilla
-        krename
-        btop
+      gimp
+      filezilla
+      btop
 
-        pandoc
+      pandoc
 
-        nix-prefetch-scripts
-        ani-cli-rofi
+      nix-prefetch-scripts
+      ani-cli-rofi
 
-        qpwgraph
-        soundwireserver
-      ]) else
-      (with pkgs; [
-        tesseract
-        imagemagick
-        inkscape
-        yazi
-        spotify
-        iina
-        rclone
-        ani-cli
-        xcbuild
-        self.packages."aarch64-darwin".skim
+      qpwgraph
+      soundwireserver
+    ])
+  else
+    (with pkgs; [
+      tesseract
+      imagemagick
+      inkscape
+      yazi
+      spotify
+      iina
+      rclone
+      skimpdf
+      ani-cli
+      xcbuild
 
-        gimp
-        btop
+      gimp
+      btop
 
-        pandoc
+      pandoc
 
-        nix-prefetch-scripts
-      ]);
+      nix-prefetch-scripts
+    ]);
 
-  services.syncthing = {
-    enable = true;
-  };
+  services.syncthing = { enable = true; };
   #  programs.thunderbird = {
   #    enable = true;
   #    profiles.yvess = {

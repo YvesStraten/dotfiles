@@ -1,8 +1,8 @@
-{ config, lib, options, pkgs, ... }:
-with lib;
+{ config, lib, pkgs, ... }:
 let
+  inherit (lib) types mkOption mkMerge mkIf;
   cfg = config.services.rclone-bisync;
-  bisyncType = types.attrsOf (types.submodule {
+  bisyncType =  types.attrsOf (types.submodule {
     options = {
       remotePath = mkOption {
         type = types.str;
@@ -29,7 +29,7 @@ let
     };
     Service = {
       Type = "simple";
-      ExecStart = escapeShellArgs ([
+      ExecStart = lib.escapeShellArgs ([
         "${lib.getExe pkgs.rclone}"
         "bisync"
         "${localPath}"
@@ -41,16 +41,22 @@ let
   };
 
   mkBisyncTimer = { name }: {
+    Unit = {
+      Description = "Timer for ${name}.service";
+    };
     Timer = {
-      OnCalendar = "*:0/15";
+      OnCalendar = "*:0/5";
       Unit = "${name}.service";
     };
+
+    Install = { WantedBy = [ "default.target" ]; };
   };
 
-  mkLaunchdService = { remotePath, localPath, name, args }:
-    with config.home; {
+  mkLaunchdService = { remotePath, localPath, name, args }:{
       enable = true;
-      config = {
+      config = let
+        homeDirectory = config.home;
+      in{
         ProgramArguments = [
           "${lib.getExe pkgs.rclone}"
           "bisync"

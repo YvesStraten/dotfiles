@@ -82,6 +82,7 @@ Workaround as corfu seems to write the entire type, e.g System.int will complete
 #+end_src
 
 *** LSP
+**** Java
 #+begin_src emacs-lisp :tangle no
 (after! lsp-java
   (use-package! lsp-java
@@ -93,6 +94,17 @@ Workaround as corfu seems to write the entire type, e.g System.int will complete
           "-data" (concat (getenv "HOME") "/.jdtls"))
     )))
 #+end_src
+
+**** Nix
+#+begin_src emacs-lisp
+(after! lsp-mode
+  (use-package! lsp-mode
+    :hook (lsp-mode . lsp-inlay-hints-mode)
+    (lsp-mode . lsp-semantic-tokens-mode)
+    ))
+#+end_src
+
+#+RESULTS:
 
 *** Rainbow-mode
 #+begin_src emacs-lisp

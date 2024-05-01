@@ -1,5 +1,4 @@
-{ pkgs, lib, config, inputs, ... }:
-with lib; {
+{ pkgs, inputs, ... }: {
   imports = [
     ../wlogout/wlogout.nix
     ../waybar/waybar.nix

@@ -64,7 +64,7 @@
       [ "https://devenv.cachix.org" "https://nix-community.cachix.org" ];
   };
 
-  outputs = { nixpkgs, nixpkgs-stable, nixos-hardware, nur, nixvim, nixos-wsl
+  outputs = { nixpkgs, nixpkgs-stable, nur, nixvim, nixos-wsl
     , home-manager, home-manager-stable, flake-parts, nix-darwin, self, ...
     }@inputs:
     let

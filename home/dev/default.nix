@@ -1,4 +1,4 @@
-{ pkgs, shell, ... }: {
+{ shell, ... }: {
   imports = [
     # ./alacritty.nix
     ./kitty.nix
