@@ -69,6 +69,11 @@ See 'C-h v doom-font' for documentation and more examples of what they accept. F
 (setq display-line-numbers-type 'relative)
 #+end_src
 
+*** Dashboard
+#+begin_src emacs-lisp
+(after! doom-dashboard
+  (use-package! +doom-dashboard))
+#+end_src
 
 ** Custom confs
 *** Corfu
@@ -99,8 +104,9 @@ Workaround as corfu seems to write the entire type, e.g System.int will complete
 #+begin_src emacs-lisp
 (after! lsp-mode
   (use-package! lsp-mode
-    :hook (lsp-mode . lsp-inlay-hints-mode)
-    (lsp-mode . lsp-semantic-tokens-mode)
+    :config
+    (setq lsp-headerline-breadcrumb-enable t
+          lsp-inlay-hint-enable t)
     ))
 #+end_src
 

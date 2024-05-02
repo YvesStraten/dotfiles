@@ -16,7 +16,7 @@
         pillow
       ]))
 
-    texlive.combined.scheme-medium
+    texlive.combined.scheme-full
     nodejs
     rustup
     yarn
