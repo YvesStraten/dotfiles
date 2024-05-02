@@ -56,6 +56,9 @@
       };
     };
 
+    # Required to get targets such as tray to work
+    xsession.enable = true;
+
     home.file.".config/i3/config" = {
       source = ./config;
     };

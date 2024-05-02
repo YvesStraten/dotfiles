@@ -2,7 +2,7 @@
 let
   inherit (lib) types mkOption mkMerge mkIf;
   cfg = config.services.rclone-bisync;
-  bisyncType =  types.attrsOf (types.submodule {
+  bisyncType = types.attrsOf (types.submodule {
     options = {
       remotePath = mkOption {
         type = types.str;
@@ -16,65 +16,78 @@ let
 
       extraArgs = mkOption {
         type = types.listOf types.str;
-        default = [
-          "--verbose"
-        ];
+        default = [ "--verbose" ];
+      };
+
+      timeDelay = mkOption {
+        type = types.int;
+        default = 300;
       };
     };
   });
 
-  mkBisyncService = { remotePath, localPath, args }: {
-    Unit = {
-      Description = "Bisync service for ${remotePath} to ${localPath}";
-    };
-    Service = {
-      Type = "simple";
-      ExecStart = lib.escapeShellArgs ([
-        "${lib.getExe pkgs.rclone}"
-        "bisync"
-        "${localPath}"
-        "${remotePath}"
-      ] ++ args);
+  mkBisyncService = { remotePath, localPath, args }:
+    let
+      failureScript = pkgs.writeShellScriptBin "recover" ''
+        if [ "$SERVICE_RESULT" = 'exit-code' ];
+        then ${lib.getExe pkgs.libnotify} "Sync failed" "Sync failed from ${remotePath} to ${localPath}";
+        fi
+      '';
+    in {
+      Unit = {
+        Description = "Bisync service for ${remotePath} to ${localPath}";
+      };
+      Service = {
+        Type = "simple";
+        ExecStart = lib.escapeShellArgs ([
+          "${lib.getExe pkgs.rclone}"
+          "bisync"
+          "${localPath}"
+          "${remotePath}"
+        ] ++ args);
+
+        ExecStopPost = "${lib.getExe failureScript}";
+      };
+
+      Install = { WantedBy = [ "default.target" ]; };
     };
 
-    Install = { WantedBy = [ "default.target" ]; };
-  };
-
-  mkBisyncTimer = { name }: {
-    Unit = {
-      Description = "Timer for ${name}.service";
-    };
+  mkBisyncTimer = { name, timeOut }:
+    let
+    delay = timeOut / 60;
+  in {
+    Unit = { Description = "Timer for ${name}.service"; };
     Timer = {
-      OnCalendar = "*:0/5";
+      OnCalendar = "*:0/${toString delay}";
       Unit = "${name}.service";
     };
 
     Install = { WantedBy = [ "default.target" ]; };
   };
 
-  mkLaunchdService = { remotePath, localPath, name, args }:{
-      enable = true;
-      config = let
-        homeDirectory = config.home.homeDirectory;
-      in{
-        ProgramArguments = [
-          "${lib.getExe pkgs.rclone}"
-          "bisync"
-          "${localPath}"
-          "${remotePath}"
-        ] ++ args;
-        WorkingDirectory = "${homeDirectory}";
-        Label = "org.rclone.${name}";
-        RunAtLoad = true;
+  # mkLaunchdService = { remotePath, localPath, timeOut, name, args }:{
+  #     enable = true;
+  #     config = let
+  #       homeDirectory = config.home.homeDirectory;
+  #     in{
+  #       ProgramArguments = [
+  #         "${lib.getExe pkgs.rclone}"
+  #         "bisync"
+  #         "${localPath}"
+  #         "${remotePath}"
+  #       ] ++ args;
+  #       WorkingDirectory = "${homeDirectory}";
+  #       Label = "org.rclone.${name}";
+  #       RunAtLoad = true;
 
-        StandardOutPath =
-          "${homeDirectory}/Library/Logs/rclone-${name}.log";
-        StandardErrorPath =
-          "${homeDirectory}/Library/Logs/rclone-${name}.log";
+  #       StandardOutPath =
+  #         "${homeDirectory}/Library/Logs/rclone-${name}.log";
+  #       StandardErrorPath =
+  #         "${homeDirectory}/Library/Logs/rclone-${name}.log";
 
-        StartInterval = 300;
-      };
-    };
+  #       StartInterval = 300;
+  #     };
+  #   };
 
 in {
   options = {
@@ -103,16 +116,16 @@ in {
         }) cfg.bisyncs;
 
       systemd.user.timers =
-        builtins.mapAttrs (name: bisync: mkBisyncTimer { name = "${name}"; })
+        builtins.mapAttrs (name: bisync: mkBisyncTimer { name = "${name}"; timeOut = bisync.timeDelay; })
         cfg.bisyncs;
 
-      launchd.agents = builtins.mapAttrs (name: bisync:
-        mkLaunchdService {
-          remotePath = "${bisync.remotePath}";
-          localPath = "${bisync.localPath}";
-          args = bisync.extraArgs;
-          name = "${name}";
-        }) cfg.bisyncs;
+      # launchd.agents = builtins.mapAttrs (name: bisync:
+      #   mkLaunchdService {
+      #     remotePath = "${bisync.remotePath}";
+      #     localPath = "${bisync.localPath}";
+      #     args = bisync.extraArgs;
+      #     name = "${name}";
+      #   }) cfg.bisyncs;
     })
   ];
 }
