@@ -55,7 +55,7 @@ let
   mkLaunchdService = { remotePath, localPath, name, args }:{
       enable = true;
       config = let
-        homeDirectory = config.home;
+        homeDirectory = config.home.homeDirectory;
       in{
         ProgramArguments = [
           "${lib.getExe pkgs.rclone}"
