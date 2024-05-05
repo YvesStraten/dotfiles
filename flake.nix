@@ -64,8 +64,8 @@
       [ "https://devenv.cachix.org" "https://nix-community.cachix.org" ];
   };
 
-  outputs = { nixpkgs, nixpkgs-stable, nur, nixvim, nixos-wsl
-    , home-manager, home-manager-stable, flake-parts, nix-darwin, self, ...
+  outputs = { nixpkgs, nixpkgs-stable, nur, nixvim, nixos-wsl, home-manager
+    , home-manager-stable, nixos-hardware, flake-parts, nix-darwin, self, ...
     }@inputs:
     let
       email = "yves.straten@gmail.com";
@@ -111,9 +111,8 @@
 
       flake = {
         packages = {
-          "aarch64-darwin" =
-            let pkgs = nixpkgs.legacyPackages."aarch64-darwin";
-            in { } // (import ./packages/packages-darwin.nix { inherit pkgs; });
+          "aarch64-darwin" = let pkgs = nixpkgs.legacyPackages."aarch64-darwin";
+          in { } // (import ./packages/packages-darwin.nix { inherit pkgs; });
           "x86_64-linux" = let pkgs = nixpkgs.legacyPackages."x86_64-linux";
           in { } // (import ./packages { inherit pkgs; });
         };
@@ -141,6 +140,50 @@
         };
 
         nixosConfigurations = {
+          pi = let user = "xayah";
+          in nixpkgs.lib.nixosSystem {
+            system = "aarch64-linux";
+            specialArgs = { inherit inputs user shell; };
+            modules = [
+              "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-new-kernel.nix"
+              "${nixos-hardware}/raspberry-pi/4"
+              ./modules/pi.nix
+
+              (nixpkgs.lib.mkAliasOptionModule [ "hm" ] [
+                "home-manager"
+                "users"
+                user
+              ])
+
+              home-manager.nixosModules.home-manager
+              {
+                home-manager = {
+                  extraSpecialArgs = {
+                    inherit inputs gitUser email user shell self;
+                  };
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  users.${user} = { ... }: {
+                    imports = [ ./home/utils/mpv.nix  ];
+
+                    nixpkgs.config.allowUnfree = true;
+                    home = {
+                      username = user;
+                      homeDirectory = "/home/${user}";
+                      stateVersion =
+                        "22.11"; # Please read the comment before changing.
+
+                      sessionPath = [ "$HOME/.local/bin" ];
+                    };
+
+                    # Let Home Manager install and manage itself.
+                    programs.home-manager.enable = true;
+                  };
+                };
+              }
+            ];
+          };
+
           nitro = nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             specialArgs = { inherit inputs user shell; };

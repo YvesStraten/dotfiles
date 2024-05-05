@@ -14,6 +14,7 @@
 
   programs.dconf.enable = true;
   services.usbmuxd.enable = true;
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   programs.nh = {
     enable = true;
     flake = "/home/${user}/dotfiles";
