@@ -44,6 +44,15 @@ in {
       ];
   };
 
+  services.emacs = (if pkgs.stdenv.isLinux then{
+    enable = true;
+    defaultEditor = true;
+    startWithUserSession = true;
+    package = emacs;
+
+    client.enable = true;
+  } else {});
+
   home = {
     sessionVariables = {
      JDTLS_PATH = "${pkgs.jdt-language-server}/share/java/jdtls/";

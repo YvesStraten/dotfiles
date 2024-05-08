@@ -5,6 +5,10 @@
 
     # Follow unstable
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    polybar-scripts = {
+      url = "github:polybar/polybar-scripts";
+      flake = false;
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -140,7 +144,8 @@
         };
 
         nixosConfigurations = {
-          pi = let user = "xayah";
+          pi = let
+            user = "xayah";
           in nixpkgs.lib.nixosSystem {
             system = "aarch64-linux";
             specialArgs = { inherit inputs user shell; };

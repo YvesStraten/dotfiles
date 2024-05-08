@@ -4,7 +4,7 @@
   lib,
   ...
 }: {
-  boot.supportedFilesystems = [ "ntfs" ];
+  boot.supportedFilesystems = [ "ntfs" "btrfs" "hpfs" ];
   boot.loader = {
     grub = {
       enable = true;

@@ -31,6 +31,7 @@ font pango:JetBrainsMono 15
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id ~/.fehbg &
+exec --no-startup-id autotiling
 
 exec --no-startup-id systemctl --user start polybar.service
 exec --no-startup-id systemctl --user start picom.service

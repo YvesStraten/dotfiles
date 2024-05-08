@@ -15,7 +15,9 @@
       package = pkgs.i3-gaps;
       enable = true;
       extraPackages = with pkgs; [
+        autotiling
         pamixer
+        pulseaudio
         feh
         pywal
         picom

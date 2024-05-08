@@ -1,14 +1,23 @@
 { config, pkgs, lib, user, shell, ... }: {
   programs.${shell}.enable = true;
 
+  fonts.packages = with pkgs; [ corefonts ];
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
     defaultUserShell = pkgs.${shell};
     users.${user} = {
       isNormalUser = true;
       description = "${user}";
-      extraGroups =
-        [ "networkmanager" "wheel" "audio" "libvirtd" "docker" "dialout" "fuse" ];
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+        "audio"
+        "libvirtd"
+        "docker"
+        "dialout"
+        "fuse"
+      ];
     };
   };
 
