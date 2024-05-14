@@ -6,7 +6,10 @@
         formatting = {
           alejandra.enable = true;
           stylua.enable = true;
-          prettier.enable = true;
+          prettier = {
+            enable = true;
+            disableTsServerFormatter = true;
+          };
         };
       };
     };

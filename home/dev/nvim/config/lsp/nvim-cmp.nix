@@ -1,9 +1,18 @@
-{
+{pkgs, ...}: {
   plugins = {
-    # luasnip = {
-    #   enable = true;
-    #   fromVscode = [{ }];
-    # };
+    luasnip = {
+      enable = true;
+      extraConfig = {
+        enable_autosnippets = true;
+        store_selection_keys = "<Tab>";
+      };
+      fromVscode = [
+        {
+          lazyLoad = true;
+          paths = "${pkgs.vimPlugins.friendly-snippets}";
+        }
+      ];
+    };
     lspkind = {
       enable = true;
       cmp.enable = true;
@@ -14,27 +23,30 @@
       autoEnableSources = true;
 
       settings = {
-        snippet.expand = "vim.fn['UltiSnips#Anon'](args.body)";
+        snippet.expand = "function(args) require('luasnip').lsp_expand(args.body) end";
         sources = [
-          { name = "nvim_lsp"; }
-          { name = "ultisnips"; }
-          { name = "nvim_lsp_document_symbol"; }
+          {name = "nvim_lsp";}
+          # {name = "ultisnips";}
+          {name = "nvim_lsp_document_symbol";}
           {
             name = "nvim_lsp_signature_help";
           }
-          # { name = "luasnip"; }
-          { name = "buffer"; }
-          { name = "path"; }
+          {name = "luasnip";}
+          {name = "buffer";}
+          {name = "path";}
         ];
 
-        window = {
-          formatting = { fields = [ "abbr" "kind" "menu" ]; };
+        performance = {
+          max_view_entries = 30;
+        };
 
+        window = {
+          formatting = {fields = ["abbr" "kind" "menu"];};
           completion = {
             border = "rounded";
             scrollbar = true;
           };
-          documentation = { border = "rounded"; };
+          documentation = {border = "rounded";};
         };
         mapping = {
           "<Tab>" = ''
@@ -60,6 +72,6 @@
       };
     };
 
-    nvim-cmp = { };
+    nvim-cmp = {};
   };
 }

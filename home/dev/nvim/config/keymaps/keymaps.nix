@@ -1,4 +1,4 @@
-{ ... }: {
+{...}: {
   globals.mapleader = " ";
   keymaps = [
     {
@@ -106,14 +106,8 @@
     }
 
     {
-      key = "<leader>go";
-      action = ":Git<cr>";
-      options.silent = true;
-    }
-
-    {
-      key = "<leader>gp";
-      action = ":Git push<cr>";
+      key = "<leader>gg";
+      action = ":Neogit<cr>";
       options.silent = true;
     }
 

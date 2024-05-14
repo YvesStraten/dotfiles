@@ -14,6 +14,7 @@
       scrolloff = 8;
       updatetime = 50;
       termguicolors = true;
+      smartindent = true;
 
       hlsearch = false;
       incsearch = true;
@@ -28,7 +29,7 @@
     };
 
     extraConfigLuaPre = ''
-      local cmp_ultisnips_mappings = require("cmp_nvim_ultisnips.mappings")
+      luasnip = require("luasnip")
       vim.opt.undodir = os.getenv('HOME') .. '/.vim/undodir';
       vim.opt.backupdir = os.getenv('HOME') .. '/.vim/backup';
 
@@ -38,7 +39,6 @@
       vim.keymap.set("n", "<leader>y", '"+y')
       vim.keymap.set("v", "<leader>y", '"+y')
       vim.keymap.set("n", "<leader>Y", '"+Y')
-
     '';
   };
 }

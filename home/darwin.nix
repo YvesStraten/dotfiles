@@ -1,10 +1,7 @@
-{ config
-, pkgs
-, gitUser
-, email
-, inputs
-, user
-, ...
+{
+  inputs,
+  user,
+  ...
 }: {
   imports = [
     inputs.nix-colors.homeManagerModules.default
@@ -32,4 +29,8 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+  programs.man = {
+    enable = true;
+    generateCaches = true;
+  };
 }

@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }: {
+{pkgs, ...}: {
   imports = [
     ./telescope/telescope.nix
     ./lsp/lsp.nix
@@ -11,15 +11,16 @@
   ];
 
   plugins = {
+    presence-nvim.enable = true;
     barbar = {
       enable = true;
       tabpages = true;
     };
     treesitter = {
       enable = true;
-      ensureInstalled = "all";
       indent = true;
-      disabledLanguages = [ "tex" ];
+      ensureInstalled = "all";
+      disabledLanguages = ["tex"];
       nixvimInjections = true;
     };
     which-key.enable = true;
@@ -30,9 +31,8 @@
     indent-blankline.enable = true;
     ts-autotag.enable = true;
 
-    # noice.enable = true;
+    noice.enable = true;
 
-    notify.enable = true;
     nvim-colorizer = {
       enable = true;
       userDefaultOptions = {
@@ -57,15 +57,16 @@
       };
     };
 
-    fugitive.enable = true;
+    neogit.enable = true;
     undotree.enable = true;
     toggleterm = {
       enable = true;
-      direction = "float";
-      hideNumbers = true;
-      openMapping = "<C-e>";
-
-      floatOpts.border = "curved";
+      settings = {
+        direction = "float";
+        hideNumbers = true;
+        open_mapping = "[[<C-e>]]";
+        floatOpts.border = "curved";
+      };
     };
     markdown-preview = {
       enable = true;
@@ -73,8 +74,12 @@
     };
     vimtex = {
       enable = true;
+      texlivePackage = null;
       settings = {
-        view_method = "zathura_simple";
+        view_method =
+          if pkgs.stdenv.isDarwin
+          then "skim"
+          else "zathura";
         compiler_latexmk = {
           options = [
             "-verbose"

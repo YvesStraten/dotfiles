@@ -1,20 +1,53 @@
 {
   plugins.telescope = {
     enable = true;
-    extensions = { fzf-native.enable = true; };
+
+    extensions = {fzf-native.enable = true;};
+    settings = {
+      defaults = {
+        layout_config = {
+          horizontal = {
+            preview_cutoff = 0;
+          };
+        };
+        mappings = {
+          i = {
+            "<esc>" = {
+              __raw = ''
+                function(...)
+                  return require("telescope.actions").close(...)
+                end'';
+            };
+          };
+        };
+      };
+    };
+
     keymaps = {
-      "<leader>ff" = {
+      "<leader><leader>" = {
         action = "find_files";
         options = {
           desc = "Telescope find files";
         };
       };
-      "<leader>fg" = {
+      "<leader>/" = {
         action = "live_grep";
         options = {
           desc = "Live grep files";
         };
       };
+
+      "<leader>m" = {
+        action = "man_pages";
+        options.desc = "Man pages grep";
+      };
+
+      # "<leader>fh" = {
+      #   action = "which_key";
+      #   options = {
+      #     desc = "Which key";
+      #   };
+      # };
     };
   };
 }

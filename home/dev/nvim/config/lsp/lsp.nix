@@ -1,4 +1,8 @@
 {
+  pkgs,
+  lib,
+  ...
+}: {
   plugins = {
     lsp = {
       enable = true;
@@ -13,15 +17,20 @@
         rust-analyzer = {
           enable = true;
           installRustc = false;
+          installCargo = false;
         };
+
+        nixd.enable = true;
       };
     };
     lsp-lines.enable = true;
     lspsaga.enable = true;
     nvim-jdtls = {
       enable = true;
-      configuration = "/Users/yvess/.cache/jdtls/config";
-      data = "/Users/yvess/.cache/jdtls/workspace";
+      data = "~/.cache/jdtls/workspace";
+      cmd = [
+        "${lib.getExe pkgs.jdt-language-server}"
+      ];
     };
   };
 }

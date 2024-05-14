@@ -1,13 +1,12 @@
-{ pkgs
-, config
-, inputs
-, self
-, ...
+{
+  pkgs,
+  self,
+  ...
 }: {
-  home.packages = with pkgs;
+  home.packages =
     [
-      fd
-      ripgrep
+      pkgs.fd
+      pkgs.ripgrep
     ]
     ++ (
       if pkgs.stdenv.isLinux
