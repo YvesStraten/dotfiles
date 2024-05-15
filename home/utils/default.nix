@@ -1,6 +1,8 @@
-{ pkgs, config, ... }:
-
 {
+  pkgs,
+  config,
+  ...
+}: {
   imports = [
     ../../config/rclone/rclone.nix
     ./general.nix
@@ -8,7 +10,7 @@
     ./yazi/yazi.nix
     ./mpv.nix
     ./zathura.nix
-    ./thunderbird.nix
+    # ./thunderbird.nix
   ];
 
   services.rclone-bisync = {

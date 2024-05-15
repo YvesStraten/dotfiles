@@ -1,4 +1,4 @@
-{ pkgs, self, ... }: {
+{ pkgs, ... }: {
   home.packages = if pkgs.stdenv.isLinux then
     (with pkgs; [
       tesseract

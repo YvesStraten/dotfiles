@@ -19,10 +19,10 @@
 
     # Desktops
     # ../home/hypr/hyprland.nix
-    ../home/i3/i3.nix
+    # ../home/i3/i3.nix
     # ../home/plasma/plasma.nix
     # ../home/sway/sway.nix
-    # ../home/gnome/gnome.nix
+    ../home/gnome/gnome.nix
   ];
 
   fileSystems = {

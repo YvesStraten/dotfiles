@@ -1,6 +1,4 @@
 {
-  config,
-  pkgs,
   inputs,
   user,
   ...
@@ -13,11 +11,6 @@
     # ./bin
 
     ./dev
-
-    ./dconf/dconf.nix
-    # ./plasma/home.nix
-    # ./sway/home.nix
-    # ./gnome/home.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -33,4 +26,8 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+  programs.man = {
+    enable = true;
+    generateCaches = true;
+  };
 }
