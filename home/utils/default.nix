@@ -10,7 +10,7 @@
     ./yazi/yazi.nix
     ./mpv.nix
     ./zathura.nix
-    # ./thunderbird.nix
+    ./thunderbird.nix
   ];
 
   services.rclone-bisync = {
