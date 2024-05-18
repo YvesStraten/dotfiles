@@ -3,4 +3,5 @@
   sekiro = pkgs.callPackage ./sekiro.nix { };
   wall-switch = pkgs.callPackage ./wall-switch.nix { };
   win32yank = pkgs.callPackage ./win32yank.nix { };
+  picom-pijulius = pkgs.callPackage ./picom-pijulius.nix {  };
 }

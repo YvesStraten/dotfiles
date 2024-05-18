@@ -1,4 +1,4 @@
-{ config, pkgs, lib, user, shell, ... }: {
+{ pkgs, lib, user, shell, ... }: {
   programs.${shell}.enable = true;
 
   fonts.packages = with pkgs; [ corefonts ];

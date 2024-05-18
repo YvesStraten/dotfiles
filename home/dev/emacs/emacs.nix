@@ -30,7 +30,7 @@ let
     ];
   });
 
-  emacs = if pkgs.stdenv.isLinux then pkgs.emacs-git else macport;
+  emacs = if pkgs.stdenv.isLinux then pkgs.emacs-unstable else macport;
 in {
   programs.emacs = {
     enable = true;
@@ -83,7 +83,7 @@ in {
       nodePackages_latest.pyright
       cppcheck
       clang-tools
-      nixfmt
+      nixfmt-rfc-style
       plantuml
       black
 

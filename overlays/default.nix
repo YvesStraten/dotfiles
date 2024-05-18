@@ -14,6 +14,9 @@
           "Wsl? is this still needed?");
         pkgs.callPackage ../packages/jdt.nix { };
 
+      picom-pijulius = assert (lib.assertMsg (prev.picom-pijulius != null) "Now in nixpkgs");
+        pkgs.callPackage ../packages/picom-pijulius.nix {  };
+
       sddm = prev.sddm.overrideAttrs (o: {
         buildInputs = o.buildInputs
           ++ [ final.qt5.qtquickcontrols2 final.qt5.qtgraphicaleffects ];
