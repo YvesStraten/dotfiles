@@ -33,9 +33,6 @@ exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id ~/.fehbg &
 exec --no-startup-id autotiling
 
-exec --no-startup-id systemctl --user start polybar.service
-exec --no-startup-id systemctl --user start picom.service
-exec --no-startup-id picom
 exec --no-startup-id wal -R
 
 # The combination of xss-lock, nm-applet and 
@@ -81,7 +78,10 @@ bindsym $mod+Return exec kitty
 
 bindsym $mod+b exec firefox 
 bindsym $mod+e exec emacs 
-bindsym $mod+n exec kitty -e yazi
+bindsym $mod+n exec tdrop -ma -w 60% -y 30% -x 20% -n 1 kitty --class fm -e yazi
+bindsym Shift+Return exec tdrop -ma -n 2 kitty --class dropdown
+bindsym $mod+m exec tdrop -ma -w 60% -y 30% -x 20% -n 3 firefox --new-window web.whatsapp.com
+
 
 for_window [class="^.*"] border pixel 0
 
@@ -205,9 +205,9 @@ bindsym $mod+Ctrl+h resize grow width 10 px or 10 ppt
 bindsym $mod+Ctrl+l resize shrink width 10 px or 10 ppt
 
 ## Screenshots
-bindsym Print exec --no-startup-id maim "/home/$USER/Pictures/$(date)"
-bindsym $mod+Print exec --no-startup-id maim --window $(xdotool getactivewindow) "/home/$USER/Pictures/$(date)"
-bindsym Shift+Print exec --no-startup-id maim --select "/home/$USER/Pictures/$(date)"
+bindsym Print exec --no-startup-id maim "/home/$USER/Pictures/$(date).png"
+bindsym $mod+Print exec --no-startup-id maim --window $(xdotool getactivewindow) "/home/$USER/Pictures/$(date).png"
+bindsym Shift+Print exec --no-startup-id maim --select "/home/$USER/Pictures/$(date).png"
 
 ## Clipboard Screenshots
 bindsym Ctrl+Print exec --no-startup-id maim | xclip -selection clipboard -t image/png

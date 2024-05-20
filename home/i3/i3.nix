@@ -16,6 +16,7 @@
       enable = true;
       extraPackages = with pkgs; [
         autotiling
+        tdrop
         pamixer
         pulseaudio
         feh
