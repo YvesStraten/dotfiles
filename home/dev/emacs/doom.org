@@ -71,9 +71,14 @@ See 'C-h v doom-font' for documentation and more examples of what they accept. F
 
 *** Dashboard
 #+begin_src emacs-lisp
+(setq fancy-splash-image (concat doom-user-dir "banner.png"))
+
 (after! doom-dashboard
-  (use-package! +doom-dashboard))
+  (use-package! +doom-dashboard)
+  )
 #+end_src
+
+#+RESULTS:
 
 ** Custom confs
 *** Corfu
@@ -213,8 +218,7 @@ Workaround as corfu seems to write the entire type, e.g System.int will complete
 **** Lsp
 #+begin_src emacs-lisp
 (map! :leader
-      :desc "Look definition" "ld" #'lsp-find-references
-      :desc "Format" "lf" #'lsp-format-buffer
+      :desc "Format" "lf" #'+format/buffer
       :desc "Rename" "lr" #'lsp-rename)
 #+end_src
 

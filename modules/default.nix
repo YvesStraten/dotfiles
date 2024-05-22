@@ -24,9 +24,4 @@
     # ../home/sway/sway.nix
     # ../home/gnome/gnome.nix
   ];
-
-  fileSystems = {
-    "/data".device = "/dev/nvme0n1p5";
-
-  };
 }

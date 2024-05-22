@@ -115,9 +115,9 @@ in {
           args = bisync.extraArgs;
         }) cfg.bisyncs;
 
-      systemd.user.timers =
-        builtins.mapAttrs (name: bisync: mkBisyncTimer { name = "${name}"; timeOut = bisync.timeDelay; })
-        cfg.bisyncs;
+      # systemd.user.timers =
+      #   builtins.mapAttrs (name: bisync: mkBisyncTimer { name = "${name}"; timeOut = bisync.timeDelay; })
+      #   cfg.bisyncs;
 
       # launchd.agents = builtins.mapAttrs (name: bisync:
       #   mkLaunchdService {
