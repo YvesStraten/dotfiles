@@ -1,4 +1,4 @@
-{ email, user, ... }: {
+{ email, user, pkgs, ... }: {
   accounts.email.accounts = {
     ${user} = {
       address = email;
@@ -6,8 +6,8 @@
     };
   };
 
-  programs.thunderbird = {
+  programs.thunderbird = if pkgs.stdenv.isLinux then {
     enable = true;
     profiles.${user} = { isDefault = true; };
-  };
+  } else {};
 }

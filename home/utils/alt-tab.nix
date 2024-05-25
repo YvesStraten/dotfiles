@@ -1,7 +1,3 @@
 {pkgs, ...}: {
-  imports = [
-    ../../config/alt-tab/alt-tab.nix
-  ];
-
-  services.alt-tab.enable = true;
+  services.alt-tab.enable = if pkgs.stdenv.isDarwin then true else false;
 }

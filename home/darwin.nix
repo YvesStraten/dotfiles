@@ -5,6 +5,7 @@
 }: {
   imports = [
     inputs.nix-colors.homeManagerModules.default
+    ../config/alt-tab/alt-tab.nix
     # Main stuff
     ./theming-darwin.nix
     ./bin/default.nix
