@@ -1282,7 +1282,8 @@
         "ouroboros": "ouroboros",
         "polybar-scripts": "polybar-scripts",
         "vim-snippets": "vim-snippets",
-        "yazi": "yazi"
+        "yazi": "yazi",
+        "zathura-dracula": "zathura-dracula"
       }
     },
     "rust-overlay": {
@@ -1513,6 +1514,22 @@
       "original": {
         "owner": "sxyazi",
         "repo": "yazi",
+        "type": "github"
+      }
+    },
+    "zathura-dracula": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1710005413,
+        "narHash": "sha256-1bEJYF1T1bk0meySXcww7POCjjzSQpyXdh5YwoZRhRA=",
+        "owner": "dracula",
+        "repo": "zathura",
+        "rev": "d21609b0548eaf45cccc275791dd3cc5c22baa5e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dracula",
+        "repo": "zathura",
         "type": "github"
       }
     }

@@ -38,6 +38,11 @@
     nix-colors.url = "github:misterio77/nix-colors";
     devenv.url = "github:cachix/devenv";
 
+    zathura-dracula = {
+      url = "github:dracula/zathura";
+      flake = false;
+    };
+
     nixvim.url = "github:nix-community/nixvim";
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";

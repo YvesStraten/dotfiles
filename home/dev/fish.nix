@@ -33,4 +33,16 @@
     }] else
       []);
   };
+
+  programs.starship = {
+    enable = true;
+    enableFishIntegration = true;
+    settings = {
+      add_newline = false;
+      hostname = {
+        ssh_only = false;
+        disabled = false;
+      };
+    };
+  };
 }
