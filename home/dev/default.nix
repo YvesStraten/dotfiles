@@ -5,7 +5,7 @@
     ./emacs/emacs.nix
     # ./nvim/neovim.nix
     # ./vscode.nix
-    # ./tmux/tmux.nix
+    ./tmux/tmux.nix
     ./${shell}.nix
 
     ./languages.nix
