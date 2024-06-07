@@ -38,7 +38,7 @@ let
         Description = "Bisync service for ${remotePath} to ${localPath}";
       };
       Service = {
-        Type = "simple";
+        Type = "oneshot";
         ExecStart = lib.escapeShellArgs ([
           "${lib.getExe pkgs.rclone}"
           "bisync"

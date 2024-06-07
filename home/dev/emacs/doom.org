@@ -46,6 +46,13 @@ See 'C-h v doom-font' for documentation and more examples of what they accept. F
 #+RESULTS:
 
 ** Custom confs
+*** Evil
+#+begin_src elisp
+(after! evil
+  (use-package! evil
+    :config (setq scroll-margin 8)))
+#+end_src
+
 *** Corfu
 Workaround as corfu seems to write the entire type, e.g System.int will complete into System.in : PrintStream
 
