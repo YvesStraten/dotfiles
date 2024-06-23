@@ -31,21 +31,21 @@ let
 
   emacs = if pkgs.stdenv.isLinux then pkgs.emacs-unstable else macport;
   banner = pkgs.stdenv.mkDerivation {
-      name = "witchmacs-banner";
-      src = pkgs.fetchurl {
-        url = "https://snackon.github.io/images/witchmacs_icon.png";
-        hash = "sha256-jZ1rpRkopYGBWcAs01pE1KknHNx/cCcP4sKWoa+8ad4=";
-      };
-
-      dontUnpack = true;
-
-      installPhase = ''
-        mkdir -p $out/
-        convert $src -resize 25% $out/witchmacs_icon.png
-      '';
-
-      buildInputs = [ pkgs.imagemagick ];
+    name = "witchmacs-banner";
+    src = pkgs.fetchurl {
+      url = "https://snackon.github.io/images/witchmacs_icon.png";
+      hash = "sha256-jZ1rpRkopYGBWcAs01pE1KknHNx/cCcP4sKWoa+8ad4=";
     };
+
+    dontUnpack = true;
+
+    installPhase = ''
+      mkdir -p $out/
+      convert $src -resize 25% $out/witchmacs_icon.png
+    '';
+
+    buildInputs = [ pkgs.imagemagick ];
+  };
 in
 {
   home.file.".config/doom/banner.png".source = "${banner}/witchmacs_icon.png";
@@ -114,8 +114,15 @@ in
 
       # DAP protocols
       lldb
-    ] ++ [
-      (aspellWithDicts (ds: with ds; [ en id en-computers ]))
+      (aspellWithDicts (
+        ds: with ds; [
+          en
+          id
+          en-computers
+          en-science
+        ]
+      ))
+      zstd
     ];
   };
   services.syncthing = {

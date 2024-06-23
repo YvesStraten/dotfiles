@@ -6,6 +6,7 @@
   plugins = {
     lsp = {
       enable = true;
+      # inlayHints = true;
       servers = {
         tsserver.enable = true;
         tailwindcss.enable = true;
