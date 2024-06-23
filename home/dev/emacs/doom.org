@@ -110,6 +110,7 @@ Workaround as corfu seems to write the entire type, e.g System.int will complete
   (use-package! neotree
     :config
     (setq neo-smart-open 1
+          neo-theme (if (display-graphic-p) 'icons 'arrow)
           neo-window-width 20
           neo-autorefresh 1
           neo-show-hidden-files 1)

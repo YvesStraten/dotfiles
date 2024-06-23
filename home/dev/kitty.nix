@@ -1,8 +1,12 @@
-{ pkgs, ... }: {
+{ ... }:
+{
   programs.kitty = {
     enable = true;
-    font.name = "JetBrainsMono Nerd Font";
-    font.size = 23;
+    font = {
+      name = "JetBrainsMono Nerd Font";
+      size = 23;
+    };
+
     shellIntegration.enableZshIntegration = true;
     extraConfig = ''
       macos_quit_when_last_window_closed yes
