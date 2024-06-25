@@ -97,7 +97,6 @@
     enable = true;
     settings = {
       compile = true;
-      transparent = true;
     };
   };
 

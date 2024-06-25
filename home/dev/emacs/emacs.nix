@@ -114,6 +114,8 @@ in
 
       # DAP protocols
       lldb
+    ] ++ [
+      (aspellWithDicts (ds: with ds; [ en id en-computers ]))
     ];
   };
   services.syncthing = {

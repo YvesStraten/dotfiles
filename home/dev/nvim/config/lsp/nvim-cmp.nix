@@ -37,7 +37,7 @@
         ];
 
         performance = {
-          max_view_entries = 30;
+          max_view_entries = 15;
         };
 
         window = {
@@ -51,13 +51,25 @@
         mapping = {
           "<Tab>" = ''
             function(fallback)
-              cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
-            end
+                  if cmp.visible() then
+                    cmp.select_next_item()
+                  elseif luasnip.expand_or_jumpable() then
+                    luasnip.expand_or_jump()
+                  else
+                    fallback()
+                  end
+	    end
           '';
           "<S-Tab>" = ''
             function(fallback)
-               cmp_ultisnips_mappings.jump_backwards(fallback)
-             end
+                  if cmp.visible() then
+                    cmp.select_prev_item()
+                  elseif luasnip.jumpable(-1) then
+                    luasnip.jump(-1)
+                  else
+                    fallback()
+                  end
+            end
           '';
           "<CR>" = "cmp.mapping.confirm({ select = true })";
           "<C-Space>" = "cmp.mapping.complete()";

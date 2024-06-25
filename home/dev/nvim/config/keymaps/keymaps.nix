@@ -40,6 +40,13 @@
     }
 
     {
+      mode = "v";
+      key = "<esc>";
+      action = ":nohlsearch<CR>";
+      options.silent = true;
+    }
+
+    {
       key = "<tab>";
       options.silent = true;
       action = ":BufferNext<CR>";
@@ -88,6 +95,20 @@
       key = "<leader>lr";
       action = ":Lspsaga rename<CR>";
       options.desc = "Rename definition";
+      options.silent = true;
+    }
+
+    {
+      key = "gd";
+      action = ":Lspsaga goto_definition<CR>";
+      options.desc = "Goto definition";
+      options.silent = true;
+    }
+
+    {
+      key = "<leader>gd";
+      action = ":Lspsaga peek_definition<CR>";
+      options.desc = "Peek definition";
       options.silent = true;
     }
 

@@ -143,7 +143,14 @@ Workaround as corfu seems to write the entire type, e.g System.int will complete
     :if (eq system-type 'darwin)
     :config
     (setq TeX-view-program-selection '((output-pdf "open")))
-    ))
+    )
+
+  (use-package! tex
+    :config
+    (setq TeX-view-program-selection '((output-pdf "Zathura")))
+    )
+  )
+
 #+end_src
 
 **** Auto-compile
