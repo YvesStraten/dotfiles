@@ -11,7 +11,10 @@
   ];
 
   plugins = {
-    presence-nvim.enable = true;
+    presence-nvim = {
+      enable = true;
+      autoUpdate = true;
+    };
     barbar = {
       enable = true;
       tabpages = true;

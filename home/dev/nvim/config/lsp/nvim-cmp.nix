@@ -40,25 +40,25 @@
           max_view_entries = 15;
         };
 
-        window = {
-          formatting = {fields = ["abbr" "kind" "menu"];};
-          completion = {
-            border = "rounded";
-            scrollbar = true;
-          };
-          documentation = {border = "rounded";};
-        };
+        # window = {
+        #   formatting = {fields = ["abbr" "kind" "menu"];};
+        #   completion = {
+        #     border = "rounded";
+        #     scrollbar = true;
+        #   };
+        #   documentation = {border = "rounded";};
+        # };
         mapping = {
           "<Tab>" = ''
-            function(fallback)
-                  if cmp.visible() then
-                    cmp.select_next_item()
-                  elseif luasnip.expand_or_jumpable() then
-                    luasnip.expand_or_jump()
-                  else
-                    fallback()
-                  end
-	    end
+                   function(fallback)
+                         if cmp.visible() then
+                           cmp.select_next_item()
+                         elseif luasnip.expand_or_jumpable() then
+                           luasnip.expand_or_jump()
+                         else
+                           fallback()
+                         end
+            end
           '';
           "<S-Tab>" = ''
             function(fallback)
