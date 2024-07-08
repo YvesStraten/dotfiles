@@ -16,6 +16,7 @@
 
       nix-prefetch-scripts
       ani-cli-rofi
+      unityhub
 
       qpwgraph
       soundwireserver
