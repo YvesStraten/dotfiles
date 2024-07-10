@@ -5,10 +5,10 @@
 }: {
   services.xserver = {
     enable = true;
-    displayManager.sddm = {
-      enable = true;
-      theme = "${pkgs.yvess.sugar-dark}";
-    };
+    # displayManager.sddm = {
+    #   enable = true;
+    #   theme = "${pkgs.yvess.sugar-dark}";
+    # };
     desktopManager.plasma5.enable = true;
   };
 
@@ -24,18 +24,15 @@
 
   environment.systemPackages = with pkgs;
     [
-      config.nur.repos.mikilio.xwaylandvideobridge
+      nur.repos.mikilio.xwaylandvideobridge
     ]
-    ++ (with pkgs.libsForQt5; [
+    ++ (with libsForQt5; [
       bismuth
     ]);
 
   environment.plasma5.excludePackages = with pkgs.libsForQt5; [
     elisa
-    gwenview
-    dolphin
     konsole
-    okular
     oxygen
     khelpcenter
   ];

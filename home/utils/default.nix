@@ -7,7 +7,7 @@
     ./mpv.nix
     ./zathura.nix
     ./thunderbird.nix
-    ./alt-tab.nix
+    # ./alt-tab.nix
   ];
 
   services.rclone-bisync = {
