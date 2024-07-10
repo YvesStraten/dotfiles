@@ -5,6 +5,10 @@
 
   services.jupyter-notebook.enable = true;
 
+  home.sessionVariables = {
+    DOTNET_ROOT = "${pkgs.dotnet-sdk}";
+ };
+
   home.packages = with pkgs; [
     (python311.withPackages (ps:
       with ps; [
@@ -21,6 +25,7 @@
     rustup
     yarn
     openjdk19
+    dotnet-sdk
 
     unzip
     sshfs
