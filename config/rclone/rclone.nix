@@ -16,7 +16,7 @@ let
 
       extraArgs = mkOption {
         type = types.listOf types.str;
-        default = [ "--verbose" ];
+        default = [ "--verbose" "-P" ];
       };
 
       timeDelay = mkOption {

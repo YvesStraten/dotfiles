@@ -66,7 +66,7 @@ in
     if pkgs.stdenv.isLinux then
       {
         enable = true;
-        defaultEditor = true;
+        # defaultEditor = true;
         startWithUserSession = true;
         package = emacs;
 

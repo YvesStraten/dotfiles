@@ -34,6 +34,7 @@
     (hiPrio gcc)
     clang
     gnumake
+    drawio
   ];
 
   programs.direnv = {
