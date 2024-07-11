@@ -94,7 +94,6 @@ in
       jdt-language-server
       stylua
       nodePackages_latest.prettier
-      nodePackages_latest.vscode-html-languageserver-bin
       nodePackages_latest.typescript-language-server
       nodePackages_latest.eslint
       python311Packages.pytest
@@ -103,7 +102,7 @@ in
 
       html-tidy
       shellcheck
-      nodePackages_latest.pyright
+      pyright
       cppcheck
       clang-tools
       nixfmt-rfc-style
