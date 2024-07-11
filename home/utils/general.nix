@@ -2,6 +2,7 @@
   home.packages = if pkgs.stdenv.isLinux then
     (with pkgs; [
       tesseract
+      rsync
       libreoffice
       rclone
       imagemagick
@@ -24,6 +25,7 @@
   else
     (with pkgs; [
       tesseract
+      rsync
       imagemagick
       inkscape
       yazi
