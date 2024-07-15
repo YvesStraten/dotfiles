@@ -65,29 +65,29 @@ let
     Install = { WantedBy = [ "default.target" ]; };
   };
 
-  # mkLaunchdService = { remotePath, localPath, timeOut, name, args }:{
-  #     enable = true;
-  #     config = let
-  #       homeDirectory = config.home.homeDirectory;
-  #     in{
-  #       ProgramArguments = [
-  #         "${lib.getExe pkgs.rclone}"
-  #         "bisync"
-  #         "${localPath}"
-  #         "${remotePath}"
-  #       ] ++ args;
-  #       WorkingDirectory = "${homeDirectory}";
-  #       Label = "org.rclone.${name}";
-  #       RunAtLoad = true;
+  mkLaunchdService = { remotePath, localPath, timeOut, name, args }:{
+      enable = true;
+      config = let
+        homeDirectory = config.home.homeDirectory;
+      in{
+        ProgramArguments = [
+          "${lib.getExe pkgs.rclone}"
+          "bisync"
+          "${localPath}"
+          "${remotePath}"
+        ] ++ args;
+        WorkingDirectory = "${homeDirectory}";
+        Label = "org.rclone.${name}";
+        RunAtLoad = true;
 
-  #       StandardOutPath =
-  #         "${homeDirectory}/Library/Logs/rclone-${name}.log";
-  #       StandardErrorPath =
-  #         "${homeDirectory}/Library/Logs/rclone-${name}.log";
+        StandardOutPath =
+          "/tmp/rclone-${name}.log";
+        StandardErrorPath =
+          "/tmp/rclone-${name}.log";
 
-  #       StartInterval = 300;
-  #     };
-  #   };
+        StartInterval = timeOut;
+      };
+    };
 
 in {
   options = {
@@ -119,13 +119,14 @@ in {
       #   builtins.mapAttrs (name: bisync: mkBisyncTimer { name = "${name}"; timeOut = bisync.timeDelay; })
       #   cfg.bisyncs;
 
-      # launchd.agents = builtins.mapAttrs (name: bisync:
-      #   mkLaunchdService {
-      #     remotePath = "${bisync.remotePath}";
-      #     localPath = "${bisync.localPath}";
-      #     args = bisync.extraArgs;
-      #     name = "${name}";
-      #   }) cfg.bisyncs;
+      launchd.agents = builtins.mapAttrs (name: bisync:
+        mkLaunchdService {
+          remotePath = "${bisync.remotePath}";
+          localPath = "${bisync.localPath}";
+          args = bisync.extraArgs;
+          name = "${name}";
+          timeOut = bisync.timeDelay;
+        }) cfg.bisyncs;
     })
   ];
 }
