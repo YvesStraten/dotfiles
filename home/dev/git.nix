@@ -3,5 +3,7 @@
     enable = true;
     userName = gitUser;
     userEmail = email;
+
+    lfs.enable = true;
   };
 }
