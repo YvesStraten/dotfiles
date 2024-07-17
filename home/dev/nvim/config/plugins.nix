@@ -21,11 +21,14 @@
     };
     treesitter = {
       enable = true;
-      indent = true;
-      ensureInstalled = "all";
       disabledLanguages = ["tex"];
       nixvimInjections = true;
+      settings = {
+        indent.enable = true;
+      };
     };
+
+    treesitter-context.enable = true;
     which-key.enable = true;
 
     comment.enable = true;
@@ -34,7 +37,7 @@
     indent-blankline.enable = true;
     ts-autotag.enable = true;
 
-    noice.enable = true;
+    # noice.enable = true;
 
     nvim-colorizer = {
       enable = true;

@@ -59,6 +59,12 @@
     }
 
     {
+      key = "<leader>toc";
+      action = ":VimtexTocToggle<CR>";
+      options.desc = "Toggle TOC";
+    }
+
+    {
       key = "<leader>ll";
       action = ":VimtexCompile<CR>";
       options.desc = "Compile latex document";
