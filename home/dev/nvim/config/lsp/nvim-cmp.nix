@@ -40,14 +40,14 @@
           max_view_entries = 15;
         };
 
-        # window = {
-        #   formatting = {fields = ["abbr" "kind" "menu"];};
-        #   completion = {
-        #     border = "rounded";
-        #     scrollbar = true;
-        #   };
-        #   documentation = {border = "rounded";};
-        # };
+        window = {
+          formatting = {fields = ["abbr" "kind" "menu"];};
+          completion = {
+            border = "rounded";
+            scrollbar = true;
+          };
+          documentation = {border = "rounded";};
+        };
         mapping = {
           "<Tab>" = ''
                    function(fallback)
