@@ -4,9 +4,13 @@
   ...
 }: {
   plugins = {
+    rust-tools = {
+      enable = true;
+      server.checkOnSave = true;
+    };
     lsp = {
       enable = true;
-      # inlayHints = true;
+      inlayHints = true;
       servers = {
         tsserver.enable = true;
         tailwindcss.enable = true;
@@ -16,11 +20,19 @@
         texlab.enable = true;
 
         pyright.enable = true;
-        rust-analyzer = {
-          enable = true;
-          installRustc = false;
-          installCargo = false;
-        };
+        #  rust-analyzer = {
+        #    enable = true;
+        #    installRustc = false;
+        #    installCargo = false;
+        #    settings = {
+        #      inlayHints = {
+        # enable = true;
+        #        bindingModeHints.enable = true;
+        #        chainingHints.enable = true;
+        #        closureCaptureHints.enable = true;
+        #      };
+        #    };
+        #  };
 
         nixd.enable = true;
       };
