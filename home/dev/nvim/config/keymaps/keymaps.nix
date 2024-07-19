@@ -16,12 +16,6 @@
     }
 
     {
-      key = "<C-o>";
-      action = ":Ouroboros<cr>";
-      options.silent = true;
-    }
-
-    {
       key = "<C-d>";
       action = "<C-d>zz";
       options.silent = true;
@@ -35,16 +29,17 @@
 
     {
       key = "<esc>";
+      mode = "n";
       action = ":nohlsearch<CR>";
       options.silent = true;
     }
 
-    {
-      mode = "v";
-      key = "<esc>";
-      action = ":nohlsearch<CR>";
-      options.silent = true;
-    }
+    # {
+    #   mode = "v";
+    #   key = "<esc>";
+    #   action = ":nohlsearch<CR>";
+    #   options.silent = true;
+    # }
 
     {
       key = "<tab>";
@@ -134,7 +129,7 @@
 
     {
       key = "<leader>gg";
-      action = ":Neogit<cr>";
+      action = ":LazyGit<cr>";
       options.silent = true;
     }
 

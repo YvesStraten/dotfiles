@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   imports = [
     ../../config/jupyter/jupyter.nix
   ];
@@ -7,9 +7,10 @@
 
   home.sessionVariables = {
     DOTNET_ROOT = "${pkgs.dotnet-sdk}";
- };
+  };
 
   home.packages = with pkgs; [
+    lazygit
     (python311.withPackages (ps:
       with ps; [
         yt-dlp
@@ -24,7 +25,7 @@
     nodejs
     rustup
     yarn
-    openjdk19
+    openjdk
     dotnet-sdk
 
     unzip
