@@ -11,6 +11,10 @@
   ];
 
   plugins = {
+    lazygit = {
+      enable = true;
+      gitPackage = null;
+    };
     neocord.enable = true;
     barbar = {
       enable = true;
