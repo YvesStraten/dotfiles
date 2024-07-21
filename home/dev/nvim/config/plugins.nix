@@ -22,10 +22,13 @@
     };
     treesitter = {
       enable = true;
-      disabledLanguages = ["tex"];
       nixvimInjections = true;
       settings = {
         indent.enable = true;
+        highlight = {
+          enable = true;
+          disable = ["latex"];
+        };
       };
     };
 
