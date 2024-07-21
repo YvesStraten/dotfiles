@@ -15,6 +15,12 @@
       enable = true;
       gitPackage = null;
     };
+    harpoon = {
+      enable = true;
+      enableTelescope = true;
+    };
+    hardtime.enable = true;
+    headlines.enable = true;
     neocord.enable = true;
     barbar = {
       enable = true;
@@ -149,12 +155,9 @@
   };
   extraPlugins = with pkgs.vimPlugins; [
     friendly-snippets
-    ultisnips
-    ouroboros
     vim-dadbod
     vim-dadbod-ui
     vim-dadbod-completion
-    vim-snippets
     bullets-vim
   ];
 }
