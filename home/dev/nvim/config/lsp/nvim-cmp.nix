@@ -26,12 +26,12 @@
         snippet.expand = "function(args) require('luasnip').lsp_expand(args.body) end";
         sources = [
           {name = "nvim_lsp";}
+          {name = "luasnip";}
           # {name = "ultisnips";}
           {name = "nvim_lsp_document_symbol";}
           {
             name = "nvim_lsp_signature_help";
           }
-          {name = "luasnip";}
           {name = "buffer";}
           {name = "path";}
         ];

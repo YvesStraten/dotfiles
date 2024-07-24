@@ -25,6 +25,10 @@
     barbar = {
       enable = true;
       tabpages = true;
+      keymaps = {
+        close.key = "<leader>x";
+        closeAllButCurrent.key = "<leader>X";
+      };
     };
     treesitter = {
       enable = true;
