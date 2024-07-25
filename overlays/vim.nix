@@ -13,5 +13,11 @@
         dontBuild = true;
         src = inputs.ouroboros;
       };
+
+      tiny-code-action = prev.vimUtils.buildVimPlugin {
+        name = "tiny-code-action";
+        dontBuild = true;
+        src = inputs.tiny-code-action;
+      };
     };
 }

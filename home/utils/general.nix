@@ -33,7 +33,7 @@
       iina
       rclone
       skimpdf
-      ani-cli
+      # ani-cli
       xcbuild
 
       gimp

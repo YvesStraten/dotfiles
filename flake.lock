@@ -1098,22 +1098,6 @@
     },
     "nixpkgs_8": {
       "locked": {
-        "lastModified": 1719848872,
-        "narHash": "sha256-H3+EC5cYuq+gQW8y0lSrrDZfH71LB4DAf+TDFyvwCNA=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "00d80d13810dbfea8ab4ed1009b09100cca86ba8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_9": {
-      "locked": {
         "lastModified": 1716097317,
         "narHash": "sha256-1UMrLtgzielG/Sop6gl6oTSM4pDt7rF9j9VuxhDWDlY=",
         "owner": "NixOS",
@@ -1136,7 +1120,9 @@
         "git-hooks": "git-hooks",
         "home-manager": "home-manager_2",
         "nix-darwin": "nix-darwin_2",
-        "nixpkgs": "nixpkgs_8",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
@@ -1165,22 +1151,6 @@
       "original": {
         "owner": "nix-community",
         "repo": "NUR",
-        "type": "github"
-      }
-    },
-    "ouroboros": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1712889012,
-        "narHash": "sha256-cuEGOgqEkoUWX4uNmQvkc2Gpjq00W0WVeuoFIMArFds=",
-        "owner": "jakemason",
-        "repo": "ouroboros.nvim",
-        "rev": "936af28729542298e7d24f4d2df7600c7b2a1efa",
-        "type": "github"
-      },
-      "original": {
-        "owner": "jakemason",
-        "repo": "ouroboros.nvim",
         "type": "github"
       }
     },
@@ -1272,9 +1242,8 @@
         "nixpkgs-stable": "nixpkgs-stable_3",
         "nixvim": "nixvim",
         "nur": "nur",
-        "ouroboros": "ouroboros",
         "polybar-scripts": "polybar-scripts",
-        "vim-snippets": "vim-snippets",
+        "tiny-code-action": "tiny-code-action",
         "yazi": "yazi",
         "zathura-dracula": "zathura-dracula"
       }
@@ -1409,6 +1378,22 @@
         "type": "github"
       }
     },
+    "tiny-code-action": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1721854866,
+        "narHash": "sha256-BsHWbwvo1Wi1Q5LhENJ+InHVSgWC3DDPYG4+WK1re3c=",
+        "owner": "rachartier",
+        "repo": "tiny-code-action.nvim",
+        "rev": "0d3a32879fc9ce69ca0a099107ccfb563942e021",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rachartier",
+        "repo": "tiny-code-action.nvim",
+        "type": "github"
+      }
+    },
     "treefmt-nix": {
       "inputs": {
         "nixpkgs": [
@@ -1427,22 +1412,6 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
-        "type": "github"
-      }
-    },
-    "vim-snippets": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1704968982,
-        "narHash": "sha256-QIvfoEmorMIoa+xQdN0iZVG0x7lJhNmA+5AJ2jfN39k=",
-        "owner": "YvesStraten",
-        "repo": "vim-snippets",
-        "rev": "c4ae9d89f0fac0034f7b7dd50a5e134abc20e917",
-        "type": "github"
-      },
-      "original": {
-        "owner": "YvesStraten",
-        "repo": "vim-snippets",
         "type": "github"
       }
     },
@@ -1479,7 +1448,7 @@
     "yazi": {
       "inputs": {
         "flake-utils": "flake-utils_6",
-        "nixpkgs": "nixpkgs_9",
+        "nixpkgs": "nixpkgs_8",
         "rust-overlay": "rust-overlay"
       },
       "locked": {

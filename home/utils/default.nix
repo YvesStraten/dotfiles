@@ -4,7 +4,7 @@
     ./general.nix
     ./firefox.nix
     ./yazi/yazi.nix
-    ./mpv.nix
+    # ./mpv.nix
     ./zathura.nix
     ./thunderbird.nix
     # ./alt-tab.nix

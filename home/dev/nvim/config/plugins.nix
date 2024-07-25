@@ -8,6 +8,7 @@
     ./gitsigns/gitsigns.nix
     ./lualine.nix
     # ./dashboard/dashboard.nix
+    ./modules
   ];
 
   plugins = {
@@ -19,6 +20,7 @@
       enable = true;
       enableTelescope = true;
     };
+    tiny-code-action.enable = true;
     hardtime.enable = true;
     headlines.enable = true;
     neocord.enable = true;

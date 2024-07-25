@@ -43,7 +43,10 @@
       flake = false;
     };
 
-    nixvim.url = "github:nix-community/nixvim";
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -51,13 +54,8 @@
 
     yazi.url = "github:sxyazi/yazi";
 
-    vim-snippets = {
-      url = "github:YvesStraten/vim-snippets";
-      flake = false;
-    };
-
-    ouroboros = {
-      url = "github:jakemason/ouroboros.nvim";
+    tiny-code-action = {
+      url = "github:rachartier/tiny-code-action.nvim";
       flake = false;
     };
   };
@@ -209,32 +207,33 @@
 
           nitro = let
             shell = "fish";
-          in nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
-            specialArgs = {inherit inputs user shell self;};
-            modules = [
-              nur.nixosModules.nur
-              ./hosts/nixos/hardware-configuration.nix
-              ./modules/default.nix
-              (nixpkgs.lib.mkAliasOptionModule ["hm"] [
-                "home-manager"
-                "users"
-                user
-              ])
+          in
+            nixpkgs.lib.nixosSystem {
+              system = "x86_64-linux";
+              specialArgs = {inherit inputs user shell self;};
+              modules = [
+                nur.nixosModules.nur
+                ./hosts/nixos/hardware-configuration.nix
+                ./modules/default.nix
+                (nixpkgs.lib.mkAliasOptionModule ["hm"] [
+                  "home-manager"
+                  "users"
+                  user
+                ])
 
-              home-manager.nixosModules.home-manager
-              {
-                home-manager = {
-                  extraSpecialArgs = {
-                    inherit inputs gitUser email user shell self;
+                home-manager.nixosModules.home-manager
+                {
+                  home-manager = {
+                    extraSpecialArgs = {
+                      inherit inputs gitUser email user shell self;
+                    };
+                    useGlobalPkgs = true;
+                    useUserPackages = true;
+                    users.${user} = {...}: {imports = [./home/home.nix];};
                   };
-                  useGlobalPkgs = true;
-                  useUserPackages = true;
-                  users.${user} = {...}: {imports = [./home/home.nix];};
-                };
-              }
-            ];
-          };
+                }
+              ];
+            };
 
           wsl = let
             user = "akali";
