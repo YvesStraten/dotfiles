@@ -3,9 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-with lib; let
-  inherit (lib) mkOption types mkIf;
+}: let
+  inherit (lib) mkOption types mkIf platforms;
+  inherit (lib.hm) assertions;
   cfg = config.services.alt-tab;
 in {
   options = {
@@ -21,6 +21,7 @@ in {
   };
 
   config = mkIf cfg.enable {
+    assertions = [(assertions.assertPlatform "services.alt-tab" pkgs platforms.darwin)];
     home.packages = [
       pkgs.alt-tab-macos
     ];
