@@ -3,7 +3,7 @@
     ../../config/jupyter/jupyter.nix
   ];
 
-  services.jupyter-notebook.enable = true;
+  # services.jupyter-notebook.enable = true;
 
   home.sessionVariables = {
     DOTNET_ROOT = "${pkgs.dotnet-sdk}";
@@ -17,7 +17,7 @@
         spotdl
         pygments
         tkinter
-        jupyter
+        # jupyter
         pillow
       ]))
 

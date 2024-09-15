@@ -1,5 +1,9 @@
-{ config, lib, pkgs, ... }:
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (lib) types mkOption mkMerge mkIf;
   cfg = config.services.rclone-bisync;
   bisyncType = types.attrsOf (types.submodule {
@@ -16,7 +20,7 @@ let
 
       extraArgs = mkOption {
         type = types.listOf types.str;
-        default = [ "--verbose" "-P" ];
+        default = ["--verbose" "-P"];
       };
 
       timeDelay = mkOption {
@@ -26,69 +30,80 @@ let
     };
   });
 
-  mkBisyncService = { remotePath, localPath, args }:
-    let
-      failureScript = pkgs.writeShellScriptBin "recover" ''
-        if [ "$SERVICE_RESULT" = 'exit-code' ];
-        then ${lib.getExe pkgs.libnotify} "Sync failed" "Sync failed from ${remotePath} to ${localPath}";
-        fi
-      '';
-    in {
-      Unit = {
-        Description = "Bisync service for ${remotePath} to ${localPath}";
-      };
-      Service = {
-        Type = "oneshot";
-        ExecStart = lib.escapeShellArgs ([
+  mkBisyncService = {
+    remotePath,
+    localPath,
+    args,
+  }: let
+    failureScript = pkgs.writeShellScriptBin "recover" ''
+      if [ "$SERVICE_RESULT" = 'exit-code' ];
+      then ${lib.getExe pkgs.libnotify} "Sync failed" "Sync failed from ${remotePath} to ${localPath}";
+      fi
+    '';
+  in {
+    Unit = {
+      Description = "Bisync service for ${remotePath} to ${localPath}";
+    };
+    Service = {
+      Type = "oneshot";
+      ExecStart = lib.escapeShellArgs ([
           "${lib.getExe pkgs.rclone}"
           "bisync"
           "${localPath}"
           "${remotePath}"
-        ] ++ args);
+        ]
+        ++ args);
 
-        ExecStopPost = "${lib.getExe failureScript}";
-      };
-
-      Install = { WantedBy = [ "default.target" ]; };
+      ExecStopPost = "${lib.getExe failureScript}";
     };
 
-  mkBisyncTimer = { name, timeOut }:
-    let
+    Install = {WantedBy = ["default.target"];};
+  };
+
+  mkBisyncTimer = {
+    name,
+    timeOut,
+  }: let
     delay = timeOut / 60;
   in {
-    Unit = { Description = "Timer for ${name}.service"; };
+    Unit = {Description = "Timer for ${name}.service";};
     Timer = {
       OnCalendar = "*:0/${toString delay}";
       Unit = "${name}.service";
     };
 
-    Install = { WantedBy = [ "default.target" ]; };
+    Install = {WantedBy = ["default.target"];};
   };
 
-  mkLaunchdService = { remotePath, localPath, timeOut, name, args }:{
-      enable = true;
-      config = let
-        homeDirectory = config.home.homeDirectory;
-      in{
-        ProgramArguments = [
+  mkLaunchdService = {
+    remotePath,
+    localPath,
+    timeOut,
+    name,
+    args,
+  }: {
+    enable = true;
+    config = let
+      homeDirectory = config.home.homeDirectory;
+    in {
+      ProgramArguments =
+        [
           "${lib.getExe pkgs.rclone}"
           "bisync"
           "${localPath}"
           "${remotePath}"
-        ] ++ args;
-        WorkingDirectory = "${homeDirectory}";
-        Label = "org.rclone.${name}";
-        RunAtLoad = true;
+        ]
+        ++ args;
+      WorkingDirectory = "${homeDirectory}";
+      Label = "org.rclone.${name}";
+      RunAtLoad = true;
 
-        StandardOutPath =
-          "/tmp/rclone-${name}.log";
-        StandardErrorPath =
-          "/tmp/rclone-${name}.log";
+      StandardOutPath = "/tmp/rclone-${name}.log";
+      StandardErrorPath = "/tmp/rclone-${name}.log";
 
-        StartInterval = timeOut;
-      };
+      StartInterval = timeOut;
     };
-
+  };
 in {
   options = {
     services.rclone-bisync = {
@@ -96,24 +111,29 @@ in {
         type = types.bool;
         default = false;
       };
+      services.enable = mkOption {
+        type = types.bool;
+        default = false;
+      };
       bisyncs = mkOption {
         type = bisyncType;
-        default = { };
+        default = {};
         description = "Your bisyncs";
       };
     };
   };
 
   config = mkMerge [
-    (mkIf (cfg.enable && cfg.bisyncs != { }) {
-      home.packages = [ pkgs.rclone ];
+    (mkIf (cfg.enable && cfg.bisyncs != {}) {
+      home.packages = [pkgs.rclone];
 
       systemd.user.services = builtins.mapAttrs (name: bisync:
         mkBisyncService {
           remotePath = "${bisync.remotePath}";
           localPath = "${bisync.localPath}";
           args = bisync.extraArgs;
-        }) cfg.bisyncs;
+        })
+      cfg.bisyncs;
 
       # systemd.user.timers =
       #   builtins.mapAttrs (name: bisync: mkBisyncTimer { name = "${name}"; timeOut = bisync.timeDelay; })
@@ -126,7 +146,8 @@ in {
           args = bisync.extraArgs;
           name = "${name}";
           timeOut = bisync.timeDelay;
-        }) cfg.bisyncs;
+        })
+      cfg.bisyncs;
     })
   ];
 }

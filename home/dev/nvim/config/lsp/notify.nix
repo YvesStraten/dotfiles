@@ -1,0 +1,5 @@
+{
+	plugins.notify = {
+		topDown = true;
+	};
+}

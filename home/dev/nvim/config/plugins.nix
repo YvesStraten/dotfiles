@@ -1,8 +1,10 @@
 {pkgs, ...}: {
   imports = [
+		./hardtime.nix
     ./telescope/telescope.nix
     ./lsp/lsp.nix
-    ./lsp/null-ls.nix
+		./lsp/notify.nix
+    ./lsp/conform.nix
     ./lsp/nvim-cmp.nix
     ./lsp/dap.nix
     ./gitsigns/gitsigns.nix
@@ -12,6 +14,7 @@
   ];
 
   plugins = {
+		lazy.enable = true;
     lazygit = {
       enable = true;
       gitPackage = null;
@@ -21,7 +24,6 @@
       enableTelescope = true;
     };
     tiny-code-action.enable = true;
-    hardtime.enable = true;
     headlines.enable = true;
     neocord.enable = true;
     barbar = {

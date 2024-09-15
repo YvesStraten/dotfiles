@@ -1,22 +1,46 @@
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name
-        "straight/repos/straight.el/bootstrap.el"
-        (or (bound-and-true-p straight-base-dir)
-            user-emacs-directory)))
-      (bootstrap-version 7))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
+(defvar elpaca-installer-version 0.7)
+(defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
+(defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
+(defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
+(defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
+                              :ref nil :depth 1
+                              :files (:defaults "elpaca-test.el" (:exclude "extensions"))
+                              :build (:not elpaca--activate-package)))
+(let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
+       (build (expand-file-name "elpaca/" elpaca-builds-directory))
+       (order (cdr elpaca-order))
+       (default-directory repo))
+  (add-to-list 'load-path (if (file-exists-p build) build repo))
+  (unless (file-exists-p repo)
+    (make-directory repo t)
+    (when (< emacs-major-version 28) (require 'subr-x))
+    (condition-case-unless-debug err
+        (if-let ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
+                 ((zerop (apply #'call-process `("git" nil ,buffer t "clone"
+                                                 ,@(when-let ((depth (plist-get order :depth)))
+                                                     (list (format "--depth=%d" depth) "--no-single-branch"))
+                                                 ,(plist-get order :repo) ,repo))))
+                 ((zerop (call-process "git" nil buffer t "checkout"
+                                       (or (plist-get order :ref) "--"))))
+                 (emacs (concat invocation-directory invocation-name))
+                 ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
+                                       "--eval" "(byte-recompile-directory \".\" 0 'force)")))
+                 ((require 'elpaca))
+                 ((elpaca-generate-autoloads "elpaca" repo)))
+            (progn (message "%s" (buffer-string)) (kill-buffer buffer))
+          (error "%s" (with-current-buffer buffer (buffer-string))))
+      ((error) (warn "%s" err) (delete-directory repo 'recursive))))
+  (unless (require 'elpaca-autoloads nil t)
+    (require 'elpaca)
+    (elpaca-generate-autoloads "elpaca" repo)
+    (load "./elpaca-autoloads")))
+(add-hook 'after-init-hook #'elpaca-process-queues)
+(elpaca `(,@elpaca-order))
 
-(straight-use-package 'use-package)
-(setq straight-use-package-by-default t)
-(setq use-package-always-defer t)
+(elpaca elpaca-use-package 
+  (elpaca-use-package-mode))
+(setq use-package-always-ensure t)
+  (setq use-package-always-defer t)
 
 (defun reload-init-file ()
   "Reload the `init.el` configuration file."
@@ -27,11 +51,19 @@
 
 (use-package esup)
 
+(use-package exec-path-from-shell
+  :if (memq window-system '(mac ns x))
+  :ensure (:wait t)
+  :init (exec-path-from-shell-initialize)
+  )
+
 (use-package evil
   :demand
   :init
   (setq evil-want-C-u-scroll t
-        evil-want-keybinding nil) ;; Enable C-u for scrolling
+        evil-want-keybinding nil
+        scroll-margin 8
+        ) ;; Enable C-u for scrolling
   :config
   (evil-mode 1)
   (evil-set-undo-system 'undo-redo))
@@ -46,7 +78,8 @@
   :after evil)
 
 (use-package general
-  :demand
+:ensure (:wait t)
+  :demand t
   :config
   (general-evil-setup)
   (general-create-definer ys/leader-keys
@@ -90,23 +123,6 @@
     "oT" '(org-todo-list :wk "Org Todo List")
     "op" '(org-tree-slide-mode :wk "Present")))
 
-(use-package hydra
-  :general-config (ys/leader-keys "=" '(hydra-text-scale/body :wk "Scale text")
-  				      "on" '(hydra-org-nav/body :wk "Navigate org"))
-  :defer 1)
-
-(defhydra hydra-text-scale (:timeout 4)
-  "Scale Text"
-  ("j" text-scale-increase "in")
-  ("k" text-scale-decrease "out")
-  ("q" nil "finished" :exit t))
-
-(defhydra hydra-org-nav (:timeout 4)
-  "Navigate org headings"
-  ("j" org-next-visible-heading "next")
-  ("k" org-previous-visible-heading "previous")
-  ("q" nil "Stop" :exit t))
-
 (defun my/persp-switch (name)
   (interactive "s")
   (persp-switch name)
@@ -145,7 +161,8 @@
   (dashboard-setup-startup-hook)
   (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*"))
         dashboard-banner-logo-title "Welcome to Emacs"
-        dashboard-startup-banner "~/.emacs.d/marivector.png"
+        dashboard-startup-banner (concat (file-name-directory user-init-file) "marivector.png")
+
         dashboard-center-content t)
 
   ;; Sets which dashboard items should show
@@ -209,20 +226,12 @@
       display-line-numbers-current-absolute t)
 
 (use-package display-line-numbers-mode
-  :straight nil
+  :ensure nil
   :defer
   :hook (prog-mode . display-line-numbers-mode)
   :config
   (setq display-line-numbers-type 'relative
         display-line-numbers-current-absolute t))
-
-(dolist (mode '(org-mode-hook
-  		term-mode-hook
-  		vterm-mode-hook
-  		shell-mode-hook
-  		neotree-mode-hook
-  		eshell-mode-hook))
-  (add-hook mode (lambda() (display-line-numbers-mode 0))))
 
 (use-package ligature
   :hook (prog-mode . ligature-mode)
@@ -248,7 +257,7 @@
 (use-package elcord
   :defer 2
   :config (elcord-mode)
-  (setq elcord-editor-icon 'emacs_icon)
+  ;; (setq elcord-editor-icon 'emacs_icon)
   )
 
 (use-package beacon
@@ -259,7 +268,7 @@
   (beacon-mode 1))
 
 (use-package hl-line
-  :straight nil
+  :ensure nil
   :hook (prog-mode . hl-line-mode)
   (org-mode . hl-line-mode)
   )
@@ -283,7 +292,7 @@
   (org-mode . centered-window-mode))
 
 (use-package visual-line-mode
-  :straight
+  :ensure nil
   :hook (org-mode . visual-line-mode))
 
 (use-package toc-org
@@ -397,23 +406,46 @@
    'TeX-view-program-selection
    '(output-pdf "PDF Tools"))
   (add-hook 'LaTeX-mode-hook
-  		      (lambda ()
-   			(add-hook 'after-save-hook
-   					      (lambda ()
-  						(setq-local split-height-threshold 90)
-  						(setq-local split-width-threshold 60)
-   						(TeX-save-document (TeX-master-file))
-   						(TeX-command-run-all nil))
-   					      0 t))))
+            (lambda ()
+              (add-hook 'after-save-hook
+                        (lambda ()
+                          (setq-local split-height-threshold 90)
+                          (setq-local split-width-threshold 60)
+                          (TeX-save-document (TeX-master-file))
+                          (TeX-command-run-all nil))
+                        0 t))))
 
 
-(use-package auctex
+(use-package latex
+  :demand
+  :ensure
+  (auctex :build (:not elpaca--compile-info)
+          :pre-build (("./autogen.sh")
+                      ("./configure"
+                       "--without-texmf-dir"
+                       "--with-packagelispdir=./"
+                       "--with-packagedatadir=./")
+                      ("make"))
+          :files ("*.el" "doc/*.info*" "etc" "images" "latex" "style")
+          :version (lambda (_) (require 'tex-site) AUCTeX-version))
   :config
+  )
+
+(define-derived-mode my-tex-mode LaTeX-mode
+  "my-tex-mode"
+  "My customised tex mode"
   (setq TeX-parse-self t
         TeX-auto-save t
         TeX-save-query nil
-   	      TeX-source-correlate-start-server t
-        TeX-command-extra-options "-shell-escape"))
+        TeX-source-correlate-start-server t
+        TeX-command-extra-options "-shell-escape")
+  (setq TeX-data-directory (expand-file-name "elpaca/builds/auctex" user-emacs-directory))
+  (setq TeX-lisp-directory TeX-data-directory)
+  )
+
+(use-package my-tex-mode
+  :ensure nil
+  :mode "\\.tex'")
 
 (use-package evil-tex
   :hook
@@ -479,14 +511,6 @@ environments."
                   ("description" LaTeX-indent-item))
                 LaTeX-indent-environment-list)))
 
-(setq-default tab-width 4)
-(setq-default standard-indent 4)
-(setq c-basic-offset tab-width)
-(setq-default indent-tabs-mode t)
-(setq backward-delete-char-untabify-method 'nil)
-
-(setq js-indent-level 2)
-
 (use-package projectile
   :defer 1
   :config
@@ -508,11 +532,21 @@ environments."
   (counsel-projectile-mode 1))
 
 (use-package magit
+  :ensure (:wait t)
   :general (ys/leader-keys
-		       "g" '(:ignore t :wk "Magit")
-		       "gg" '(magit :wk "Open magit")
-		       "gp" '(magit-push :wk "Push commits"))
+             "g" '(:ignore t :wk "Magit")
+             "gg" '(magit :wk "Open magit")
+             "gp" '(magit-push :wk "Push commits"))
   :commands magit)
+
+(use-package hl-todo
+  :init
+  (global-hl-todo-mode))
+
+(use-package magit-todos
+  :after magit
+  :config
+  (magit-todos-mode 1))
 
 (use-package dirvish
   :init (dirvish-override-dired-mode)
@@ -563,12 +597,13 @@ environments."
   ("M-x" . counsel-M-x)
   ("C-x C-f" . counsel-find-file)
   ("C-h v" . counsel-describe-variable)
+  ("C-h f" . counsel-describe-function)
   ("C-c t" . counsel-load-theme)
   )
 
 (use-package doom-snippets 
   :after yasnippet
-  :straight (doom-snippets :type git :host github
+  :ensure (doom-snippets :type git :host github
   						 :repo "doomemacs/snippets"
   						 :files ("*.el" "*")))
 
@@ -580,8 +615,27 @@ environments."
   (yas-global-mode 1)
   )
 
-(use-package eglot
-  :hook (prog-mode . eglot-ensure))
+(use-package lsp-mode
+  :hook (prog-mode . lsp-deferred)
+  (lsp-mode . lsp-enable-which-key-integration)
+  :config
+  (setq lsp-inlay-hint-enable t)
+  (setq lsp-enable-folding t)
+  (setq lsp-enable-snippet t))
+
+(use-package lsp-ui :commands lsp-ui-mode)
+
+(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+
+(use-package lsp-java
+  :config
+  (add-hook 'java-mode-hook 'lsp)
+  )
+
+(use-package lsp-pyright
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-pyright)
+                          (lsp-deferred))))  ; or lsp-deferred
 
 (use-package dap-mode
   :config
@@ -592,18 +646,19 @@ environments."
   (global-set-key (kbd "C-c y") 'company-yasnippet)
   :init
   (setq company-auto-commit nil
-  	      company-minimum-prefix-length 2
-  	      company-tooltip-limit 14
-  	      company-tooltip-align-annotations t
-  	      company-require-match 'never
-  	      company-frontends '(company-pseudo-tooltip-frontend
-  						      company-echo-metadata-frontend))
+      company-minimum-prefix-length 2
+      company-tooltip-limit 14
+      company-tooltip-align-annotations t
+      company-require-match 'never
+      company-frontends '(company-pseudo-tooltip-frontend
+                          company-echo-metadata-frontend)
+      )
   (global-company-mode))
 
 (use-package company-box
   :config
   (setq company-box-show-single-candidate t
-  	      company-box-backends-colors nil)
+      company-box-backends-colors nil)
   :hook (company-mode . company-box-mode))
 
 (use-package company-math
@@ -620,10 +675,8 @@ environments."
   :after company
   :config (company-auctex-init))
 
-(use-package format-all
-  :hook (format-all-mode . format-all-ensure-formatter)
-  (prog-mode . format-all-mode)
-  )
+(use-package apheleia
+  :init (apheleia-global-mode +1))
 
 ;; Indent blankline
 (use-package highlight-indent-guides
@@ -655,9 +708,18 @@ environments."
       ))
 
 (use-package typescript-mode)
-(use-package web-mode)
+(use-package web-mode
+  :config (setq web-mode-indent-style 4
+                web-mode-css-indent-offset 4
+                web-mode-code-indent-offset 4
+                web-mode-attr-indent-offset 4
+                web-mode-script-padding 4)
+  :mode (("\\.tsx\\'" . web-mode)
+         ("\\.jsx\\'" . web-mode)
+         ("\\.svelte\\'" . web-mode))
+  )
 
-(use-package rust-mode)
+(use-package rustic)
 
 (use-package python-mode)
 
@@ -718,7 +780,7 @@ environments."
   (progn
       (message "eshell")
       (use-package eshell
-  	:straight nil
+  	:ensure nil
   	:defer 1)
       (use-package eshell-toggle
   	:custom
@@ -760,7 +822,7 @@ environments."
 		     (executable-find "languagetool")))))))  ; for nixpkgs.languagetool
 
 (use-package flyspell-mode
-  :straight nil
+  :ensure nil
   :hook (org-mode . flyspell-mode)
   )
 
@@ -769,7 +831,14 @@ environments."
   :commands flyspell-correct-wrapper
 )
 
-(setq ns-use-native-fullscreen nil)
+(use-package emacs
+  :ensure nil
+  :if (eq system-type 'darwin)
+  :config
+  (setq ns-use-native-fullscreen nil
+        mac-control-modifier 'control
+        mac-command-modifier 'meta
+        mac-right-option-modifier 'control))
 
 ;; Automatically reverts buffers for changed files
 (global-auto-revert-mode 1)

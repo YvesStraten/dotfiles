@@ -1,10 +1,13 @@
-{ config, lib, pkgs, ... }:
-with lib;
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  inherit (lib) getExe mkOption mkIf mkMerge escapeShellArgs types;
   cfg = config.services.jupyter-notebook;
-  defaultJupyterArgs = [ "${lib.getExe pkgs.jupyter}" "--no-browser" ];
-
   jupyterArgs = defaultJupyterArgs ++ cfg.extraOptions;
+  defaultJupyterArgs = ["${getExe pkgs.jupyter}" "--no-browser"];
 in {
   options = {
     services.jupyter-notebook = {
@@ -18,11 +21,10 @@ in {
 
       extraOptions = mkOption {
         type = types.listOf types.str;
-        default = [ ];
+        default = [];
         description = ''
           Extra command-line arguments to pass to `jupyter-notebook`
         '';
-
       };
     };
   };
@@ -40,18 +42,20 @@ in {
           Restart = "on-failure";
         };
 
-        Install.WantedBy = [ "default.target" ];
+        Install.WantedBy = ["default.target"];
       };
 
-      launchd.agents.jupyter-notebook = with config.home; {
+      launchd.agents.jupyter-notebook = {
         enable = true;
-        config = {
+        config = let
+          home = config.home;
+        in {
           ProgramArguments = jupyterArgs;
-          WorkingDirectory = "${homeDirectory}";
+          WorkingDirectory = "${home.homeDirectory}";
           Label = "org.nix-community.home.jupyter";
           RunAtLoad = true;
-          StandardOutPath = "${homeDirectory}/Library/Logs/jupyter.log";
-          StandardErrorPath = "${homeDirectory}/Library/Logs/jupyter.log";
+          StandardOutPath = "${home.homeDirectory}/Library/Logs/jupyter.log";
+          StandardErrorPath = "${home.homeDirectory}/Library/Logs/jupyter.log";
         };
       };
     })

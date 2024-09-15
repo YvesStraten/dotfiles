@@ -4,9 +4,8 @@
   ...
 }: {
   plugins = {
-    rust-tools = {
+    rustaceanvim = {
       enable = true;
-      server.checkOnSave = true;
     };
     lsp = {
       enable = true;

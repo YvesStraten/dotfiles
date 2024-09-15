@@ -99,6 +99,7 @@ in
       python311Packages.pytest
       python311Packages.pyflakes
       python311Packages.debugpy
+      nodePackages_latest.svelte-language-server
 
       html-tidy
       shellcheck
