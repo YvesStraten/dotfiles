@@ -11,6 +11,8 @@
       enable = true;
       inlayHints = true;
       servers = {
+	hls.enable = true;
+			nil-ls.enable = true;
         tsserver.enable = true;
         tailwindcss.enable = true;
         svelte.enable = true;
@@ -33,7 +35,7 @@
         #    };
         #  };
 
-        nixd.enable = true;
+        # nixd.enable = true;
       };
     };
     # lsp-lines.enable = true;

@@ -13,7 +13,7 @@
       java = ["google-java-format"];
       python = ["black"];
       lua = ["stylua"];
-      nix = ["alejandra"];
+      nix = ["nixfmt"];
       markdown = [["prettierd" "prettier"]];
       rust = ["rustfmt"];
     };

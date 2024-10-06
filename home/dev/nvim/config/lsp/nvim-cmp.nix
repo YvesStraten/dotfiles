@@ -32,7 +32,6 @@
           {
             name = "nvim_lsp_signature_help";
           }
-          {name = "buffer";}
           {name = "path";}
         ];
 
@@ -41,12 +40,12 @@
         };
 
         window = {
-          formatting = {fields = ["abbr" "kind" "menu"];};
-          completion = {
-            border = "rounded";
-            scrollbar = true;
-          };
-          documentation = {border = "rounded";};
+          # formatting = {fields = ["abbr" "kind" "menu"];};
+          # completion = {
+          #   border = "rounded";
+          #   scrollbar = true;
+          # };
+          # documentation = {border = "rounded";};
         };
         mapping = {
           "<Tab>" = ''
@@ -83,7 +82,5 @@
         };
       };
     };
-
-    nvim-cmp = {};
   };
 }
