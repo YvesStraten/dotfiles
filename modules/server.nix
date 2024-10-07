@@ -41,4 +41,16 @@
     ./nixos/time.nix
     ../overlays/default.nix
   ];
+
+	fileSystems = {
+		"/" = {
+			device = "/dev/disk/by-label/root";
+			fsType = "ext4";
+		};
+
+		"/boot" = {
+			device = "/dev/disk/by-label/efi";
+			fsType = "vfat";
+		};
+	};
 }
