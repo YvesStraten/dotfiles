@@ -28,10 +28,15 @@
 
   services.openssh.enable = true;
 
+	environment.systemPackages = with pkgs; [
+	vim 
+	wget
+
+	];
+
   imports = [
     ./nixos/bootloader.nix
     ./nixos/networking.nix
-    ./nixos/pkgs.nix
     ./nixos/settings.nix
     ./nixos/time.nix
     ../overlays/default.nix
