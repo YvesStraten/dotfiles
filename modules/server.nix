@@ -1,9 +1,10 @@
 {
-	shell,
-	pkgs, 
-	user, 
+  shell,
+  pkgs,
+  user,
   ...
-}: {
+}:
+{
   programs.${shell}.enable = true;
 
   fonts.packages = with pkgs; [ corefonts ];
@@ -27,12 +28,22 @@
   };
 
   services.openssh.enable = true;
+  services.qemuGuest.enable = true;
+  services.spice-webdavd.enable = true;
+  services.davfs2.settings = {
+    globalSection = {
+      ask_auth = false;
 
-	environment.systemPackages = with pkgs; [
-	vim 
-	wget
+    };
+  };
 
-	];
+  environment.systemPackages = with pkgs; [
+    vim
+    wget
+    git
+    tmux
+
+  ];
 
   imports = [
     ./nixos/bootloader.nix
@@ -42,15 +53,20 @@
     ../overlays/default.nix
   ];
 
-	fileSystems = {
-		"/" = {
-			device = "/dev/disk/by-label/root";
-			fsType = "ext4";
-		};
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-label/root";
+      fsType = "ext4";
+    };
 
-		"/boot" = {
-			device = "/dev/disk/by-label/efi";
-			fsType = "vfat";
-		};
-	};
+    "/boot" = {
+      device = "/dev/disk/by-label/efi";
+      fsType = "vfat";
+    };
+
+    "/mnt" = {
+      device = "http://localhost:9843/";
+      fsType = "davfs";
+    };
+  };
 }
