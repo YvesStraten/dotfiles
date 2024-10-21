@@ -23,7 +23,7 @@
       enable = true;
       enableTelescope = true;
     };
-    tiny-code-action.enable = true;
+    # tiny-code-action.enable = true;
     headlines.enable = true;
     neocord.enable = true;
     barbar = {

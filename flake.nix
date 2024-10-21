@@ -353,21 +353,24 @@
         homeConfigurations =
           let
             pkgs = nixpkgs.legacyPackages."x86_64-linux";
-            user = "akali";
+            user = "deck";
+						shell = "fish";
           in
           {
-            akali = home-manager.lib.homeManagerConfiguration {
+            deck = home-manager.lib.homeManagerConfiguration {
               extraSpecialArgs = {
                 inherit
                   inputs
+									shell
                   gitUser
                   email
                   user
+									self
                   ;
               };
               inherit pkgs;
               modules = [
-                ./home/wsl.nix
+                ./home/home.nix
                 ./overlays/default.nix
               ];
             };

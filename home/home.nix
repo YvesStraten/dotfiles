@@ -11,6 +11,7 @@
     # ./bin
 
     ./dev
+		./pass
   ];
 
   nixpkgs.config.allowUnfree = true;
