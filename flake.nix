@@ -353,11 +353,11 @@
         homeConfigurations =
           let
             pkgs = nixpkgs.legacyPackages."x86_64-linux";
-            user = "deck";
+            user = "bazzite";
 						shell = "fish";
           in
           {
-            deck = home-manager.lib.homeManagerConfiguration {
+            bazzite = home-manager.lib.homeManagerConfiguration {
               extraSpecialArgs = {
                 inherit
                   inputs
