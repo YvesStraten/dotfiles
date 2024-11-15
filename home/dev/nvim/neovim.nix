@@ -7,6 +7,8 @@
     [
       pkgs.fd
       pkgs.ripgrep
+			pkgs.google-java-format
+			pkgs.nixfmt-rfc-style
     ]
     ++ (
       if pkgs.stdenv.isLinux

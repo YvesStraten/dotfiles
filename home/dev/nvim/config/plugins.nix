@@ -3,6 +3,7 @@
 		./hardtime.nix
     ./telescope/telescope.nix
     ./lsp/lsp.nix
+		./lsp/trouble.nix
 		./lsp/notify.nix
     ./lsp/conform.nix
     ./lsp/nvim-cmp.nix
@@ -81,17 +82,18 @@
       };
     };
 
-    neogit.enable = true;
+    fugitive.enable = true;
     undotree.enable = true;
     toggleterm = {
       enable = true;
       settings = {
-        direction = "float";
+        direction = "horizontal";
         hideNumbers = true;
         open_mapping = "[[<C-e>]]";
         floatOpts.border = "curved";
       };
     };
+
     markdown-preview = {
       enable = true;
       settings.auto_start = true;

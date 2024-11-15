@@ -116,7 +116,7 @@
     {
       key = "<leader>la";
       action = ":Lspsaga code_action<CR>";
-      options.desc = "Rename definition";
+      options.desc = "Code action";
       options.silent = true;
     }
 
