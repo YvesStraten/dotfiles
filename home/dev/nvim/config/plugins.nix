@@ -3,6 +3,7 @@
 		./hardtime.nix
     ./telescope/telescope.nix
     ./lsp/lsp.nix
+		./lsp/lspsaga.nix
 		./lsp/trouble.nix
 		./lsp/notify.nix
     ./lsp/conform.nix
@@ -31,8 +32,9 @@
       enable = true;
       tabpages = true;
       keymaps = {
-        close.key = "<leader>x";
-        closeAllButCurrent.key = "<leader>X";
+        close.key = "<C-w>";
+        closeAllButCurrent.key = "<C-S-w>";
+				pin.key = "<C-t>";
       };
     };
     treesitter = {

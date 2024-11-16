@@ -39,7 +39,6 @@
       };
     };
     # lsp-lines.enable = true;
-    lspsaga.enable = true;
     nvim-jdtls = {
       enable = true;
       data = "~/.cache/jdtls/workspace";
