@@ -10,6 +10,7 @@
       relativenumber = true;
       conceallevel = 2;
       tabstop = 2;
+      expandtab = true;
       shiftwidth = 2;
       scrolloff = 8;
       updatetime = 50;
@@ -26,7 +27,10 @@
       tex_superscripts = "[0-9a-zA-W.,:;+-<>/()=]";
       tex_subscripts = "[0-9aehijklmnoprstuvx,+-/().]";
       tex_conceal_frac = 1;
-      bullets_enabled_file_types = ["markdown" "tex"];
+      bullets_enabled_file_types = [
+        "markdown"
+        "tex"
+      ];
     };
 
     extraConfigLuaPre = ''
