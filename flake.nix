@@ -17,6 +17,8 @@
       url = "github:LnL7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+		
+		mac-app-util.url = "github:hraban/mac-app-util";
 
     # Follows unstable
     nixpkgs-stable.url = "github:/NixOS/nixpkgs/nixos-23.11";
@@ -88,6 +90,7 @@
       nixos-hardware,
       flake-parts,
       nix-darwin,
+			mac-app-util,
       self,
       ...
     }@inputs:
@@ -183,7 +186,9 @@
                     users.${user} =
                       { ... }:
                       {
-                        imports = [ ./home/darwin.nix ];
+                        imports = [ 
+															mac-app-util.homeManagerModules.default
+															./home/darwin.nix ];
                       };
                   };
                 }
