@@ -48,6 +48,7 @@
 
 			in {
 				alt-enter = "exec-and-forget open -na Kitty";
+				alt-shift-s = "exec-and-forget open -a Screenshot";
 				alt-b = "exec-and-forget open -na Firefox";
 			  alt-h = "focus left";
 			  alt-j = "focus down";
