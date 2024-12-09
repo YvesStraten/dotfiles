@@ -146,13 +146,13 @@
       "scb" '(langtool-correct-buffer :wk "Correct buffer"))
 
     (ys/leader-keys
-      "c" '(centaur-tabs-ace-jump :wk "Jump to tab"))
+      "c" '(:ignore t :wk "Format"))
 
     (ys/leader-keys
       "l" '(:ignore t :wk "Lsp")
       "lr" '(lsp-rename :wk "Rename reference")
       "lf" '(format-all-buffer :wk "Formats buffer")
-      "la" '(lsp-code-actions-at-point :wk "Code actions"))
+      "ca" '(lsp-code-actions-at-point :wk "Code actions"))
 
     (ys/leader-keys
       "o" '(:ignore t :wk "Org")
@@ -407,7 +407,6 @@
 
   (if (eq system-type 'darwin)
   	(progn
-  	  (message "Is darwin")
   	  (tool-bar-mode t)
   	  (menu-bar-mode t)))
 #+end_src
@@ -607,15 +606,7 @@ Credit to Derek Taylor
     (add-to-list
      'TeX-view-program-selection
      '(output-pdf "PDF Tools"))
-    (add-hook 'LaTeX-mode-hook
-              (lambda ()
-                (add-hook 'after-save-hook
-                          (lambda ()
-                            (setq-local split-height-threshold 90)
-                            (setq-local split-width-threshold 60)
-                            (TeX-save-document (TeX-master-file))
-                            (TeX-command-run-all nil))
-                          0 t))))
+  )
 
 
   (use-package latex
@@ -649,20 +640,15 @@ Credit to Derek Taylor
     :ensure nil
     :mode "\\.tex'")
 
-  (use-package evil-tex
-    :hook
-    (LaTeX-mode . evil-tex-mode))
+  ;; (use-package evil-tex
+  ;;   :hook
+  ;;   (LaTeX-mode . evil-tex-mode))
 
   (use-package pdf-tools
     :demand
     :hook
-    (pdf-view-mode . pdf-view-midnight-minor-mode)
-    :config
-    (pdf-loader-install))
+    (pdf-view-mode . pdf-view-midnight-minor-mode))
 #+end_src
-
-#+RESULTS:
-: [nil 26281 56981 530850 nil elpaca-process-queues nil nil 0 nil]
 
 Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-in-latex-auctex-itemize-environments][Emacs StackExchange]]
 
@@ -714,7 +700,9 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
     :type 'integer)
 
   (eval-after-load "latex"
-    '(setq LaTeX-indent-environment-list
+    '(setq
+      LaTeX-indent-level-item-continuation 2
+      LaTeX-indent-environment-list
            (nconc '(("itemize" LaTeX-indent-item)
                     ("enumerate" LaTeX-indent-item)
                     ("description" LaTeX-indent-item))
@@ -735,10 +723,10 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
   (use-package counsel-projectile
     :after projectile
     :general (ys/leader-keys
-  			 "SPC" '(counsel-projectile-find-file :wk "Find file")
-  			 "/" '(counsel-projectile-grep :wk "Grep Project")
-  			 "bb" '(counsel-projectile-switch-to-buffer :wk "Project buffers")
-  			 "bB" '(counsel-switch-buffer :wk "Buffers"))
+                         "SPC" '(counsel-projectile-find-file :wk "Find file")
+                         "/" '(counsel-projectile-grep :wk "Grep Project")
+                         "bb" '(counsel-projectile-switch-to-buffer :wk "Project buffers")
+                         "bB" '(counsel-switch-buffer :wk "Buffers"))
     :commands
     (counsel-projectile-find-file
      counsel-projectile-grep
@@ -750,6 +738,8 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
 
 ** Git
 #+begin_src elisp
+  (use-package transient)
+
   (use-package magit
     :ensure (:wait t)
     :general (ys/leader-keys
@@ -857,6 +847,9 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
     )
 #+end_src
 
+#+RESULTS:
+: [nil 26454 56870 713420 nil elpaca-process-queues nil nil 164000 nil]
+
 * LSP stuff
 ** Yasnippet
 #+begin_src elisp
@@ -893,9 +886,9 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
     :hook (prog-mode . lsp-deferred)
     (lsp-mode . lsp-enable-which-key-integration)
     :config
-    (setq lsp-inlay-hint-enable t)
-    (setq lsp-enable-folding t)
-    (setq lsp-enable-snippet t))
+    (setq lsp-inlay-hint-enable t
+          lsp-enable-folding t
+          lsp-enable-snippet t))
 
   (use-package lsp-ui :commands lsp-ui-mode)
 
@@ -904,7 +897,12 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
   (use-package lsp-java
     :config
     (add-hook 'java-mode-hook 'lsp)
-    )
+    (setq lsp-java-server-install-dir (getenv "JDTLS_PATH"))
+    (defun lsp-java--ls-command ()
+      (list "jdtls"
+          "-configuration" (concat (getenv "HOME") "/.cache/jdtls/")
+          "-data" (concat (getenv "HOME") "/.jdtls"))
+    ))
 
   (use-package lsp-pyright
     :hook (python-mode . (lambda ()
@@ -1027,7 +1025,9 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
 ** Formatter
 #+begin_src elisp
   (use-package apheleia
-    :init (apheleia-global-mode +1))
+    :general (ys/leader-keys
+               "cf" '(apheleia-format-buffer
+                      :wk "Format buffer")))
 #+end_src
 
 ** Indentation and parenthesis
@@ -1077,19 +1077,11 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
 #+begin_src elisp
   (use-package typescript-mode)
   (use-package web-mode
-    :config (setq web-mode-indent-style 4
-                  web-mode-css-indent-offset 4
-                  web-mode-code-indent-offset 4
-                  web-mode-attr-indent-offset 4
-                  web-mode-script-padding 4)
     :mode (("\\.tsx\\'" . web-mode)
            ("\\.jsx\\'" . web-mode)
            ("\\.svelte\\'" . web-mode))
     )
 #+end_src
-
-#+RESULTS:
-: [nil 26279 12729 822680 nil elpaca-process-queues nil nil 0 nil]
 
 *** Rust
 #+begin_src elisp
@@ -1232,7 +1224,7 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
           which-key-min-display-lines 6
           which-key-side-window-slot -10
           which-key-side-window-max-height 0.25
-          which-key-idle-delay 0.8
+          which-key-idle-delay 0.1
           which-key-max-description-length 25
           which-key-allow-imprecise-window-fit t))
 
@@ -1299,6 +1291,14 @@ Credit to doom-emacs devs
 
 ;; Remembers the last place you visited in a file
 (save-place-mode 1)
+#+end_src
+
+** Automatic restore of sessions
+#+begin_src emacs-lisp
+(use-package emacs
+  :config
+  (desktop-save-mode 1)
+)
 #+end_src
 
 ** Disables annoying features
