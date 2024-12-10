@@ -194,13 +194,22 @@
       "scb" '(langtool-correct-buffer :wk "Correct buffer"))
 
     (ys/leader-keys
-      "c" '(:ignore t :wk "Format"))
+      "p" '(:ignore t :wk "Project"))
+
+    (ys/leader-keys
+      "c" '(:ignore t :wk "Code")
+      "ca" '(lsp-code-actions-at-point :wk "Code actions")
+      "cc" '(compile :wk "Compile")
+      "cC" '(recompile :wk "Recompile"))
+
+    (ys/leader-keys
+      "b" '(:ignore t :wk "Buffers")
+      "bx" '(kill-buffer :wk "Kill Buffer")
+      "bi" '(ibuffer :wk "Ibuffer"))
 
     (ys/leader-keys
       "l" '(:ignore t :wk "Lsp")
-      "lr" '(lsp-rename :wk "Rename reference")
-      "lf" '(format-all-buffer :wk "Formats buffer")
-      "ca" '(lsp-code-actions-at-point :wk "Code actions"))
+      "lr" '(lsp-rename :wk "Rename reference"))
 
     (ys/leader-keys
       "o" '(:ignore t :wk "Org")
@@ -212,6 +221,8 @@
       "oT" '(org-todo-list :wk "Org Todo List")
       "op" '(org-tree-slide-mode :wk "Present")))
 #+end_src
+
+#+RESULTS:
 
 ** Hydra
 #+begin_src elisp :tangle no
@@ -414,15 +425,16 @@
 #+RESULTS:
 
 ** Discord 
-#+begin_src elisp
+#+begin_src elisp :tangle no
   (use-package elcord
     :defer 2
-    :config (elcord-mode)
+    :config
+    (if (not (daemonp))
+      (progn
+        (elcord-mode)))
     ;; (setq elcord-editor-icon 'emacs_icon)
     )
 #+end_src
-
-#+RESULTS:
 
 ** Cursor highlight
 #+begin_src elisp
@@ -758,13 +770,40 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
 #+end_src
 
 * Project management
+** Mini buffer completion 
+#+begin_src elisp
+  (use-package counsel
+    :commands (counsel-M-x
+               counsel-find-file
+               counsel-describe-variable
+               counsel-load-theme)
+    :config (setq ivy-use-virtual-buffers t
+                  ivy-count-format "(%d/%d) ")
+    :bind
+    ("M-x" . counsel-M-x)
+    ("C-x C-f" . counsel-find-file)
+    ("C-h v" . counsel-describe-variable)
+    ("C-h f" . counsel-describe-function)
+    ("C-c t" . counsel-load-theme)
+    )
+#+end_src
+
+#+RESULTS:
+: [nil 26454 56870 713420 nil elpaca-process-queues nil nil 164000 nil]
+
 ** Projectile
 #+begin_src elisp
   (use-package projectile
     :defer 1
+    :general
+    (ys/leader-keys
+      "pc" '(projectile-compile-project :wk "Compile project"))
     :config
     (projectile-mode +1))
 #+end_src
+
+#+RESULTS:
+: [nil 26456 5079 815658 nil elpaca-process-queues nil nil 504000 nil]
 
 *** Ivy Integration (fix keys)
 #+begin_src elisp
@@ -773,6 +812,7 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
     :general (ys/leader-keys
                          "SPC" '(counsel-projectile-find-file :wk "Find file")
                          "/" '(counsel-projectile-grep :wk "Grep Project")
+                         "pp" '(counsel-projectile-switch-project :wk "Switch project")
                          "bb" '(counsel-projectile-switch-to-buffer :wk "Project buffers")
                          "bB" '(counsel-switch-buffer :wk "Buffers"))
     :commands
@@ -875,27 +915,6 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
 #+end_src
 
 #+RESULTS:
-
-** Mini buffer completion 
-#+begin_src elisp
-  (use-package counsel
-    :commands (counsel-M-x
-               counsel-find-file
-               counsel-describe-variable
-               counsel-load-theme)
-    :config (setq ivy-use-virtual-buffers t
-                  ivy-count-format "(%d/%d) ")
-    :bind
-    ("M-x" . counsel-M-x)
-    ("C-x C-f" . counsel-find-file)
-    ("C-h v" . counsel-describe-variable)
-    ("C-h f" . counsel-describe-function)
-    ("C-c t" . counsel-load-theme)
-    )
-#+end_src
-
-#+RESULTS:
-: [nil 26454 56870 713420 nil elpaca-process-queues nil nil 164000 nil]
 
 * LSP stuff
 ** Yasnippet
