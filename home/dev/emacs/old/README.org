@@ -1,4 +1,3 @@
-
 #+Title: My Emacs configuration 
 #+Property: header-args :tangle init.el 
 #+auto_tangle: t
@@ -80,10 +79,10 @@
 ** ~Exec-path~ from shell
 #+begin_src elisp
   (use-package exec-path-from-shell
-    :if (memq window-system '(mac ns x))
+    :demand t
     :ensure (:wait t)
-    :init (exec-path-from-shell-initialize)
-    )
+    :init
+    (exec-path-from-shell-initialize))
 #+end_src
 
 * Evil
@@ -760,8 +759,7 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
 
   (use-package magit-todos
     :after magit
-    :config
-    (magit-todos-mode 1))
+    :hook (magit-mode . magit-todos-mode))
 #+end_src
 
 ** File explorer
@@ -1294,11 +1292,12 @@ Credit to doom-emacs devs
 #+end_src
 
 ** Automatic restore of sessions
-#+begin_src emacs-lisp
-(use-package emacs
-  :config
-  (desktop-save-mode 1)
-)
+#+begin_src emacs-lisp :tangle no
+  (use-package emacs
+    :ensure nil
+    :config
+    (desktop-save-mode 1)
+  )
 #+end_src
 
 ** Disables annoying features
