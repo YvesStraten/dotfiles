@@ -822,7 +822,7 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
 
 * Buffers management
 ** Tabs
-#+begin_src elisp
+#+begin_src elisp :tangle no
   (use-package centaur-tabs
     :hook (dashboard-mode . centaur-tabs-local-mode) 
     (calendar-mode . centaur-tabs-local-mode)
@@ -926,6 +926,9 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
                            (require 'lsp-pyright)
                            (lsp-deferred))))  ; or lsp-deferred
 #+end_src
+
+#+RESULTS:
+: [nil 26455 56624 175428 nil elpaca-process-queues nil nil 0 nil]
 
 #+begin_src elisp :tangle no
   (use-package eglot
@@ -1298,10 +1301,19 @@ Credit to doom-emacs devs
           mac-control-modifier 'control
           mac-command-modifier 'meta
           mac-right-option-modifier 'control))
+
+  (if (eq 'system-type 'darwin)
+      (progn
+        (defun open-in-finder ()
+          (interactive)
+          (shell-command (concat "open " (file-name-directory (buffer-file-name))))
+          )
+        )
+    )
 #+end_src
 
 #+RESULTS:
-: t
+: open-in-finder
 
 ** Automatic revert of buffers
 #+begin_src elisp
