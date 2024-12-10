@@ -68,7 +68,7 @@ in
 
   home = {
     sessionVariables = {
-      JDTLS_PATH = "${pkgs.jdt-language-server}/share/java/jdtls/";
+      JDTLS_PATH = "${pkgs.jdt-language-server}/share/java/jdtls";
     };
 
     packages = with pkgs; [

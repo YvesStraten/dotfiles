@@ -81,8 +81,26 @@
   (use-package exec-path-from-shell
     :demand t
     :ensure (:wait t)
-    :init
-    (exec-path-from-shell-initialize))
+    :config
+    (dolist (var '("PYTHONPATH"         ; Python modules
+                   "INFOPATH"           ; Info directories
+                   "JAVA_OPTS"          ; Options for java processes
+                   "SBT_OPTS"           ; Options for SBT
+                   "RUST_SRC_PATH"      ; Rust sources, for racer
+                   "CARGO_HOME"         ; Cargo home, for racer
+                   "EMAIL"              ; My personal email
+                   "GPG_TTY"
+                   "GPG_AGENT_INFO"
+                   "SSH_AUTH_SOCK"
+                   "SSH_AGENT_PID"
+                   "JDTLS_PATH"
+                   "HOME"
+                   ))
+
+      (add-to-list 'exec-path-from-shell-variables var)
+      ))
+
+    (exec-path-from-shell-initialize)
 #+end_src
 
 * Evil
@@ -893,23 +911,21 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
   (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
 
   (use-package lsp-java
-    :config
-    (add-hook 'java-mode-hook 'lsp)
-    (setq lsp-java-server-install-dir (getenv "JDTLS_PATH"))
+    :hook (java-mode . lsp)
+    :init
     (defun lsp-java--ls-command ()
       (list "jdtls"
-          "-configuration" (concat (getenv "HOME") "/.cache/jdtls/")
-          "-data" (concat (getenv "HOME") "/.jdtls"))
-    ))
+            "-configuration" (concat (getenv "HOME") "/.cache/jdtls/")
+            "-data" (concat (getenv "HOME") "/.jdtls"))
+      )
+    (setq lsp-java-server-install-dir (concat (getenv "JDTLS_PATH") "/"))
+    )
 
   (use-package lsp-pyright
     :hook (python-mode . (lambda ()
-                            (require 'lsp-pyright)
-                            (lsp-deferred))))  ; or lsp-deferred
+                           (require 'lsp-pyright)
+                           (lsp-deferred))))  ; or lsp-deferred
 #+end_src
-
-#+RESULTS:
-| (lambda nil (require 'lsp-pyright) (lsp-deferred)) | doom-modeline-env-setup-python | evil-collection-python-set-evil-shift-width |
 
 #+begin_src elisp :tangle no
   (use-package eglot
@@ -1264,6 +1280,14 @@ Credit to doom-emacs devs
 
 
 * Useful extra settings
+** Sudo edit
+#+begin_src emacs-lisp 
+  (use-package sudo-edit)
+#+end_src
+
+#+RESULTS:
+: [nil 26455 41349 133617 nil elpaca-process-queues nil nil 0 nil]
+
 ** Macos stuff
 #+begin_src elisp
   (use-package emacs
