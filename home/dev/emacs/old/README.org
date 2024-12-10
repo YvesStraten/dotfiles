@@ -962,20 +962,19 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
   (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
 
   (use-package lsp-java
-    :hook (java-mode . lsp)
-    :init
-    (defun lsp-java--ls-command ()
-      (list "jdtls"
-            "-configuration" (concat (getenv "HOME") "/.cache/jdtls/")
-            "-data" (concat (getenv "HOME") "/.jdtls"))
-      )
-    (setq lsp-java-server-install-dir (concat (getenv "JDTLS_PATH") "/"))
-    )
+    :hook (java-mode . (lambda ()
+  		       (require 'lsp-java) 
+  		       (defun lsp-java--ls-command ()
+  			 (list "jdtls"
+  			       "-configuration" (concat (getenv "HOME") "/.cache/jdtls/")
+  			       "-data" (concat (getenv "HOME") "/.jdtls")))
+  		       (setq lsp-java-server-install-dir (concat (getenv "JDTLS_PATH") "/"))
+  		       (lsp-deferred))))
 
-  (use-package lsp-pyright
-    :hook (python-mode . (lambda ()
-                           (require 'lsp-pyright)
-                           (lsp-deferred))))  ; or lsp-deferred
+    (use-package lsp-pyright
+      :hook (python-mode . (lambda ()
+                             (require 'lsp-pyright)
+                             (lsp-deferred))))  ; or lsp-deferred
 #+end_src
 
 #+RESULTS:
