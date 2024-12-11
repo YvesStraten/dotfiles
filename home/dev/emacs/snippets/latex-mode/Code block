@@ -1,10 +1,6 @@
 # key: code
 # name: Code block
 # --
-\begin{listing}[!ht]
-\begin{minted}[${1:linenos}]{${2:language}}
-    $0
+\begin{minted}${1:[${2:linenos}]}{${3:language}}
+$0
 \end{minted}
-
-\caption{${3:description}}
-\end{listing}

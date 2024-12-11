@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Mint inline 
+# key: mintl
+# --
+\mintinline{$1}{$2} $0

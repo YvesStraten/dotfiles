@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Mint input 
+# key: minti
+# --
+\inputminted{$1}{$2} $0

@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
-# name:mint
-# key:mint
+# name: Inline code 
+# key: mint 
 # --
 \mintinline{$1}{$2} $0
