@@ -137,6 +137,7 @@
 * Indentation
 #+begin_src emacs-lisp
   (setq-default indent-tabs-mode nil)
+  (electric-pair-mode 1)
 #+end_src
 
 * Evil
@@ -817,6 +818,7 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
 #+end_src
 
 ** Git
+Needed because for some reason transient is outdated
 #+begin_src elisp
   (use-package transient)
 
@@ -833,6 +835,7 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
 : t
 
 *** Git todos
+Provides nice todos inside of [[Git][Magit]]
 #+begin_src elisp
   (use-package hl-todo
     :init
@@ -954,14 +957,17 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
   (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
 
   (use-package lsp-java
+    :config
+    (setq c-basic-offset 2)
+    (setq-default electric-indent-inhibit t)
     :hook (java-mode . (lambda ()
-  		       (require 'lsp-java) 
-  		       (defun lsp-java--ls-command ()
-  			 (list "jdtls"
-  			       "-configuration" (concat (getenv "HOME") "/.cache/jdtls/")
-  			       "-data" (concat (getenv "HOME") "/.jdtls")))
-  		       (setq lsp-java-server-install-dir (concat (getenv "JDTLS_PATH") "/"))
-  		       (lsp-deferred))))
+                       (require 'lsp-java) 
+                       (defun lsp-java--ls-command ()
+                         (list "jdtls"
+                               "-configuration" (concat (getenv "HOME") "/.cache/jdtls/")
+                               "-data" (concat (getenv "HOME") "/.jdtls")))
+                       (setq lsp-java-server-install-dir (concat (getenv "JDTLS_PATH") "/"))
+                       (lsp-deferred))))
 
     (use-package lsp-pyright
       :hook (python-mode . (lambda ()
@@ -970,7 +976,7 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
 #+end_src
 
 #+RESULTS:
-: [nil 26455 56624 175428 nil elpaca-process-queues nil nil 0 nil]
+: [nil 26457 1059 232235 nil elpaca-process-queues nil nil 0 nil]
 
 #+begin_src elisp :tangle no
   (use-package eglot
@@ -1112,16 +1118,6 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
   (use-package rainbow-mode
     :defer
     :hook (prog-mode . rainbow-mode))
-#+end_src
-
-*** Smart parentheses
-#+begin_src elisp
-  (use-package smartparens
-    :hook
-    (prog-mode . smartparens-mode)
-    (LaTeX-mode . smartparens-mode)
-    :config
-    (require 'smartparens-config))
 #+end_src
 
 ** Direnv support
