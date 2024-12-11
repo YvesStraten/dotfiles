@@ -204,7 +204,6 @@
 
     (ys/leader-keys
       "c" '(:ignore t :wk "Code")
-      "ca" '(lsp-code-actions-at-point :wk "Code actions")
       "cc" '(compile :wk "Compile")
       "cC" '(recompile :wk "Recompile"))
 
@@ -214,8 +213,7 @@
       "bi" '(ibuffer :wk "Ibuffer"))
 
     (ys/leader-keys
-      "l" '(:ignore t :wk "Lsp")
-      "lr" '(lsp-rename :wk "Rename reference"))
+      "l" '(:ignore t :wk "Lsp"))
 
     (ys/leader-keys
       "o" '(:ignore t :wk "Org")
@@ -944,6 +942,10 @@ Provides nice todos inside of [[Git][Magit]]
 ** Lsp-mode
 #+begin_src elisp
   (use-package lsp-mode
+    :general
+    (ys/leader-keys
+      "ca" '(lsp-execute-code-action :wk "Code actions")
+      "lr" '(lsp-rename :wk "Rename reference"))
     :ensure (:wait t)
     :hook (prog-mode . lsp-deferred)
     (lsp-mode . lsp-enable-which-key-integration)
@@ -961,18 +963,18 @@ Provides nice todos inside of [[Git][Magit]]
     (setq c-basic-offset 2)
     (setq-default electric-indent-inhibit t)
     :hook (java-mode . (lambda ()
-                       (require 'lsp-java) 
-                       (defun lsp-java--ls-command ()
-                         (list "jdtls"
-                               "-configuration" (concat (getenv "HOME") "/.cache/jdtls/")
-                               "-data" (concat (getenv "HOME") "/.jdtls")))
-                       (setq lsp-java-server-install-dir (concat (getenv "JDTLS_PATH") "/"))
-                       (lsp-deferred))))
+                         (require 'lsp-java) 
+                         (defun lsp-java--ls-command ()
+                           (list "jdtls"
+                                 "-configuration" (concat (getenv "HOME") "/.cache/jdtls/")
+                                 "-data" (concat (getenv "HOME") "/.jdtls")))
+                         (setq lsp-java-server-install-dir (concat (getenv "JDTLS_PATH") "/"))
+                         (lsp-deferred))))
 
-    (use-package lsp-pyright
-      :hook (python-mode . (lambda ()
-                             (require 'lsp-pyright)
-                             (lsp-deferred))))  ; or lsp-deferred
+  (use-package lsp-pyright
+    :hook (python-mode . (lambda ()
+                           (require 'lsp-pyright)
+                           (lsp-deferred))))  ; or lsp-deferred
 #+end_src
 
 #+RESULTS:
