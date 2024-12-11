@@ -134,6 +134,11 @@
     (exec-path-from-shell-initialize)
 #+end_src
 
+* Indentation
+#+begin_src emacs-lisp
+  (setq-default indent-tabs-mode nil)
+#+end_src
+
 * Evil
 #+begin_src elisp
   (use-package evil
