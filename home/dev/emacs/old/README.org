@@ -30,6 +30,10 @@
   ;; Inhibit resizing frame
   (setq frame-inhibit-implied-resize t)
 
+  ;; Disable startup message
+  (defun display-startup-echo-area-message ()
+    (message nil))
+
   ;; Disable before actual init
   (push '(tool-bar-lines . 0) default-frame-alist)
   (push '(vertical-scroll-bars) default-frame-alist)
@@ -261,17 +265,17 @@
     )
 
   (use-package perspective
+    :hook (dashboard-mode . persp-mode)
     :general (ys/leader-keys
-    			 "TAB" '(:ignore t :wk "Workspaces")
-    			 "TAB n" '(my/persp-switch :wk "New Workspace")
-    			 "TAB d" '(persp-kill :wk "Kill workspace")
-    			 "TAB 1" '(lambda () (interactive) (persp-switch-by-number 1) :wk "Switch to workspace 1")
-    			 "TAB 2" '(lambda () (interactive) (persp-switch-by-number 2) :wk "Switch to workspace 2")
-    			 "TAB 3" '(lambda () (interactive) (persp-switch-by-number 3) :wk "Switch to workspace 3")
-    			 "TAB 4" '(lambda () (interactive) (persp-switch-by-number 4) :wk "Switch to workspace 4")
-    			 "TAB 5" '(lambda () (interactive) (persp-switch-by-number 5) :wk "Switch to workspace 5")
-    			 )
-    :init (persp-mode))
+                         "TAB" '(:ignore t :wk "Workspaces")
+                         "TAB n" '(my/persp-switch :wk "New Workspace")
+                         "TAB d" '(persp-kill :wk "Kill workspace")
+                         "TAB 1" '(lambda () (interactive) (persp-switch-by-number 1) :wk "Switch to workspace 1")
+                         "TAB 2" '(lambda () (interactive) (persp-switch-by-number 2) :wk "Switch to workspace 2")
+                         "TAB 3" '(lambda () (interactive) (persp-switch-by-number 3) :wk "Switch to workspace 3")
+                         "TAB 4" '(lambda () (interactive) (persp-switch-by-number 4) :wk "Switch to workspace 4")
+                         "TAB 5" '(lambda () (interactive) (persp-switch-by-number 5) :wk "Switch to workspace 5")
+                         ))
 #+end_src
 
 #+RESULTS:
@@ -306,49 +310,21 @@
           dashboard-center-content t)
 
     ;; Sets which dashboard items should show
-    (setq dashboard-banner-logo-title ""
-          dashboard-set-footer nil
-          dashboard-projects-switch-function 'counsel-projectile-switch-project
-          dashboard-items '()
-          dashboard-set-navigator t)
-
-    (setq dashboard-navigator-buttons
-          `(
-            ;; First row
-            ((nil
-              "Edit emacs config"
-              "Open the config file for emacs"
-              (lambda (&rest _) (find-file "~/dotfiles/home/dev/emacs/old/README.org")
-                )
-              'default)
-             (nil
-              "Open Notes"
-              "Open my notes"
-              (lambda (&rest _) (org-roam-node-find))
-              'default)
-             )
-
-            ;; Second row
-            ((nil
-              "Todo list"
-              "Open todo list"
-              (lambda (&rest _) (find-file "~/org/Todos.org"))
-              'default)
-             ))))
-
-  ;; (setq dashboard-set-file-icons t)
-  ;; (setq dashboard-set-heading-icons t)
-  ;; (setq dashboard-display-icons-p t
-  ;;       dashboard-icon-type 'all-the-icons)
-  ;; (setq dashboard-heading-icons '((recents   . "history")
-  ;;                                 (bookmarks . "bookmark")
-  ;;                                 (agenda    . "calendar")
-  ;;                                 (projects  . "rocket")
-  ;;                                 (registers . "database"))))
+    (setq dashboard-set-file-icons t)
+    (setq dashboard-set-heading-icons t)
+    (setq dashboard-display-icons-p t)
+    (setq dashboard-heading-icons '((recents   . "history")
+                                    (bookmarks . "bookmark")
+                                    (agenda    . "calendar")
+                                    (projects  . "rocket")
+                                    (registers . "database")))
+    (setq dashboard-projects-switch-function 'projectile-persp-switch-project
+          dashboard-items '(
+                            (recents . 5)
+                            (projects . 10)
+                            )
+          dashboard-set-navigator t))
 #+end_src
-
-#+RESULTS:
-: [nil 26278 56495 432856 nil elpaca-process-queues nil nil 0 nil]
 
 ** Theme
 #+begin_src elisp
@@ -785,16 +761,17 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
 ** Projectile
 #+begin_src elisp
   (use-package projectile
-    :defer 1
+    :demand
     :general
     (ys/leader-keys
       "pc" '(projectile-compile-project :wk "Compile project"))
     :config
+    (setq projectile-completion-system 'ivy)
     (projectile-mode +1))
 #+end_src
 
 #+RESULTS:
-: [nil 26456 5079 815658 nil elpaca-process-queues nil nil 504000 nil]
+: [nil 26458 30565 94376 nil elpaca-process-queues nil nil 0 nil]
 
 *** Ivy Integration (fix keys)
 #+begin_src elisp
@@ -813,6 +790,12 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
      counsel-projectile-switch-to-buffer)
     :config
     (counsel-projectile-mode 1))
+#+end_src
+
+*** Persp integration
+#+begin_src elisp 
+  (use-package persp-projectile 
+    :after projectile)
 #+end_src
 
 ** Git
