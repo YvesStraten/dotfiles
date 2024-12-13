@@ -1314,24 +1314,50 @@ Credit to doom-emacs devs
 : [nil 26455 41349 133617 nil elpaca-process-queues nil nil 0 nil]
 
 ** Macos stuff
+Credits to [[https://github.com/doomemacs/doomemacs/blob/ba1dca322f9a07bc2b7bec6a98f2c3c55c0bbd77/modules/os/macos/autoload.el][Doom emacs]] for the insanely good macro
 #+begin_src elisp
   (use-package emacs
     :ensure nil
+    :general (ys/leader-keys
+               "of" '(+macos/reveal-in-finder :wk "Open in finder")
+               "op" '(+macos/reveal-project-in-finder :wk "Open in finder")
+               )
     :if (eq system-type 'darwin)
     :config
     (setq ns-use-native-fullscreen nil
           mac-control-modifier 'control
           mac-command-modifier 'meta
-          mac-right-option-modifier 'control))
+          mac-right-option-modifier 'control)
 
-  (defun open-in-finder ()
-    (interactive)
-    (shell-command (concat "open " (file-name-directory (buffer-file-name))))
+    (defun +macos-open-with (&optional app-name path)
+      "Send PATH to APP-NAME on OSX."
+      (interactive)
+      (let* ((path (expand-file-name
+                    (replace-regexp-in-string
+                     "'" "\\'"
+                     (or path (if (derived-mode-p 'dired-mode)
+                                  (dired-get-file-for-visit)
+                                (buffer-file-name)))
+                     nil t)))
+             (command (format "open %s"
+                              (if app-name
+                                  (format "-a %s '%s'" (shell-quote-argument app-name) path)
+                                (format "'%s'" path)))))
+        (message "Running: %s" command)
+        (shell-command command)))
+
+    (defmacro +macos--open-with (id &optional app dir)
+      `(defun ,(intern (format "+macos/%s" id)) ()
+         (interactive)
+         (+macos-open-with ,app ,dir)))
+
+    (+macos--open-with reveal-in-finder "Finder" default-directory)
+    (+macos--open-with reveal-project-in-finder "Finder" (or (projectile-project-root) default-directory))
+    (+macos--open-with open-file nil buffer-file-name)
+
     )
-#+end_src
 
-#+RESULTS:
-: open-in-finder
+#+end_src
 
 ** Automatic revert of buffers
 #+begin_src elisp
