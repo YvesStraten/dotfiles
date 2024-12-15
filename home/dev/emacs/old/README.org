@@ -888,6 +888,8 @@ Provides nice todos inside of [[Git][Magit]]
   						   :files ("*.el" "*")))
 
   (use-package yasnippet
+    :hook (snippet-mode . (lambda ()
+                            (setq mode-require-final-newline nil)))
     :defer 1
     :config
     (add-to-list 'yas-snippet-dirs '"~/dotfiles/home/dev/emacs/snippets")
