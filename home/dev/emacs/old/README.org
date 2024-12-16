@@ -795,11 +795,14 @@ Needed because for some reason transient is outdated
                "g" '(:ignore t :wk "Magit")
                "gg" '(magit :wk "Open magit")
                "gp" '(magit-push :wk "Push commits"))
-    :commands magit)
+    :commands magit
+    :config
+    (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell)
+    (add-hook 'git-commit-mode-hook 'evil-insert-state)
+    )
 #+end_src
 
 #+RESULTS:
-: t
 
 *** Git todos
 Provides nice todos inside of [[Git][Magit]]
