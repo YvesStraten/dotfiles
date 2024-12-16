@@ -1360,10 +1360,11 @@ Credits to [[https://github.com/doomemacs/doomemacs/blob/ba1dca322f9a07bc2b7bec6
 #+end_src
 
 ** Automatic restore of sessions
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
   (use-package emacs
     :ensure nil
     :config
+    (add-to-list 'desktop-modes-not-to-save 'dired-mode)
     (desktop-save-mode 1)
   )
 #+end_src
