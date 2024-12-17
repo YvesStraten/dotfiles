@@ -1199,6 +1199,18 @@ Provides nice todos inside of [[Git][Magit]]
     (global-treesit-auto-mode))
 #+end_src
 
+** Compilation buffer
+#+begin_src elisp
+  (use-package emacs
+    :ensure nil
+    :config
+    (setq compilation-scroll-output t
+          compilation-always-kill t
+          compilation-auto-jump-to-first-error t
+          )
+    (local-set-key (kbd "q") 'kill-buffer-and-window)
+    )
+#+end_src
 
 * Terminal
 #+begin_src elisp
