@@ -938,6 +938,9 @@ Provides nice todos inside of [[Git][Magit]]
   (use-package lsp-ui :commands lsp-ui-mode)
 
   (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+  (use-package helm-lsp)
+  (use-package helm
+    :hook (lsp-mode . helm-mode))
 
   (use-package lsp-java
     :config
