@@ -764,9 +764,7 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
   (use-package counsel-projectile
     :after projectile
     :general (ys/leader-keys
-                         "SPC" '(counsel-projectile-find-file :wk "Find file")
                          "/" '(counsel-projectile-grep :wk "Grep Project")
-                         "pp" '(counsel-projectile-switch-project :wk "Switch project")
                          "bb" '(counsel-projectile-switch-to-buffer :wk "Project buffers")
                          "bB" '(counsel-switch-buffer :wk "Buffers"))
     :commands
@@ -780,7 +778,16 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
 
 *** Persp integration
 #+begin_src elisp 
+  (defun ys/project-find-or-switch ()
+    (interactive)
+    (if (projectile-project-p)
+        (counsel-projectile-find-file)
+      (call-interactively 'projectile-persp-switch-project)))
+
   (use-package persp-projectile 
+    :general (ys/leader-keys
+               "SPC" '(ys/project-find-or-switch :wk "Find file")
+               "pp" '(projectile-persp-switch-project :wk "Switch project"))
     :after projectile)
 #+end_src
 
