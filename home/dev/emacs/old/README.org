@@ -142,6 +142,8 @@
 #+begin_src emacs-lisp
   (setq-default indent-tabs-mode nil)
   (electric-pair-mode 1)
+  ;; Fixes switch statements
+  (c-set-offset 'case-label '+)
 #+end_src
 
 * Evil
