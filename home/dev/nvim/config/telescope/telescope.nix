@@ -5,8 +5,13 @@
     extensions = {fzf-native.enable = true;};
     settings = {
       defaults = {
+        layout_strategy = "vertical";
         layout_config = {
           horizontal = {
+            preview_cutoff = 0;
+          };
+
+          vertical = {
             preview_cutoff = 0;
           };
         };
