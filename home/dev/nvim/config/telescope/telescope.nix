@@ -2,9 +2,16 @@
   plugins.telescope = {
     enable = true;
 
-    extensions = {fzf-native.enable = true;};
+    extensions = {
+      fzf-native.enable = true;
+    };
     settings = {
       defaults = {
+        path_display.__raw = ''
+          {
+            "truncate"
+          }
+        '';
         layout_strategy = "vertical";
         layout_config = {
           horizontal = {

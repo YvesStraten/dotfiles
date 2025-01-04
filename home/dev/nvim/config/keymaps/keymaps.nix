@@ -34,25 +34,6 @@
       options.silent = true;
     }
 
-    # {
-    #   mode = "v";
-    #   key = "<esc>";
-    #   action = ":nohlsearch<CR>";
-    #   options.silent = true;
-    # }
-
-    {
-      key = "<tab>";
-      options.silent = true;
-      action = ":BufferNext<CR>";
-    }
-
-    {
-      key = "<S-tab>";
-      action = ":BufferPrevious<CR>";
-      options.silent = true;
-    }
-
     {
       key = "<leader>toc";
       action = ":VimtexTocToggle<CR>";
@@ -66,7 +47,7 @@
     }
 
     {
-      key = "<C-n>";
+      key = "<leader>n";
       action = ":Neotree toggle<CR>";
       options.silent = true;
     }

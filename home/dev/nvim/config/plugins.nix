@@ -2,6 +2,7 @@
   imports = [
 		./hardtime.nix
     ./telescope/telescope.nix
+    ./toggleterm.nix
     ./lsp/lsp.nix
 		./lsp/lspsaga.nix
 		./lsp/trouble.nix
@@ -21,22 +22,25 @@
       enable = true;
       gitPackage = null;
     };
+
     harpoon = {
       enable = true;
       enableTelescope = true;
-    };
-    # tiny-code-action.enable = true;
-    headlines.enable = true;
-    neocord.enable = true;
-    barbar = {
-      enable = true;
-      tabpages = true;
       keymaps = {
-        close.key = "<C-w>";
-        closeAllButCurrent.key = "<C-S-w>";
-				pin.key = "<C-t>";
+        addFile = "<leader>a";
+        toggleQuickMenu = "<C-a>";
+        navFile = {
+          "1" = "<C-h>";
+          "2" = "<C-t>";
+          "3" = "<C-n>";
+          "4" = "<C-s>";
+        };
       };
     };
+
+    headlines.enable = true;
+    neocord.enable = true;
+
     treesitter = {
       enable = true;
       nixvimInjections = true;
@@ -44,29 +48,25 @@
         indent.enable = true;
         highlight = {
           enable = true;
-          disable = ["latex"];
+          disable = ["latex" "xml"];
         };
       };
     };
 
-    treesitter-context.enable = true;
+    treesitter-context = {
+      enable = true;
+      settings.max_lines = 5;
+    };
+
     which-key.enable = true;
 
     comment.enable = true;
 
-    tmux-navigator.enable = true;
     indent-blankline.enable = true;
     ts-autotag.enable = true;
 
-    # noice.enable = true;
+    noice.enable = true;
 
-    nvim-colorizer = {
-      enable = true;
-      userDefaultOptions = {
-        tailwind = true;
-        sass.enable = true;
-      };
-    };
     nvim-autopairs.enable = true;
     neo-tree = {
       enable = true;
@@ -86,15 +86,6 @@
 
     fugitive.enable = true;
     undotree.enable = true;
-    toggleterm = {
-      enable = true;
-      settings = {
-        direction = "horizontal";
-        hideNumbers = true;
-        open_mapping = "[[<C-e>]]";
-        floatOpts.border = "curved";
-      };
-    };
 
     markdown-preview = {
       enable = true;

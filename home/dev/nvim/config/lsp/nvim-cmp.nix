@@ -1,8 +1,9 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   plugins = {
     luasnip = {
       enable = true;
-      extraConfig = {
+      settings = {
         enable_autosnippets = true;
         store_selection_keys = "<Tab>";
       };
@@ -25,14 +26,14 @@
       settings = {
         snippet.expand = "function(args) require('luasnip').lsp_expand(args.body) end";
         sources = [
-          {name = "nvim_lsp";}
-          {name = "luasnip";}
+          { name = "nvim_lsp"; }
+          { name = "luasnip"; }
           # {name = "ultisnips";}
-          {name = "nvim_lsp_document_symbol";}
+          { name = "nvim_lsp_document_symbol"; }
           {
             name = "nvim_lsp_signature_help";
           }
-          {name = "path";}
+          { name = "path"; }
         ];
 
         performance = {
