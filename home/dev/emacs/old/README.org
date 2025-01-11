@@ -362,7 +362,7 @@
 #+begin_src elisp
   (if (eq system-type 'windows-nt)
   	(add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-19"))
-    (add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-20"))
+    (add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-17"))
     )
   (setq display-line-numbers-type 'relative
         display-line-numbers-current-absolute t)
@@ -835,7 +835,7 @@ Provides nice todos inside of [[Git][Magit]]
 #+end_src
 
 ** File explorer
-#+begin_src elisp :tangle no
+#+begin_src elisp
   (use-package neotree
     :defer
     :commands neotree-toggle
@@ -850,7 +850,7 @@ Provides nice todos inside of [[Git][Magit]]
     )
 #+end_src
 
-#+begin_src elisp
+#+begin_src elisp :tangle no
   (use-package dirvish
     :init (dirvish-override-dired-mode)
     :hook (dirvish-side . dirvish-side-follow-mode)
