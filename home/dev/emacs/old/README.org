@@ -36,6 +36,7 @@
 
   ;; Disable before actual init
   (push '(tool-bar-lines . 0) default-frame-alist)
+  (push '(menu-bar-lines . 0) default-frame-alist)
   (push '(vertical-scroll-bars) default-frame-alist)
   (when (featurep 'ns)
     (push '(ns-transparent-titlebar . t) default-frame-alist))
@@ -442,7 +443,7 @@
 #+RESULTS:
 
 ** Transparent emacs
-#+begin_src elisp
+#+begin_src elisp :tangle no
   (set-frame-parameter nil 'alpha-background 70) ; For current frame
   (add-to-list 'default-frame-alist '(alpha-background . 70)) ; For all new frames henceforth
 #+end_src
@@ -728,12 +729,9 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
 ** Mini buffer completion 
 #+begin_src elisp
   (use-package counsel
-    :commands (counsel-M-x
-               counsel-find-file
-               counsel-describe-variable
-               counsel-load-theme)
     :config (setq ivy-use-virtual-buffers t
                   ivy-count-format "(%d/%d) ")
+    (ivy-mode)
     :bind
     ("M-x" . counsel-M-x)
     ("C-x C-f" . counsel-find-file)
@@ -910,6 +908,9 @@ Provides nice todos inside of [[Git][Magit]]
     )
 #+end_src
 
+#+RESULTS:
+: [nil 26462 44629 456310 nil elpaca-process-queues nil nil 852000 nil]
+
 *** Ivy Integration
 #+begin_src elisp :tangle no
   (use-package ivy-yasnippet
@@ -940,9 +941,6 @@ Provides nice todos inside of [[Git][Magit]]
   (use-package lsp-ui :commands lsp-ui-mode)
 
   (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
-  (use-package helm-lsp)
-  (use-package helm
-    :hook (lsp-mode . helm-mode))
 
   (use-package lsp-java
     :config
@@ -1119,7 +1117,6 @@ Provides nice todos inside of [[Git][Magit]]
 ** Programming language modes
 *** Typescript
 #+begin_src elisp
-  (use-package typescript-mode)
   (use-package web-mode
     :mode (("\\.tsx\\'" . web-mode)
            ("\\.jsx\\'" . web-mode)
@@ -1387,7 +1384,7 @@ Credits to [[https://github.com/doomemacs/doomemacs/blob/ba1dca322f9a07bc2b7bec6
 #+end_src
 
 ** Automatic restore of sessions
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package emacs
     :ensure nil
     :config

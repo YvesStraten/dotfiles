@@ -1,4 +1,4 @@
-(defvar elpaca-installer-version 0.7)
+(defvar elpaca-installer-version 0.8)
 (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
 (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
@@ -15,18 +15,18 @@
     (make-directory repo t)
     (when (< emacs-major-version 28) (require 'subr-x))
     (condition-case-unless-debug err
-        (if-let ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
-                 ((zerop (apply #'call-process `("git" nil ,buffer t "clone"
-                                                 ,@(when-let ((depth (plist-get order :depth)))
-                                                     (list (format "--depth=%d" depth) "--no-single-branch"))
-                                                 ,(plist-get order :repo) ,repo))))
-                 ((zerop (call-process "git" nil buffer t "checkout"
-                                       (or (plist-get order :ref) "--"))))
-                 (emacs (concat invocation-directory invocation-name))
-                 ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
-                                       "--eval" "(byte-recompile-directory \".\" 0 'force)")))
-                 ((require 'elpaca))
-                 ((elpaca-generate-autoloads "elpaca" repo)))
+        (if-let* ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
+                  ((zerop (apply #'call-process `("git" nil ,buffer t "clone"
+                                                  ,@(when-let* ((depth (plist-get order :depth)))
+                                                      (list (format "--depth=%d" depth) "--no-single-branch"))
+                                                  ,(plist-get order :repo) ,repo))))
+                  ((zerop (call-process "git" nil buffer t "checkout"
+                                        (or (plist-get order :ref) "--"))))
+                  (emacs (concat invocation-directory invocation-name))
+                  ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
+                                        "--eval" "(byte-recompile-directory \".\" 0 'force)")))
+                  ((require 'elpaca))
+                  ((elpaca-generate-autoloads "elpaca" repo)))
             (progn (message "%s" (buffer-string)) (kill-buffer buffer))
           (error "%s" (with-current-buffer buffer (buffer-string))))
       ((error) (warn "%s" err) (delete-directory repo 'recursive))))
@@ -52,10 +52,33 @@
 (use-package esup)
 
 (use-package exec-path-from-shell
-  :if (memq window-system '(mac ns x))
+  :demand t
   :ensure (:wait t)
-  :init (exec-path-from-shell-initialize)
-  )
+  :config
+  (dolist (var '("PYTHONPATH"         ; Python modules
+                 "INFOPATH"           ; Info directories
+                 "JAVA_OPTS"          ; Options for java processes
+                 "SBT_OPTS"           ; Options for SBT
+                 "RUST_SRC_PATH"      ; Rust sources, for racer
+                 "CARGO_HOME"         ; Cargo home, for racer
+                 "EMAIL"              ; My personal email
+                 "GPG_TTY"
+                 "GPG_AGENT_INFO"
+                 "SSH_AUTH_SOCK"
+                 "SSH_AGENT_PID"
+                 "JDTLS_PATH"
+                 "HOME"
+                 ))
+
+    (add-to-list 'exec-path-from-shell-variables var)
+    ))
+
+  (exec-path-from-shell-initialize)
+
+(setq-default indent-tabs-mode nil)
+(electric-pair-mode 1)
+;; Fixes switch statements
+(c-set-offset 'case-label '+)
 
 (use-package evil
   :demand
@@ -105,13 +128,20 @@
     "scb" '(langtool-correct-buffer :wk "Correct buffer"))
 
   (ys/leader-keys
-    "c" '(centaur-tabs-ace-jump :wk "Jump to tab"))
+    "p" '(:ignore t :wk "Project"))
 
   (ys/leader-keys
-    "l" '(:ignore t :wk "Lsp")
-    "lr" '(lsp-rename :wk "Rename reference")
-    "lf" '(format-all-buffer :wk "Formats buffer")
-    "la" '(lsp-code-actions-at-point :wk "Code actions"))
+    "c" '(:ignore t :wk "Code")
+    "cc" '(compile :wk "Compile")
+    "cC" '(recompile :wk "Recompile"))
+
+  (ys/leader-keys
+    "b" '(:ignore t :wk "Buffers")
+    "bx" '(kill-buffer :wk "Kill Buffer")
+    "bi" '(ibuffer :wk "Ibuffer"))
+
+  (ys/leader-keys
+    "l" '(:ignore t :wk "Lsp"))
 
   (ys/leader-keys
     "o" '(:ignore t :wk "Org")
@@ -130,17 +160,17 @@
   )
 
 (use-package perspective
+  :hook (dashboard-mode . persp-mode)
   :general (ys/leader-keys
-    		       "TAB" '(:ignore t :wk "Workspaces")
-    		       "TAB n" '(my/persp-switch :wk "New Workspace")
-    		       "TAB d" '(persp-kill :wk "Kill workspace")
-    		       "TAB 1" '(lambda () (interactive) (persp-switch-by-number 1) :wk "Switch to workspace 1")
-    		       "TAB 2" '(lambda () (interactive) (persp-switch-by-number 2) :wk "Switch to workspace 2")
-    		       "TAB 3" '(lambda () (interactive) (persp-switch-by-number 3) :wk "Switch to workspace 3")
-    		       "TAB 4" '(lambda () (interactive) (persp-switch-by-number 4) :wk "Switch to workspace 4")
-    		       "TAB 5" '(lambda () (interactive) (persp-switch-by-number 5) :wk "Switch to workspace 5")
-    		       )
-  :init (persp-mode))
+                       "TAB" '(:ignore t :wk "Workspaces")
+                       "TAB n" '(my/persp-switch :wk "New Workspace")
+                       "TAB d" '(persp-kill :wk "Kill workspace")
+                       "TAB 1" '(lambda () (interactive) (persp-switch-by-number 1) :wk "Switch to workspace 1")
+                       "TAB 2" '(lambda () (interactive) (persp-switch-by-number 2) :wk "Switch to workspace 2")
+                       "TAB 3" '(lambda () (interactive) (persp-switch-by-number 3) :wk "Switch to workspace 3")
+                       "TAB 4" '(lambda () (interactive) (persp-switch-by-number 4) :wk "Switch to workspace 4")
+                       "TAB 5" '(lambda () (interactive) (persp-switch-by-number 5) :wk "Switch to workspace 5")
+                       ))
 
 (use-package all-the-icons
   :if (display-graphic-p))
@@ -150,9 +180,9 @@
   :hook (after-init . doom-modeline-mode)
   :config
   (setq doom-modeline-persp-name t
-  	      doom-modeline-display-default-persp-name t
-  	      doom-modeline-buffer-encoding nil
-  	      )
+		doom-modeline-display-default-persp-name t
+		doom-modeline-buffer-encoding nil
+		)
   )
 
 (use-package dashboard
@@ -161,50 +191,25 @@
   (dashboard-setup-startup-hook)
   (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*"))
         dashboard-banner-logo-title "Welcome to Emacs"
-        dashboard-startup-banner (concat (file-name-directory user-init-file) "marivector.png")
+        dashboard-startup-banner (concat (file-name-directory user-init-file) "banner.png")
 
         dashboard-center-content t)
 
   ;; Sets which dashboard items should show
-  (setq dashboard-banner-logo-title ""
-        dashboard-set-footer nil
-        dashboard-projects-switch-function 'counsel-projectile-switch-project
-        dashboard-items '()
-        dashboard-set-navigator t)
-
-  (setq dashboard-navigator-buttons
-        `(
-          ;; First row
-          ((nil
-            "Edit emacs config"
-            "Open the config file for emacs"
-            (lambda (&rest _) (find-file "~/dotfiles/home/dev/emacs/old/README.org")
-              )
-            'default)
-           (nil
-            "Open Notes"
-            "Open my notes"
-            (lambda (&rest _) (org-roam-node-find))
-            'default)
-           )
-
-          ;; Second row
-          ((nil
-            "Todo list"
-            "Open todo list"
-            (lambda (&rest _) (find-file "~/org/Todos.org"))
-            'default)
-           ))))
-
-;; (setq dashboard-set-file-icons t)
-;; (setq dashboard-set-heading-icons t)
-;; (setq dashboard-display-icons-p t
-;;       dashboard-icon-type 'all-the-icons)
-;; (setq dashboard-heading-icons '((recents   . "history")
-;;                                 (bookmarks . "bookmark")
-;;                                 (agenda    . "calendar")
-;;                                 (projects  . "rocket")
-;;                                 (registers . "database"))))
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-display-icons-p t)
+  (setq dashboard-heading-icons '((recents   . "history")
+                                  (bookmarks . "bookmark")
+                                  (agenda    . "calendar")
+                                  (projects  . "rocket")
+                                  (registers . "database")))
+  (setq dashboard-projects-switch-function 'projectile-persp-switch-project
+        dashboard-items '(
+                          (recents . 5)
+                          (projects . 10)
+                          )
+        dashboard-set-navigator t))
 
 (use-package doom-themes
   :demand
@@ -219,7 +224,7 @@
   (doom-themes-org-config))
 
 (if (eq system-type 'windows-nt)
-      (add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-19"))
+	(add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-19"))
   (add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-20"))
   )
 (setq display-line-numbers-type 'relative
@@ -254,12 +259,6 @@
                                        "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
                                        "\\\\" "://")))
 
-(use-package elcord
-  :defer 2
-  :config (elcord-mode)
-  ;; (setq elcord-editor-icon 'emacs_icon)
-  )
-
 (use-package beacon
   :defer 2
   :config
@@ -272,19 +271,6 @@
   :hook (prog-mode . hl-line-mode)
   (org-mode . hl-line-mode)
   )
-
-(scroll-bar-mode -1)
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-
-(if (eq system-type 'darwin)
-      (progn
-  	(message "Is darwin")
-  	(tool-bar-mode t)
-  	(menu-bar-mode t)))
-
-(set-frame-parameter nil 'alpha-background 70) ; For current frame
-(add-to-list 'default-frame-alist '(alpha-background . 70)) ; For all new frames henceforth
 
 (use-package centered-window
   :defer
@@ -328,16 +314,16 @@
    (python . t)))
 
 (nconc org-babel-default-header-args:java
-       '((:dir . "/tmp/")))
+	 '((:dir . "/tmp/")))
 
 (setq org-babel-default-header-args:js
              '((:exports . "both") (:results . "output")))
 
 (setq org-latex-listings 'minted
-      org-latex-packages-alist '(("" "minted"))
-      org-latex-pdf-process
-      '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-	"pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+	org-latex-packages-alist '(("" "minted"))
+	org-latex-pdf-process
+	'("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+	  "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
 (setq org-confirm-babel-evaluate nil)
 
@@ -397,26 +383,13 @@
       org-use-sub-superscripts "{}"
       org-image-actual-width '(300))
 
-(with-eval-after-load 'tex
-  (add-hook 'LaTeX-mode-hook (lambda () (electric-indent-local-mode -1)))
-  (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-  (add-hook 'LaTeX-mode-hook (lambda () (prettify-symbols-mode 1)))
-  (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
-  (add-to-list
-   'TeX-view-program-selection
-   '(output-pdf "PDF Tools"))
-  (add-hook 'LaTeX-mode-hook
-            (lambda ()
-              (add-hook 'after-save-hook
-                        (lambda ()
-                          (setq-local split-height-threshold 90)
-                          (setq-local split-width-threshold 60)
-                          (TeX-save-document (TeX-master-file))
-                          (TeX-command-run-all nil))
-                        0 t))))
-
-
 (use-package latex
+  :hook (LaTeX-mode . (lambda ()
+                        (setq TeX-command-extra-options "-shell-escape")
+                        (electric-indent-local-mode -1)
+                        (turn-on-reftex)
+                        (prettify-symbols-mode)
+                        ))
   :demand
   :ensure
   (auctex :build (:not elpaca--compile-info)
@@ -429,34 +402,21 @@
           :files ("*.el" "doc/*.info*" "etc" "images" "latex" "style")
           :version (lambda (_) (require 'tex-site) AUCTeX-version))
   :config
+  (setq TeX-show-compilation t)
+  (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
+  (add-to-list
+   'TeX-view-program-selection
+   '(output-pdf "PDF Tools"))
   )
 
-(define-derived-mode my-tex-mode LaTeX-mode
-  "my-tex-mode"
-  "My customised tex mode"
-  (setq TeX-parse-self t
-        TeX-auto-save t
-        TeX-save-query nil
-        TeX-source-correlate-start-server t
-        TeX-command-extra-options "-shell-escape")
-  (setq TeX-data-directory (expand-file-name "elpaca/builds/auctex" user-emacs-directory))
-  (setq TeX-lisp-directory TeX-data-directory)
-  )
-
-(use-package my-tex-mode
-  :ensure nil
-  :mode "\\.tex'")
-
-(use-package evil-tex
-  :hook
-  (LaTeX-mode . evil-tex-mode))
+;; (use-package evil-tex
+;;   :hook
+;;   (LaTeX-mode . evil-tex-mode))
 
 (use-package pdf-tools
-  :demand
+  :mode ("\\.pdf'" . pdf-view-mode)
   :hook
-  (pdf-view-mode . pdf-view-midnight-minor-mode)
-  :config
-  (pdf-loader-install))
+  (pdf-view-mode . pdf-view-midnight-minor-mode))
 
 (defun LaTeX-indent-item ()
   "Provide proper indentation for LaTeX \"itemize\",\"enumerate\", and
@@ -505,94 +465,18 @@ environments."
   :type 'integer)
 
 (eval-after-load "latex"
-  '(setq LaTeX-indent-environment-list
+  '(setq
+    LaTeX-indent-level-item-continuation 2
+    LaTeX-indent-environment-list
          (nconc '(("itemize" LaTeX-indent-item)
                   ("enumerate" LaTeX-indent-item)
                   ("description" LaTeX-indent-item))
                 LaTeX-indent-environment-list)))
 
-(use-package projectile
-  :defer 1
-  :config
-  (projectile-mode +1))
-
-(use-package counsel-projectile
-  :after projectile
-  :general (ys/leader-keys
-  		       "SPC" '(counsel-projectile-find-file :wk "Find file")
-  		       "/" '(counsel-projectile-grep :wk "Grep Project")
-  		       "bb" '(counsel-projectile-switch-to-buffer :wk "Project buffers")
-  		       "bB" '(counsel-switch-buffer :wk "Buffers"))
-  :commands
-  (counsel-projectile-find-file
-   counsel-projectile-grep
-   counsel-projectile-switch-project
-   counsel-projectile-switch-to-buffer)
-  :config
-  (counsel-projectile-mode 1))
-
-(use-package magit
-  :ensure (:wait t)
-  :general (ys/leader-keys
-             "g" '(:ignore t :wk "Magit")
-             "gg" '(magit :wk "Open magit")
-             "gp" '(magit-push :wk "Push commits"))
-  :commands magit)
-
-(use-package hl-todo
-  :init
-  (global-hl-todo-mode))
-
-(use-package magit-todos
-  :after magit
-  :config
-  (magit-todos-mode 1))
-
-(use-package dirvish
-  :init (dirvish-override-dired-mode)
-  :hook (dirvish-side . dirvish-side-follow-mode)
-  :custom
-  (dirvish-quick-access-entries
-   '(("h" "~/" "Home")
-       ("d" "~/Downloads" "Downloads")
-       ))
-  :bind
-  (:map evil-normal-state-map
-  	      ("C-n" . dirvish-side))
-  (:map dirvish-mode-map
-      ("q" . dirvish-quit)
-      ("a" . dirvish-quick-access)
-      ("TAB" . dirvish-subtree-toggle)
-      )
-  :config (setq dirvish-attributes
-  			      '(vc-state subtree-state all-the-icons collapse git-msg file-time file-size)))
-
-(use-package centaur-tabs
-  :hook (dashboard-mode . centaur-tabs-local-mode) 
-  (calendar-mode . centaur-tabs-local-mode)
-  (eshell-mode . centaur-tabs-local-mode)
-  (vterm-mode . centaur-tabs-local-mode)
-  (pdf-view-mode . centaur-tabs-local-mode)
-  (magit-mode . centaur-tabs-local-mode)
-  (org-mode . centaur-tabs-local-mode)
-  :config
-  (centaur-tabs-mode t)
-  (centaur-tabs-headline-match)
-  (setq centaur-tabs-height 40
-        centaur-tabs-style "wave"
-        centaur-tabs-set-icons t
-        centaur-tabs-gray-out-icons 'buffer
-        centaur-tabs-set-bar 'under
-        x-underline-at-descent-line t
-        centaur-tabs-set-modified-marker t))
-
 (use-package counsel
-  :commands (counsel-M-x
-             counsel-find-file
-             counsel-describe-variable
-             counsel-load-theme)
   :config (setq ivy-use-virtual-buffers t
                 ivy-count-format "(%d/%d) ")
+  (ivy-mode)
   :bind
   ("M-x" . counsel-M-x)
   ("C-x C-f" . counsel-find-file)
@@ -601,13 +485,91 @@ environments."
   ("C-c t" . counsel-load-theme)
   )
 
+(use-package projectile
+  :demand
+  :general
+  (ys/leader-keys
+    "pc" '(projectile-compile-project :wk "Compile project"))
+  :config
+  (setq projectile-completion-system 'ivy)
+  (projectile-mode +1))
+
+(use-package counsel-projectile
+  :after projectile
+  :general (ys/leader-keys
+                       "/" '(counsel-projectile-grep :wk "Grep Project")
+                       "bb" '(counsel-projectile-switch-to-buffer :wk "Project buffers")
+                       "bB" '(counsel-switch-buffer :wk "Buffers"))
+  :commands
+  (counsel-projectile-find-file
+   counsel-projectile-grep
+   counsel-projectile-switch-project
+   counsel-projectile-switch-to-buffer)
+  :config
+  (counsel-projectile-mode 1))
+
+(defun ys/project-find-or-switch ()
+  (interactive)
+  (if (projectile-project-p)
+      (counsel-projectile-find-file)
+    (call-interactively 'projectile-persp-switch-project)))
+
+(use-package persp-projectile 
+  :general (ys/leader-keys
+             "SPC" '(ys/project-find-or-switch :wk "Find file")
+             "pp" '(projectile-persp-switch-project :wk "Switch project"))
+  :after projectile)
+
+(use-package transient)
+
+(use-package magit
+  :ensure (:wait t)
+  :general (ys/leader-keys
+             "g" '(:ignore t :wk "Magit")
+             "gg" '(magit :wk "Open magit")
+             "gp" '(magit-push :wk "Push commits"))
+  :commands magit
+  :config
+  (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell)
+  (add-hook 'git-commit-mode-hook 'evil-insert-state)
+  )
+
+(use-package hl-todo
+  :init
+  (global-hl-todo-mode))
+
+(use-package magit-todos
+  :after magit
+  :hook (magit-mode . magit-todos-mode))
+
+(use-package dirvish
+  :init (dirvish-override-dired-mode)
+  :hook (dirvish-side . dirvish-side-follow-mode)
+  :custom
+  (dirvish-quick-access-entries
+   '(("h" "~/" "Home")
+	 ("d" "~/Downloads" "Downloads")
+	 ))
+  :bind
+  (:map evil-normal-state-map
+		("C-n" . dirvish-side))
+  (:map dirvish-mode-map
+	("q" . dirvish-quit)
+	("a" . dirvish-quick-access)
+	("TAB" . dirvish-subtree-toggle)
+	)
+  :config (setq dirvish-attributes
+				'(vc-state subtree-state all-the-icons collapse git-msg file-time file-size)))
+
 (use-package doom-snippets 
   :after yasnippet
   :ensure (doom-snippets :type git :host github
-  						 :repo "doomemacs/snippets"
-  						 :files ("*.el" "*")))
+						   :repo "doomemacs/snippets"
+						   :files ("*.el" "*")))
 
 (use-package yasnippet
+  :hook (snippet-mode . (lambda ()
+                          (setq mode-require-final-newline nil)))
   :defer 1
   :config
   (add-to-list 'yas-snippet-dirs '"~/dotfiles/home/dev/emacs/snippets")
@@ -616,12 +578,17 @@ environments."
   )
 
 (use-package lsp-mode
+  :general
+  (ys/leader-keys
+    "ca" '(lsp-execute-code-action :wk "Code actions")
+    "lr" '(lsp-rename :wk "Rename reference"))
+  :ensure (:wait t)
   :hook (prog-mode . lsp-deferred)
   (lsp-mode . lsp-enable-which-key-integration)
   :config
-  (setq lsp-inlay-hint-enable t)
-  (setq lsp-enable-folding t)
-  (setq lsp-enable-snippet t))
+  (setq lsp-inlay-hint-enable t
+        lsp-enable-folding t
+        lsp-enable-snippet t))
 
 (use-package lsp-ui :commands lsp-ui-mode)
 
@@ -629,13 +596,21 @@ environments."
 
 (use-package lsp-java
   :config
-  (add-hook 'java-mode-hook 'lsp)
-  )
+  (setq c-basic-offset 2)
+  (setq-default electric-indent-inhibit t)
+  :hook (java-mode . (lambda ()
+                       (require 'lsp-java) 
+                       (defun lsp-java--ls-command ()
+                         (list "jdtls"
+                               "-configuration" (concat (getenv "HOME") "/.cache/jdtls/")
+                               "-data" (concat (getenv "HOME") "/.jdtls")))
+                       (setq lsp-java-server-install-dir (concat (getenv "JDTLS_PATH") "/"))
+                       (lsp-deferred))))
 
 (use-package lsp-pyright
   :hook (python-mode . (lambda ()
-                          (require 'lsp-pyright)
-                          (lsp-deferred))))  ; or lsp-deferred
+                         (require 'lsp-pyright)
+                         (lsp-deferred))))  ; or lsp-deferred
 
 (use-package dap-mode
   :config
@@ -665,9 +640,9 @@ environments."
   :after company
   :config
   (defun my-latex-mode-setup ()
-      (setq-local company-backends
-  			      (append '((company-math-symbols-latex company-latex-commands))
-  					      company-backends)))
+	(setq-local company-backends
+				(append '((company-math-symbols-latex company-latex-commands))
+						company-backends)))
   (add-hook 'TeX-mode-hook 'my-latex-mode-setup)
   )
 
@@ -676,7 +651,9 @@ environments."
   :config (company-auctex-init))
 
 (use-package apheleia
-  :init (apheleia-global-mode +1))
+  :general (ys/leader-keys
+             "cf" '(apheleia-format-buffer
+                    :wk "Format buffer")))
 
 ;; Indent blankline
 (use-package highlight-indent-guides
@@ -695,33 +672,18 @@ environments."
   :defer
   :hook (prog-mode . rainbow-mode))
 
-(use-package smartparens
-  :hook
-  (prog-mode . smartparens-mode)
-  (LaTeX-mode . smartparens-mode)
-  :config
-  (require 'smartparens-config))
-
 (if (not (eq system-type 'windows-nt))
     (use-package direnv
       :hook (prog-mode . direnv-mode)
       ))
 
-(use-package typescript-mode)
 (use-package web-mode
-  :config (setq web-mode-indent-style 4
-                web-mode-css-indent-offset 4
-                web-mode-code-indent-offset 4
-                web-mode-attr-indent-offset 4
-                web-mode-script-padding 4)
   :mode (("\\.tsx\\'" . web-mode)
          ("\\.jsx\\'" . web-mode)
          ("\\.svelte\\'" . web-mode))
   )
 
 (use-package rustic)
-
-(use-package python-mode)
 
 (use-package pyvenv)
 
@@ -750,46 +712,56 @@ environments."
 
 (use-package tree-sitter-langs)
 
+(use-package emacs
+  :ensure nil
+  :config
+  (setq compilation-scroll-output t
+        compilation-always-kill t
+        compilation-auto-jump-to-first-error t
+        )
+  (local-set-key (kbd "q") 'kill-buffer-and-window)
+  )
+
 (if (not (eq system-type 'windows-nt))
-      (progn
-  	(message "unix")
+  	(progn
+	  (message "unix")
       (use-package vterm
-  	      :defer 1)
+		:defer 1)
       (use-package vterm-toggle
-  	      :after vterm
-  	      :general (ys/leader-keys
-  				 "t" '(vterm-toggle :wk "Vterm"))
-    	      :after vterm
-    	      :config
-    	      (setq vterm-toggle-fullscreen-p nil)
-    	      (setq vterm-toggle-scope 'project)
-    	      (add-to-list 'display-buffer-alist
-    				       '((lambda (buffer-or-name _)
-    					       (let ((buffer (get-buffer buffer-or-name)))
-    						 (with-current-buffer buffer
-    						       (or (equal major-mode 'vterm-mode)
-    							       (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
-    					 (display-buffer-reuse-window display-buffer-at-bottom)
-    					 ;;(display-buffer-reuse-window display-buffer-in-direction)
-    					 ;;display-buffer-in-direction/direction/dedicated is added in emacs27
-    					 ;;(direction . bottom)
-    					 (dedicated . t) ;dedicated is supported in emacs27
-    					 (reusable-frames . visible)
-    					 (window-height . 0.3)))))
+		:after vterm
+		:general (ys/leader-keys
+				   "t" '(vterm-toggle :wk "Vterm"))
+  		:after vterm
+  		:config
+  		(setq vterm-toggle-fullscreen-p nil)
+  		(setq vterm-toggle-scope 'project)
+  		(add-to-list 'display-buffer-alist
+  					 '((lambda (buffer-or-name _)
+  						 (let ((buffer (get-buffer buffer-or-name)))
+  						   (with-current-buffer buffer
+  							 (or (equal major-mode 'vterm-mode)
+  								 (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
+  					   (display-buffer-reuse-window display-buffer-at-bottom)
+  					   ;;(display-buffer-reuse-window display-buffer-in-direction)
+  					   ;;display-buffer-in-direction/direction/dedicated is added in emacs27
+  					   ;;(direction . bottom)
+  					   (dedicated . t) ;dedicated is supported in emacs27
+  					   (reusable-frames . visible)
+  					   (window-height . 0.3)))))
 
   (progn
-      (message "eshell")
-      (use-package eshell
-  	:ensure nil
-  	:defer 1)
-      (use-package eshell-toggle
-  	:custom
-    	(eshell-toggle-size-fraction 3)
-  	:after eshell
-    	:config
-  	:general (ys/leader-keys
-  			       "t" '(eshell-toggle :wk "Eshell"))
-    	)))
+	(message "eshell")
+	(use-package eshell
+	  :ensure nil
+	  :defer 1)
+  	(use-package eshell-toggle
+	  :custom
+  	  (eshell-toggle-size-fraction 3)
+	  :after eshell
+  	  :config
+	  :general (ys/leader-keys
+				 "t" '(eshell-toggle :wk "Eshell"))
+  	  )))
 
 (use-package which-key
   :defer 1
@@ -803,23 +775,23 @@ environments."
         which-key-min-display-lines 6
         which-key-side-window-slot -10
         which-key-side-window-max-height 0.25
-        which-key-idle-delay 0.8
+        which-key-idle-delay 0.1
         which-key-max-description-length 25
         which-key-allow-imprecise-window-fit t))
 
 (use-package langtool
   :commands (langtool-check
-	     langtool-check-done
-	     langtool-show-message-at-point
-	     langtool-correct-buffer)
+	       langtool-check-done
+	       langtool-show-message-at-point
+	       langtool-correct-buffer)
   :init (setq langtool-default-language "en-US")
   :config
   (unless (or langtool-bin
-	      langtool-language-tool-jar
-	      langtool-java-classpath)
+		langtool-language-tool-jar
+		langtool-java-classpath)
     (cond ((setq langtool-bin
-		 (or (executable-find "languagetool-commandline")
-		     (executable-find "languagetool")))))))  ; for nixpkgs.languagetool
+		   (or (executable-find "languagetool-commandline")
+		       (executable-find "languagetool")))))))  ; for nixpkgs.languagetool
 
 (use-package flyspell-mode
   :ensure nil
@@ -831,14 +803,48 @@ environments."
   :commands flyspell-correct-wrapper
 )
 
+(use-package sudo-edit)
+
 (use-package emacs
   :ensure nil
+  :general (ys/leader-keys
+             "of" '(+macos/reveal-in-finder :wk "Open in finder")
+             "op" '(+macos/reveal-project-in-finder :wk "Open in finder")
+             )
   :if (eq system-type 'darwin)
   :config
   (setq ns-use-native-fullscreen nil
         mac-control-modifier 'control
         mac-command-modifier 'meta
-        mac-right-option-modifier 'control))
+        mac-right-option-modifier 'control)
+
+  (defun +macos-open-with (&optional app-name path)
+    "Send PATH to APP-NAME on OSX."
+    (interactive)
+    (let* ((path (expand-file-name
+                  (replace-regexp-in-string
+                   "'" "\\'"
+                   (or path (if (derived-mode-p 'dired-mode)
+                                (dired-get-file-for-visit)
+                              (buffer-file-name)))
+                   nil t)))
+           (command (format "open %s"
+                            (if app-name
+                                (format "-a %s '%s'" (shell-quote-argument app-name) path)
+                              (format "'%s'" path)))))
+      (message "Running: %s" command)
+      (shell-command command)))
+
+  (defmacro +macos--open-with (id &optional app dir)
+    `(defun ,(intern (format "+macos/%s" id)) ()
+       (interactive)
+       (+macos-open-with ,app ,dir)))
+
+  (+macos--open-with reveal-in-finder "Finder" default-directory)
+  (+macos--open-with reveal-project-in-finder "Finder" (or (projectile-project-root) default-directory))
+  (+macos--open-with open-file nil buffer-file-name)
+
+  )
 
 ;; Automatically reverts buffers for changed files
 (global-auto-revert-mode 1)
