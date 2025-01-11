@@ -176,6 +176,12 @@
     :after evil)
 #+end_src
 
+** Copy and pasting
+#+begin_src emacs-lisp
+  (use-package simpleclip
+    :init (simpleclip-mode 1))
+#+end_src
+
 * Keybinds
 ** General
 #+begin_src elisp
@@ -230,10 +236,15 @@
       "oi" '(org-toggle-item :wk "Org toggle Item")
       "ot" '(org-todo :wk "Org Todo")
       "oT" '(org-todo-list :wk "Org Todo List")
-      "op" '(org-tree-slide-mode :wk "Present")))
-#+end_src
+      "op" '(org-tree-slide-mode :wk "Present"))
 
-#+RESULTS:
+    (ys/leader-keys
+      "y" '(simpleclip-copy :wk "Yank to clipboard"))
+
+    (ys/leader-keys
+      "P" '(simpleclip-paste :wk "Paste from clipboard"))
+    )
+#+end_src
 
 ** Hydra
 #+begin_src elisp :tangle no
