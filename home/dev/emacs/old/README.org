@@ -899,6 +899,17 @@ Provides nice todos inside of [[Git][Magit]]
 
 #+RESULTS:
 
+** Harpoon
+#+begin_src emacs-lisp
+  (use-package harpoon
+    :general (ys/leader-keys
+               "h" '(:ignore t :wk "Harpoon")
+               "hh" '(harpoon-quick-menu-hydra :wk "Quick menu")
+               "h1" '(harpoon-go-to-1 :wk "Go to 1")
+               )
+    )
+#+end_src
+
 * LSP stuff
 ** Yasnippet
 #+begin_src elisp
