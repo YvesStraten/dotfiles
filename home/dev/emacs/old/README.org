@@ -42,6 +42,7 @@
     (push '(ns-transparent-titlebar . t) default-frame-alist))
   (push '(width . 0.5) default-frame-alist)
   (push '(height . 0.5) default-frame-alist)
+  (setq site-run-file nil)
 #+end_src
 
 * Elpaca
@@ -1097,12 +1098,16 @@ Provides nice todos inside of [[Git][Magit]]
 #+RESULTS:
 
 *** Other useful backends 
-#+begin_src elisp :tangle no
+#+begin_src elisp
   (use-package cape
-    :commands cape-file
-    :config
-    (define-key evil-insert-state-map (kbd "C-x C-f") #'cape-file)
-    )
+    :demand
+    :init
+    (add-hook 'completion-at-point-functions #'cape-file))
+
+  (use-package yasnippet-capf
+    :after cape
+    :init
+    (add-hook 'completion-at-point-functions #'yasnippet-capf))
 #+end_src
 
 ** Formatter
