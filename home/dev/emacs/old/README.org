@@ -842,15 +842,13 @@ Provides nice todos inside of [[Git][Magit]]
   (use-package neotree
     :defer
     :commands neotree-toggle
+    :general (ys/leader-keys
+               "n" '(neotree-toggle :wk "Neotree"))
     :config
     (setq neo-theme (if (display-graphic-p) 'icons 'arrow)
         neo-window-width 25
         neo-smart-open t
-        neo-show-hidden-files t)
-    :bind
-    (:map evil-normal-state-map
-          ("C-n" . neotree-toggle))
-    )
+        neo-show-hidden-files t))
 #+end_src
 
 #+begin_src elisp :tangle no
@@ -1145,11 +1143,12 @@ Provides nice todos inside of [[Git][Magit]]
 ** Direnv support
 #+begin_src elisp
   (if (not (eq system-type 'windows-nt))
-      (use-package direnv
-        :init
-        (direnv-mode)
-        ))
+      (use-package envrc
+        :demand
+        :init (envrc-global-mode))
+  )
 #+end_src
+
 
 ** Programming language modes
 *** Typescript
