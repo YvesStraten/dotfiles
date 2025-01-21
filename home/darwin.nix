@@ -2,24 +2,19 @@
   inputs,
   user,
   ...
-}: let 
-	hmModule = (name: inputs.${name}.homeManagerModules.default);
-in {
-  imports = let 
-		nvchad = hmModule "nvchad";
-	in [
-		nvchad
+}:
+{
+  imports = [
     ../config/alt-tab/alt-tab.nix
     # Main stuff
     ./theming-darwin.nix
     ./bin/default.nix
+    ./theming-darwin.nix
 
     ./dev
     ./utils
     ./pass
   ];
-
-	programs.nvchad.enable = true;
 
   nixpkgs.config.allowUnfree = true;
 
@@ -36,8 +31,4 @@ in {
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-  programs.man = {
-    enable = true;
-    generateCaches = true;
-  };
 }

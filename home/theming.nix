@@ -31,11 +31,7 @@
 
   home.packages = with pkgs; [
     #fonts
-    (nerdfonts.override {
-      fonts = [
-        "JetBrainsMono"
-      ];
-    })
+    nerd-fonts.jetbrains-mono
     ubuntu_font_family
     emacs-all-the-icons-fonts
   ];

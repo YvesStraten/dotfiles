@@ -6,7 +6,6 @@
   imports = [
 		../../config/rclone/rclone.nix
 		../../config/alt-tab/alt-tab.nix
-		../../config/nh
     ./general.nix
     ./firefox.nix
     ./yazi/yazi.nix

@@ -22,6 +22,7 @@
       ]))
 
     texlive.combined.scheme-full
+    maven
     nodejs
     rustup
     yarn

@@ -1,12 +1,16 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   programs.kitty = {
     enable = true;
     font = {
-      name = "JetBrainsMono Nerd Font";
+      name = "FiraCode";
       size = 23;
     };
 
-    shellIntegration.enableZshIntegration = true;
+    shellIntegration = {
+      enableZshIntegration = true;
+      enableFishIntegration = true;
+    };
     extraConfig =
       ''
         macos_quit_when_last_window_closed yes
@@ -17,11 +21,7 @@
         enable_audio_bell no
         include ~/.cache/wal/colors-kitty.conf
       ''
-      + (
-        if pkgs.stdenv.isDarwin
-        then "hide_window_decorations no
-"
-        else ""
-      );
+      + (if pkgs.stdenv.isDarwin then "hide_window_decorations no
+" else "");
   };
 }
