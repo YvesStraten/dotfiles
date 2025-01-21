@@ -1,30 +1,6 @@
 { pkgs, ... }:
 let
-  macport = pkgs.emacs-unstable.overrideAttrs (old: {
-    configureFlags = old.configureFlags ++ [
-      "--with-cairo"
-      "--with-json"
-    ];
-    patches = (old.patches or [ ]) ++ [
-      # Fix OS window role (needed for window managers like yabai)
-      (pkgs.fetchpatch {
-        url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-28/fix-window-role.patch";
-        sha256 = "+z/KfsBm1lvZTZNiMbxzXQGRTjkCFO4QPlEK35upjsE=";
-      })
-      # Enable rounded window with no decoration
-      (pkgs.fetchpatch {
-        url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-29/round-undecorated-frame.patch";
-        sha256 = "uYIxNTyfbprx5mCqMNFVrBcLeo+8e21qmBE3lpcnd+4=";
-      })
-      # Make Emacs aware of OS-level light/dark mode
-      (pkgs.fetchpatch {
-        url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-28/system-appearance.patch";
-        sha256 = "oM6fXdXCWVcBnNrzXmF0ZMdp8j0pzkLE66WteeCutv8=";
-      })
-    ];
-  });
-
-  emacs = if pkgs.stdenv.isLinux then pkgs.emacs-unstable else macport;
+  emacs = if pkgs.stdenv.isLinux then pkgs.emacs-unstable else pkgs.emacs30;
   banner = pkgs.stdenv.mkDerivation {
     name = "witchmacs-banner";
     src = pkgs.fetchurl {
@@ -78,7 +54,7 @@ in
 
       ispell
       languagetool
-      nixd
+      nil
       texlab
       sumneko-lua-language-server
       jdt-language-server
@@ -86,15 +62,11 @@ in
       nodePackages_latest.prettier
       nodePackages_latest.typescript-language-server
       nodePackages_latest.eslint
-      python311Packages.pytest
-      python311Packages.pyflakes
-      python311Packages.debugpy
       nodePackages_latest.svelte-language-server
 
       html-tidy
       shellcheck
       pyright
-      cppcheck
       clang-tools
       nixfmt-rfc-style
       plantuml
@@ -115,6 +87,7 @@ in
       zstd
     ];
   };
+
   services.syncthing = {
     enable = true;
   };
