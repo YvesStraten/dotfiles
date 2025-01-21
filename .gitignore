@@ -3,3 +3,4 @@ result/
 /result
 home/dev/emacs/init.el
 home/dev/emacs/early-init.el
+.DS_Store
