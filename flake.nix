@@ -17,8 +17,8 @@
       url = "github:LnL7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-		
-		mac-app-util.url = "github:hraban/mac-app-util";
+
+    mac-app-util.url = "github:hraban/mac-app-util";
 
     # Follows unstable
     nixpkgs-stable.url = "github:/NixOS/nixpkgs/nixos-23.11";
@@ -90,7 +90,7 @@
       nixos-hardware,
       flake-parts,
       nix-darwin,
-			mac-app-util,
+      mac-app-util,
       self,
       ...
     }@inputs:
@@ -155,45 +155,21 @@
             in
             { } // (import ./packages { inherit pkgs; });
         };
+
+        lib = import ./lib/lib.nix;
+
         darwinConfigurations = {
-          "shaco" =
-            let
-              shell = "zsh";
-            in
-            nix-darwin.lib.darwinSystem {
-              system = "aarch64-darwin";
-              specialArgs = {
-                inherit inputs user shell;
-              };
-              modules = [
-                ./modules/darwin/configuration.nix
-                ./overlays/default.nix
-                home-manager.darwinModules.home-manager
-                {
-                  home-manager = {
-                    extraSpecialArgs = {
-                      inherit
-                        inputs
-                        self
-                        gitUser
-                        email
-                        user
-                        shell
-                        ;
-                    };
-                    useGlobalPkgs = true;
-                    useUserPackages = true;
-                    users.${user} =
-                      { ... }:
-                      {
-                        imports = [ 
-															mac-app-util.homeManagerModules.default
-															./home/darwin.nix ];
-                      };
-                  };
-                }
-              ];
-            };
+          "shaco" = self.lib.mkDarwinHost {
+            inherit
+              user
+              shell
+              email
+              gitUser
+              nix-darwin
+              inputs
+              self
+              ;
+          };
         };
 
         nixosConfigurations = {
@@ -211,11 +187,14 @@
                 "${nixos-hardware}/raspberry-pi/4"
                 ./modules/pi.nix
 
-                (nixpkgs.lib.mkAliasOptionModule [ "hm" ] [
-                  "home-manager"
-                  "users"
-                  user
-                ])
+                (nixpkgs.lib.mkAliasOptionModule
+                  [ "hm" ]
+                  [
+                    "home-manager"
+                    "users"
+                    user
+                  ]
+                )
 
                 home-manager.nixosModules.home-manager
                 {
@@ -272,11 +251,14 @@
                 nur.nixosModules.nur
                 ./hosts/nixos/hardware-configuration.nix
                 ./modules/default.nix
-                (nixpkgs.lib.mkAliasOptionModule [ "hm" ] [
-                  "home-manager"
-                  "users"
-                  user
-                ])
+                (nixpkgs.lib.mkAliasOptionModule
+                  [ "hm" ]
+                  [
+                    "home-manager"
+                    "users"
+                    user
+                  ]
+                )
 
                 home-manager.nixosModules.home-manager
                 {
@@ -359,18 +341,18 @@
           let
             pkgs = nixpkgs.legacyPackages."x86_64-linux";
             user = "bazzite";
-						shell = "fish";
+            shell = "fish";
           in
           {
             bazzite = home-manager.lib.homeManagerConfiguration {
               extraSpecialArgs = {
                 inherit
                   inputs
-									shell
+                  shell
                   gitUser
                   email
                   user
-									self
+                  self
                   ;
               };
               inherit pkgs;
