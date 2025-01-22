@@ -1,5 +1,6 @@
 { pkgs, ... }:
 {
+  networking.hostId = "14b2792a";
   fileSystems = {
     "/" = {
       device = "zroot/root";

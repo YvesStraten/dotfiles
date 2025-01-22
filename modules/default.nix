@@ -7,7 +7,6 @@
   imports = [
     ./nixos/bootloader.nix
     ./nixos/networking.nix
-    ./nixos/nvidia.nix
     ./nixos/pkgs.nix
     ./nixos/security.nix
     ./nixos/services.nix
