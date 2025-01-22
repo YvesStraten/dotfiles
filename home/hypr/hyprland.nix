@@ -12,15 +12,15 @@
   programs.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    portalPackage = inputs.hyprland.${pkgs.system}.xdg-desktop-portal-hyprland;
     xwayland.enable = true;
+    withUWSM = true;
   };
 
   services.xserver.displayManager.sddm = {
     enable = true;
     theme = "${pkgs.yvess.sugar-dark}";
   };
-
-  environment.systemPackages =  [ pkgs.nur.repos.mikilio.xwaylandvideobridge-hypr ];
 
   sound.enable = false;
   security.rtkit.enable = true;
@@ -30,18 +30,9 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-
-    wireplumber.configPackages = [
-      (pkgs.writeTextDir "share/wireplumber/bluetooth.lua.d/51-bluez-config.lua" ''
-        	bluez_monitor.properties = {
-        		["bluez5.enable-sbc-xq"] = true,
-        		["bluez5.enable-msbc"] = true,
-        		["bluez5.enable-hw-volume"] = true,
-        		["bluez5.headset-roles"] = "[ hsp_hs hsp_ag hfp_hf hfp_ag ]"
-        	}
-      '')
-    ];
   };
+
+  security.pam.services.hyprlock = {}; 
 
   hm = {
     home = {
@@ -60,13 +51,9 @@
       ];
     };
 
-    home.file.".config/hypr/scripts" = {
-      source = ./scripts;
-      recursive = true;
-    };
-
-    home.file.".config/hypr/hypridle.conf" = {
-      text = ''
+    programs.hyprlock = {
+      enable = true;
+      extraConfig = ''
         general {
             lock_cmd = pidof hyprlock || hyprlock       # avoid starting multiple hyprlock instances.
             before_sleep_cmd = loginctl lock-session    # lock before suspend.
@@ -115,18 +102,34 @@
         automount = true;
         tray = "never";
       };
+
+      cliphist = {
+        enable = true; 
+        allowImages = true;
+      };
     };
 
     wayland.windowManager.hyprland = {
       enable = true;
-      systemd.enable = true;
+      systemd.enable = false;
+      settings = {
+        "$mod" = "alt";
+        bind = [
+        ] ++ (
+         # workspaces
+        # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}
+        builtins.concatLists (builtins.genList (i:
+            let ws = i + 1;
+            in [
+              "$mod, code:1${toString i}, workspace, ${toString ws}"
+              "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
+              "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
+            ]
+          )
+          9) 
+        );
+      };
       extraConfig = with pkgs; ''
-        env = LIBVA_DRIVER_NAME,nvidia
-        env = XDG_SESSION_TYPE,wayland
-        env = GBM_BACKEND,nvidia-drm
-        env = __GLX_VENDOR_LIBRARY_NAME,nvidia
-        env = WLR_NO_HARDWARE_CURSORS,1
-
         $mod = "alt"
         exec-once = waybar
         exec-once = hypridle
@@ -135,15 +138,7 @@
         exec-once = plasma-browser-integration-host
         exec-once = ${blueman}/bin/blueman-applet
 
-        exec-once = wl-paste --type text --watch ${cliphist}/bin/cliphist store #Stores only text data
-
-        exec-once = wl-paste --type image --watch ${cliphist}/bin/cliphist store #Stores only image data
-
         exec-once = swww init
-        exec-once = ~/.config/hypr/scripts/wall.sh
-        exec = ~/.config/hypr/scripts/wall.sh
-        exec-once = ${polkit_gnome}/libexec/polkit-gnome-authentication-agent-1
-
         monitor = ,highrr,auto,1
 
         input {
@@ -261,27 +256,6 @@
         bind = $mod CTRL, j, resizeactive, 0 -20
         bind = $mod CTRL, k, resizeactive, 0 20
 
-        bind = $mod SHIFT, 1, movetoworkspace, 1
-        bind = $mod SHIFT, 2, movetoworkspace, 2
-        bind = $mod SHIFT, 3, movetoworkspace, 3
-        bind = $mod SHIFT, 4, movetoworkspace, 4
-        bind = $mod SHIFT, 5, movetoworkspace, 5
-        bind = $mod SHIFT, 6, movetoworkspace, 6
-        bind = $mod SHIFT, 7, movetoworkspace, 7
-        bind = $mod SHIFT, 8, movetoworkspace, 8
-        bind = $mod SHIFT, 9, movetoworkspace, 9
-        bind = $mod SHIFT, 0, movetoworkspace, 10
-
-        bind = $mod, 1, workspace, 1
-        bind = $mod, 2, workspace, 2
-        bind = $mod, 3, workspace, 3
-        bind = $mod, 4, workspace, 4
-        bind = $mod, 5, workspace, 5
-        bind = $mod, 6, workspace, 6
-        bind = $mod, 7, workspace, 7
-        bind = $mod, 8, workspace, 8
-        bind = $mod, 9, workspace, 9
-        bind = $mod, 0, workspace, 10
         bind = SUPER ALT, up, workspace, e+1
         bind = SUPER ALT, down, workspace, e-1
 

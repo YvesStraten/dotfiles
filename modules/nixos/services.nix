@@ -58,6 +58,7 @@
   environment.systemPackages = with pkgs; [
     cifs-utils
   ];
+
   # mDNS
   #
   # This part may be optional for your needs, but I find it makes browsing in Dolphin easier,

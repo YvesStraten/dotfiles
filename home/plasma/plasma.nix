@@ -24,7 +24,6 @@
 
   environment.systemPackages = with pkgs;
     [
-      nur.repos.mikilio.xwaylandvideobridge
     ]
     ++ (with libsForQt5; [
       bismuth

@@ -1,15 +1,23 @@
-{ pkgs, user, shell, lib, config, ... }: {
+{
+  pkgs,
+  user,
+  shell,
+  lib,
+  config,
+  ...
+}:
+{
   imports = [
-    ./nixos/settings.nix # ../home/i3/i3.nix
+    ./nixos/settings.nix
     ./nixos/time.nix
   ];
 
-  # services.xserver.displayManager.startx = {
-  #   enable = true;
-  # };
-
-
-  boot.supportedFilesystems = lib.mkForce [ "btrfs" "hpfs" "ntfs" "ext4" ];
+  boot.supportedFilesystems = lib.mkForce [
+    "btrfs"
+    "hpfs"
+    "ntfs"
+    "ext4"
+  ];
   sdImage = {
     imageName = "pi-nixos.img";
     compressImage = false;
@@ -18,8 +26,7 @@
 
   nixpkgs.overlays = [
     (final: super: {
-      makeModulesClosure = x:
-        super.makeModulesClosure (x // { allowMissing = true; });
+      makeModulesClosure = x: super.makeModulesClosure (x // { allowMissing = true; });
     })
   ];
 
@@ -29,8 +36,6 @@
       enable = true;
       support32Bit = true;
     };
-    };
-  };
   };
 
   # services.xserver = {
@@ -57,7 +62,10 @@
     "/data" = {
       device = "/dev/sda1";
       fsType = "btrfs";
-      options = [ "noatime" "nofail" ];
+      options = [
+        "noatime"
+        "nofail"
+      ];
     };
   };
 
@@ -72,7 +80,12 @@
       isNormalUser = true;
       description = "${user}";
       initialPassword = "password";
-      extraGroups = [ "networkmanager" "wheel" "audio" "dialout" ];
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+        "audio"
+        "dialout"
+      ];
       home = "/home/${user}";
     };
   };
@@ -97,18 +110,7 @@
     enable = true;
     securityType = "user";
     openFirewall = true;
-    extraConfig = ''
-      workgroup = WORKGROUP
-      server string = ${config.networking.hostName}
-      netbios name = ${config.networking.hostName}
-      security = user
-      #use sendfile = yes
-      #max protocol = smb2
-      # note: localhost is the ipv6 localhost ::1
-      guest account = nobody
-      map to guest = bad user
-    '';
-    shares = {
+    settings = {
       jellyfin = {
         path = "/data";
         browseable = "yes";
@@ -118,8 +120,14 @@
     };
   };
 
-  networking.firewall.allowedTCPPorts = [ 445 139 ];
-  networking.firewall.allowedUDPPorts = [ 137 138 ];
+  networking.firewall.allowedTCPPorts = [
+    445
+    139
+  ];
+  networking.firewall.allowedUDPPorts = [
+    137
+    138
+  ];
   networking.networkmanager.enable = true;
   networking.wireless.enable = lib.mkForce false;
 
@@ -156,34 +164,15 @@
     };
   };
 
-  networking.nameservers = [ "8.8.8.8" "8.8.4.4" ];
+  networking.nameservers = [
+    "8.8.8.8"
+    "8.8.4.4"
+  ];
   hardware.bluetooth = {
     enable = true;
     package = pkgs.bluez;
     powerOnBoot = true;
   };
-
-  #   services.mopidy = {
-  #     enable = true;
-  #     extensionPackages = [ pkgs.mopidy-jellyfin pkgs.mopidy-mpd ];
-  #     configuration = ''
-  # [jellyfin]
-  # hostname = 0.0.0.0
-  # username = yvess
-
-  # libraries =  (Optional: will default to "Music" if left undefined)
-  # albumartistsort = False (Optional: will default to True if left undefined)
-  # album_format = {ProductionYear} - {Name} (Optional: will default to "{Name}" if left undefined)
-
-  # [mpd]
-  # enabled = true
-  # # Useful if you want to control this instance from a remote MPD client
-  # hostname = 0.0.0.0
-  # port = 6600
-  # # This will help avoid timeout errors for  artists or folders with large amounts of files
-  # connection_timeout = 300
-  # '';
-  #   };
 
   networking.defaultGateway = {
     address = "192.168.1.1";
@@ -192,10 +181,12 @@
 
   security.polkit.enable = true;
   networking.interfaces = {
-    eth0.ipv4.addresses = [{
-      address = "192.168.1.72";
-      prefixLength = 24;
-    }];
+    eth0.ipv4.addresses = [
+      {
+        address = "192.168.1.72";
+        prefixLength = 24;
+      }
+    ];
   };
 
   services.udisks2.enable = true;

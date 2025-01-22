@@ -248,7 +248,7 @@
                   ;
               };
               modules = [
-                nur.nixosModules.nur
+                nur.modules.nixos.default
                 ./hosts/nixos/hardware-configuration.nix
                 ./modules/default.nix
                 (nixpkgs.lib.mkAliasOptionModule
