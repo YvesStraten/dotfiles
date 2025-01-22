@@ -14,14 +14,6 @@
     (final: prev: {
       yvess = (prev.yvess or { }) // (import ../packages/default.nix { inherit (prev) pkgs; });
 
-      jdt-language-server-wsl =
-        assert (lib.assertMsg (prev.jdt-language-server.version == "1.31.0") "Wsl? is this still needed?");
-        pkgs.callPackage ../packages/jdt.nix { };
-
-      picom-pijulius =
-        assert (lib.assertMsg (prev.picom-pijulius != null) "Now in nixpkgs");
-        pkgs.callPackage ../packages/picom-pijulius.nix { };
-
       sddm = prev.sddm.overrideAttrs (oldAttrs: {
         buildInputs = oldAttrs.buildInputs ++ [
           final.qt5.qtquickcontrols2
