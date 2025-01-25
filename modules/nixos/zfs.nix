@@ -23,6 +23,10 @@
       fsType = "zfs";
     };
 
+    "/var" = {
+      device = "zroot/var";
+      fsType = "zfs";
+    };
   };
 
   swapDevices = [
