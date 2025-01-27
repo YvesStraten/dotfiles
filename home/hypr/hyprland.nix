@@ -31,7 +31,7 @@
     pulse.enable = true;
   };
 
-  security.pam.services.hyprlock = {}; 
+  security.pam.services.hyprlock = { };
 
   hm = {
     home = {
@@ -102,7 +102,7 @@
       };
 
       cliphist = {
-        enable = true; 
+        enable = true;
         allowImages = true;
       };
     };
@@ -138,6 +138,7 @@
           "$mod" = "alt";
           bind =
             with pkgs; [
+            [
               "$mod, B, exec, firefox"
               "$mod, F1, exec, ~/.config/hypr/scripts/keybind"
               ", XF86AudioRaiseVolume, exec, ${pamixer}/bin/pamixer -i 5"
@@ -166,25 +167,40 @@
               "$mod, grave, togglespecialworkspace"
               "SUPERSHIFT, grave, movetoworkspace, special"
             ]
-          )
-          9) 
-        ) ++
+            ++ (
+              # workspaces
+              # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}
+              builtins.concatLists (
+                builtins.genList (
+                  i:
+                  let
+                    ws = i + 1;
+                  in
+                  [
+                    "$mod, code:1${toString i}, workspace, ${toString ws}"
+                    "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
+                  ]
+                ) 9
+              )
+            )
+            ++
 
-        (builtins.concatLists (builtins.map (key_attr:
-          [ "$mod SHIFT, ${key_attr.key}, movefocus, ${key_attr.direction} "]
-        ) keys_directions))
+              (builtins.concatLists (
+                builtins.map (key_attr: [
+                  "$mod SHIFT, ${key_attr.key}, movefocus, ${key_attr.direction} "
+                ]) keys_directions
+              ))
 
-        ++
-        (
-          
+            ++ (
 
-        builtins.concatLists (builtins.map (key_attr:
-          [ "$mod SHIFT, ${key_attr.key}, movewindow, ${key_attr.direction} "]
-        ) keys_directions)
-        )
-        ;
+              builtins.concatLists (
+                builtins.map (key_attr: [
+                  "$mod SHIFT, ${key_attr.key}, movewindow, ${key_attr.direction} "
+                ]) keys_directions
+              )
+            );
 
-      };
+        };
 
       extraConfig = with pkgs; ''
         exec-once = waybar
