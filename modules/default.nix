@@ -14,6 +14,7 @@
     ./nixos/sound.nix
     ./nixos/time.nix
     ./nixos/zfs.nix
+    ./nixos/nvidia.nix
 
     ../overlays/default.nix
 

@@ -233,7 +233,7 @@
               ];
             };
 
-          nitro =
+          vivobook =
             let
               shell = "fish";
             in

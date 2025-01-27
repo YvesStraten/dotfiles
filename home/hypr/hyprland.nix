@@ -12,7 +12,7 @@
   programs.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-    portalPackage = inputs.hyprland.${pkgs.system}.xdg-desktop-portal-hyprland;
+    portalPackage = inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland;
     xwayland.enable = true;
     withUWSM = true;
   };
@@ -22,7 +22,6 @@
     theme = "${pkgs.yvess.sugar-dark}";
   };
 
-  sound.enable = false;
   security.rtkit.enable = true;
   security.polkit.enable = true;
   services.pipewire = {
@@ -46,7 +45,6 @@
         yvess.wall-switch
         wl-clipboard
         swww
-        hyprlock
         hypridle
       ];
     };
@@ -112,25 +110,83 @@
     wayland.windowManager.hyprland = {
       enable = true;
       systemd.enable = false;
-      settings = {
-        "$mod" = "alt";
-        bind = [
-        ] ++ (
-         # workspaces
-        # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}
-        builtins.concatLists (builtins.genList (i:
-            let ws = i + 1;
-            in [
-              "$mod, code:1${toString i}, workspace, ${toString ws}"
-              "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
-              "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
+      settings =
+        let
+          keys_directions = [
+            {
+              key = "h";
+              direction = "l";
+            }
+
+            {
+              key = "j";
+              direction = "d";
+            }
+
+            {
+              key = "k";
+              direction = "u";
+            }
+
+            {
+              key = "l";
+              direction = "r";
+            }
+          ];
+        in
+        {
+          "$mod" = "alt";
+          bind =
+            with pkgs; [
+              "$mod, B, exec, firefox"
+              "$mod, F1, exec, ~/.config/hypr/scripts/keybind"
+              ", XF86AudioRaiseVolume, exec, ${pamixer}/bin/pamixer -i 5"
+              ", XF86AudioLowerVolume, exec, ${pamixer}/bin/pamixer -d 5"
+              ", XF86MonBrightnessUp, exec, ${brightnessctl}/bin/brightnessctl s +10%"
+              ", XF86MonBrightnessDown, exec, ${brightnessctl}/bin/brightnessctl s 10%-"
+              "SUPER SHIFT, X, exec, ${hyprpicker}/bin/hyprpicker | ${wl-clipboard}/bin/wl-copy"
+              "$mod SHIFT, L, exec, hyprlock"
+              "$mod, Return, exec, ${kitty}/bin/kitty"
+              "$mod, E, exec, emacs"
+              "$mod, N, exec, yazi"
+              "$mod, R, exec, killall rofi || rofi -show drun"
+              "$mod, Q, killactive,"
+              "$mod, F, fullscreen,"
+              "$mod, Space, togglefloating,"
+              "$mod, I, pseudo, # dwindle"
+              "$mod, S, togglesplit, # dwindle"
+              "$mod CTRL, h, resizeactive, -20 0"
+              "$mod CTRL, l, resizeactive, 20 0"
+              "$mod CTRL, j, resizeactive, 0 -20"
+              "$mod CTRL, k, resizeactive, 0 20"
+              "SUPER ALT, up, workspace, e+1"
+              "SUPER ALT, down, workspace, e-1"
+              "$mod, g, togglegroup"
+              "$mod, tab, changegroupactive"
+              "$mod, grave, togglespecialworkspace"
+              "SUPERSHIFT, grave, movetoworkspace, special"
             ]
           )
           9) 
-        );
+        ) ++
+
+        (builtins.concatLists (builtins.map (key_attr:
+          [ "$mod SHIFT, ${key_attr.key}, movefocus, ${key_attr.direction} "]
+        ) keys_directions))
+
+        ++
+        (
+          
+
+        builtins.concatLists (builtins.map (key_attr:
+          [ "$mod SHIFT, ${key_attr.key}, movewindow, ${key_attr.direction} "]
+        ) keys_directions)
+        )
+        ;
+
       };
+
       extraConfig = with pkgs; ''
-        $mod = "alt"
         exec-once = waybar
         exec-once = hypridle
         exec-once = ${networkmanagerapplet}/bin/nm-applet
@@ -159,23 +215,6 @@
                  workspace_swipe_numbered = true
         }
 
-        bind = $mod, B, exec, firefox
-        bind = $mod, F1, exec, ~/.config/hypr/scripts/keybind
-
-        bind = , XF86AudioRaiseVolume, exec, ${pamixer}/bin/pamixer -i 5
-        bind = , XF86AudioLowerVolume, exec, ${pamixer}/bin/pamixer -d 5
-        bind = , XF86MonBrightnessUp, exec, ${brightnessctl}/bin/brightnessctl s +10%
-        bind = , XF86MonBrightnessDown, exec, ${brightnessctl}/bin/brightnessctl s 10%-
-
-
-        bind = SUPER SHIFT, S, exec, ${grim}/bin/grim -g "$(${slurp}/bin/slurp)" - | ${swappy}/bin/swappy -f -
-
-        bind = SUPER SHIFT, X, exec, ${hyprpicker}/bin/hyprpicker | ${wl-clipboard}/bin/wl-copy
-        bind = $mod SHIFT, L, exec, hyprlock
-        bind = $mod, Return, exec, ${kitty}/bin/kitty
-        bind = $mod, E, exec, emacs
-        bind = $mod, N, exec, yazi
-        bind = $mod, R, exec, killall rofi || rofi -show drun
         bind = $mod, V, exec, ${cliphist}/bin/cliphist list | wofi --show dmenu | ${cliphist}/bin/cliphist decode | ${wl-clipboard}/bin/wl-copy
         bind = $mod, escape, exec, ${wlogout}/bin/wlogout --protocol layer-shell -b 5 -T 400 -B 400
         bind = $mod, period, exec, rofi -modi emoji -show emoji --action copy
@@ -188,8 +227,6 @@
                 layout = dwindle
 
         }
-
-        # env = WLR_DRM_NO_ATOMIC,1
 
         decoration {
            # Rounded windows
@@ -235,35 +272,7 @@
           preserve_split = true # you probably want this
         }
 
-        bind = $mod, Q, killactive,
-        bind = $mod, F, fullscreen,
-        bind = $mod, Space, togglefloating,
-        bind = $mod, I, pseudo, # dwindle
-        bind = $mod, S, togglesplit, # dwindle
-
-        bind = $mod, h, movefocus, l
-        bind = $mod, l, movefocus, r
-        bind = $mod, j, movefocus, u
-        bind = $mod, k, movefocus, d
-
-        bind = $mod SHIFT, h, movewindow, l
-        bind = $mod SHIFT, l, movewindow, r
-        bind = $mod SHIFT, k, movewindow, u
-        bind = $mod SHIFT, j, movewindow, d
-
-        bind = $mod CTRL, h, resizeactive, -20 0
-        bind = $mod CTRL, l, resizeactive, 20 0
-        bind = $mod CTRL, j, resizeactive, 0 -20
-        bind = $mod CTRL, k, resizeactive, 0 20
-
-        bind = SUPER ALT, up, workspace, e+1
-        bind = SUPER ALT, down, workspace, e-1
-
-        bind = $mod, g, togglegroup
-        bind = $mod, tab, changegroupactive
-
-        bind = $mod, grave, togglespecialworkspace
-        bind = SUPERSHIFT, grave, movetoworkspace, special
+        "SUPER SHIFT, S, exec, ${grim}/bin/grim -g "$(${slurp}/bin/slurp)" - | ${swappy}/bin/swappy -f -"
 
         windowrule = float, file_progress
         windowrule = float, blueman-manager
@@ -301,9 +310,6 @@
         windowrule = size 800 600, title:^(Volume Control)$
         windowrule = move 75 44%, title:^(Volume Control)$
         # windowrulev2 = immediate, title:^(Heroic Games Launcher)$
-
-        # Where applications appear
-        windowrule = workspace 9, rclone-browser
 
         misc {
              disable_hyprland_logo = true
