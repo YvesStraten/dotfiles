@@ -1162,7 +1162,13 @@ Provides nice todos inside of [[Git][Magit]]
 
 *** Rust
 #+begin_src elisp
-  (use-package rustic)
+  (use-package rustic
+    :config (setq rustic-rustfmt-args "--edition 2021"))
+
+  (use-package apheleia
+    :config (setf (alist-get 'rustfmt apheleia-formatters)
+                  '("rustfmt" "--quiet" "--emit" "stdout" "--edition" "2021" )
+                  ))
 #+end_src
 
 *** Python
