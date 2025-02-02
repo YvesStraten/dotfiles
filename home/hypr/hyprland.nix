@@ -146,18 +146,18 @@
               '';
             in
             [
-              "$mod, B, exec, firefox"
-              "$mod, F1, exec, ~/.config/hypr/scripts/keybind"
-              ", XF86AudioRaiseVolume, exec, ${pamixer}/bin/pamixer -i 5"
-              ", XF86AudioLowerVolume, exec, ${pamixer}/bin/pamixer -d 5"
-              ", XF86MonBrightnessUp, exec, ${brightnessctl}/bin/brightnessctl s +5%"
-              ", XF86MonBrightnessDown, exec, ${brightnessctl}/bin/brightnessctl s 5%-"
-              "SUPER SHIFT, X, exec, ${hyprpicker}/bin/hyprpicker | ${wl-clipboard}/bin/wl-copy"
-              "$mod, L, exec, hyprlock"
-              "$mod, Return, exec, ${kitty}/bin/kitty"
-              "$mod, E, exec, emacs"
-              "$mod, N, exec, yazi"
-              "$mod, R, exec, killall rofi || rofi -show drun"
+              "$mod, B, exec, uwsm app -- firefox"
+              "$mod, F1, exec, uwsm app -- ~/.config/hypr/scripts/keybind"
+              ", XF86AudioRaiseVolume, exec, uwsm app -- ${pamixer}/bin/pamixer -i 5"
+              ", XF86AudioLowerVolume, exec, uwsm app -- ${pamixer}/bin/pamixer -d 5"
+              ", XF86MonBrightnessUp, exec, uwsm app -- ${brightnessctl}/bin/brightnessctl s +5%"
+              ", XF86MonBrightnessDown, exec, uwsm app -- ${brightnessctl}/bin/brightnessctl s 5%-"
+              "SUPER SHIFT, x, exec, uwsm app -- ${hyprpicker}/bin/hyprpicker | ${wl-clipboard}/bin/wl-copy"
+              "$mod, L, exec, uwsm app -- hyprlock"
+              "$mod, Return, exec, uwsm app -- ${kitty}/bin/kitty"
+              "$mod, E, exec, uwsm app -- emacs"
+              "$mod, N, exec, uwsm app -- yazi"
+              "$mod, R, exec, uwsm app -- killall rofi || rofi -show drun"
               "$mod, Q, killactive,"
               "$mod, F, fullscreen,"
               "$mod, Space, togglefloating,"
@@ -173,8 +173,8 @@
               "$mod, tab, changegroupactive"
               "$mod, grave, togglespecialworkspace"
               "$mod SHIFT, grave, movetoworkspace, special"
-              "$mod, v, exec, cliphist list | ${rofi}/bin/rofi -dmenu | cliphist decode | wl-copy"
-              "$mod SHIFT, s, exec, ${screenshot}"
+              "$mod, v, exec, uwsm app -- cliphist list | ${rofi}/bin/rofi -dmenu | cliphist decode | wl-copy"
+              "$mod SHIFT, s, exec, uwsm app -- ${screenshot}/bin/screenshot"
             ]
             ++ (
               # workspaces
@@ -239,9 +239,9 @@
                  workspace_swipe_fingers = 3
         }
 
-        bind = $mod, V, exec, ${cliphist}/bin/cliphist list | wofi --show dmenu | ${cliphist}/bin/cliphist decode | ${wl-clipboard}/bin/wl-copy
-        bind = $mod, escape, exec, ${wlogout}/bin/wlogout --protocol layer-shell -b 5 -T 400 -B 400
-        bind = $mod, period, exec, rofi -modi emoji -show emoji --action copy
+        bind = $mod, V, exec, uwsm app -- ${cliphist}/bin/cliphist list | wofi --show dmenu | ${cliphist}/bin/cliphist decode | ${wl-clipboard}/bin/wl-copy
+        bind = $mod, escape, exec, uwsm app -- ${wlogout}/bin/wlogout --protocol layer-shell -b 5 -T 400 -B 400
+        bind = $mod, period, exec, uwsm app -- rofi -modi emoji -show emoji --action copy
 
         general {
                 gaps_in=10
