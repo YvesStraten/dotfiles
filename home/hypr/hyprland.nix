@@ -17,9 +17,10 @@
     withUWSM = true;
   };
 
-  services.xserver.displayManager.sddm = {
+  services.displayManager.sddm = {
     enable = true;
     theme = "${pkgs.yvess.sugar-dark}";
+    wayland.enable = true;
   };
 
   security.rtkit.enable = true;
@@ -46,6 +47,7 @@
         wl-clipboard
         swww
         hypridle
+        swappy
       ];
     };
 
@@ -135,18 +137,23 @@
           ];
         in
         {
-          "$mod" = "alt";
+          "$mod" = "super";
           bind =
-            with pkgs; [
+            with pkgs;
+            let
+              screenshot = pkgs.writeShellScriptBin "screenshot" ''
+                ${grim}/bin/grim -g "$(${slurp}/bin/slurp)" - | ${swappy}/bin/swappy -f -
+              '';
+            in
             [
               "$mod, B, exec, firefox"
               "$mod, F1, exec, ~/.config/hypr/scripts/keybind"
               ", XF86AudioRaiseVolume, exec, ${pamixer}/bin/pamixer -i 5"
               ", XF86AudioLowerVolume, exec, ${pamixer}/bin/pamixer -d 5"
-              ", XF86MonBrightnessUp, exec, ${brightnessctl}/bin/brightnessctl s +10%"
-              ", XF86MonBrightnessDown, exec, ${brightnessctl}/bin/brightnessctl s 10%-"
+              ", XF86MonBrightnessUp, exec, ${brightnessctl}/bin/brightnessctl s +5%"
+              ", XF86MonBrightnessDown, exec, ${brightnessctl}/bin/brightnessctl s 5%-"
               "SUPER SHIFT, X, exec, ${hyprpicker}/bin/hyprpicker | ${wl-clipboard}/bin/wl-copy"
-              "$mod SHIFT, L, exec, hyprlock"
+              "$mod, L, exec, hyprlock"
               "$mod, Return, exec, ${kitty}/bin/kitty"
               "$mod, E, exec, emacs"
               "$mod, N, exec, yazi"
@@ -165,7 +172,9 @@
               "$mod, g, togglegroup"
               "$mod, tab, changegroupactive"
               "$mod, grave, togglespecialworkspace"
-              "SUPERSHIFT, grave, movetoworkspace, special"
+              "$mod SHIFT, grave, movetoworkspace, special"
+              "$mod, v, exec, cliphist list | ${rofi}/bin/rofi -dmenu | cliphist decode | wl-copy"
+              "$mod SHIFT, s, exec, ${screenshot}"
             ]
             ++ (
               # workspaces
@@ -187,7 +196,7 @@
 
               (builtins.concatLists (
                 builtins.map (key_attr: [
-                  "$mod SHIFT, ${key_attr.key}, movefocus, ${key_attr.direction} "
+                  "$mod, ${key_attr.key}, movefocus, ${key_attr.direction} "
                 ]) keys_directions
               ))
 
@@ -228,7 +237,6 @@
         gestures {
                  workspace_swipe = true
                  workspace_swipe_fingers = 3
-                 workspace_swipe_numbered = true
         }
 
         bind = $mod, V, exec, ${cliphist}/bin/cliphist list | wofi --show dmenu | ${cliphist}/bin/cliphist decode | ${wl-clipboard}/bin/wl-copy
@@ -245,24 +253,7 @@
         }
 
         decoration {
-           # Rounded windows
-           rounding = 10
-
-           #Opacity
-           active_opacity = 1.0
-           inactive_opacity = 1.0
-
-           col.shadow = rgba(1E202966)
-           drop_shadow = yes
-           shadow_range = 60
-           shadow_offset = 1 2
-           shadow_render_power = 3
-            shadow_scale = 0.97 #shadows
-
-
-           blurls = gtk-layer-shell
-           # blurls = waybar
-           blurls = lockscreen
+               rounding=8
         }
 
         animations {
@@ -283,12 +274,10 @@
         }
 
         dwindle {
-          no_gaps_when_only = false
           pseudotile = true # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
           preserve_split = true # you probably want this
         }
 
-        "SUPER SHIFT, S, exec, ${grim}/bin/grim -g "$(${slurp}/bin/slurp)" - | ${swappy}/bin/swappy -f -"
 
         windowrule = float, file_progress
         windowrule = float, blueman-manager
@@ -333,6 +322,7 @@
              mouse_move_enables_dpms = true
              enable_swallow = true
              swallow_regex = ^(wezterm)$
+             animate_manual_resizes = true
         }
 
         bindm = $mod, mouse:272, movewindow

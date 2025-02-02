@@ -11,9 +11,8 @@
 
   services.xserver.videoDrivers = ["nvidia"];
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.latest;
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
-    driSupport32Bit = true;
   };
 
   hardware.nvidia.modesetting.enable = true;

@@ -3,7 +3,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   services.upower = {
     enable = true;
     criticalPowerAction = "Hibernate";
@@ -29,8 +30,29 @@
   services.openssh.enable = true;
   services.udisks2.enable = true;
 
-  virtualisation.libvirtd.enable = true;
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu = {
+      package = pkgs.qemu_kvm;
+      runAsRoot = true;
+      swtpm.enable = true;
+
+      ovmf = {
+        enable = true;
+        packages = [
+          (pkgs.OVMF.override {
+            secureBoot = true;
+            tpmSupport = true;
+          }).fd
+        ];
+      };
+    };
+  };
+
   virtualisation.docker.enable = true;
+  services.flatpak.enable = true;
+  services.thermald.enable = true;
+  services.tlp.enable = true;
   services.samba = {
     enable = true;
     openFirewall = true;

@@ -7,7 +7,6 @@
 {
   nixpkgs.overlays = [
     inputs.nur.overlay
-    inputs.yazi.overlays.default
     inputs.firefox-darwin.overlay
     inputs.emacs-overlay.overlay
 

@@ -34,4 +34,7 @@
       device = "/dev/disk/by-label/SWAP";
     }
   ];
+
+  boot.zfs.allowHibernation = true;
+  boot.zfs.forceImportRoot = false;
 }

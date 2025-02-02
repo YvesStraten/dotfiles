@@ -4,7 +4,7 @@
     enable = true;
     font = {
       name = "FiraCode";
-      size = 23;
+      size = 18;
     };
 
     shellIntegration = {

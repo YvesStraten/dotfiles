@@ -7,22 +7,21 @@
         rsync
         libreoffice
         rclone
-        imagemagick
         spotify
         obs-studio
 
         gimp
         filezilla
         btop
+        vesktop
+        nautilus
 
         pandoc
 
         nix-prefetch-scripts
         ani-cli-rofi
-        unityhub
 
         qpwgraph
-        soundwireserver
       ])
     else
       (with pkgs; [

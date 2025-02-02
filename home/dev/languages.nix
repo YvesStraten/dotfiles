@@ -21,7 +21,7 @@
         pillow
       ]))
 
-    texlive.combined.scheme-full
+    texlive.combined.scheme-medium
     maven
     nodejs
     rustup

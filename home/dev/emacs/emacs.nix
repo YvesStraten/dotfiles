@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  emacs = if pkgs.stdenv.isLinux then pkgs.emacs-unstable else pkgs.emacs30;
+  emacs = if pkgs.stdenv.isLinux then pkgs.emacs30 else pkgs.emacs30;
   banner = pkgs.stdenv.mkDerivation {
     name = "witchmacs-banner";
     src = pkgs.fetchurl {
@@ -33,14 +33,14 @@ in
       ];
   };
 
-  services.emacs = {
-    enable = true;
-    # defaultEditor = true;
-    startWithUserSession = true;
-    package = emacs;
+  # services.emacs = {
+  #   enable = true;
+  #   # defaultEditor = true;
+  #   startWithUserSession = true;
+  #   package = emacs;
 
-    client.enable = true;
-  };
+  #   client.enable = true;
+  # };
 
   home = {
     sessionVariables = {
