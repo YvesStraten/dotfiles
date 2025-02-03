@@ -1109,12 +1109,18 @@ Provides nice todos inside of [[Git][Magit]]
 #+end_src
 
 ** Formatter
-#+begin_src elisp
+#+begin_src elisp :noweb yes
   (use-package apheleia
+    :demand
+    :config
+    <<apheleia-settings>>
     :general (ys/leader-keys
                "cf" '(apheleia-format-buffer
                       :wk "Format buffer")))
 #+end_src
+
+#+RESULTS:
+: [nil 26528 32680 656208 nil elpaca-process-queues nil nil 827000 nil]
 
 ** Indentation and parenthesis
 *** Indent blank-line
@@ -1164,11 +1170,12 @@ Provides nice todos inside of [[Git][Magit]]
 #+begin_src elisp
   (use-package rustic
     :config (setq rustic-rustfmt-args "--edition 2021"))
+#+end_src
 
-  (use-package apheleia
-    :config (setf (alist-get 'rustfmt apheleia-formatters)
-                  '("rustfmt" "--quiet" "--emit" "stdout" "--edition" "2021" )
-                  ))
+#+name: apheleia-settings
+#+begin_src elisp :tangle no
+  (setf (alist-get 'rustfmt apheleia-formatters)
+        '("rustfmt" "--quiet" "--emit" "stdout" "--edition" "2021" ))
 #+end_src
 
 *** Python
