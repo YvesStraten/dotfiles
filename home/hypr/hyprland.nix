@@ -51,45 +51,40 @@
       ];
     };
 
-    programs.hyprlock = {
-      enable = true;
-      extraConfig = ''
-        general {
-            lock_cmd = pidof hyprlock || hyprlock       # avoid starting multiple hyprlock instances.
-            before_sleep_cmd = loginctl lock-session    # lock before suspend.
-            after_sleep_cmd = hyprctl dispatch dpms on  # to avoid having to press a key twice to turn on the display.
-        }
+    programs.hyprlock =
+      {
+        enable = true;
+        settings = {
+          general = {
+            disable_loading_bar = true;
+            no_fade_in = false;
+          };
 
-        listener {
-            timeout = 150                                # 2.5min.
-            on-timeout = brightnessctl -s set 10         # set monitor backlight to minimum, avoid 0 on OLED monitor.
-            on-resume = brightnessctl -r                 # monitor backlight restore.
-        }
+          background = [
+            {
+              path = "screenshot";
+              blur_passes = 3;
+              blur_size = 8;
+            }
+          ];
 
-        # turn off keyboard backlight, comment out this section if you dont have a keyboard backlight.
-        listener {
-            timeout = 150                                          # 2.5min.
-            on-timeout = brightnessctl -sd rgb:kbd_backlight set 0 # turn off keyboard backlight.
-            on-resume = brightnessctl -rd rgb:kbd_backlight        # turn on keyboard backlight.
-        }
-
-        listener {
-            timeout = 300                                 # 5min
-            on-timeout = loginctl lock-session            # lock screen when timeout has passed
-        }
-
-        listener {
-            timeout = 330                                 # 5.5min
-            on-timeout = hyprctl dispatch dpms off        # screen off when timeout has passed
-            on-resume = hyprctl dispatch dpms on          # screen on when activity is detected after timeout has fired.
-        }
-
-        listener {
-            timeout = 1800                                # 30min
-            on-timeout = systemctl suspend                # suspend pc
-        }
-      '';
-    };
+          input-field = [
+            {
+              size = "200, 50";
+              position = "0, -80";
+              monitor = "";
+              dots_center = true;
+              fade_on_empty = false;
+              font_color = "rgb(202, 211, 245)";
+              inner_color = "rgb(91, 96, 120)";
+              outer_color = "rgb(24, 25, 38)";
+              outline_thickness = 5;
+              placeholder_text = "<span foreground=\"##cad3f5\">Password...</span>";
+              shadow_passes = 2;
+            }
+          ];
+        };
+      };
 
     services = {
       kdeconnect = {
@@ -106,6 +101,37 @@
       cliphist = {
         enable = true;
         allowImages = true;
+      };
+
+      hypridle = {
+        enable = true;
+        settings = {
+          general = {
+            before_sleep_cmd = "pidof hyprlock | hyprlock";
+            after_sleep_cmd = "hyprctl dispatch dpms on";
+            lock_cmd = "pidof hyprlock | hyprlock";
+          };
+
+          listener = [
+            {
+              timeout = 60;
+              on-timeout = "brightnessctl -s set 10";
+              on-resume = "brightnessctl -r";
+            }
+
+            {
+              timeout = 90;
+              on-timeout = "loginctl lock-session";
+            }
+
+            {
+              timeout = 300;
+              on-timeout = "hyprctl dispatch dpms off";
+              on-resume = "hyprctl dispatch dpms on";
+            }
+          ];
+        };
+
       };
     };
 
@@ -153,7 +179,7 @@
               ", XF86MonBrightnessUp, exec, uwsm app -- ${brightnessctl}/bin/brightnessctl s +5%"
               ", XF86MonBrightnessDown, exec, uwsm app -- ${brightnessctl}/bin/brightnessctl s 5%-"
               "SUPER SHIFT, x, exec, uwsm app -- ${hyprpicker}/bin/hyprpicker | ${wl-clipboard}/bin/wl-copy"
-              "$mod, L, exec, uwsm app -- hyprlock"
+              "$mod, C, exec, uwsm app -- pidof hyprlock | hyprlock"
               "$mod, Return, exec, uwsm app -- ${kitty}/bin/kitty"
               "$mod, E, exec, uwsm app -- emacs"
               "$mod, N, exec, uwsm app -- yazi"
@@ -209,11 +235,13 @@
               )
             );
 
+          # bindl = [
+          #   ",switch:on:Lid Switch, exec, hyprctl dispatch dpms off && hyprctl dispatch exec hyprlock"
+          #   ",switch:off:Lid Switch, exec, hyprctl dispatch dpms on"
+          # ];
         };
 
       extraConfig = with pkgs; ''
-        exec-once = waybar
-        exec-once = hypridle
         exec-once = ${networkmanagerapplet}/bin/nm-applet
 
         exec-once = plasma-browser-integration-host

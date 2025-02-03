@@ -6,7 +6,7 @@
       layout = [
         {
           label = "lock";
-          action = "swaylock";
+          action = "hyprlock";
           text = "Lock";
           keybind = "l";
         }
