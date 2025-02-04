@@ -1,4 +1,9 @@
-{ pkgs, inputs, ... }:
+{
+  pkgs,
+  inputs,
+  lib,
+  ...
+}:
 {
   imports = [
     ../wlogout/wlogout.nix
@@ -9,6 +14,7 @@
     ../swappy/swappy.nix
   ];
 
+  programs.uwsm.enable = true;
   programs.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
@@ -51,40 +57,39 @@
       ];
     };
 
-    programs.hyprlock =
-      {
-        enable = true;
-        settings = {
-          general = {
-            disable_loading_bar = true;
-            no_fade_in = false;
-          };
-
-          background = [
-            {
-              path = "screenshot";
-              blur_passes = 3;
-              blur_size = 8;
-            }
-          ];
-
-          input-field = [
-            {
-              size = "200, 50";
-              position = "0, -80";
-              monitor = "";
-              dots_center = true;
-              fade_on_empty = false;
-              font_color = "rgb(202, 211, 245)";
-              inner_color = "rgb(91, 96, 120)";
-              outer_color = "rgb(24, 25, 38)";
-              outline_thickness = 5;
-              placeholder_text = "<span foreground=\"##cad3f5\">Password...</span>";
-              shadow_passes = 2;
-            }
-          ];
+    programs.hyprlock = {
+      enable = true;
+      settings = {
+        general = {
+          disable_loading_bar = true;
+          no_fade_in = false;
         };
+
+        background = [
+          {
+            path = "screenshot";
+            blur_passes = 3;
+            blur_size = 8;
+          }
+        ];
+
+        input-field = [
+          {
+            size = "200, 50";
+            position = "0, -80";
+            monitor = "";
+            dots_center = true;
+            fade_on_empty = false;
+            font_color = "rgb(202, 211, 245)";
+            inner_color = "rgb(91, 96, 120)";
+            outer_color = "rgb(24, 25, 38)";
+            outline_thickness = 5;
+            placeholder_text = "<span foreground=\"##cad3f5\">Password...</span>";
+            shadow_passes = 2;
+          }
+        ];
       };
+    };
 
     services = {
       kdeconnect = {
@@ -107,9 +112,10 @@
         enable = true;
         settings = {
           general = {
-            before_sleep_cmd = "pidof hyprlock | hyprlock";
-            after_sleep_cmd = "hyprctl dispatch dpms on";
             lock_cmd = "pidof hyprlock | hyprlock";
+            before_sleep_cmd = "loginctl lock-session";
+            after_sleep_cmd = "hyprctl dispatch dpms on";
+            inhibit_sleep = 3;
           };
 
           listener = [
@@ -235,13 +241,10 @@
               )
             );
 
-          # bindl = [
-          #   ",switch:on:Lid Switch, exec, hyprctl dispatch dpms off && hyprctl dispatch exec hyprlock"
-          #   ",switch:off:Lid Switch, exec, hyprctl dispatch dpms on"
-          # ];
         };
 
       extraConfig = with pkgs; ''
+
         exec-once = ${networkmanagerapplet}/bin/nm-applet
 
         exec-once = plasma-browser-integration-host
