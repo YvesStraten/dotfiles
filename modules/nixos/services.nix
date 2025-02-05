@@ -21,6 +21,8 @@
     drivers = [
       pkgs.gutenprintBin
       pkgs.gutenprint
+      pkgs.canon-cups-ufr2
+      pkgs.cnijfilter2
     ];
   };
 
