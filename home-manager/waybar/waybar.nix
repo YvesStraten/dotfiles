@@ -1,5 +1,17 @@
-{ pkgs, ... }: {
-  hm = {
+{
+  lib,
+  options,
+  config,
+  ...
+}:
+let
+  cfg = config.custom.waybar;
+  inherit (lib) mkEnableOption mkIf;
+in
+{
+  options.custom.waybar.enable = mkEnableOption "Enable waybar";
+
+  config = mkIf cfg.enable {
     programs.waybar = {
       enable = true;
       systemd.enable = true;
@@ -27,7 +39,9 @@
             "clock"
           ];
 
-          "hyprland/window" = { format = "{}"; };
+          "hyprland/window" = {
+            format = "{}";
+          };
           "hyprland/workspaces" = {
             disable-scroll = true;
             all-outputs = true;
@@ -44,7 +58,9 @@
               "8" = " ";
               "9" = "󰊶";
             };
-            persistent_workspaces = { "*" = 9; };
+            persistent_workspaces = {
+              "*" = 9;
+            };
           };
 
           "custom/weather" = {
@@ -89,7 +105,11 @@
           "backlight" = {
             device = "intel_backlight";
             format = "{icon}   {percent}%";
-            format-icons = [ "󰃞" "󰃟" "󰃠" ];
+            format-icons = [
+              "󰃞"
+              "󰃟"
+              "󰃠"
+            ];
             on-scroll-up = "brightnessctl set 1%+";
             on-scroll-down = "brightnessctl set 1%-";
             min-length = 6;
@@ -105,7 +125,13 @@
             format-charging = "   {capacity}%";
             format-plugged = "  {capacity}%";
             format-alt = "{time} {icon}";
-            format-icons = [ "" "" "" "" "" ];
+            format-icons = [
+              ""
+              ""
+              ""
+              ""
+              ""
+            ];
           };
 
           "pulseaudio" = {
@@ -123,7 +149,11 @@
               phone = "";
               portable = "";
               car = "";
-              default = [ "" "" "" ];
+              default = [
+                ""
+                ""
+                ""
+              ];
             };
           };
 
@@ -381,6 +411,7 @@
             background-color: #66cc99;
             color: #2a5c45;
         }
+
 
         #mpd.disconnected {
             background-color: #f53c3c;

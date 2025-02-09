@@ -250,6 +250,7 @@
               modules = [
                 nur.modules.nixos.default
                 ./modules/default.nix
+                ./config/default.nix
                 (nixpkgs.lib.mkAliasOptionModule
                   [ "hm" ]
                   [
@@ -277,7 +278,10 @@
                     users.${user} =
                       { ... }:
                       {
-                        imports = [ ./home/home.nix ];
+                        imports = [
+                          ./home/home.nix
+                          ./home-manager
+                        ];
                       };
                   };
                 }
