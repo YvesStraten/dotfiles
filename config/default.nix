@@ -8,11 +8,10 @@
     ./networking.nix
     ./users.nix
     ./power.nix
-    ./settings.nix
     ./nvidia.nix
     ./nix-settings.nix
     ./virtualisation.nix
     ./file-sharing.nix
-    ./audio.nix
+    ./sound.nix
   ];
 }

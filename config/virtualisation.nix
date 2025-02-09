@@ -34,11 +34,11 @@ in
       };
 
       docker.enable = true;
-
-      environment.systemPackages = with pkgs; [
-        distrobox
-        virt-manager
-      ];
     };
+
+    environment.systemPackages = with pkgs; [
+      distrobox
+      virt-manager
+    ];
   };
 }

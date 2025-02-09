@@ -21,17 +21,16 @@ in
         enable = true;
         openFirewall = true;
       };
-
-      # To make SMB mounting easier on the command line
-      environment.systemPackages = with pkgs; [
-        cifs-utils
-      ];
-
       avahi = {
         enable = true;
         nssmdns4 = true;
         publish.enable = true;
       };
     };
+
+    # To make SMB mounting easier on the command line
+    environment.systemPackages = with pkgs; [
+      cifs-utils
+    ];
   };
 }

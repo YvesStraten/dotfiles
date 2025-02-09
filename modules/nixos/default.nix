@@ -2,6 +2,7 @@
 {
   imports = [
     ../../overlays/default.nix
+    ./hardware.nix
 
     # Desktops
     ../../home/hypr/hyprland.nix
@@ -10,6 +11,11 @@
     # ../home/gnome/gnome.nix
   ];
 
+  custom = {
+    nvidia.enable = true;
+    virtualisation.enable = true;
+    
+  };
   # Set your time zone.
   time.timeZone = "Asia/Makassar";
 

@@ -12,7 +12,7 @@ in
   options.custom.udisks.enable = mkEnableOption "Enable udiskie";
 
   config = mkIf cfg.enable {
-    udiskie = {
+    services.udiskie = {
       enable = true;
       automount = true;
       tray = "never";
