@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: module 
+# key: mod
+# --
+{ config, options, lib, ... }:
+let
+  ${1:inherit (lib) ${2:mkMerge} ${3:mkEnableOption} ${4:mkIf};}
+in {
+  $0
+
+}
