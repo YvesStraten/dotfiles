@@ -249,7 +249,7 @@
               };
               modules = [
                 nur.modules.nixos.default
-                ./modules/default.nix
+                ./modules/nixos
                 ./config/default.nix
                 (nixpkgs.lib.mkAliasOptionModule
                   [ "hm" ]

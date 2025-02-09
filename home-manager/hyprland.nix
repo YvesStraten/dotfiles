@@ -35,6 +35,7 @@ in
       custom = {
         swappy.enable = true;
         waybar.enable = true;
+        udisks.enable = true;
       };
 
       programs.hyprlock = {
@@ -75,12 +76,6 @@ in
         kdeconnect = {
           enable = true;
           indicator = true;
-        };
-
-        udiskie = {
-          enable = true;
-          automount = true;
-          tray = "never";
         };
 
         cliphist = {
