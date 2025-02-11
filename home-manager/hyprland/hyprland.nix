@@ -36,6 +36,9 @@ in
         swappy.enable = true;
         waybar.enable = true;
         udisks.enable = true;
+        dunst.enable = true;
+        rofi.enable = true;
+        wlogout.enable = true;
       };
 
       programs.hyprlock = {

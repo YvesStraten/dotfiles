@@ -8,10 +8,8 @@
     # Main stuff
     ./utils
     ./theming.nix
-    # ./bin
 
     ./dev
-		./pass
   ];
 
   nixpkgs.config.allowUnfree = true;

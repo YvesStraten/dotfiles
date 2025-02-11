@@ -15,6 +15,7 @@
         btop
         vesktop
         nautilus
+        teams-for-linux
 
         pandoc
 

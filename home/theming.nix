@@ -37,9 +37,4 @@ gtk = {
     ubuntu_font_family
     emacs-all-the-icons-fonts
   ];
-
-  home.file.".local/share/fonts" = {
-    source = ./fonts;
-    recursive = true;
-  };
 }

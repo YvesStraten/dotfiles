@@ -1,14 +1,10 @@
-{shell, ...}: {
-  imports = [
-    # ./alacritty.nix
-    ./kitty.nix
-    ./emacs/emacs.nix
-    #./nvim/neovim.nix
-    # ./vscode.nix
-    ./tmux/tmux.nix
-    ./${shell}.nix
-
-    ./languages.nix
-    ./git.nix
-  ];
+{ ... }:
+{
+  custom = {
+    fish.enable = true;
+    kitty.enable = true;
+    emacs.enable = true;
+    tmux.enable = true;
+    languages.enable = true;
+  };
 }
