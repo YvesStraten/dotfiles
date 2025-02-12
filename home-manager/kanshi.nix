@@ -18,7 +18,7 @@ in
   options.custom.kanshi = {
     enable = mkEnableOption "Enable kanshi";
     laptopScreen = mkOption {
-      type = types.string;
+      type = types.str;
       default = "eDP-1";
       description = ''
         Your internal display monitor name, if any

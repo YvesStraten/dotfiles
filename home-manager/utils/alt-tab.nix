@@ -3,25 +3,29 @@
   lib,
   pkgs,
   ...
-}: let
-  inherit (lib) mkOption types mkIf platforms;
+}:
+let
+  inherit (lib)
+    mkOption
+    types
+    mkIf
+    platforms
+    mkEnableOption
+    ;
   inherit (lib.hm) assertions;
   cfg = config.services.alt-tab;
-in {
+in
+{
   options = {
     services.alt-tab = {
-      enable = mkOption {
-        type = types.bool;
-        default = false;
-        description = ''
-          Enables the alt-tab service
-        '';
+      enable = mkEnableOption // {
+        default = (if pkgs.stdenv.isDarwin then true else false);
       };
     };
   };
 
   config = mkIf cfg.enable {
-    assertions = [(assertions.assertPlatform "services.alt-tab" pkgs platforms.darwin)];
+    assertions = [ (assertions.assertPlatform "services.alt-tab" pkgs platforms.darwin) ];
     home.packages = [
       pkgs.alt-tab-macos
     ];

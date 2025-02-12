@@ -9,6 +9,7 @@
     ./dunst.nix
     ./pass.nix
     ./kanshi.nix
+    ./utils
     ./wlogout/wlogout.nix
   ];
 }
