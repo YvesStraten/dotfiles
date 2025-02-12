@@ -39,6 +39,7 @@ in
         dunst.enable = true;
         rofi.enable = true;
         wlogout.enable = true;
+        kanshi.enable = true;
       };
 
       programs.hyprlock = {

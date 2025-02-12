@@ -8,6 +8,7 @@
     ./rofi.nix
     ./dunst.nix
     ./pass.nix
+    ./kanshi.nix
     ./wlogout/wlogout.nix
   ];
 }
