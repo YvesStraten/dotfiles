@@ -38,29 +38,24 @@ in
     services.kanshi = {
       enable = true;
       profiles = {
-        undocked = {
+        "machine_docked" = {
           outputs = [
             {
               criteria = cfg.laptopScreen;
-              status = "enable";
+              status = "disable";
             }
 
             {
               criteria = cfg.hdmiScreen;
-              status = "disable";
+              status = "enable";
             }
           ];
         };
 
-        docked = {
+        "machine_undocked" = {
           outputs = [
             {
               criteria = cfg.laptopScreen;
-              status = "disable";
-            }
-
-            {
-              criteria = cfg.hdmiScreen;
               status = "enable";
             }
           ];
