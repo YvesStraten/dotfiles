@@ -1,4 +1,9 @@
-{ config, options, lib, ... }:
+{
+  config,
+  options,
+  lib,
+  ...
+}:
 let
   cfg = config.custom.utils;
   inherit (lib) mkEnableOption mkIf mkMerge;
@@ -10,9 +15,12 @@ in
     ./zathura.nix
     ./mpv.nix
     ./thunderbird.nix
+    ./rclone.nix
   ];
 
-  options.custom.utils.enable = mkEnableOption "Enable utils" // { default = true; };
+  options.custom.utils.enable = mkEnableOption "Enable utils" // {
+    default = true;
+  };
 
   config = mkMerge [
     (mkIf cfg.enable {
@@ -25,6 +33,16 @@ in
       };
 
       programs.nh.enable = true;
+
+      services.rclone-bisync = {
+        enable = true;
+        bisyncs = {
+          gdrive = {
+            remotePath = "Gdrive:School/Uni";
+            localPath = "${config.home.homeDirectory}/Gdrive/Uni";
+          };
+        };
+      };
     })
   ];
 }

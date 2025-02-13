@@ -9,5 +9,6 @@
     ./git.nix
     ./emacs/emacs.nix
     ./languages.nix
+    ./jupyter.nix
   ];
 }
