@@ -1,6 +1,7 @@
 {
   config,
   options,
+  pkgs,
   lib,
   ...
 }:
@@ -42,7 +43,7 @@ in
           outputs = [
             {
               criteria = cfg.laptopScreen;
-              status = "disable";
+              status = "enable";
             }
 
             {
@@ -50,6 +51,8 @@ in
               status = "enable";
             }
           ];
+
+          exec = ["${pkgs.hyprland}/bin/hyprctl keyword monitor ${cfg.hdmiScreen},highres,auto,1,mirror,${cfg.laptopScreen}"];
         };
 
         "machine_undocked" = {

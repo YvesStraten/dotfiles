@@ -9,7 +9,7 @@ let
   inherit (lib) mkMerge mkEnableOption mkIf;
 in
 {
-  options.custom.bluetooth.enable = mkEnableOption "Bluetooth";
+  options.custom.bluetooth.enable = mkEnableOption "Bluetooth" // { default = true; };
 
   config = mkIf cfg.enable {
     hardware.bluetooth.enable = true;

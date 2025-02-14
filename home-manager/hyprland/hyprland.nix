@@ -22,6 +22,7 @@ in
         };
 
         packages = with pkgs; [
+          blueman
           yvess.wall-switch
           wl-clipboard
           swww
@@ -221,8 +222,6 @@ in
           };
 
         extraConfig = with pkgs; ''
-
-          exec-once = uwsm app -- ${networkmanagerapplet}/bin/nm-applet
 
           exec-once = uwsm app -- ${blueman}/bin/blueman-applet
 

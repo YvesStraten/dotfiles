@@ -5,6 +5,7 @@
     ./zfs.nix
     ./auth.nix
     ./boot.nix
+    ./bluetooth.nix
     ./networking.nix
     ./users.nix
     ./power.nix
