@@ -16,6 +16,8 @@ in
     ./mpv.nix
     ./thunderbird.nix
     ./rclone.nix
+    ./general.nix
+    ./alt-tab.nix
   ];
 
   options.custom.utils.enable = mkEnableOption "Enable utils" // {
@@ -30,6 +32,7 @@ in
         zathura.enable = true;
         mpv.enable = true;
         thunderbird.enable = true;
+        general.enable = true;
       };
 
       programs.nh.enable = true;

@@ -17,6 +17,8 @@ mkIf cfg.enable {
     withUWSM = true;
   };
 
+  programs.nm-applet.enable = true;
+
   services.displayManager.sddm = {
     enable = true;
     theme = "${pkgs.yvess.sugar-dark}";

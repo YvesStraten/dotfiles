@@ -185,7 +185,7 @@
               modules = [
                 "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-new-kernel.nix"
                 "${nixos-hardware}/raspberry-pi/4"
-                ./modules/pi.nix
+                ./hosts/pi.nix
 
                 (nixpkgs.lib.mkAliasOptionModule
                   [ "hm" ]
@@ -214,19 +214,7 @@
                     users.${user} =
                       { ... }:
                       {
-                        imports = [ ./home/utils/mpv.nix ];
-
                         nixpkgs.config.allowUnfree = true;
-                        home = {
-                          username = user;
-                          homeDirectory = "/home/${user}";
-                          stateVersion = "22.11"; # Please read the comment before changing.
-
-                          sessionPath = [ "$HOME/.local/bin" ];
-                        };
-
-                        # Let Home Manager install and manage itself.
-                        programs.home-manager.enable = true;
                       };
                   };
                 }
@@ -249,7 +237,7 @@
               };
               modules = [
                 nur.modules.nixos.default
-                ./modules/nixos
+                ./hosts/nixos
                 ./config/default.nix
                 (nixpkgs.lib.mkAliasOptionModule
                   [ "hm" ]
@@ -279,7 +267,7 @@
                       { ... }:
                       {
                         imports = [
-                          ./home/home.nix
+                          ./hosts/nixos/home.nix
                           ./home-manager
                         ];
                       };

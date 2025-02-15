@@ -6,6 +6,7 @@
     ./auth.nix
     ./boot.nix
     ./bluetooth.nix
+    ./i3.nix
     ./networking.nix
     ./users.nix
     ./power.nix

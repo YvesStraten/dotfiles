@@ -8,7 +8,6 @@
 }:
 {
   imports = [
-    ./nixos/settings.nix
     ./nixos/time.nix
   ];
 
@@ -38,12 +37,6 @@
     };
   };
 
-  # services.xserver = {
-  #   enable = true;
-  #   displayManager.lightdm.enable = true;
-  #   videoDrivers = [ "fbdev" ];
-  # };
-
   networking.hostName = "PinixOS";
   networking.firewall.enable = false;
   environment.systemPackages = with pkgs; [
@@ -70,25 +63,6 @@
   };
 
   programs.${shell}.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users = {
-    defaultUserShell = pkgs.${shell};
-    mutableUsers = true;
-
-    users.${user} = {
-      isNormalUser = true;
-      description = "${user}";
-      initialPassword = "password";
-      extraGroups = [
-        "networkmanager"
-        "wheel"
-        "audio"
-        "dialout"
-      ];
-      home = "/home/${user}";
-    };
-  };
 
   services.xserver.videoDrivers = [ "fbdev" ];
 
@@ -139,6 +113,7 @@
   services.avahi = {
     enable = true;
     nssmdns4 = true;
+    openFirewall = true;
 
     publish = {
       enable = true;

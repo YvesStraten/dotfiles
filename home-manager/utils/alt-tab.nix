@@ -18,7 +18,7 @@ in
 {
   options = {
     services.alt-tab = {
-      enable = mkEnableOption // {
+      enable = mkEnableOption "Enable alt-tab" // {
         default = (if pkgs.stdenv.isDarwin then true else false);
       };
     };

@@ -71,7 +71,7 @@
       inherit system;
       specialArgs = { inherit inputs user shell; };
       modules = [
-        ../modules/darwin/configuration.nix
+        ../hosts/darwin/configuration.nix
         ../overlays/default.nix
 
         inputs.home-manager.darwinModules.home-manager
@@ -94,7 +94,7 @@
               {
                 imports = [
                   inputs.mac-app-util.homeManagerModules.default
-                  ../home/darwin.nix
+                  ../hosts/darwin/home.nix
                 ];
               };
           };

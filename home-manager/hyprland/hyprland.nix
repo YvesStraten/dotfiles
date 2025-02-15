@@ -16,8 +16,6 @@ in
     (mkIf cfg.enable {
       home = {
         sessionVariables = {
-          _JAVA_AWT_WM_NONREPARENTING = "1";
-          XCURSOR_SIZE = "30";
           NIXOS_OZONE_WL = "1";
         };
 
@@ -27,9 +25,11 @@ in
           wl-clipboard
           swww
           hypridle
+          gwenview
           swappy
           nautilus
           pavucontrol
+          selectdefaultapplication
         ];
       };
 
