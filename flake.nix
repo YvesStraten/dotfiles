@@ -300,7 +300,7 @@
                 inherit inputs user shell;
               };
               modules = [
-                ./modules/wsl/wsl.nix
+                ./hosts/wsl/wsl.nix
                 home-manager-stable.nixosModules.home-manager
                 nixos-wsl.nixosModules.wsl
                 {
@@ -320,7 +320,7 @@
                     users.${user} =
                       { ... }:
                       {
-                        imports = [ ./home/wsl.nix ];
+                        imports = [ ./hosts/wsl/home.nix ];
                       };
                   };
                 }
