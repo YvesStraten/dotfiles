@@ -8,6 +8,7 @@
   custom = {
     nvidia.enable = true;
     virtualisation.enable = true;
+    tailscale.enable = true;
   };
 
   # Set your time zone.

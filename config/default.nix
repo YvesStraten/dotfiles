@@ -15,5 +15,6 @@
     ./virtualisation.nix
     ./file-sharing.nix
     ./sound.nix
+    ./tailscale.nix
   ];
 }

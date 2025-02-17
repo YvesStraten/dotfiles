@@ -104,9 +104,5 @@ in
         zstd
       ];
     };
-
-    services.syncthing = {
-      enable = true;
-    };
   };
 }

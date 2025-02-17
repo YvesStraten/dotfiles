@@ -18,6 +18,7 @@ in
     ./rclone.nix
     ./general.nix
     ./alt-tab.nix
+    ./syncthing.nix
   ];
 
   options.custom.utils.enable = mkEnableOption "Enable utils" // {
@@ -32,6 +33,7 @@ in
         zathura.enable = true;
         mpv.enable = true;
         thunderbird.enable = true;
+        syncthing.enable = true;
         general.enable = true;
       };
 
