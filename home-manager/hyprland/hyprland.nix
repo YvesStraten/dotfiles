@@ -152,7 +152,8 @@ in
               with pkgs;
               let
                 screenshot = pkgs.writeShellScriptBin "screenshot" ''
-                  ${grim}/bin/grim -g "$(${slurp}/bin/slurp)" - | ${swappy}/bin/swappy -f -
+                  set -euxo pipefail
+                  ${grim}/bin/grim -g "$(${slurp}/bin/slurp)" - | ${swappy}/bin/swappy -f - -o "${config.xdg.userDirs.pictures}/Screenshots/swappy-$(date).png"
                 '';
               in
               [
