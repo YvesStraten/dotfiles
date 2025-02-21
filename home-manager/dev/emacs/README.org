@@ -917,22 +917,25 @@ Provides nice todos inside of [[Git][Magit]]
   (use-package doom-snippets 
     :after yasnippet
     :ensure (doom-snippets :type git :host github
-  						   :repo "doomemacs/snippets"
-  						   :files ("*.el" "*")))
+    			 :repo "doomemacs/snippets"
+    			 :files ("*.el" "*")))
 
   (use-package yasnippet
     :hook (snippet-mode . (lambda ()
                             (setq mode-require-final-newline nil)))
     :defer 1
     :config
-    (add-to-list 'yas-snippet-dirs '"~/dotfiles/home/dev/emacs/snippets")
+    (defun get-snippet-dir ()
+      (concat (file-name-directory user-init-file) "snippets")
+      )
+    (add-to-list 'yas-snippet-dirs `,(get-snippet-dir))
     (setq yas-verbosity 2)
     (yas-global-mode 1)
     )
 #+end_src
 
 #+RESULTS:
-: [nil 26462 44629 456310 nil elpaca-process-queues nil nil 852000 nil]
+: [nil 26549 11740 926909 nil elpaca-process-queues nil nil 21000 nil]
 
 *** Ivy Integration
 #+begin_src elisp :tangle no
@@ -945,6 +948,100 @@ Provides nice todos inside of [[Git][Magit]]
 
 #+RESULTS:
 : ivy-yasnippet
+
+** Programming language modes
+*** Typescript
+#+begin_src elisp
+  (use-package web-mode
+    :mode (("\\.tsx\\'" . web-mode)
+           ("\\.jsx\\'" . web-mode)
+           ("\\.svelte\\'" . web-mode))
+    )
+#+end_src
+
+*** Rust
+#+begin_src elisp
+  (use-package rustic
+    :config (setq rustic-rustfmt-args "--edition 2021"))
+#+end_src
+
+#+name: apheleia-settings
+#+begin_src elisp :tangle no
+  (setf (alist-get 'rustfmt apheleia-formatters)
+        '("rustfmt" "--quiet" "--emit" "stdout" "--edition" "2021" ))
+#+end_src
+
+*** Python
+#+begin_src elisp
+    (use-package pyvenv)
+#+end_src
+
+#+RESULTS:
+
+*** Nix
+#+begin_src elisp
+(use-package nix-mode
+  :mode "\\.nix\\'")
+#+end_src
+
+*** Prisma
+#+begin_src elisp :tangle no
+  (use-package prisma-mode
+    :mode "\\.prisma\\'"
+    :ensure (:host github :repo "pimeys/emacs-prisma-mode" :branch "main"))
+#+end_src
+
+*** Markdown
+#+begin_src elisp
+  (use-package markdown-mode
+    :mode ("README\\.md\\'" . gfm-mode)
+    :config (setq markdown-command "pandoc")
+    )
+#+end_src
+
+*** Arduino
+#+begin_src elisp
+  (use-package arduino-mode
+    :mode ("\\.ino\\'" . arduino-mode)
+    )
+#+end_src
+
+*** Plantuml
+#+begin_src elisp
+  (use-package plantuml-mode
+    :mode ("\\.plantuml\\'" . plantuml-mode)
+    :config (setq org-plantuml-executable-path (executable-find "plantuml")
+                  plantuml-executable-path (executable-find "plantuml")
+                  org-plantuml-exec-mode 'plantuml
+                  plantuml-default-exec-mode 'executable)
+    )
+#+end_src
+
+#+RESULTS:
+
+*** Treesitter
+#+begin_src elisp
+  (use-package tree-sitter
+    :config (global-tree-sitter-mode))
+
+  (use-package tree-sitter-langs)
+#+end_src
+
+#+begin_src elisp :tangle no
+  (use-package treesit-auto
+    :demand
+    :custom (treesit-auto-install t)
+    :config
+    (add-to-list 'auto-mode-alist '("[/\\]\\(?:Containerfile\\|Dockerfile\\)\\(?:\\.[^/\\]*\\)?\\'" . dockerfile-ts-mode))
+    (add-to-list 'auto-mode-alist '("CMakeLists\\'" . cmake-ts-mode))
+    (add-to-list 'auto-mode-alist '("\\.go\\'"      . go-ts-mode))
+    (add-to-list 'auto-mode-alist '("/go\\.mod\\'"  . go-mod-ts-mode))
+    (add-to-list 'auto-mode-alist '("\\.ts\\'"      . typescript-ts-mode))
+    (add-to-list 'auto-mode-alist '("\\.tsx\\'"     . tsx-ts-mode))
+    (add-to-list 'auto-mode-alist '("\\.rs\\'"      . rust-ts-mode))
+    (add-to-list 'auto-mode-alist '("\\.ya?ml\\'"   . yaml-ts-mode))
+    (global-treesit-auto-mode))
+#+end_src
 
 ** Lsp-mode
 #+begin_src elisp
@@ -1156,100 +1253,6 @@ Provides nice todos inside of [[Git][Magit]]
 #+end_src
 
 
-** Programming language modes
-*** Typescript
-#+begin_src elisp
-  (use-package web-mode
-    :mode (("\\.tsx\\'" . web-mode)
-           ("\\.jsx\\'" . web-mode)
-           ("\\.svelte\\'" . web-mode))
-    )
-#+end_src
-
-*** Rust
-#+begin_src elisp
-  (use-package rustic
-    :config (setq rustic-rustfmt-args "--edition 2021"))
-#+end_src
-
-#+name: apheleia-settings
-#+begin_src elisp :tangle no
-  (setf (alist-get 'rustfmt apheleia-formatters)
-        '("rustfmt" "--quiet" "--emit" "stdout" "--edition" "2021" ))
-#+end_src
-
-*** Python
-#+begin_src elisp
-    (use-package pyvenv)
-#+end_src
-
-#+RESULTS:
-
-*** Nix
-#+begin_src elisp
-(use-package nix-mode
-  :mode "\\.nix\\'")
-#+end_src
-
-*** Prisma
-#+begin_src elisp :tangle no
-  (use-package prisma-mode
-    :mode "\\.prisma\\'"
-    :ensure (:host github :repo "pimeys/emacs-prisma-mode" :branch "main"))
-#+end_src
-
-*** Markdown
-#+begin_src elisp
-  (use-package markdown-mode
-    :mode ("README\\.md\\'" . gfm-mode)
-    :config (setq markdown-command "pandoc")
-    )
-#+end_src
-
-*** Arduino
-#+begin_src elisp
-  (use-package arduino-mode
-    :mode ("\\.ino\\'" . arduino-mode)
-    )
-#+end_src
-
-*** Plantuml
-#+begin_src elisp
-  (use-package plantuml-mode
-    :mode ("\\.plantuml\\'" . plantuml-mode)
-    :config (setq org-plantuml-executable-path (executable-find "plantuml")
-                  plantuml-executable-path (executable-find "plantuml")
-                  org-plantuml-exec-mode 'plantuml
-                  plantuml-default-exec-mode 'executable)
-    )
-#+end_src
-
-#+RESULTS:
-
-*** Treesitter
-#+begin_src elisp
-  (use-package tree-sitter
-    :config (global-tree-sitter-mode))
-
-  (use-package tree-sitter-langs)
-#+end_src
-
-#+begin_src elisp :tangle no
-  (use-package treesit-auto
-    :demand
-    :custom (treesit-auto-install t)
-    :config
-    (add-to-list 'auto-mode-alist '("[/\\]\\(?:Containerfile\\|Dockerfile\\)\\(?:\\.[^/\\]*\\)?\\'" . dockerfile-ts-mode))
-    (add-to-list 'auto-mode-alist '("CMakeLists\\'" . cmake-ts-mode))
-    (add-to-list 'auto-mode-alist '("\\.go\\'"      . go-ts-mode))
-    (add-to-list 'auto-mode-alist '("/go\\.mod\\'"  . go-mod-ts-mode))
-    (add-to-list 'auto-mode-alist '("\\.ts\\'"      . typescript-ts-mode))
-    (add-to-list 'auto-mode-alist '("\\.tsx\\'"     . tsx-ts-mode))
-    (add-to-list 'auto-mode-alist '("\\.rs\\'"      . rust-ts-mode))
-    (add-to-list 'auto-mode-alist '("\\.ya?ml\\'"   . yaml-ts-mode))
-    (global-treesit-auto-mode))
-#+end_src
-
 ** Compilation buffer
 #+begin_src elisp
   (use-package emacs
@@ -1265,48 +1268,48 @@ Provides nice todos inside of [[Git][Magit]]
 * Terminal
 #+begin_src elisp
   (if (not (eq system-type 'windows-nt))
-    	(progn
-  	  (message "unix")
+      (progn
+        (message "unix")
         (use-package vterm
-  		:defer 1)
+  	:defer 1)
         (use-package vterm-toggle
-  		:after vterm
-  		:general (ys/leader-keys
-  				   "t" '(vterm-toggle :wk "Vterm"))
-    		:after vterm
-    		:config
-    		(setq vterm-toggle-fullscreen-p nil)
-    		(setq vterm-toggle-scope 'project)
-    		(add-to-list 'display-buffer-alist
-    					 '((lambda (buffer-or-name _)
-    						 (let ((buffer (get-buffer buffer-or-name)))
-    						   (with-current-buffer buffer
-    							 (or (equal major-mode 'vterm-mode)
-    								 (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
-    					   (display-buffer-reuse-window display-buffer-at-bottom)
-    					   ;;(display-buffer-reuse-window display-buffer-in-direction)
-    					   ;;display-buffer-in-direction/direction/dedicated is added in emacs27
-    					   ;;(direction . bottom)
-    					   (dedicated . t) ;dedicated is supported in emacs27
-    					   (reusable-frames . visible)
-    					   (window-height . 0.3)))))
+  	:after vterm
+  	:general (ys/leader-keys
+  		   "t" '(vterm-toggle :wk "Vterm"))
+    	:config
+    	(setq vterm-toggle-fullscreen-p nil)
+    	(setq vterm-toggle-scope 'project)
+    	(add-to-list 'display-buffer-alist
+    		     '((lambda (buffer-or-name _)
+    			 (let ((buffer (get-buffer buffer-or-name)))
+    			   (with-current-buffer buffer
+    			     (or (equal major-mode 'vterm-mode)
+    				 (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
+    		       (display-buffer-reuse-window display-buffer-at-bottom)
+    		       ;;(display-buffer-reuse-window display-buffer-in-direction)
+    		       ;;display-buffer-in-direction/direction/dedicated is added in emacs27
+    		       ;;(direction . bottom)
+    		       (dedicated . t) ;dedicated is supported in emacs27
+    		       (reusable-frames . visible)
+    		       (window-height . 0.3)))))
 
     (progn
-  	(message "eshell")
-  	(use-package eshell
-  	  :ensure nil
-  	  :defer 1)
-    	(use-package eshell-toggle
-  	  :custom
-    	  (eshell-toggle-size-fraction 3)
-  	  :after eshell
-    	  :config
-  	  :general (ys/leader-keys
-  				 "t" '(eshell-toggle :wk "Eshell"))
-    	  )))
+      (message "eshell")
+      (use-package eshell
+        :ensure nil
+        :defer 1)
+      (use-package eshell-toggle
+        :custom
+        (eshell-toggle-size-fraction 3)
+        :after eshell
+        :config
+        :general (ys/leader-keys
+  		 "t" '(eshell-toggle :wk "Eshell"))
+        )))
 #+end_src
 
 #+RESULTS:
+: [nil 26551 55236 624206 nil elpaca-process-queues nil nil 713000 nil]
 
 * Keybind management
 ** Which key

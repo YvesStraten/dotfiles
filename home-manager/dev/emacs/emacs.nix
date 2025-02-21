@@ -35,7 +35,17 @@ in
     emacs = {
       enable = mkEnableOption "Enable emacs";
       package = mkOption {
-        default = pkgs.emacs30;
+        default =
+          with pkgs;
+          ((emacsPackagesFor pkgs.emacs30).emacsWithPackages (
+            epkgs: with epkgs; [
+
+              vterm
+              all-the-icons
+              nerd-icons
+              treesit-grammars.with-all-grammars
+            ]
+          ));
         type = types.package;
         description = ''
           Emacs package to use
@@ -50,13 +60,13 @@ in
     programs.emacs = {
       enable = true;
       package = cfg.package;
-      extraPackages =
-        epkgs: with epkgs; [
-          vterm
-          all-the-icons
-          nerd-icons
-          # treesit-grammars.with-all-grammars
-        ];
+    };
+
+    services.emacs = {
+      enable = true;
+      package = cfg.package;
+      client.enable = true;
+      defaultEditor = true;
     };
 
     home = {
