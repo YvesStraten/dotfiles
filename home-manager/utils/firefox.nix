@@ -25,12 +25,19 @@ in
         Packaged firefox to use
       '';
     };
+
+    enablePwas = mkEnableOption "Enable pwas";
   };
 
   config = mkIf cfg.enable {
+    home.packages = mkIf cfg.enablePwas [ pkgs.firefoxpwa ];
     programs.firefox = {
       enable = true;
       package = cfg.package;
+      nativeMessagingHosts = mkIf cfg.enablePwas [
+        pkgs.firefoxpwa  
+      ];
+
       policies = {
         DisableAppUpdate = true;
         DisablePocket = true;
@@ -43,7 +50,7 @@ in
           darkreader
           ublock-origin
           # sidebery
-        ];
+        ] ++ (if cfg.enablePwas then [ pwas-for-firefox ] else []);
         settings = {
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
           "layers.acceleration.force-enabled" = true;

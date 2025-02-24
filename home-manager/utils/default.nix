@@ -29,7 +29,10 @@ in
     (mkIf cfg.enable {
       custom = {
         yazi.enable = true;
-        firefox.enable = true;
+        firefox = {
+          enable = true;
+          enablePwas = true;
+        };
         zathura.enable = true;
         mpv.enable = true;
         thunderbird.enable = true;
@@ -42,8 +45,8 @@ in
       services.rclone-bisync = {
         enable = true;
         bisyncs = {
-          gdrive = {
-            remotePath = "Gdrive:School/Uni";
+          onedrive = {
+            remotePath = "Onedrive:Uni";
             localPath = "${config.home.homeDirectory}/Gdrive/Uni";
           };
         };
