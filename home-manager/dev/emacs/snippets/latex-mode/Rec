@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Rectangle 
+# key: rec
+# --
+\node (${1}) at (0,0) [draw,align=center,label={[text width=${2:3cm}, align=${3:center}]${4:south:}$5}] {$6} $0
