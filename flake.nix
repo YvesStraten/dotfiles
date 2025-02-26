@@ -19,6 +19,7 @@
     };
 
     mac-app-util.url = "github:hraban/mac-app-util";
+    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
 
     # Follows unstable
     nixpkgs-stable.url = "github:/NixOS/nixpkgs/nixos-23.11";
@@ -262,7 +263,6 @@
                         ;
                     };
                     useGlobalPkgs = true;
-                    useUserPackages = true;
                     users.${user} =
                       { ... }:
                       {

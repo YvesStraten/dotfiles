@@ -10,6 +10,7 @@
     inputs.firefox-darwin.overlay
     inputs.emacs-overlay.overlay
     inputs.hyprland.overlays.default
+    inputs.hyprpanel.overlay
 
     (final: prev: {
       yvess = (prev.yvess or { }) // (import ../packages/default.nix { inherit (prev) pkgs; });

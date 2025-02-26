@@ -1,16 +1,18 @@
 {
   config,
   options,
+  inputs,
   user, 
   lib,
   ...
 }:
 let
-  inherit (lib) mkMerge;
+  inherit (lib) mkMerge mkIf;
 in
 {
   imports = [
     ./hyprland/hyprland.nix
+    ./hyprpanel.nix
     ./swappy.nix
     ./waybar/waybar.nix
     ./udisks.nix
@@ -29,10 +31,6 @@ in
   ];
 
   config = mkMerge [
-    {
-      nixpkgs.config.allowUnfree = true;
-    }
-
     {
 
       home = {

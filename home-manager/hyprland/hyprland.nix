@@ -35,9 +35,8 @@ in
 
       custom = {
         swappy.enable = true;
-        waybar.enable = true;
         udisks.enable = true;
-        dunst.enable = true;
+        hyprpanel.enable = true;
         rofi.enable = true;
         wlogout.enable = true;
         kanshi.enable = true;
