@@ -21,6 +21,8 @@ in
           runAsRoot = true;
           swtpm.enable = true;
 
+          vhostUserPackages = [ pkgs.virtiofsd ];
+
           ovmf = {
             enable = true;
             packages = [
