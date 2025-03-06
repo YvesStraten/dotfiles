@@ -1,6 +1,16 @@
-{ ... }:{
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+let
+  inherit (lib) mkMerge;
+in
+{
   imports = [
     ./hyprland.nix
+    ./gnome.nix
     ./nvidia.nix
     ./zfs.nix
     ./auth.nix
@@ -16,5 +26,13 @@
     ./file-sharing.nix
     ./sound.nix
     ./tailscale.nix
+  ];
+
+  config = mkMerge [
+    {
+      environment.systemPackages = with pkgs; [
+        vim
+      ];
+    }
   ];
 }

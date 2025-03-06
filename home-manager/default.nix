@@ -28,6 +28,7 @@ in
     ./polybar/polybar.nix
     ./xdg-dirs.nix
     ./theming.nix
+    ./gnome.nix
   ];
 
   config = mkMerge [
