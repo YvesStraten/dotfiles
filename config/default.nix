@@ -13,6 +13,7 @@ in
     ./gnome.nix
     ./nvidia.nix
     ./zfs.nix
+    ./vfio.nix
     ./auth.nix
     ./boot.nix
     ./bluetooth.nix
