@@ -1,0 +1,7 @@
+# key: subs
+# name: Subsection
+# --
+\subsubsection{$1}%
+\label{subsubsec:$2}
+
+$0

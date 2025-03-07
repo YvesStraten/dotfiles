@@ -47,7 +47,7 @@
 
 * Elpaca
 #+begin_src elisp 
-  (defvar elpaca-installer-version 0.8)
+  (defvar elpaca-installer-version 0.9)
   (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
   (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
   (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
@@ -97,11 +97,14 @@
 
 ** Ability to reload configuration
 #+begin_src elisp
-(defun reload-init-file ()
-  "Reload the `init.el` configuration file."
-  (interactive)
-  (load-file (expand-file-name "~/.emacs.d/init.el")))
+  (defun reload-init-file ()
+    "Reload the `init.el` configuration file."
+    (interactive)
+    (load-file (expand-file-name user-init-file)))
 #+end_src
+
+#+RESULTS:
+: reload-init-file
 
 ** Bug hunting
 #+begin_src elisp
@@ -465,15 +468,15 @@
 #+begin_src elisp
   (use-package centered-window
     :defer
-    :hook
-    (org-mode . centered-window-mode))
+    :hook (org-mode . centered-window-mode)
+    (LaTeX-mode . centered-window-mode))
 #+end_src
 
 *** Wrapped
 #+begin_src elisp
   (use-package visual-line-mode
     :ensure nil
-    :hook (org-mode . visual-line-mode))
+    :init (visual-line-mode))
 #+end_src
 
 * Org-mode
@@ -645,6 +648,7 @@ Credit to Derek Taylor
                           (electric-indent-local-mode -1)
                           (turn-on-reftex)
                           (prettify-symbols-mode)
+                          (lsp-deferred)
                           ))
     :demand
     :ensure
@@ -670,7 +674,7 @@ Credit to Derek Taylor
   ;;   (LaTeX-mode . evil-tex-mode))
 
   (use-package pdf-tools
-    :mode ("\\.pdf'" . pdf-view-mode)
+    :mode ("\\.pdf\\'" . pdf-view-mode)
     :hook
     (pdf-view-mode . pdf-view-midnight-minor-mode))
 #+end_src
@@ -768,7 +772,9 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
     (ys/leader-keys
       "pc" '(+ys/compile-project :wk "Compile project"))
     :config
-    (setq projectile-completion-system 'ivy)
+    (setq projectile-completion-system 'ivy
+          projectile-ignored-projects '("~/"
+                                        "~/.cargo/registry/"))
     (projectile-mode +1))
 #+end_src
 
@@ -835,6 +841,13 @@ Provides nice todos inside of [[Git][Magit]]
   (use-package magit-todos
     :after magit
     :hook (magit-mode . magit-todos-mode))
+#+end_src
+
+*** Git gutter
+#+begin_src elisp
+  (use-package git-gutter
+    :init (global-git-gutter-mode +1) 
+    )
 #+end_src
 
 ** File explorer
@@ -925,17 +938,16 @@ Provides nice todos inside of [[Git][Magit]]
                             (setq mode-require-final-newline nil)))
     :defer 1
     :config
-    (defun get-snippet-dir ()
-      (concat (file-name-directory user-init-file) "snippets")
-      )
-    (add-to-list 'yas-snippet-dirs `,(get-snippet-dir))
+    (setq yas-snippet-dirs (cons
+                            (concat (file-name-directory user-init-file) "snippets")
+                            yas-snippet-dirs))
     (setq yas-verbosity 2)
     (yas-global-mode 1)
     )
 #+end_src
 
 #+RESULTS:
-: [nil 26549 11740 926909 nil elpaca-process-queues nil nil 21000 nil]
+: [nil 26555 56761 263553 nil elpaca-process-queues nil nil 6000 nil]
 
 *** Ivy Integration
 #+begin_src elisp :tangle no
@@ -953,11 +965,23 @@ Provides nice todos inside of [[Git][Magit]]
 *** Typescript
 #+begin_src elisp
   (use-package web-mode
+    :custom
+    (web-mode-markup-indent-offset 2)
+    (web-mode-css-indent-offset 2)
+    (web-mode-code-indent-offset 2) 
+    :hook
+    (web-mode . lsp-mode)
     :mode (("\\.tsx\\'" . web-mode)
            ("\\.jsx\\'" . web-mode)
-           ("\\.svelte\\'" . web-mode))
+           ("\\.html\\'". web-mode)
+           ("\\.js\\'". web-mode)
+           ("\\.svelte\\'" . web-mode)
+           ("\\.ts\\'" . web-mode))
     )
 #+end_src
+
+#+RESULTS:
+: [nil 26559 45355 879518 nil elpaca-process-queues nil nil 229000 nil]
 
 *** Rust
 #+begin_src elisp
