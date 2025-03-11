@@ -283,17 +283,23 @@
     )
 
   (use-package perspective
+    :config
+    (add-hook 'ibuffer-hook
+              (lambda ()
+                (persp-ibuffer-set-filter-groups)
+                (unless (eq ibuffer-sorting-mode 'alphabetic)
+                  (ibuffer-do-sort-by-alphabetic)))) 
     :hook (dashboard-mode . persp-mode)
     :general (ys/leader-keys
-                         "TAB" '(:ignore t :wk "Workspaces")
-                         "TAB n" '(my/persp-switch :wk "New Workspace")
-                         "TAB d" '(persp-kill :wk "Kill workspace")
-                         "TAB 1" '(lambda () (interactive) (persp-switch-by-number 1) :wk "Switch to workspace 1")
-                         "TAB 2" '(lambda () (interactive) (persp-switch-by-number 2) :wk "Switch to workspace 2")
-                         "TAB 3" '(lambda () (interactive) (persp-switch-by-number 3) :wk "Switch to workspace 3")
-                         "TAB 4" '(lambda () (interactive) (persp-switch-by-number 4) :wk "Switch to workspace 4")
-                         "TAB 5" '(lambda () (interactive) (persp-switch-by-number 5) :wk "Switch to workspace 5")
-                         ))
+               "TAB" '(:ignore t :wk "Workspaces")
+               "TAB n" '(my/persp-switch :wk "New Workspace")
+               "TAB d" '(persp-kill :wk "Kill workspace")
+               "TAB 1" '(lambda () (interactive) (persp-switch-by-number 1) :wk "Switch to workspace 1")
+               "TAB 2" '(lambda () (interactive) (persp-switch-by-number 2) :wk "Switch to workspace 2")
+               "TAB 3" '(lambda () (interactive) (persp-switch-by-number 3) :wk "Switch to workspace 3")
+               "TAB 4" '(lambda () (interactive) (persp-switch-by-number 4) :wk "Switch to workspace 4")
+               "TAB 5" '(lambda () (interactive) (persp-switch-by-number 5) :wk "Switch to workspace 5")
+               ))
 #+end_src
 
 #+RESULTS:
@@ -745,6 +751,7 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
 ** Mini buffer completion 
 #+begin_src elisp
   (use-package counsel
+    :demand
     :config (setq ivy-use-virtual-buffers t
                   ivy-count-format "(%d/%d) ")
     (ivy-mode)
@@ -760,54 +767,44 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
 #+RESULTS:
 : [nil 26454 56870 713420 nil elpaca-process-queues nil nil 164000 nil]
 
-** Projectile
-#+begin_src elisp
-  (defun +ys/compile-project ()
-    (interactive)
-    (call-interactively 'projectile-compile-project))
-
-  (use-package projectile
-    :demand
-    :general
-    (ys/leader-keys
-      "pc" '(+ys/compile-project :wk "Compile project"))
-    :config
-    (setq projectile-completion-system 'ivy
-          projectile-ignored-projects '("~/"
-                                        "~/.cargo/registry/"))
-    (projectile-mode +1))
-#+end_src
-
-*** Ivy Integration (fix keys)
-#+begin_src elisp
-  (use-package counsel-projectile
-    :after projectile
-    :general (ys/leader-keys
-                         "/" '(counsel-projectile-grep :wk "Grep Project")
-                         "bb" '(counsel-projectile-switch-to-buffer :wk "Project buffers")
-                         "bB" '(counsel-switch-buffer :wk "Buffers"))
-    :commands
-    (counsel-projectile-find-file
-     counsel-projectile-grep
-     counsel-projectile-switch-project
-     counsel-projectile-switch-to-buffer)
-    :config
-    (counsel-projectile-mode 1))
-#+end_src
-
+** ~Project.el~
 *** Persp integration
-#+begin_src elisp 
+#+begin_src elisp
+  (defun ys/project-new-persp ()
+    (interactive)
+    (let ((selected (project-prompt-project-dir)))
+      (persp-new selected)
+      (persp-switch selected)
+      (cd selected)
+      (project-find-file)
+      )
+    )
+
   (defun ys/project-find-or-switch ()
     (interactive)
-    (if (projectile-project-p)
-        (counsel-projectile-find-file)
-      (call-interactively 'projectile-persp-switch-project)))
+    (if (project-current)
+        (project-find-file)
+      (call-interactively 'ys/project-new-persp)))
 
-  (use-package persp-projectile 
-    :general (ys/leader-keys
-               "SPC" '(ys/project-find-or-switch :wk "Find file")
-               "pp" '(projectile-persp-switch-project :wk "Switch project"))
-    :after projectile)
+  (defun ys/project-rg ()
+    (interactive)
+    (counsel-rg nil nil nil "What to search for: ")
+    )
+#+end_src
+
+#+begin_src elisp
+  (use-package project
+    :ensure nil
+    :config
+    (setq project-prompter
+          #'ivy-read)
+    :general
+    (ys/leader-keys
+      "pc" '(project-compile :wk "Compile project")
+      "SPC" '(ys/project-find-or-switch :wk "Find file")
+      "pp" '(ys/project-new-persp :wk "Switch project")
+      "/" '(ys/project-rg :wk "Ripgrep")
+      ))
 #+end_src
 
 ** Git
@@ -1454,7 +1451,7 @@ Credits to [[https://github.com/doomemacs/doomemacs/blob/ba1dca322f9a07bc2b7bec6
          (+macos-open-with ,app ,dir)))
 
     (+macos--open-with reveal-in-finder "Finder" default-directory)
-    (+macos--open-with reveal-project-in-finder "Finder" (or (projectile-project-root) default-directory))
+    (+macos--open-with reveal-project-in-finder "Finder" (or (project-root) default-directory))
     (+macos--open-with open-file nil buffer-file-name)
 
     )
