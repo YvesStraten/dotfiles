@@ -39,7 +39,21 @@ in
     services.kanshi = {
       enable = true;
       profiles = {
-        "machine_docked" = {
+        "machine_docked_home" = {
+          outputs = [
+            {
+              criteria = cfg.laptopScreen;
+              status = "disable";
+            }
+
+            {
+              criteria = "BNQ BenQ EX2510 M8L08374019";
+              status = "enable";
+            }
+          ];
+        };
+
+        "machine_docker_other" = {
           outputs = [
             {
               criteria = cfg.laptopScreen;
