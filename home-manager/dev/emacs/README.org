@@ -1043,6 +1043,21 @@ Provides nice todos inside of [[Git][Magit]]
 
 #+RESULTS:
 
+*** Docker
+#+begin_src lisp
+  (use-package docker
+      :commands docker)
+
+  (use-package dockerfile-mode)
+#+end_src
+
+*** Yaml
+#+begin_src elisp
+  (use-package yaml-mode
+    :mode
+    ("\\yml\\'" . yaml-mode))
+#+end_src
+
 *** Treesitter
 #+begin_src elisp
   (use-package tree-sitter
