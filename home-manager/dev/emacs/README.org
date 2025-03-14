@@ -770,11 +770,15 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
 ** ~Project.el~
 *** Persp integration
 #+begin_src elisp
+  (defun ys/get-dir-name (path)
+    (file-name-nondirectory (directory-file-name (file-name-directory path)))
+    )
+
   (defun ys/project-new-persp ()
     (interactive)
     (let ((selected (project-prompt-project-dir)))
-      (persp-new selected)
-      (persp-switch selected)
+      (persp-new (ys/get-dir-name selected))
+      (persp-switch (ys/get-dir-name selected))
       (cd selected)
       (project-find-file)
       )
