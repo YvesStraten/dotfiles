@@ -74,12 +74,8 @@ in
         };
       };
 
-      services = {
-        kdeconnect = {
-          enable = true;
-          indicator = true;
-        };
 
+      services = {
         cliphist = {
           enable = true;
           allowImages = true;

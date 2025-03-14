@@ -15,6 +15,7 @@ in
     ./zathura.nix
     ./mpv.nix
     ./thunderbird.nix
+    ./kde-connect.nix
     ./rclone.nix
     ./general.nix
     ./alt-tab.nix
@@ -38,6 +39,7 @@ in
         thunderbird.enable = true;
         syncthing.enable = true;
         general.enable = true;
+        kde-connect.enable = true;
       };
 
       programs.nh.enable = true;
