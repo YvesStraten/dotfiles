@@ -17,7 +17,17 @@ in
       DOTNET_ROOT = "${pkgs.dotnet-sdk}";
     };
 
-    home.packages = with pkgs; [
+    home.packages = with pkgs;
+      let
+        # CUDA
+      whisper-warnings = openai-whisper.override { torch = python3.pkgs.torch-bin; };
+
+      # Some closures seem to conflict, I am not insanely good at python to fix this
+      whisper-no-warnings = whisper-warnings.overridePythonAttrs(o: {
+        catchConflicts = false;
+      });
+      in
+      [
       (python311.withPackages (
         ps: with ps; [
           yt-dlp
@@ -36,6 +46,8 @@ in
       yarn
       openjdk
       dotnet-sdk
+      typescript
+      whisper-no-warnings
 
       unzip
       sshfs

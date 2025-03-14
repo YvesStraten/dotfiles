@@ -16,7 +16,6 @@
 
       filezilla
       btop
-      vesktop
       nautilus
       teams-for-linux
 
