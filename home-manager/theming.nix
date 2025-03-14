@@ -24,11 +24,16 @@ in
 
     gtk = {
       enable = true;
-      gtk3.bookmarks = [
+      gtk3.bookmarks = let
+        xdg-dirs = config.xdg.userDirs;
+        xdg-entries = (builtins.filter (elem: builtins.isString elem) (builtins.attrValues xdg-dirs));
+        toBookmark = name:
+          "file://${name}";
+      in [
         "file:///home/yvess/Gdrive/Uni"
         "file:///home/yvess/Gdrive/Docs"
         "file:///home/yvess/Notes"
-      ];
+      ] ++ (builtins.map toBookmark xdg-entries);
       theme = {
         name = "catppuccin-frappe-blue-standard";
         package = pkgs.catppuccin-gtk;
