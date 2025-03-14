@@ -10,6 +10,7 @@ let
     mkOption
     mkMerge
     mkIf
+    mkEnableOption
     ;
   cfg = config.services.rclone-bisync;
   bisyncType = types.attrsOf (
@@ -147,10 +148,8 @@ in
 {
   options = {
     services.rclone-bisync = {
-      enable = mkOption {
-        type = types.bool;
-        default = false;
-      };
+      enable = mkEnableOption "Enable bisyncs";
+      enableTimers = mkEnableOption "Enable systemd timers";
       services.enable = mkOption {
         type = types.bool;
         default = false;
@@ -185,13 +184,13 @@ in
         }
       ) cfg.bisyncs;
 
-      systemd.user.timers = lib.attrsets.concatMapAttrs (
+      systemd.user.timers = (mkIf cfg.enableTimers (lib.attrsets.concatMapAttrs (
         name: bisync:
         mkBisyncTimer {
           name = "${name}";
           timeOut = bisync.timeDelay;
         }
-      ) cfg.bisyncs;
+      ) cfg.bisyncs));
 
       launchd.agents = builtins.mapAttrs (
         name: bisync:

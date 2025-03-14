@@ -46,6 +46,7 @@ in
 
       services.rclone-bisync = {
         enable = true;
+        enableTimers = false;
         bisyncs = {
           onedrive = {
             remotePath = "Onedrive:Uni";
