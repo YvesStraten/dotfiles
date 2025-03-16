@@ -323,6 +323,15 @@
 
 ** Dashboard
 #+begin_src elisp
+  (defun ys/new-persp-switch (dir)
+    (persp-new (ys/get-dir-name dir))
+    (persp-switch (ys/get-dir-name dir))
+    (cd dir)
+    (project-find-file)
+    )
+#+end_src
+
+#+begin_src elisp
   (use-package dashboard
     :demand
     :config
@@ -342,7 +351,7 @@
                                     (agenda    . "calendar")
                                     (projects  . "rocket")
                                     (registers . "database")))
-    (setq dashboard-projects-switch-function 'projectile-persp-switch-project
+    (setq dashboard-projects-switch-function 'ys/new-persp-switch
           dashboard-items '(
                             (recents . 5)
                             (projects . 10)
@@ -777,10 +786,7 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
   (defun ys/project-new-persp ()
     (interactive)
     (let ((selected (project-prompt-project-dir)))
-      (persp-new (ys/get-dir-name selected))
-      (persp-switch (ys/get-dir-name selected))
-      (cd selected)
-      (project-find-file)
+      (ys/new-persp-switch selected)
       )
     )
 
@@ -795,6 +801,9 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
     (counsel-rg nil nil nil "What to search for: ")
     )
 #+end_src
+
+#+RESULTS:
+: ys/project-rg
 
 #+begin_src elisp
   (use-package project
