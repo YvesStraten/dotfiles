@@ -40,6 +40,7 @@ in
         rofi.enable = true;
         wlogout.enable = true;
         kanshi.enable = true;
+        nwg-dock.enable = true;
       };
 
       programs.hyprlock = {

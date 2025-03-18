@@ -13,6 +13,7 @@ in
   imports = [
     ./hyprland/hyprland.nix
     ./hyprpanel.nix
+    ./nwg-dock.nix
     ./swappy.nix
     ./waybar/waybar.nix
     ./udisks.nix
