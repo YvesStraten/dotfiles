@@ -2,6 +2,10 @@
   description = "My Nix based systems";
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
+    jovian = {
+      url = "github:Jovian-Experiments/Jovian-NixOS?ref=development";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Follow unstable
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -112,7 +116,7 @@
       perSystem =
         { system, ... }:
         let
-          nvimConf = import ./home/dev/nvim/config;
+          nvimConf = import ./packages/neovim;
           pkgs = import nixpkgs {
             inherit system;
             overlays = [ (import ./overlays/vim.nix { inherit inputs; }) ];
@@ -287,6 +291,59 @@
                 inherit inputs user shell;
               };
               modules = [ ./modules/server.nix ];
+            };
+
+          deck =
+            let
+              user = "bazzite";
+              shell = "fish";
+            in
+            nixpkgs.lib.nixosSystem {
+              system = "x86_64-linux";
+              specialArgs = {
+                inherit inputs user shell;
+              };
+
+              modules = [
+                ./hosts/deck
+                inputs.jovian.nixosModules.default
+                nur.modules.nixos.default
+                ./config
+
+                (nixpkgs.lib.mkAliasOptionModule
+                  [ "hm" ]
+                  [
+                    "home-manager"
+                    "users"
+                    user
+                  ]
+                )
+
+                home-manager.nixosModules.home-manager
+                {
+                  home-manager = {
+                    extraSpecialArgs = {
+                      inherit
+                        inputs
+                        gitUser
+                        email
+                        user
+                        shell
+                        self
+                        ;
+                    };
+                    useGlobalPkgs = true;
+                    users.${user} =
+                      { ... }:
+                      {
+                        imports = [
+                          ./hosts/deck/home.nix
+                          ./home-manager
+                        ];
+                      };
+                  };
+                }
+              ];
             };
 
           wsl =

@@ -5,10 +5,15 @@
   ...
 }:
 let
+  cfg = config.custom.sound;
   inherit (lib) mkMerge mkEnableOption mkIf;
 in
 {
-  config = mkMerge [
+  options.custom.sound.enable = mkEnableOption "Enable sound" // {
+    default = true;
+  };
+
+  config = mkIf cfg.enable (mkMerge [
     {
       security.rtkit.enable = true;
 
@@ -24,5 +29,5 @@ in
         pulseaudio.enable = false;
       };
     }
-  ];
+  ]);
 }

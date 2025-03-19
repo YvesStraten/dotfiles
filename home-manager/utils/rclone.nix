@@ -58,10 +58,6 @@ let
           ExecStart = lib.escapeShellArgs (bisyncCommand);
           OnFailure = "rclone-${name}-recovery.service";
         };
-
-        Install = {
-          WantedBy = [ "default.target" ];
-        };
       };
 
       "rclone-${name}-recovery" =
@@ -83,7 +79,7 @@ let
           };
 
           Install = {
-            WantedBy = [ "default.target" ];
+            WantedBy = [ "timers.target" ];
           };
         };
     };
