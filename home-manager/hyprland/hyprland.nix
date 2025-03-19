@@ -75,6 +75,7 @@ in
         };
       };
 
+      systemd.user.services.poweralertd.Unit.After = lib.mkForce [ "graphical-session.target" ];
 
       services = {
         cliphist = {
@@ -82,21 +83,22 @@ in
           allowImages = true;
         };
 
+        poweralertd.enable = true;
+
         hypridle = {
           enable = true;
           settings = {
             general = {
-              lock_cmd = "pidof hyprlock | hyprlock";
-              before_sleep_cmd = "loginctl lock-session";
-              after_sleep_cmd = "hyprctl dispatch dpms on";
-              inhibit_sleep = 3;
+              lock_cmd = "pidof hyprlock || hyprlock";
             };
 
-            listener = [
+            listener = let
+              brightnessctl = lib.getExe pkgs.brightnessctl;
+            in [
               {
                 timeout = 60;
-                on-timeout = "brightnessctl -s set 10";
-                on-resume = "brightnessctl -r";
+                on-timeout = "${brightnessctl} -s set 10";
+                on-resume = "${brightnessctl} -r";
               }
 
               {
@@ -118,6 +120,8 @@ in
       wayland.windowManager.hyprland = {
         enable = true;
         systemd.enable = false;
+        package = null;
+        portalPackage = null;
         settings =
           let
             keys_directions = [
@@ -144,6 +148,7 @@ in
           in
           {
             "$mod" = "super";
+            bindl = ",switch:Lid Switch, exec, pidof hyprlock || hyprlock";
             bind =
               with pkgs;
               let
@@ -160,11 +165,11 @@ in
                 ", XF86MonBrightnessUp, exec, uwsm app -- ${brightnessctl}/bin/brightnessctl s +5%"
                 ", XF86MonBrightnessDown, exec, uwsm app -- ${brightnessctl}/bin/brightnessctl s 5%-"
                 "SUPER SHIFT, x, exec, uwsm app -- ${hyprpicker}/bin/hyprpicker | ${wl-clipboard}/bin/wl-copy"
-                "$mod, C, exec, uwsm app -- pidof hyprlock | hyprlock"
+                "$mod, C, exec, ${pamixer}/bin/pamixer -m && uwsm app -- pidof hyprlock || hyprlock && ${pamixer}/bin/pamixer -u"
                 "$mod, Return, exec, uwsm app -- ${kitty}/bin/kitty"
-                "$mod, E, exec, uwsm app -- emacs"
-                "$mod, N, exec, uwsm app -- yazi"
-                "$mod, R, exec, uwsm app -- killall rofi || rofi -show drun"
+                "$mod, E, exec, uwsm app -- emacsclient -c"
+                "$mod, N, exec, uwsm app -- yazi.desktop"
+                "$mod, R, exec, uwsm app -- rofi -show drun -run-command 'uwsm app -- {cmd}'"
                 "$mod, Q, killactive,"
                 "$mod, F, fullscreen,"
                 "$mod, Space, togglefloating,"
@@ -219,9 +224,6 @@ in
           };
 
         extraConfig = with pkgs; ''
-
-          exec-once = uwsm app -- ${blueman}/bin/blueman-applet
-
           exec-once = swww init
           monitor = ,highrr,auto,1
 
@@ -315,9 +317,16 @@ in
           windowrule = float, title:^(Media viewer)$
           windowrule = float, title:^(Volume Control)$
           windowrule = float, title:^(Picture-in-Picture)$
-          windowrule = size 800 600, title:^(Volume Control)$
-          windowrule = move 75 44%, title:^(Volume Control)$
+          windowrule = size 800 600, class:^(org.pulseaudio.pavucontrol)$
+          windowrule = move 75 44%, title:^(org.pulseaudio.pavucontrol)$
           # windowrulev2 = immediate, title:^(Heroic Games Launcher)$
+
+          windowrulev2 = size 800 450, title:(Picture-in-Picture)
+          windowrulev2 = pin, title:^(Picture-in-Picture)$
+          windowrulev2 = float, title:^(Firefox)$
+          windowrulev2 = size 800 450, title:(Firefox)
+          windowrulev2 = pin, title:^(Firefox)$ 
+
 
           misc {
                disable_hyprland_logo = true
