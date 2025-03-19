@@ -42,22 +42,51 @@ in
       programs.hyprpanel = {
         enable = true;
         overwrite.enable = true;
-        settings = {
-          menus = {
-            dashboard = {
-              shortcuts = {
-                left = {
 
+        layout = {
+          "bar.layouts" = {
+            "*" = {
+              left = [
+                "dashboard"
+                "workspaces"
+                "windowtitle"
+                "battery"
+                "hypridle"
+              ];
+              middle = [ "media" ];
+              right = [
+                "volume"
+                "network"
+                "bluetooth"
+                "systray"
+                "clock"
+                "notifications"
+              ];
+
+            };
+          };
+
+          settings = {
+            bar = {
+              launcher.autoDetectIcon = true;
+              workspaces.show_icons = true;
+            };
+            dashboard = {
+              shortcuts = let
+                launch = app: "${lib.getExe pkgs.uwsm}/bin/uwsm app -- ${app}";
+                in
+                {
+                left = {
                   shortcut1 = {
-                    command = "firefox";
+                    command = launch "firefox";
                   };
 
                   shortcut2 = {
-                    command = "spotify";
+                    command = launch "spotify";
                   };
 
                   shortcut3 = {
-                    command = "vesktop";
+                    command = launch "vesktop";
                   };
                 };
               };
