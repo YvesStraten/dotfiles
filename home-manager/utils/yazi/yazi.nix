@@ -13,8 +13,8 @@ in
 
   config =
     mkIf (cfg.enable
-    || config.custom.hyprland
-    || config.custom.i3) {
+    || config.custom.hyprland.enable
+    || config.custom.i3.enable) {
       programs.yazi = {
         enable = true;
         enableZshIntegration = true;
