@@ -6,10 +6,13 @@
   ...
 }:
 let
-  inherit (lib) mkMerge;
+  cfg = config.custom.boot;
+  inherit (lib) mkMerge mkIf mkEnableOption;
 in
 {
-  config = mkMerge [
+  options.custom.boot.enable = mkEnableOption "Enable bootloader" // { default = true; };
+
+  config = mkIf cfg.enable (mkMerge [
     {
 
       boot = {
@@ -41,7 +44,6 @@ in
           "ntfs"
           "btrfs"
           "hpfs"
-          "zfs"
         ];
         loader = {
           timeout = 0;
@@ -74,5 +76,5 @@ in
         '';
       };
     }
-  ];
+  ]);
 }
