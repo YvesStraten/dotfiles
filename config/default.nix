@@ -27,6 +27,7 @@ in
     ./file-sharing.nix
     ./sound.nix
     ./tailscale.nix
+    ./fonts.nix
   ];
 
   config = mkMerge [
