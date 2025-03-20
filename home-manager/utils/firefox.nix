@@ -45,7 +45,7 @@ in
       };
       profiles.yvess = {
         isDefault = true;
-        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
           react-devtools
           darkreader
           ublock-origin

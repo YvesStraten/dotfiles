@@ -25,7 +25,7 @@ in
           wl-clipboard
           swww
           hypridle
-          gwenview
+          kdePackages.gwenview
           swappy
           nautilus
           pavucontrol
