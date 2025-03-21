@@ -50,10 +50,7 @@
       flake = false;
     };
 
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      # inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nvf.url = "github:NotAShelf/nvf";
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -83,29 +80,27 @@
     ];
   };
 
-  outputs =
-    {
-      nixpkgs,
-      nixpkgs-stable,
-      nur,
-      nixvim,
-      nixos-wsl,
-      home-manager,
-      home-manager-stable,
-      nixos-hardware,
-      flake-parts,
-      nix-darwin,
-      mac-app-util,
-      self,
-      ...
-    }@inputs:
-    let
-      email = "yves.straten@gmail.com";
-      gitUser = "YvesStraten";
-      user = "yvess";
-      shell = "zsh";
-    in
-    flake-parts.lib.mkFlake { inherit inputs; } {
+  outputs = {
+    nixpkgs,
+    nixpkgs-stable,
+    nur,
+    nixos-wsl,
+    home-manager,
+    home-manager-stable,
+    nixos-hardware,
+    flake-parts,
+    nix-darwin,
+    nvf,
+    mac-app-util,
+    self,
+    ...
+  } @ inputs: let
+    email = "yves.straten@gmail.com";
+    gitUser = "YvesStraten";
+    user = "yvess";
+    shell = "zsh";
+  in
+    flake-parts.lib.mkFlake {inherit inputs;} {
       systems = [
         "x86_64-linux"
         "aarch64-linux"
@@ -113,52 +108,35 @@
         "aarch64-darwin"
       ];
 
-      perSystem =
-        { system, ... }:
-        let
-          nvimConf = import ./packages/neovim;
-          pkgs = import nixpkgs {
-            inherit system;
-            overlays = [ (import ./overlays/vim.nix { inherit inputs; }) ];
-          };
-          nixvimLib = nixvim.lib.${system};
-          nixvim' = nixvim.legacyPackages.${system};
-          nvim = nixvim'.makeNixvimWithModule {
-            inherit pkgs;
-            module = nvimConf;
-            # You can use `extraSpecialArgs` to pass additional arguments to your module files
-            extraSpecialArgs = {
-              # inherit (inputs) foo;
-            };
-          };
-        in
-        {
-          checks = {
-            # Run `nix flake check .` to verify that your config is not broken
-            default = nixvimLib.check.mkTestDerivationFromNvim {
-              inherit nvim;
-              name = "A nixvim configuration";
-            };
-          };
-
-          packages = {
-            default = nvim;
-            nvim = nvim;
-          };
+      perSystem = {system, ...}: let
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [(import ./overlays/vim.nix {inherit inputs;})];
         };
+
+        nvim =
+          (nvf.lib.neovimConfiguration {
+            inherit pkgs;
+            modules = [./packages/neovim];
+          })
+          .neovim;
+      in {
+        packages = {
+          default = nvim;
+          inherit nvim;
+        };
+      };
 
       flake = {
         packages = {
-          "aarch64-darwin" =
-            let
-              pkgs = nixpkgs.legacyPackages."aarch64-darwin";
-            in
-            { } // (import ./packages/packages-darwin.nix { inherit pkgs; });
-          "x86_64-linux" =
-            let
-              pkgs = nixpkgs.legacyPackages."x86_64-linux";
-            in
-            { } // (import ./packages { inherit pkgs; });
+          "aarch64-darwin" = let
+            pkgs = nixpkgs.legacyPackages."aarch64-darwin";
+          in
+            {} // (import ./packages/packages-darwin.nix {inherit pkgs;});
+          "x86_64-linux" = let
+            pkgs = nixpkgs.legacyPackages."x86_64-linux";
+          in
+            {} // (import ./packages {inherit pkgs;});
         };
 
         lib = import ./lib/lib.nix;
@@ -178,10 +156,9 @@
         };
 
         nixosConfigurations = {
-          pi =
-            let
-              user = "xayah";
-            in
+          pi = let
+            user = "xayah";
+          in
             nixpkgs.lib.nixosSystem {
               system = "aarch64-linux";
               specialArgs = {
@@ -192,8 +169,9 @@
                 "${nixos-hardware}/raspberry-pi/4"
                 ./hosts/pi.nix
 
-                (nixpkgs.lib.mkAliasOptionModule
-                  [ "hm" ]
+                (
+                  nixpkgs.lib.mkAliasOptionModule
+                  ["hm"]
                   [
                     "home-manager"
                     "users"
@@ -216,20 +194,17 @@
                     };
                     useGlobalPkgs = true;
                     useUserPackages = true;
-                    users.${user} =
-                      { ... }:
-                      {
-                        nixpkgs.config.allowUnfree = true;
-                      };
+                    users.${user} = {...}: {
+                      nixpkgs.config.allowUnfree = true;
+                    };
                   };
                 }
               ];
             };
 
-          vivobook =
-            let
-              shell = "fish";
-            in
+          vivobook = let
+            shell = "fish";
+          in
             nixpkgs.lib.nixosSystem {
               system = "x86_64-linux";
               specialArgs = {
@@ -244,8 +219,9 @@
                 nur.modules.nixos.default
                 ./hosts/nixos
                 ./config/default.nix
-                (nixpkgs.lib.mkAliasOptionModule
-                  [ "hm" ]
+                (
+                  nixpkgs.lib.mkAliasOptionModule
+                  ["hm"]
                   [
                     "home-manager"
                     "users"
@@ -267,37 +243,33 @@
                         ;
                     };
                     useGlobalPkgs = true;
-                    users.${user} =
-                      { ... }:
-                      {
-                        imports = [
-                          ./hosts/nixos/home.nix
-                          ./home-manager
-                        ];
-                      };
+                    users.${user} = {...}: {
+                      imports = [
+                        ./hosts/nixos/home.nix
+                        ./home-manager
+                      ];
+                    };
                   };
                 }
               ];
             };
 
-          server =
-            let
-              user = "utm";
-              shell = "fish";
-            in
+          server = let
+            user = "utm";
+            shell = "fish";
+          in
             nixpkgs.lib.nixosSystem {
               system = "aarch64-linux";
               specialArgs = {
                 inherit inputs user shell;
               };
-              modules = [ ./modules/server.nix ];
+              modules = [./modules/server.nix];
             };
 
-          deck =
-            let
-              user = "bazzite";
-              shell = "fish";
-            in
+          deck = let
+            user = "bazzite";
+            shell = "fish";
+          in
             nixpkgs.lib.nixosSystem {
               system = "x86_64-linux";
               specialArgs = {
@@ -310,8 +282,9 @@
                 nur.modules.nixos.default
                 ./config
 
-                (nixpkgs.lib.mkAliasOptionModule
-                  [ "hm" ]
+                (
+                  nixpkgs.lib.mkAliasOptionModule
+                  ["hm"]
                   [
                     "home-manager"
                     "users"
@@ -333,24 +306,21 @@
                         ;
                     };
                     useGlobalPkgs = true;
-                    users.${user} =
-                      { ... }:
-                      {
-                        imports = [
-                          ./hosts/deck/home.nix
-                          ./home-manager
-                        ];
-                      };
+                    users.${user} = {...}: {
+                      imports = [
+                        ./hosts/deck/home.nix
+                        ./home-manager
+                      ];
+                    };
                   };
                 }
               ];
             };
 
-          wsl =
-            let
-              user = "akali";
-              shell = "fish";
-            in
+          wsl = let
+            user = "akali";
+            shell = "fish";
+          in
             nixpkgs-stable.lib.nixosSystem {
               system = "x86_64-linux";
               specialArgs = {
@@ -374,42 +344,38 @@
                     };
                     useGlobalPkgs = true;
                     useUserPackages = true;
-                    users.${user} =
-                      { ... }:
-                      {
-                        imports = [ ./hosts/wsl/home.nix ];
-                      };
+                    users.${user} = {...}: {
+                      imports = [./hosts/wsl/home.nix];
+                    };
                   };
                 }
               ];
             };
         };
 
-        homeConfigurations =
-          let
-            pkgs = nixpkgs.legacyPackages."x86_64-linux";
-            user = "bazzite";
-            shell = "fish";
-          in
-          {
-            bazzite = home-manager.lib.homeManagerConfiguration {
-              extraSpecialArgs = {
-                inherit
-                  inputs
-                  shell
-                  gitUser
-                  email
-                  user
-                  self
-                  ;
-              };
-              inherit pkgs;
-              modules = [
-                ./home/home.nix
-                ./overlays/default.nix
-              ];
+        homeConfigurations = let
+          pkgs = nixpkgs.legacyPackages."x86_64-linux";
+          user = "bazzite";
+          shell = "fish";
+        in {
+          bazzite = home-manager.lib.homeManagerConfiguration {
+            extraSpecialArgs = {
+              inherit
+                inputs
+                shell
+                gitUser
+                email
+                user
+                self
+                ;
             };
+            inherit pkgs;
+            modules = [
+              ./home/home.nix
+              ./overlays/default.nix
+            ];
           };
+        };
 
         homeManagerModules = import ./config;
       };
