@@ -21,6 +21,7 @@ in
           isNormalUser = true;
           description = "${user}";
           extraGroups = [
+            "users"
             "networkmanager"
             "wheel"
             "audio"

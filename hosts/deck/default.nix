@@ -81,6 +81,7 @@
     '';
   };
 
+  environment.systemPackages = [ pkgs.vesktop pkgs.lutris pkgs.heroic ];
   # Autostart steam in kde
   environment.etc."xdg/autostart/steam.desktop".source = "${pkgs.steam}/share/applications/steam.desktop"; 
 

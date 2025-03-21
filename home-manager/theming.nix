@@ -4,16 +4,18 @@
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   cfg = config.custom.theming;
   inherit (lib) mkIf mkEnableOption;
-in
-{
-  options.custom.theming.enable = mkEnableOption "Enable theming";
+in {
+  options.custom.theming = {
+    enable = mkEnableOption "Enable theming";
+    gtk.enable = mkEnableOption "gtk" // {default = cfg.enable;};
+    qt.enable = mkEnableOption "qt" // {default = cfg.enable;};
+  };
 
   config = mkIf cfg.enable {
-    qt = {
+    qt = mkIf cfg.qt.enable {
       enable = true;
       platformTheme = "gtk";
       style = {
@@ -22,18 +24,19 @@ in
       };
     };
 
-    gtk = {
+    gtk = mkIf cfg.gtk.enable {
       enable = true;
       gtk3.bookmarks = let
         xdg-dirs = config.xdg.userDirs;
-        xdg-entries = (builtins.filter (elem: builtins.isString elem) (builtins.attrValues xdg-dirs));
-        toBookmark = name:
-          "file://${name}";
-      in [
-        "file:///home/yvess/Gdrive/Uni"
-        "file:///home/yvess/Gdrive/Docs"
-        "file:///home/yvess/Notes"
-      ] ++ (builtins.map toBookmark xdg-entries);
+        xdg-entries = builtins.filter (elem: builtins.isString elem) (builtins.attrValues xdg-dirs);
+        toBookmark = name: "file://${name}";
+      in
+        [
+          "file:///home/yvess/Gdrive/Uni"
+          "file:///home/yvess/Gdrive/Docs"
+          "file:///home/yvess/Notes"
+        ]
+        ++ (builtins.map toBookmark xdg-entries);
       theme = {
         name = "catppuccin-frappe-blue-standard";
         package = pkgs.catppuccin-gtk;

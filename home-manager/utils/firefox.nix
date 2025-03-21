@@ -58,6 +58,7 @@ in
           "svg.context-properties.content.enabled" = true;
 
           "pdfjs.disabled" = true;
+          "sidebar.verticalTabs" = true;
 
           "browser.aboutConfig.showWarning" = false;
         };

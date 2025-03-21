@@ -6,10 +6,13 @@
   ...
 }:
 let
-  inherit (lib) mkMerge;
+  cfg = config.custom.fonts;
+  inherit (lib) mkMerge mkEnableOption mkIf;
 in
 {
-  config = mkMerge [
+  options.custom.fonts.enable = mkEnableOption "Enable fonts";
+
+  config = mkIf cfg.enable (mkMerge [
     {
       fonts = {
         fonts = with pkgs; [
@@ -33,5 +36,5 @@ in
         };
       };
     }
-  ];
+  ]);
 }
