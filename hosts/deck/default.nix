@@ -1,5 +1,10 @@
-{ pkgs, lib, ... }:
 {
+  pkgs,
+  lib,
+  user,
+  config,
+  ...
+}: {
   imports = [
     ./hardware.nix
   ];
@@ -15,7 +20,22 @@
     };
 
     devices.steamdeck.enable = true;
-    decky-loader.enable = true;
+    decky-loader = {
+      enable = true;
+      # TODO: FIGURE OUT WHY fantastic cannot create in `/tmp/`
+      stateDir = "${config.users.users.${user}.home}/.local/share/decky";
+
+      extraPackages = with pkgs; [
+        curl
+        unzip
+        util-linux
+        gnugrep
+        readline
+        procps
+        pciutils
+        libpulseaudio
+      ];
+    };
   };
 
   programs = {
@@ -27,6 +47,10 @@
       remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
       dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
       localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+
+      extraPackages = with pkgs; [
+        kdePackages.breeze
+      ];
     };
   };
 
@@ -45,7 +69,7 @@
 
         mirroredBoots = [
           {
-            devices = [ "nodev" ];
+            devices = ["nodev"];
             path = "/boot";
           }
         ];
@@ -74,16 +98,16 @@
   };
 
   systemd.services.flatpak-repo = {
-    wantedBy = [ "multi-user.target" ];
-    path = [ pkgs.flatpak ];
+    wantedBy = ["multi-user.target"];
+    path = [pkgs.flatpak];
     script = ''
       flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
     '';
   };
 
-  environment.systemPackages = [ pkgs.vesktop pkgs.lutris pkgs.heroic ];
+  environment.systemPackages = [pkgs.vesktop pkgs.lutris pkgs.heroic pkgs.steam-rom-manager];
   # Autostart steam in kde
-  environment.etc."xdg/autostart/steam.desktop".source = "${pkgs.steam}/share/applications/steam.desktop"; 
+  environment.etc."xdg/autostart/steam.desktop".source = "${pkgs.steam}/share/applications/steam.desktop";
 
   # Set your time zone.
   time.timeZone = "Asia/Makassar";
