@@ -5,9 +5,35 @@
   vim = {
     luaConfigPre = ''
       vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled(), { bufnr })
+      vim.opt.undodir = os.getenv('HOME') .. '/.vim/undodir';
+      vim.opt.backupdir = os.getenv('HOME') .. '/.vim/backup';
     '';
 
     keymaps = [
+      {
+        mode = "x";
+        key = "<leader>p";
+        action = "\"_dP";
+      }
+
+      {
+        mode = "n";
+        key = "<leader>y";
+        action = "\"+y";
+      }
+
+      {
+        mode = "v";
+        key = "<leader>y";
+        action = "\"+y";
+      }
+
+      {
+        mode = "v";
+        key = "<leader>Y";
+        action = "\"+Y";
+      }
+
       {
         mode = "v";
         key = "J";
@@ -109,6 +135,13 @@
       }
 
       {
+        key = "<leader>la";
+        mode = "n";
+        action = ":Lspsaga code_action<cr>";
+        silent = true;
+      }
+
+      {
         mode = "t";
         key = "<Esc>";
         action = "<C-\\><C-n>";
@@ -153,6 +186,8 @@
       sql.enable = true;
       svelte.enable = true;
       ts.enable = true;
+      bash.enable = true;
+      clang.enable = true;
     };
 
     lsp = {
@@ -163,7 +198,11 @@
     };
 
     autopairs.nvim-autopairs.enable = true;
-    autocomplete.nvim-cmp.enable = true;
+    autocomplete = {
+      blink-cmp.enable = true;
+      blink-cmp.friendly-snippets.enable = true;
+    };
+
     snippets.luasnip.enable = true;
 
     spellcheck.enable = true;
@@ -201,6 +240,10 @@
     ui = {
       noice.enable = true;
       colorizer.enable = true;
+    };
+
+    visuals = {
+      indent-blankline.enable = true;
     };
   };
 }
