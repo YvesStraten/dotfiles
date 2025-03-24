@@ -221,6 +221,17 @@ in
                 )
               );
 
+            windowrulev2 = [
+              "float, class:^(org.gnome.Nautilus)$"
+              # make Firefox/Zen PiP window floating and sticky
+              "float, title:^(Picture-in-Picture)$"
+              "pin, title:^(Picture-in-Picture)$"
+              "idleinhibit focus, class:^(mpv|.+exe)$"
+              "idleinhibit focus, class:^(firefox)$, title:^(.*YouTube.*)$"
+              "idleinhibit fullscreen, class:^(firefox)$"
+
+            ];
+
           };
 
         extraConfig = with pkgs; ''
@@ -282,51 +293,6 @@ in
             pseudotile = true # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
             preserve_split = true # you probably want this
           }
-
-
-          windowrule = float, file_progress
-          windowrule = float, blueman-manager
-          windowrule = float, confirm
-          windowrule = float, dialog
-          windowrule = float, download
-          windowrule = float, notification
-          windowrule = float, error
-          windowrule = float, splashhyprl
-          windowrule = float, confirmreset
-          windowrule = float, title:Open File
-          windowrule = float, title:branchdialog
-          windowrule = float, Rofi
-          windowrule = animation none,Rofi
-          windowrule = float,viewnior
-          windowrule = float,feh
-          windowrule = float, org.gnome.Nautilus
-          windowrule = size 1071 658, org.gnome.Nautilus
-          windowrule = float, pavucontrol-qt
-          windowrule = float, pavucontrol
-          windowrule = float, whatsapp-for-linux
-          windowrule = pin, whatsapp-for-linux
-          windowrule = float, file-roller
-          windowrule = fullscreen, wlogout
-          windowrule = float, title:wlogout
-          windowrule = fullscreen, title:wlogout
-          windowrule = fullscreen, dunst
-          windowrule = idleinhibit focus, mpv
-          windowrule = idleinhibit lutris
-          windowrule = idleinhibit steam
-          windowrule = idleinhibit fullscreen, brave
-          windowrule = float, title:^(Media viewer)$
-          windowrule = float, title:^(Volume Control)$
-          windowrule = float, title:^(Picture-in-Picture)$
-          windowrule = size 800 600, class:^(org.pulseaudio.pavucontrol)$
-          windowrule = move 75 44%, title:^(org.pulseaudio.pavucontrol)$
-          # windowrulev2 = immediate, title:^(Heroic Games Launcher)$
-
-          windowrulev2 = size 800 450, title:(Picture-in-Picture)
-          windowrulev2 = pin, title:^(Picture-in-Picture)$
-          windowrulev2 = float, title:^(Firefox)$
-          windowrulev2 = size 800 450, title:(Firefox)
-          windowrulev2 = pin, title:^(Firefox)$ 
-
 
           misc {
                disable_hyprland_logo = true
