@@ -133,14 +133,6 @@
         action = "Nzzzv";
         silent = true;
       }
-
-      {
-        key = "<leader>la";
-        mode = "n";
-        action = ":Lspsaga code_action<cr>";
-        silent = true;
-      }
-
       {
         mode = "t";
         key = "<Esc>";
@@ -154,6 +146,8 @@
       name = "gruvbox";
       style = "dark";
     };
+
+    treesitter.context.enable = true;
 
     languages = {
       enableLSP = true;
@@ -194,6 +188,9 @@
       formatOnSave = true;
       lspsaga.enable = true;
       trouble.enable = true;
+      lightbulb.enable = true;
+      lsplines.enable = true;
+      nvim-docs-view.enable = true;
       otter-nvim.enable = true;
     };
 
@@ -237,13 +234,29 @@
       scrolloff = 8;
     };
 
+    dashboard.alpha.enable = true;
+
+    notes = {
+      todo-comments.enable = true;
+    };
+
     ui = {
       noice.enable = true;
       colorizer.enable = true;
+      borders.enable = true;
+      fastaction.enable = true;
     };
 
     visuals = {
       indent-blankline.enable = true;
     };
+
+    utility = {
+      surround.enable = true;
+    };
+
+    comments.comment-nvim.enable = true;
+
+    presence.neocord.enable = true;
   };
 }
