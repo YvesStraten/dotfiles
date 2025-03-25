@@ -87,6 +87,7 @@
     power.enable = lib.mkForce false;
     boot.enable = lib.mkForce false;
     bluetooth.enable = lib.mkForce false;
+    virtualisation.docker.enable = true;
     # Done by jovian
     sound.enable = true;
   };

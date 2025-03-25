@@ -4,43 +4,55 @@
   pkgs,
   lib,
   ...
-}:
-let
+}: let
   cfg = config.custom.virtualisation;
   inherit (lib) mkMerge mkEnableOption mkIf;
-in
-{
-  options.custom.virtualisation.enable = mkEnableOption "Enable virtualisation";
+in {
+  options = {
+    custom.virtualisation = {
+      enable = mkEnableOption "Enable virtualisation";
+      libvirt.enable = mkEnableOption "Enable libvirt" // {default = cfg.enable;};
+      docker.enable = mkEnableOption "Enable libvirt" // {default = cfg.enable;};
+    };
+  };
 
-  config = mkIf cfg.enable {
-    virtualisation = {
-      libvirtd = {
-        enable = true;
-        qemu = {
-          package = pkgs.qemu_kvm;
-          runAsRoot = true;
-          swtpm.enable = true;
+  config = mkMerge [
+    (mkIf cfg.libvirt.enable {
+      virtualisation = {
+        libvirtd = mkIf cfg.libvirt.enable {
+          enable = true;
+          qemu = {
+            package = pkgs.qemu_kvm;
+            runAsRoot = true;
+            swtpm.enable = true;
 
-          vhostUserPackages = [ pkgs.virtiofsd ];
+            vhostUserPackages = [pkgs.virtiofsd];
 
-          ovmf = {
-            enable = true;
-            packages = [
-              (pkgs.OVMF.override {
-                secureBoot = true;
-                tpmSupport = true;
-              }).fd
-            ];
+            ovmf = {
+              enable = true;
+              packages = [
+                (pkgs.OVMF.override {
+                  secureBoot = true;
+                  tpmSupport = true;
+                })
+                .fd
+              ];
+            };
           };
         };
       };
 
-      docker.enable = true;
-    };
+      environment.systemPackages = with pkgs; [
+        virt-manager
+      ];
+    })
 
-    environment.systemPackages = with pkgs; [
-      distrobox
-      virt-manager
-    ];
-  };
+    (mkIf cfg.docker.enable {
+      virtualisation.docker.enable = true;
+      environment.systemPackages = with pkgs; [
+        distrobox
+        virt-manager
+      ];
+    })
+  ];
 }
