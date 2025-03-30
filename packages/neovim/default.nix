@@ -1,4 +1,5 @@
-{...}: {
+{ ... }:
+{
   imports = [
   ];
 
@@ -173,10 +174,10 @@
           },
         '';
         crates.enable = true;
-        format.enable = true;
       };
 
       java.enable = true;
+      haskell.enable = true;
       sql.enable = true;
       svelte.enable = true;
       ts.enable = true;
@@ -195,10 +196,8 @@
     };
 
     autopairs.nvim-autopairs.enable = true;
-    autocomplete = {
-      blink-cmp.enable = true;
-      blink-cmp.friendly-snippets.enable = true;
-    };
+
+    autocomplete.nvim-cmp.enable = true;
 
     snippets.luasnip.enable = true;
 
