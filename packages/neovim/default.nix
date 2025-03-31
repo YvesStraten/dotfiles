@@ -1,5 +1,4 @@
-{ ... }:
-{
+{...}: {
   imports = [
   ];
 
@@ -188,9 +187,9 @@
     lsp = {
       formatOnSave = true;
       lspsaga.enable = true;
+      lspkind.enable = true;
       trouble.enable = true;
       lightbulb.enable = true;
-      lsplines.enable = true;
       nvim-docs-view.enable = true;
       otter-nvim.enable = true;
     };
@@ -224,6 +223,23 @@
     };
 
     filetree.neo-tree.enable = true;
+    filetree.neo-tree.setupOpts = {
+      enable_cursor_hijack = true;
+      reveal = true;
+      window.width = 25;
+      filesystem = {
+        filtered_items = {
+          hide_dotfiles = false;
+          hide_gitignored = false;
+          hide_hidden = false;
+        };
+
+        follow_current_file = {
+          enabled = true;
+          leave_dirs_open = true;
+        };
+      };
+    };
 
     git.gitsigns.enable = true;
 
