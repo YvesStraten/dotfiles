@@ -92,6 +92,15 @@
     sound.enable = true;
   };
 
+  services.printing = {
+    enable = true;
+    drivers = [
+      pkgs.gutenprintBin
+      pkgs.gutenprint
+      pkgs.cnijfilter2
+    ];
+  };
+
   networking.networkmanager.enable = true;
   services = {
     desktopManager.plasma6.enable = true;

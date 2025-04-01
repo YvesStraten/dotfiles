@@ -17,7 +17,6 @@
       ];
     };
 
-    thunderbird.enable = lib.mkForce false;
     theming = {
       enable = true;
       gtk.enable = false;
