@@ -115,7 +115,7 @@
     '';
   };
 
-  environment.systemPackages = [pkgs.vesktop pkgs.lutris pkgs.heroic pkgs.steam-rom-manager];
+  environment.systemPackages = with pkgs; [vesktop lutris heroic steam-rom-manager mangohud mangojuice prismlauncher];
   # Autostart steam in kde
   environment.etc."xdg/autostart/steam.desktop".source = "${pkgs.steam}/share/applications/steam.desktop";
 
