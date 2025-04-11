@@ -5,6 +5,7 @@
 }: {
   custom = {
     fish.enable = true;
+    tmux.enable = true;
     kitty.enable = true;
     firefox.enable = true;
     utils.enable = lib.mkForce false;
@@ -13,7 +14,10 @@
     general = {
       enable = true;
       extraPackages = with pkgs; [
-        libreoffice
+        libreoffice-qt6-fresh
+        zotero
+        temurin-jre-bin-17
+        teams-for-linux
       ];
     };
 
