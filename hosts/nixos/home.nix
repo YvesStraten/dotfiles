@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   custom = {
     fish.enable = true;
     hyprland.enable = true;
@@ -7,10 +6,10 @@
     emacs.enable = true;
     tmux.enable = true;
     languages.enable = true;
+    office.enable = true;
     theming.enable = true;
 
     general.extraPackages = with pkgs; [
-      libreoffice
       spotify
       obs-studio
 

@@ -20,6 +20,7 @@ in
     ./general.nix
     ./alt-tab.nix
     ./syncthing.nix
+    ./office.nix
   ];
 
   options.custom.utils.enable = mkEnableOption "Enable utils" // {
