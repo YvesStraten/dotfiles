@@ -12,7 +12,7 @@ in
 {
   config = mkIf cfg.enable (mkMerge [
     {
-      custom.power.enable = mkForce false;
+      services.power-profiles-daemon.enable = mkForce false;
     }
 
     {

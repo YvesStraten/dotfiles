@@ -39,6 +39,8 @@ in
     {
       dconf.settings = {
         "org/gnome/shell" = {
+          disable-user-extensions = false;
+
           favorite-apps = [
             "firefox.desktop"
             "org.gnome.Nautilus.desktop"
