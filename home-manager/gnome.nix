@@ -51,6 +51,10 @@ in
           enabled-extensions = builtins.map (extension: "${extension.extensionUuid}") cfg.extensions;
         };
 
+        "org/gnome/desktop/wm/preferences" = {
+          button-layout = "appmenu:minimize,maximize,close";
+        };
+
         "org/gnome/desktop/interface" = {
           color-scheme = "prefer-dark";
           clock-show-seconds = true;
