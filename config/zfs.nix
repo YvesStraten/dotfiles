@@ -1,6 +1,7 @@
 {
   config,
   options,
+  pkgs, 
   lib,
   ...
 }:
@@ -69,5 +70,9 @@ in
         "zfs"
       ];
     };
+
+    environment.systemPackages = [
+      pkgs.sanoid
+    ];
   };
 }
