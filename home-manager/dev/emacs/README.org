@@ -480,7 +480,7 @@
 
 ** Text
 *** Centered
-#+begin_src elisp
+#+begin_src elisp :tangle no
   (use-package centered-window
     :defer
     :hook (org-mode . centered-window-mode)
@@ -814,9 +814,9 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
     :general
     (ys/leader-keys
       "pc" '(project-compile :wk "Compile project")
-      "SPC" '(ys/project-find-or-switch :wk "Find file")
+      "ff" '(ys/project-find-or-switch :wk "Find file")
       "pp" '(ys/project-new-persp :wk "Switch project")
-      "/" '(ys/project-rg :wk "Ripgrep")
+      "fg" '(ys/project-rg :wk "Ripgrep")
       ))
 #+end_src
 
@@ -1092,6 +1092,11 @@ Provides nice todos inside of [[Git][Magit]]
     (global-treesit-auto-mode))
 #+end_src
 
+*** Haskell
+#+begin_src elisp
+  (use-package haskell-mode)
+  (use-package lsp-haskell)
+#+end_src
 ** Lsp-mode
 #+begin_src elisp
   (use-package lsp-mode
@@ -1105,6 +1110,7 @@ Provides nice todos inside of [[Git][Magit]]
     :config
     (setq lsp-inlay-hint-enable t
           lsp-enable-folding t
+          lsp-ui-sideline-show-hover t
           lsp-enable-snippet t))
 
   (use-package lsp-ui :commands lsp-ui-mode)
