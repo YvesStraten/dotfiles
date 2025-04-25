@@ -23,21 +23,4 @@
       qpwgraph
     ];
   };
-
-  systemd.user.services = {
-    "Rclone-onedrive-mount" = {
-      Unit = {
-        Description = "Mount rclone";
-      };
-
-      Service = {
-        Type = "notify";
-        ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p ${config.home.homeDirectory}/Onedrive";
-        ExecStart = "${pkgs.rclone}/bin/rclone mount Onedrive:Uni ${config.home.homeDirectory}/Onedrive/ --vfs-cache-mode full";
-        ExecStop = "${pkgs.fuse}/bin/fusermount -u ${config.home.homeDirectory}/Onedrive";
-      };
-
-      Install.WantedBy = ["default.target"];
-    };
-  };
 }
