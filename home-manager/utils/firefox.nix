@@ -45,12 +45,18 @@ in
       };
       profiles.yvess = {
         isDefault = true;
-        extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
-          react-devtools
-          darkreader
-          ublock-origin
-          # sidebery
-        ] ++ (if cfg.enablePwas then [ pwas-for-firefox ] else []);
+        extensions.packages = with pkgs.nur.repos.rycee.firefox-addons;
+          [
+            react-devtools
+            darkreader
+            ublock-origin
+            zotero-connector
+          ]
+          ++ (
+            if cfg.enablePwas
+            then [pwas-for-firefox]
+            else []
+          );
         settings = {
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
           "layers.acceleration.force-enabled" = true;

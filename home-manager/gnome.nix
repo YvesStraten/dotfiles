@@ -27,6 +27,9 @@ in
         espresso
         dock-from-dash
         gsconnect
+        advanced-alttab-window-switcher
+        tiling-shell
+        color-picker
       ];
 
       description = ''
@@ -39,6 +42,8 @@ in
     {
       dconf.settings = {
         "org/gnome/shell" = {
+          disable-user-extensions = false;
+
           favorite-apps = [
             "firefox.desktop"
             "org.gnome.Nautilus.desktop"
@@ -49,13 +54,17 @@ in
           enabled-extensions = builtins.map (extension: "${extension.extensionUuid}") cfg.extensions;
         };
 
+        "org/gnome/desktop/wm/preferences" = {
+          button-layout = "appmenu:minimize,maximize,close";
+        };
+
         "org/gnome/desktop/interface" = {
           color-scheme = "prefer-dark";
           clock-show-seconds = true;
         };
 
         "org/gnome/shell/extensions/user-theme" = {
-          name = "Catppuccin-Frappe-Standard-Blue-Dark";
+          name = "catppuccin-frappe-blue-standard";
         };
       };
     }

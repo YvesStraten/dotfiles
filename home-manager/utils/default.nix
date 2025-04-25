@@ -20,6 +20,7 @@ in
     ./general.nix
     ./alt-tab.nix
     ./syncthing.nix
+    ./office.nix
   ];
 
   options.custom.utils.enable = mkEnableOption "Enable utils" // {
@@ -43,17 +44,6 @@ in
       };
 
       programs.nh.enable = true;
-
-      services.rclone-bisync = {
-        enable = true;
-        enableTimers = false;
-        bisyncs = {
-          onedrive = {
-            remotePath = "Onedrive:Uni";
-            localPath = "${config.home.homeDirectory}/Gdrive/Uni";
-          };
-        };
-      };
     })
   ];
 }

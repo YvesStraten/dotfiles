@@ -1,5 +1,8 @@
-{ pkgs, ... }:
 {
+  pkgs,
+  config,
+  ...
+}: {
   imports = [
     ../../overlays/default.nix
     ./hardware.nix
@@ -8,6 +11,7 @@
   custom = {
     nvidia.enable = true;
     virtualisation.enable = true;
+    fonts.enable = true;
     tailscale.enable = true;
   };
 
@@ -39,6 +43,28 @@
       pkgs.cnijfilter2
     ];
   };
+
+  systemd.services."Rclone-onedrive-mount" = {
+    unitConfig = {
+      Description = "Mount rclone";
+      After = "network-online.target";
+      Requires = "network-online.target";
+    };
+
+    serviceConfig = let
+      inherit (config.users.users) yvess;
+    in {
+      User = "${yvess.name}";
+      Group = "${yvess.group}";
+      ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p ${yvess.home}/Onedrive";
+      ExecStart = "+${pkgs.rclone}/bin/rclone mount Onedrive:Uni ${yvess.home}/Onedrive/ --vfs-cache-mode full --allow-other";
+      ExecStop = "+${pkgs.fuse}/bin/fusermount -u ${yvess.home}/Onedrive";
+    };
+
+    wantedBy = ["multi-user.target"];
+  };
+
+  programs.fuse.userAllowOther = true;
 
   services.flatpak.enable = true;
 
