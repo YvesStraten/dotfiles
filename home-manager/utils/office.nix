@@ -16,10 +16,21 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     (mkIf cfg.libreoffice.enable {
-      home.packages = with pkgs; [
-        libreoffice
-        zotero
-      ];
+      home.packages = builtins.attrValues {
+        inherit
+          (pkgs)
+          libreoffice
+          zotero
+          hunspell
+          ;
+        inherit
+          (pkgs.hunspellDicts)
+          en_US-large
+          de_DE
+          en_GB-large
+          it_IT
+          ;
+      };
     })
 
     (mkIf cfg.latex.enable {
