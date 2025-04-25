@@ -1,5 +1,8 @@
-{ pkgs, ... }:
 {
+  pkgs,
+  config,
+  ...
+}: {
   imports = [
     ../../overlays/default.nix
     ./hardware.nix
@@ -8,6 +11,7 @@
   custom = {
     nvidia.enable = true;
     virtualisation.enable = true;
+    fonts.enable = true;
     tailscale.enable = true;
   };
 
