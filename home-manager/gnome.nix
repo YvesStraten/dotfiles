@@ -27,6 +27,9 @@ in
         espresso
         dock-from-dash
         gsconnect
+        advanced-alttab-window-switcher
+        tiling-shell
+        color-picker
       ];
 
       description = ''
