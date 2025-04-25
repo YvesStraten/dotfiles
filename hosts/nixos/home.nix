@@ -1,7 +1,8 @@
 {pkgs, ...}: {
   custom = {
     fish.enable = true;
-    hyprland.enable = true;
+    # hyprland.enable = true;
+    gnome.enable = true;
     kitty.enable = true;
     emacs.enable = true;
     tmux.enable = true;
