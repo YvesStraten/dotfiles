@@ -1,9 +1,8 @@
-{
-  pkgs,
-  lib,
-  user,
-  config,
-  ...
+{ pkgs
+, lib
+, user
+, config
+, ...
 }: {
   imports = [
     ./hardware.nix
@@ -21,9 +20,7 @@
 
     devices.steamdeck.enable = true;
     decky-loader = {
-      enable = true;
-      # TODO: FIGURE OUT WHY fantastic cannot create in `/tmp/`
-      stateDir = "${config.users.users.${user}.home}/.local/share/decky";
+      enable = false;
 
       extraPackages = with pkgs; [
         curl
@@ -50,37 +47,56 @@
 
       extraPackages = with pkgs; [
         kdePackages.breeze
+        mangohud
       ];
     };
+
+    gamescope.enable = true;
   };
 
-  boot = {
-    supportedFilesystems = [
-      "ntfs"
-      "btrfs"
-    ];
+  boot =
+    let
+      kernelParams = [
+        "spi_amd.speed_dev=1"
+        "log_buf_len=4M"
+        "amd_iommu=off"
+        "amdgpu.lockup_timeout=5000,10000,10000,5000"
+        "amdgpu.gttsize=8128"
+        "amdgpu.sched_hw_submission=4"
+        "audit=0"
+        "loglevel=4"
+        "video=DP-1:rotate=90"
+        "video=eDP-1:rotate=180"
+      ];
+    in
+    {
+      kernelParams = lib.mkForce kernelParams;
+      supportedFilesystems = [
+        "ntfs"
+        "btrfs"
+      ];
 
-    loader = {
-      timeout = 0;
-      grub = {
-        enable = true;
-        efiSupport = true;
-        useOSProber = true;
+      loader = {
+        timeout = 0;
+        grub = {
+          enable = true;
+          efiSupport = true;
+          useOSProber = true;
 
-        mirroredBoots = [
-          {
-            devices = ["nodev"];
-            path = "/boot";
-          }
-        ];
-      };
+          mirroredBoots = [
+            {
+              devices = [ "nodev" ];
+              path = "/boot";
+            }
+          ];
+        };
 
-      efi = {
-        canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot/";
+        efi = {
+          canTouchEfiVariables = true;
+          efiSysMountPoint = "/boot/";
+        };
       };
     };
-  };
 
   custom = {
     zfs.enable = lib.mkForce false;
@@ -108,14 +124,14 @@
   };
 
   systemd.services.flatpak-repo = {
-    wantedBy = ["multi-user.target"];
-    path = [pkgs.flatpak];
+    wantedBy = [ "multi-user.target" ];
+    path = [ pkgs.flatpak ];
     script = ''
       flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
     '';
   };
 
-  environment.systemPackages = with pkgs; [vesktop lutris heroic steam-rom-manager mangohud mangojuice prismlauncher];
+  environment.systemPackages = with pkgs; [ vesktop lutris heroic steam-rom-manager mangohud mangojuice prismlauncher r2modman ];
   # Autostart steam in kde
   environment.etc."xdg/autostart/steam.desktop".source = "${pkgs.steam}/share/applications/steam.desktop";
 
