@@ -4,3 +4,5 @@ result/
 home-manager/dev/emacs/init.el
 home-manager/dev/emacs/early-init.el
 .DS_Store
+.pre-commit-config.yaml
+.direnv
