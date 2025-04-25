@@ -44,17 +44,6 @@ in
       };
 
       programs.nh.enable = true;
-
-      services.rclone-bisync = {
-        enable = true;
-        enableTimers = false;
-        bisyncs = {
-          onedrive = {
-            remotePath = "Onedrive:Uni";
-            localPath = "${config.home.homeDirectory}/Gdrive/Uni";
-          };
-        };
-      };
     })
   ];
 }
