@@ -37,7 +37,7 @@ in
       package = mkOption {
         default =
           with pkgs;
-          ((emacsPackagesFor pkgs.emacs30).emacsWithPackages (
+          ((emacsPackagesFor pkgs.emacs30-pgtk).emacsWithPackages (
             epkgs: with epkgs; [
 
               vterm
@@ -80,7 +80,6 @@ in
         jq
 
         ispell
-        languagetool
         nil
         texlab
         sumneko-lua-language-server
