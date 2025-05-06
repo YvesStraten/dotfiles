@@ -1,9 +1,8 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
 let
   cfg = config.custom.gnome;
@@ -51,7 +50,7 @@ in
             "kitty.desktop"
           ];
 
-          enabled-extensions = builtins.map (extension: "${extension.extensionUuid}") cfg.extensions;
+          enabled-extensions = builtins.map (extension: "${extension.extensionUuid}") cfg.extensions ++ [ "user-theme@gnome-shell-extensions.gcampax.github.com" ];
         };
 
         "org/gnome/desktop/wm/preferences" = {
