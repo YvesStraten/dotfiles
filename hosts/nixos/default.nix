@@ -1,7 +1,6 @@
-{
-  pkgs,
-  config,
-  ...
+{ pkgs
+, config
+, ...
 }: {
   imports = [
     ../../overlays/default.nix
@@ -51,17 +50,26 @@
       Requires = "network-online.target";
     };
 
-    serviceConfig = let
-      inherit (config.users.users) yvess;
-    in {
-      User = "${yvess.name}";
-      Group = "${yvess.group}";
-      ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p ${yvess.home}/Onedrive";
-      ExecStart = "+${pkgs.rclone}/bin/rclone mount Onedrive:Uni ${yvess.home}/Onedrive/ --vfs-cache-mode full --allow-other";
-      ExecStop = "+${pkgs.fuse}/bin/fusermount -u ${yvess.home}/Onedrive";
-    };
+    serviceConfig =
+      let
+        inherit (config.users.users) yvess;
+      in
+      {
+        User = "${yvess.name}";
+        Group = "${yvess.group}";
+        ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p ${yvess.home}/Onedrive";
+        ExecStart = "+${pkgs.rclone}/bin/rclone mount Onedrive:Uni ${yvess.home}/Onedrive/ --vfs-cache-mode full --allow-other";
+        ExecStop = "+${pkgs.fuse}/bin/fusermount -u ${yvess.home}/Onedrive";
+      };
 
-    wantedBy = ["multi-user.target"];
+    wantedBy = [ "multi-user.target" ];
+  };
+
+  fileSystems = {
+    "/home/yvess/Emulation" = {
+      device = "zroot/home/emulation";
+      fsType = "zfs";
+    };
   };
 
   programs.fuse.userAllowOther = true;
