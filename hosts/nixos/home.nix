@@ -14,6 +14,7 @@
     general.extraPackages = with pkgs; [
       spotify
       obs-studio
+      peaclock
 
       filezilla
       btop
