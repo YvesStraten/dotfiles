@@ -1445,22 +1445,6 @@
         "type": "github"
       }
     },
-    "nmd": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1705050560,
-        "narHash": "sha256-x3zzcdvhJpodsmdjqB4t5mkVW22V3wqHLOun0KRBzUI=",
-        "owner": "~rycee",
-        "repo": "nmd",
-        "rev": "66d9334933119c36f91a78d565c152a4fdc8d3d3",
-        "type": "sourcehut"
-      },
-      "original": {
-        "owner": "~rycee",
-        "repo": "nmd",
-        "type": "sourcehut"
-      }
-    },
     "nur": {
       "inputs": {
         "flake-parts": "flake-parts_3",
@@ -1488,19 +1472,19 @@
         "mnw": "mnw",
         "nil": "nil",
         "nixpkgs": "nixpkgs_12",
-        "nmd": "nmd",
         "systems": "systems_5"
       },
       "locked": {
-        "lastModified": 1742471089,
-        "narHash": "sha256-wiGkhJcDdg2/wy4QxaudNsU98y7CzzZpB6pnjUrNNDQ=",
-        "owner": "NotAShelf",
+        "lastModified": 1746382836,
+        "narHash": "sha256-RzRFeoyexAKbRxrpwVEvdoPUx8UWRe1vgAFxQ2vgZ18=",
+        "owner": "isaacST08",
         "repo": "nvf",
-        "rev": "3a28d05684f7f4e314eb4e56a5af624b648ab278",
+        "rev": "8c4e49ebf7b6c22bf051984e070d4748e0d7e76c",
         "type": "github"
       },
       "original": {
-        "owner": "NotAShelf",
+        "owner": "isaacST08",
+        "ref": "feature-language-tex",
         "repo": "nvf",
         "type": "github"
       }

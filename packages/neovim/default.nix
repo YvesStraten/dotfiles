@@ -1,4 +1,4 @@
-{...}: {
+{ ... }: {
   imports = [
   ];
 
@@ -156,12 +156,14 @@
       enableTreesitter = true;
 
       nix.enable = true;
-      # tex.enable = true;
-      # tex.build.builder.args = [
-      #   "-pdf"
-      #   "-shell-escape"
-      #   "%f"
-      # ];
+      tex = {
+        enable = true;
+        build.builder.args = [
+          "-pdf"
+          "-shell-escape"
+          "%f"
+        ];
+      };
 
       rust = {
         enable = true;
