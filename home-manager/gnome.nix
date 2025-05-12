@@ -6,7 +6,8 @@
 }:
 let
   cfg = config.custom.gnome;
-  inherit (lib)
+  inherit
+    (lib)
     mkEnableOption
     mkIf
     mkMerge
@@ -23,7 +24,7 @@ in
         appindicator
         pano
         forge
-        espresso
+        caffeine
         dock-from-dash
         gsconnect
         advanced-alttab-window-switcher
