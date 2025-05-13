@@ -69,6 +69,7 @@
     "/home/yvess/Emulation" = {
       device = "zroot/home/emulation";
       fsType = "zfs";
+      options = [ "x-gvfs-hide" ];
     };
   };
 
