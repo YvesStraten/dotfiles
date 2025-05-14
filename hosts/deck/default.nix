@@ -64,12 +64,19 @@
         "amdgpu.gttsize=8128"
         "amdgpu.sched_hw_submission=4"
         "audit=0"
-        "loglevel=4"
+        "loglevel=3"
         "video=DP-1:rotate=90"
         "video=eDP-1:rotate=180"
+        "quiet"
+        "splash"
       ];
     in
     {
+      plymouth = {
+        enable = true;
+        theme = "bgrt";
+      };
+
       kernelParams = lib.mkForce kernelParams;
       supportedFilesystems = [
         "ntfs"
