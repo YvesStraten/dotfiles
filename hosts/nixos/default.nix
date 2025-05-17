@@ -12,6 +12,7 @@
     virtualisation.enable = true;
     fonts.enable = true;
     tailscale.enable = true;
+    design.enable = true;
   };
 
   # Set your time zone.

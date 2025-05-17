@@ -1,8 +1,7 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }:
 let
   inherit (lib) mkMerge;
@@ -22,6 +21,7 @@ in
     ./users.nix
     ./power.nix
     ./nvidia.nix
+    ./design.nix
     ./nix-settings.nix
     ./virtualisation.nix
     ./file-sharing.nix

@@ -1,10 +1,9 @@
-{
-  config,
-  options,
-  inputs,
-  user, 
-  lib,
-  ...
+{ config
+, options
+, inputs
+, user
+, lib
+, ...
 }:
 let
   inherit (lib) mkMerge mkIf;
@@ -34,7 +33,6 @@ in
 
   config = mkMerge [
     {
-
       home = {
         username = user;
         homeDirectory = "/home/${user}";
@@ -45,7 +43,6 @@ in
     }
 
     {
-
       # Let Home Manager install and manage itself.
       programs.home-manager.enable = true;
     }

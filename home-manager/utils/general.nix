@@ -18,7 +18,6 @@ let
     tesseract
     rsync
     rclone
-    gimp3-with-plugins
     pandoc
     nix-prefetch-scripts
     inkscape
