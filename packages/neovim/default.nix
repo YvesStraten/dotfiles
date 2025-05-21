@@ -219,7 +219,7 @@
         enable = true;
         lazygit.enable = true;
         mappings = {
-          open = "<c-e>";
+          open = "<c-t>";
         };
       };
     };
@@ -271,6 +271,8 @@
     utility = {
       surround.enable = true;
     };
+
+    navigation.harpoon.enable = true;
 
     comments.comment-nvim.enable = true;
 
