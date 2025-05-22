@@ -1,7 +1,6 @@
-{
-  pkgs,
-  lib,
-  ...
+{ pkgs
+, lib
+, ...
 }: {
   custom = {
     fish.enable = true;
@@ -10,6 +9,7 @@
     firefox.enable = true;
     utils.enable = lib.mkForce false;
     emacs.enable = true;
+    mpv.enable = true;
 
     general = {
       enable = true;
