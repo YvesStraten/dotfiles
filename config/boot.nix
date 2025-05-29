@@ -1,9 +1,8 @@
-{
-  config,
-  options,
-  pkgs,
-  lib,
-  ...
+{ config
+, options
+, pkgs
+, lib
+, ...
 }:
 let
   cfg = config.custom.boot;
@@ -14,11 +13,10 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     {
-
       boot = {
         plymouth = {
           enable = true;
-          theme = "rings";
+          theme = "bgrt";
           themePackages = with pkgs; [
             # By default we would install all themes
             (adi1090x-plymouth-themes.override {
@@ -60,7 +58,6 @@ in
                 devices = [ "nodev" ];
                 path = "/boot";
               }
-
             ];
           };
 
