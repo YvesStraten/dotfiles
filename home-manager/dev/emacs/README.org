@@ -1070,26 +1070,15 @@ Provides nice todos inside of [[Git][Magit]]
 
 *** Treesitter
 #+begin_src elisp
-  (use-package tree-sitter
-    :config (global-tree-sitter-mode))
-
-  (use-package tree-sitter-langs)
-#+end_src
-
-#+begin_src elisp :tangle no
-  (use-package treesit-auto
-    :demand
-    :custom (treesit-auto-install t)
-    :config
-    (add-to-list 'auto-mode-alist '("[/\\]\\(?:Containerfile\\|Dockerfile\\)\\(?:\\.[^/\\]*\\)?\\'" . dockerfile-ts-mode))
-    (add-to-list 'auto-mode-alist '("CMakeLists\\'" . cmake-ts-mode))
-    (add-to-list 'auto-mode-alist '("\\.go\\'"      . go-ts-mode))
-    (add-to-list 'auto-mode-alist '("/go\\.mod\\'"  . go-mod-ts-mode))
-    (add-to-list 'auto-mode-alist '("\\.ts\\'"      . typescript-ts-mode))
-    (add-to-list 'auto-mode-alist '("\\.tsx\\'"     . tsx-ts-mode))
-    (add-to-list 'auto-mode-alist '("\\.rs\\'"      . rust-ts-mode))
-    (add-to-list 'auto-mode-alist '("\\.ya?ml\\'"   . yaml-ts-mode))
-    (global-treesit-auto-mode))
+  (use-package treesit
+    :elpaca nil
+    :init
+    (setq major-mode-remap-alist
+          '((rustic-mode . rust-ts-mode)
+            (dockerfile-mode . dockerfile-ts-mode)
+            (cmake-mode . cmake-ts-mode)
+            (yaml-mode . yaml-ts-mode)
+            )))
 #+end_src
 
 *** Haskell
@@ -1097,6 +1086,12 @@ Provides nice todos inside of [[Git][Magit]]
   (use-package haskell-mode)
   (use-package lsp-haskell)
 #+end_src
+*** Typst
+#+begin_src emacs-lisp
+  (use-package typst-ts-mode
+    :ensure (:type git :host codeberg :repo "meow_king/typst-ts-mode"))
+#+end_src
+
 ** Lsp-mode
 #+begin_src elisp
   (use-package lsp-mode
