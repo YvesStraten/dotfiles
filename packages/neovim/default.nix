@@ -156,14 +156,20 @@
       enableTreesitter = true;
 
       nix.enable = true;
-      # tex = {
-      #   enable = true;
-      #   build.builder.args = [
-      #     "-pdf"
-      #     "-shell-escape"
-      #     "%f"
-      #   ];
-      # };
+      tex = {
+        enable = true;
+        pdfViewer.zathura.enable = true;
+        lsp.texlab.forwardSearch.enable = true;
+        build = {
+          forwardSearchAfter = true;
+          onSave = true;
+          builder.args = [
+            "-pdf"
+            "-shell-escape"
+            "%f"
+          ];
+        };
+      };
 
       rust = {
         enable = true;
