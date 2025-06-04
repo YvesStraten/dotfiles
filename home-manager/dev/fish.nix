@@ -1,9 +1,8 @@
-{
-  config,
-  options,
-  pkgs,
-  lib,
-  ...
+{ config
+, options
+, pkgs
+, lib
+, ...
 }:
 let
   cfg = config.custom.fish;
@@ -14,35 +13,38 @@ in
 
   config = mkMerge [
     (mkIf
-    cfg.enable
-    {
-      programs.fish = {
-        enable = true;
-        shellAliases = {
-          ga = "git add";
-          gc = "git commit";
-          ".." = "cd ..";
-          "..." = "cd ../..";
+      cfg.enable
+      {
+        programs.fish = {
+          enable = true;
+          shellAliases = {
+            ga = "git add";
+            gc = "git commit";
+            ".." = "cd ..";
+            "..." = "cd ../..";
+          };
+
+          shellInit = ''
+            set -g fish_greeting
+          '';
+
+          plugins = with pkgs.fishPlugins; [
+            {
+              name = "tide";
+              src = tide.src;
+            }
+
+            {
+              name = "sponge";
+              src = sponge.src;
+            }
+          ];
         };
 
-        shellInit = ''
-          set -g fish_greeting
-        '';
-
-        plugins = with pkgs.fishPlugins; [
-          {
-            name = "tide";
-            src = tide.src;
-          }
-
-          {
-            name = "sponge";
-            src = sponge.src;
-          }
-        ];
-      };
-
-      custom.starship.enable = true;
-    })
+        custom = {
+          starship.enable = true;
+          zoxide.enable = true;
+        };
+      })
   ];
 }

@@ -10,5 +10,6 @@
     ./emacs/emacs.nix
     ./languages.nix
     ./jupyter.nix
+    ./zoxide.nix
   ];
 }
