@@ -1,17 +1,18 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
-}: let
+{ config
+, options
+, lib
+, pkgs
+, ...
+}:
+let
   cfg = config.custom.theming;
   inherit (lib) mkIf mkEnableOption;
-in {
+in
+{
   options.custom.theming = {
     enable = mkEnableOption "Enable theming";
-    gtk.enable = mkEnableOption "gtk" // {default = cfg.enable;};
-    qt.enable = mkEnableOption "qt" // {default = cfg.enable;};
+    gtk.enable = mkEnableOption "gtk" // { default = cfg.enable; };
+    qt.enable = mkEnableOption "qt" // { default = cfg.enable; };
   };
 
   config = mkIf cfg.enable {
@@ -19,21 +20,24 @@ in {
       enable = true;
       platformTheme = "gtk";
       style = {
-        name = "adwaita-dark";
-        package = pkgs.adwaita-qt;
+        name = "gtk2";
+        package = pkgs.libsForQt5.breeze-qt5;
       };
     };
 
     gtk = mkIf cfg.gtk.enable {
       enable = true;
-      gtk3.bookmarks = let
-        xdg-dirs = config.xdg.userDirs;
-        xdg-entries = builtins.filter (elem: builtins.isString elem) (builtins.attrValues xdg-dirs);
-        toBookmark = name: "file://${name}";
-      in
+      gtk3.bookmarks =
+        let
+          inherit (lib.attrsets) filterAttrs;
+          xdg-dirs = config.xdg.userDirs;
+          xdg-dirs-filtered = filterAttrs (k: v: k != "publishShare") xdg-dirs;
+          xdg-entries = builtins.filter (elem: builtins.isString elem) (builtins.attrValues xdg-dirs-filtered);
+          toBookmark = name: "file://${name}";
+        in
         [
-          "file:///home/yvess/Gdrive/Uni"
-          "file:///home/yvess/Gdrive/Docs"
+          # From onedrive service in hosts/nixos/default.nix
+          "file:///home/yvess/Onedrive/Uni"
           "file:///home/yvess/Notes"
         ]
         ++ (builtins.map toBookmark xdg-entries);
