@@ -23,6 +23,7 @@ let
     inkscape
     btop
     spotify
+    kdePackages.elisa
   ];
 in
 {
