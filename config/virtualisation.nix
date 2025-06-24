@@ -1,18 +1,19 @@
-{
-  config,
-  options,
-  pkgs,
-  lib,
-  ...
-}: let
+{ config
+, options
+, pkgs
+, lib
+, ...
+}:
+let
   cfg = config.custom.virtualisation;
-  inherit (lib) mkMerge mkEnableOption mkIf;
-in {
+  inherit (lib) mkMerge mkEnableOption mkIf mkForce;
+in
+{
   options = {
     custom.virtualisation = {
       enable = mkEnableOption "Enable virtualisation";
-      libvirt.enable = mkEnableOption "Enable libvirt" // {default = cfg.enable;};
-      docker.enable = mkEnableOption "Enable libvirt" // {default = cfg.enable;};
+      libvirt.enable = mkEnableOption "Enable libvirt" // { default = cfg.enable; };
+      docker.enable = mkEnableOption "Enable libvirt" // { default = cfg.enable; };
     };
   };
 
@@ -26,7 +27,7 @@ in {
             runAsRoot = true;
             swtpm.enable = true;
 
-            vhostUserPackages = [pkgs.virtiofsd];
+            vhostUserPackages = [ pkgs.virtiofsd ];
 
             ovmf = {
               enable = true;
@@ -34,8 +35,7 @@ in {
                 (pkgs.OVMF.override {
                   secureBoot = true;
                   tpmSupport = true;
-                })
-                .fd
+                }).fd
               ];
             };
           };
@@ -48,6 +48,7 @@ in {
     })
 
     (mkIf cfg.docker.enable {
+      systemd.services.docker.wantedBy = mkForce [ ];
       virtualisation.docker.enable = true;
       environment.systemPackages = with pkgs; [
         distrobox
