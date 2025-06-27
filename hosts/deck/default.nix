@@ -141,6 +141,7 @@
   environment.systemPackages = with pkgs; [ vesktop lutris heroic steam-rom-manager mangohud mangojuice prismlauncher r2modman ];
   # Autostart steam in kde
   environment.etc."xdg/autostart/steam.desktop".source = "${pkgs.steam}/share/applications/steam.desktop";
+  hardware.xpadneo.enable = true;
 
   # Set your time zone.
   time.timeZone = "Asia/Makassar";
