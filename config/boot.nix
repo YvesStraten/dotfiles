@@ -44,7 +44,7 @@ in
           "hpfs"
         ];
         loader = {
-          timeout = 0;
+          timeout = 4;
           grub = {
             enable = true;
             efiSupport = true;
