@@ -1,17 +1,18 @@
-{
-  config,
-  options,
-  pkgs,
-  lib,
-  ...
-}: let
+{ config
+, options
+, pkgs
+, lib
+, ...
+}:
+let
   cfg = config.custom.office;
   inherit (lib) mkEnableOption mkIf mkMerge;
-in {
+in
+{
   options.custom.office = {
     enable = mkEnableOption "Enable office tools";
-    libreoffice.enable = mkEnableOption "Enable libreoffice" // {default = cfg.enable;};
-    latex.enable = mkEnableOption "Enable latex" // {default = cfg.enable;};
+    libreoffice.enable = mkEnableOption "Enable libreoffice" // { default = cfg.enable; };
+    latex.enable = mkEnableOption "Enable latex" // { default = cfg.enable; };
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -29,6 +30,7 @@ in {
           de_DE
           en_GB-large
           it_IT
+          id_ID
           ;
       };
     })
