@@ -285,6 +285,7 @@
                         self
                         ;
                     };
+                    backupFileExtension = "backup";
                     useGlobalPkgs = true;
                     users.${user} = { ... }: {
                       imports = [
