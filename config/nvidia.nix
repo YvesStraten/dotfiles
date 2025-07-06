@@ -1,8 +1,7 @@
-{
-  config,
-  options,
-  lib,
-  ...
+{ config
+, options
+, lib
+, ...
 }:
 let
   cfg = config.custom.nvidia;
@@ -12,7 +11,6 @@ in
   options.custom.nvidia.enable = mkEnableOption "NVIDIA gpu";
 
   config = mkIf cfg.enable {
-
     services.xserver = {
       enable = true;
       xkb.layout = "us";
@@ -25,7 +23,7 @@ in
       nvidia = {
         package = config.boot.kernelPackages.nvidiaPackages.latest;
         modesetting.enable = true;
-        open = true;
+        open = false;
       };
     };
   };
