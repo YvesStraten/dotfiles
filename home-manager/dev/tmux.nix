@@ -1,9 +1,8 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
 let
   cfg = config.custom.tmux;
@@ -17,17 +16,23 @@ in
       enable = true;
       plugins = with pkgs.tmuxPlugins; [
         yank
-        sensible
-        gruvbox
-        vim-tmux-navigator
       ];
 
       baseIndex = 1;
       mouse = true;
       keyMode = "vi";
+      sensibleOnTop = true;
+      customPaneNavigationAndResize = true;
+      escapeTime = 0;
 
       extraConfig = ''
-        set -g @tmux-gruvbox "dark"
+        # Fix terminal Title display
+        set-option -g set-titles on
+        set-option -g set-titles-string "#{pane_title}"
+
+        # Status bar
+        set-option -g status-justify absolute-centre
+        set-option -g status-position top
 
         bind '"' split-window -v -c "#{pane_current_path}"
         bind % split-window -h -c "#{pane_current_path}"
