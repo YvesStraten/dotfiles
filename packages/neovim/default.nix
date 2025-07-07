@@ -156,6 +156,7 @@
       enableTreesitter = true;
 
       nix.enable = true;
+      typst.enable = true;
       tex = {
         enable = true;
         pdfViewer.zathura.enable = true;
