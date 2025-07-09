@@ -1,4 +1,5 @@
 { pkgs
+, lib
 , config
 , ...
 }: {
@@ -96,9 +97,37 @@
     };
   };
 
+  programs.nix-ld.enable = true;
   programs.fuse.userAllowOther = true;
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    localNetworkGameTransfers.openFirewall = true;
+  };
+
+  programs.gamescope.enable = true;
+  environment.systemPackages = [ pkgs.mangohud ];
 
   services.flatpak.enable = true;
+  xdg.portal.enable = true;
+
+  specialisation = {
+    hypr.configuration = {
+      config.hardware.nvidia.open = lib.mkForce true;
+
+      config.hm.custom = {
+        hyprland.enable = true;
+        gnome.enable = lib.mkForce false;
+      };
+    };
+
+    i3.configuration = {
+      config.hm.custom = {
+        i3.enable = true;
+        gnome.enable = lib.mkForce false;
+      };
+    };
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

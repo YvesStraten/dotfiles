@@ -1,9 +1,8 @@
-{
-  pkgs,
-  lib,
-  options,
-  config,
-  ...
+{ pkgs
+, lib
+, options
+, config
+, ...
 }:
 let
   cfg = config.custom.picom;
@@ -15,7 +14,7 @@ in
   config = mkIf cfg.enable {
     services.picom = {
       enable = true;
-      package = pkgs.yvess.picom-pijulius;
+      package = pkgs.picom-pijulius;
     };
 
     xdg.configFile."picom/picom.conf" = {
