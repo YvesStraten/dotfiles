@@ -1,9 +1,8 @@
-{
-  config,
-  options,
-  pkgs,
-  lib,
-  ...
+{ config
+, options
+, pkgs
+, lib
+, ...
 }:
 let
   cfg = config.custom.fonts;
@@ -20,6 +19,8 @@ in
           dejavu_fonts
           source-code-pro
           source-sans-pro
+          noto-fonts-cjk-sans
+          noto-fonts-cjk-serif
           source-serif-pro
           unifont # some international languages
         ];
@@ -28,11 +29,11 @@ in
           cache32Bit = true;
           hinting.enable = true;
           hinting.autohint = true;
-          defaultFonts = {
-            monospace = [ "Source Code Pro" ];
-            sansSerif = [ "Source Sans Pro" ];
-            serif = [ "Source Serif Pro" ];
-          };
+          # defaultFonts = {
+          #   monospace = ["Source Code Pro"];
+          #   sansSerif = ["Source Sans Pro"];
+          #   serif = ["Source Serif Pro"];
+          # };
         };
       };
     }
