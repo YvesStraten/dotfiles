@@ -1,12 +1,10 @@
-{
-  inputs,
-  pkgs,
-  lib,
-  ...
-}:
-{
+{ inputs
+, pkgs
+, lib
+, ...
+}: {
   nixpkgs.overlays = [
-    inputs.nur.overlay
+    inputs.nur.overlays.default
     inputs.firefox-darwin.overlay
     inputs.emacs-overlay.overlay
     inputs.hyprland.overlays.default
@@ -16,17 +14,21 @@
       yvess = (prev.yvess or { }) // (import ../packages/default.nix { inherit (prev) pkgs; });
 
       sddm = prev.sddm.overrideAttrs (oldAttrs: {
-        buildInputs = oldAttrs.buildInputs ++ [
-          final.qt5.qtquickcontrols2
-          final.qt5.qtgraphicaleffects
-        ];
+        buildInputs =
+          oldAttrs.buildInputs
+          ++ [
+            final.qt5.qtquickcontrols2
+            final.qt5.qtgraphicaleffects
+          ];
       });
 
-      libsForQt5 = prev.libsForQt5 // {
-        sddm = prev.libsForQt5.sddm.overrideAttrs (oldAttrs: {
-          buildInputs = oldAttrs.buildInputs ++ [ final.qt5.qtgraphicaleffects ];
-        });
-      };
+      libsForQt5 =
+        prev.libsForQt5
+        // {
+          sddm = prev.libsForQt5.sddm.overrideAttrs (oldAttrs: {
+            buildInputs = oldAttrs.buildInputs ++ [ final.qt5.qtgraphicaleffects ];
+          });
+        };
 
       ani-cli-rofi = prev.ani-cli.overrideAttrs (
         oldAttrs:
