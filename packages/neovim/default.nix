@@ -157,20 +157,21 @@
 
       nix.enable = true;
       typst.enable = true;
-      tex = {
-        enable = true;
-        pdfViewer.zathura.enable = true;
-        lsp.texlab.forwardSearch.enable = true;
-        build = {
-          forwardSearchAfter = true;
-          onSave = true;
-          builder.args = [
-            "-pdf"
-            "-shell-escape"
-            "%f"
-          ];
-        };
-      };
+      # TODO: Add when latex support is merged https://github.com/NotAShelf/nvf/pull/569
+      # tex = {
+      #   enable = true;
+      #   pdfViewer.zathura.enable = true;
+      #   lsp.texlab.forwardSearch.enable = true;
+      #   build = {
+      #     forwardSearchAfter = true;
+      #     onSave = true;
+      #     builder.args = [
+      #       "-pdf"
+      #       "-shell-escape"
+      #       "%f"
+      #     ];
+      #   };
+      # };
 
       rust = {
         enable = true;
