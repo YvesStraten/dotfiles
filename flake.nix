@@ -50,16 +50,11 @@
       flake = false;
     };
 
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      # inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nvf.url = "github:NotAShelf/nvf";
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    yazi.url = "github:sxyazi/yazi";
 
     tiny-code-action = {
       url = "github:rachartier/tiny-code-action.nvim";
@@ -89,7 +84,7 @@
     { nixpkgs
     , nixpkgs-stable
     , nur
-    , nixvim
+    , nvf
     , nixos-wsl
     , home-manager
     , home-manager-stable
@@ -117,30 +112,19 @@
 
       perSystem = { system, ... }:
         let
-          nvimConf = import ./packages/neovim;
           pkgs = import nixpkgs {
             inherit system;
             overlays = [ (import ./overlays/vim.nix { inherit inputs; }) ];
           };
-          nixvimLib = nixvim.lib.${system};
-          nixvim' = nixvim.legacyPackages.${system};
-          nvim = nixvim'.makeNixvimWithModule {
-            inherit pkgs;
-            module = nvimConf;
-            # You can use `extraSpecialArgs` to pass additional arguments to your module files
-            extraSpecialArgs = {
-              # inherit (inputs) foo;
-            };
-          };
+
+          nvim =
+            (nvf.lib.neovimConfiguration {
+              inherit pkgs;
+              modules = [ ./packages/neovim ];
+            }).neovim;
         in
         {
           checks = {
-            # Run `nix flake check .` to verify that your config is not broken
-            default = nixvimLib.check.mkTestDerivationFromNvim {
-              inherit nvim;
-              name = "A nixvim configuration";
-            };
-
             pre-commit-check = pre-commit-hooks.lib.${system}.run {
               src = ./.;
               hooks = {
@@ -151,7 +135,7 @@
 
           packages = {
             default = nvim;
-            nvim = nvim;
+            inherit nvim;
           };
 
           devShells = {
