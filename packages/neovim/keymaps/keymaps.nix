@@ -1,5 +1,0 @@
-{...}: {
-  globals.mapleader = " ";
-  keymaps = [
-  ];
-}
