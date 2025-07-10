@@ -50,13 +50,11 @@
       flake = false;
     };
 
-    nvf.url = "github:isaacST08/nvf?ref=feature-language-tex";
+    nvf.url = "github:NotAShelf/nvf";
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    yazi.url = "github:sxyazi/yazi";
 
     tiny-code-action = {
       url = "github:rachartier/tiny-code-action.nvim";
