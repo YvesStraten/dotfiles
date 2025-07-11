@@ -3,6 +3,7 @@
     ./fish.nix
     ./kitty.nix
     ./tmux.nix
+    ./neovim.nix
     ./vscode.nix
     ./zsh.nix
     ./starship.nix

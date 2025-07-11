@@ -56,11 +56,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    tiny-code-action = {
-      url = "github:rachartier/tiny-code-action.nvim";
-      flake = false;
-    };
-
     pre-commit-hooks.url = "github:cachix/git-hooks.nix";
   };
 

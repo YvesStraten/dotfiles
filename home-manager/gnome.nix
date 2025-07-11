@@ -30,6 +30,7 @@ in
         advanced-alttab-window-switcher
         tiling-shell
         color-picker
+        user-themes
       ];
 
       description = ''
@@ -51,7 +52,7 @@ in
             "kitty.desktop"
           ];
 
-          enabled-extensions = builtins.map (extension: "${extension.extensionUuid}") cfg.extensions ++ [ "user-theme@gnome-shell-extensions.gcampax.github.com" ];
+          enabled-extensions = builtins.map (extension: "${extension.extensionUuid}") cfg.extensions;
         };
 
         "org/gnome/desktop/wm/preferences" = {

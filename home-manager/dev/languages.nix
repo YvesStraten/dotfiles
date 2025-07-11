@@ -1,13 +1,14 @@
-{
-  config,
-  options,
-  pkgs,
-  lib,
-  ...
-}: let
+{ config
+, options
+, pkgs
+, lib
+, ...
+}:
+let
   cfg = config.custom.languages;
   inherit (lib) mkMerge mkEnableOption mkIf;
-in {
+in
+{
   options.custom.languages.enable = mkEnableOption "Enable languages";
 
   config = mkIf cfg.enable {
@@ -17,14 +18,12 @@ in {
 
     home.packages = with pkgs; let
       # CUDA
-      whisper-warnings = openai-whisper.override {torch = python3.pkgs.torch-bin;};
-
-      # Some closures seem to conflict, I am not insanely good at python to fix this
-      whisper-no-warnings = whisper-warnings.overridePythonAttrs (o: {
-        catchConflicts = false;
-      });
-    in [
-      (python311.withPackages (
+      packageOverrides = self: super: {
+        torch = super.torch-bin;
+      };
+    in
+    [
+      ((python311.override { inherit packageOverrides; }).withPackages (
         ps:
           with ps; [
             yt-dlp
@@ -43,7 +42,7 @@ in {
       openjdk
       dotnet-sdk
       typescript
-      whisper-no-warnings
+      openai-whisper
 
       unzip
       sshfs

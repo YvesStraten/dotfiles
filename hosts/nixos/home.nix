@@ -4,7 +4,7 @@
     # hyprland.enable = true;
     gnome.enable = true;
     kitty.enable = true;
-    emacs.enable = true;
+    nvim.enable = true;
     tmux.enable = true;
     languages.enable = true;
     office.enable = true;
