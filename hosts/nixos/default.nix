@@ -45,50 +45,6 @@
     ];
   };
 
-  systemd.services."Rclone-onedrive-mount" = {
-    unitConfig = {
-      Description = "Mount rclone onedrive";
-      After = "network-online.target";
-      Requires = "network-online.target";
-    };
-
-    serviceConfig =
-      let
-        inherit (config.users.users) yvess;
-      in
-      {
-        User = "${yvess.name}";
-        Group = "${yvess.group}";
-        ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p ${yvess.home}/Onedrive";
-        ExecStart = "+${pkgs.rclone}/bin/rclone mount Onedrive:Uni ${yvess.home}/Onedrive/ --vfs-cache-mode full --allow-other";
-        ExecStop = "+${pkgs.fuse}/bin/fusermount -u ${yvess.home}/Onedrive";
-      };
-
-    wantedBy = [ "multi-user.target" ];
-  };
-
-  systemd.services."Rclone-gdrive-life-mount" = {
-    unitConfig = {
-      Description = "Mount rclone gdrivelife";
-      After = "network-online.target";
-      Requires = "network-online.target";
-    };
-
-    serviceConfig =
-      let
-        inherit (config.users.users) yvess;
-      in
-      {
-        User = "${yvess.name}";
-        Group = "${yvess.group}";
-        ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p ${yvess.home}/Life";
-        ExecStart = "+${pkgs.rclone}/bin/rclone mount --drive-shared-with-me Gdrive:Life ${yvess.home}/Life/ --vfs-cache-mode full --allow-other";
-        ExecStop = "+${pkgs.fuse}/bin/fusermount -u ${yvess.home}/Onedrive";
-      };
-
-    wantedBy = [ "multi-user.target" ];
-  };
-
   fileSystems = {
     "/home/yvess/Emulation" = {
       device = "zroot/home/emulation";
