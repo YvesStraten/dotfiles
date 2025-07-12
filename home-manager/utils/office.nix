@@ -13,31 +13,48 @@ in
     enable = mkEnableOption "Enable office tools";
     libreoffice.enable = mkEnableOption "Enable libreoffice" // { default = cfg.enable; };
     latex.enable = mkEnableOption "Enable latex" // { default = cfg.enable; };
+    typst.enable = mkEnableOption "Enable typst" // { default = cfg.enable; };
   };
 
   config = mkIf cfg.enable (mkMerge [
+    {
+      home.packages = with pkgs; [
+        (aspellWithDicts (ds:
+          with ds; [
+            en
+            id
+            de
+            en-computers
+            en-science
+          ]))
+      ];
+    }
+
     (mkIf cfg.libreoffice.enable {
-      home.packages = builtins.attrValues {
-        inherit
-          (pkgs)
+      home.packages = with pkgs;
+        [
           libreoffice
           zotero
           hunspell
-          ;
-        inherit
-          (pkgs.hunspellDicts)
+        ]
+        ++ (with pkgs.hunspellDicts; [
           en_US-large
           de_DE
           en_GB-large
           it_IT
           id_ID
-          ;
-      };
+        ]);
     })
 
     (mkIf cfg.latex.enable {
       home.packages = with pkgs; [
         texlive.combined.scheme-medium
+      ];
+    })
+
+    (mkIf cfg.typst.enable {
+      home.packages = [
+        pkgs.typst
       ];
     })
   ]);
