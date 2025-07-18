@@ -37,7 +37,7 @@ in
         in
         [
           # From onedrive service in hosts/nixos/default.nix
-          "file:///home/yvess/Onedrive/Uni"
+          "file:///home/yvess/Onedrive"
           "file:///home/yvess/Notes"
         ]
         ++ (builtins.map toBookmark xdg-entries);
