@@ -27,6 +27,7 @@ in
       gimp3-with-plugins
       audacity
       darktable
+      krita
     ];
   };
 }
