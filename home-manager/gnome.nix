@@ -49,7 +49,7 @@ in
             "firefox.desktop"
             "org.gnome.Nautilus.desktop"
             "emacsclient.desktop"
-            "kitty.desktop"
+            "com.mitchellh.ghostty.desktop"
           ];
 
           enabled-extensions = builtins.map (extension: "${extension.extensionUuid}") cfg.extensions;
