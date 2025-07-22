@@ -2,6 +2,7 @@
   imports = [
     ./fish.nix
     ./kitty.nix
+    ./ghostty.nix
     ./tmux.nix
     ./neovim.nix
     ./vscode.nix
