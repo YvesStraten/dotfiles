@@ -14,6 +14,7 @@
     general.extraPackages = with pkgs; [
       spotify
       peaclock
+      discord
 
       filezilla
       btop
