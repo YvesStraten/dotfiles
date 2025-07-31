@@ -19,6 +19,7 @@ in
   config = mkIf cfg.enable (mkMerge [
     {
       home.packages = with pkgs; [
+        pdfarranger
         (aspellWithDicts (ds:
           with ds; [
             en
