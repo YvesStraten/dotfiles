@@ -187,6 +187,7 @@
 
       java.enable = true;
       haskell.enable = true;
+      python.enable = true;
       sql.enable = true;
       svelte.enable = true;
       ts.enable = true;
