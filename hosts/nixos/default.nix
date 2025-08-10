@@ -30,9 +30,6 @@
     nvidiaBusId = "PCI:1:0:0";
   };
 
-  # Set your time zone.
-  time.timeZone = "Asia/Makassar";
-
   i18n = {
     # Select internationalisation properties.
     defaultLocale = "de_DE.UTF-8";
