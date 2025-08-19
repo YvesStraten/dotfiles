@@ -80,7 +80,7 @@
   };
 
   programs.gamescope.enable = true;
-  environment.systemPackages = [ pkgs.mangohud ];
+  environment.systemPackages = [ pkgs.mangohud pkgs.prismlauncher ];
 
   services.flatpak.enable = true;
   xdg.portal.enable = true;
