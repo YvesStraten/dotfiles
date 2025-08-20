@@ -28,6 +28,7 @@ in
     ./sound.nix
     ./tailscale.nix
     ./fonts.nix
+    ./kde.nix
   ];
 
   config = mkMerge [

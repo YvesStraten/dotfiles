@@ -14,6 +14,7 @@
     fonts.enable = true;
     tailscale.enable = true;
     design.enable = true;
+    kde.enable = true;
   };
 
   services.xserver.videoDrivers = [
