@@ -164,7 +164,7 @@ in
               ", XF86MonBrightnessDown, exec, uwsm app -- ${brightnessctl}/bin/brightnessctl s 5%-"
               "SUPER SHIFT, x, exec, uwsm app -- ${hyprpicker}/bin/hyprpicker | ${wl-clipboard}/bin/wl-copy"
               "$mod, C, exec, ${pamixer}/bin/pamixer -m && uwsm app -- pidof hyprlock || hyprlock && ${pamixer}/bin/pamixer -u"
-              "$mod, Return, exec, uwsm app -- ${kitty}/bin/kitty"
+              "$mod, Return, exec, uwsm app -- ${ghostty}/bin/ghostty"
               "$mod, E, exec, uwsm app -- emacsclient -c"
               "$mod, N, exec, uwsm app -- yazi.desktop"
               "$mod, R, exec, uwsm app -- rofi -show drun -run-command 'uwsm app -- {cmd}'"
@@ -238,7 +238,8 @@ in
           monitor = ,highrr,auto,1
 
           input {
-          kb_layout = us
+          kb_layout = us,se,de,it
+          kb_options=grp:win_space_toggle
           repeat_rate = 40
           repeat_delay = 400
           follow_mouse = 1
