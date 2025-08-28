@@ -13,6 +13,7 @@
 
     general.extraPackages = with pkgs; [
       spotify
+      slack
       peaclock
       discord
 
