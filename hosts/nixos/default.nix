@@ -31,27 +31,31 @@
     nvidiaBusId = "PCI:1:0:0";
   };
 
-  i18n = {
-    # Select internationalisation properties.
-    defaultLocale = "de_DE.UTF-8";
-    supportedLocales =
-      let
-        genLocale = locale: "${locale}.UTF-8/UTF-8";
-      in
-      map genLocale [ "en_US" "de_DE" "sv_SE" ];
+  i18n =
+    let
+      defaultLocale = "sv_SE.UTF-8";
+    in
+    {
+      # Select internationalisation properties.
+      inherit defaultLocale;
+      supportedLocales =
+        let
+          genLocale = locale: "${locale}.UTF-8/UTF-8";
+        in
+        map genLocale [ "en_US" "de_DE" "sv_SE" ];
 
-    extraLocaleSettings = {
-      LC_ADDRESS = "de_DE.UTF-8";
-      LC_IDENTIFICATION = "de_DE.UTF-8";
-      LC_MEASUREMENT = "de_DE.UTF-8";
-      LC_MONETARY = "de_DE.UTF-8";
-      LC_NAME = "de_DE.UTF-8";
-      LC_NUMERIC = "de_DE.UTF-8";
-      LC_PAPER = "de_DE.UTF-8";
-      LC_TELEPHONE = "de_DE.UTF-8";
-      LC_TIME = "de_DE.UTF-8";
+      extraLocaleSettings = {
+        LC_ADDRESS = defaultLocale;
+        LC_IDENTIFICATION = defaultLocale;
+        LC_MEASUREMENT = defaultLocale;
+        LC_MONETARY = defaultLocale;
+        LC_NAME = defaultLocale;
+        LC_NUMERIC = defaultLocale;
+        LC_PAPER = defaultLocale;
+        LC_TELEPHONE = defaultLocale;
+        LC_TIME = defaultLocale;
+      };
     };
-  };
 
   networking.hostId = "14b2792a";
   services.printing = {
@@ -88,9 +92,12 @@
 
   specialisation = {
     hypr.configuration = {
-      config.hardware.nvidia.open = lib.mkForce true;
-
       config.hm.custom = {
+        theming = {
+          enable = lib.mkForce true;
+          qt.enable = lib.mkForce true;
+          gtk.enable = lib.mkForce true;
+        };
         hyprland.enable = true;
         gnome.enable = lib.mkForce false;
       };
