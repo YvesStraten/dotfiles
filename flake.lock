@@ -900,16 +900,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1752052164,
-        "narHash": "sha256-rq5aT1acTwLMAds//7WLtZhZGC5Hyr5YQqbiA0kb3yo=",
-        "owner": "Jovian-Experiments",
+        "lastModified": 1756044592,
+        "narHash": "sha256-+MXZOULo4MkDUbA43xbd1b1UxANyE1KC5IFBV3MU4T4=",
+        "owner": "YvesStraten",
         "repo": "Jovian-NixOS",
-        "rev": "f81c48f403c976463fe5812e9e6bca8cf49aebdc",
+        "rev": "97ebd2cba3be807233a46292dab89cac7720a16d",
         "type": "github"
       },
       "original": {
-        "owner": "Jovian-Experiments",
-        "ref": "development",
+        "owner": "YvesStraten",
+        "ref": "decky-plugins",
         "repo": "Jovian-NixOS",
         "type": "github"
       }

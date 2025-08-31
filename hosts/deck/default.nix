@@ -20,7 +20,11 @@
 
     devices.steamdeck.enable = true;
     decky-loader = {
-      enable = false;
+      enable = true;
+      plugins = with pkgs.decky-plugins; [
+        protondb_badges
+        css_loader
+      ];
 
       extraPackages = with pkgs; [
         curl
@@ -110,19 +114,19 @@
     power.enable = lib.mkForce false;
     boot.enable = lib.mkForce false;
     bluetooth.enable = lib.mkForce false;
-    virtualisation.docker.enable = true;
+    # virtualisation.docker.enable = true;
     # Done by jovian
     sound.enable = true;
   };
 
-  services.printing = {
-    enable = true;
-    drivers = [
-      pkgs.gutenprintBin
-      pkgs.gutenprint
-      pkgs.cnijfilter2
-    ];
-  };
+  # services.printing = {
+  #   enable = true;
+  #   drivers = [
+  #     pkgs.gutenprintBin
+  #     pkgs.gutenprint
+  #     pkgs.cnijfilter2
+  #   ];
+  # };
 
   networking.networkmanager.enable = true;
   services = {
@@ -138,13 +142,10 @@
     '';
   };
 
-  environment.systemPackages = with pkgs; [ vesktop lutris heroic steam-rom-manager mangohud mangojuice prismlauncher r2modman ];
+  environment.systemPackages = with pkgs; [ discord lutris heroic steam-rom-manager mangohud mangojuice prismlauncher r2modman ];
   # Autostart steam in kde
   environment.etc."xdg/autostart/steam.desktop".source = "${pkgs.steam}/share/applications/steam.desktop";
   hardware.xpadneo.enable = true;
-
-  # Set your time zone.
-  time.timeZone = "Asia/Makassar";
 
   system.stateVersion = "25.05";
 }

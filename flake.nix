@@ -3,7 +3,7 @@
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
     jovian = {
-      url = "github:Jovian-Experiments/Jovian-NixOS?ref=development";
+      url = "github:YvesStraten/Jovian-NixOS?ref=decky-plugins";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
