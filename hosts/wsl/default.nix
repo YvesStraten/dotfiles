@@ -1,7 +1,17 @@
-{ pkgs, user, shell, ... }: {
+{ pkgs
+, user
+, shell
+, ...
+}: {
   imports = [
     ../../overlays/default.nix
   ];
+
+  custom = {
+    boot.enable = false;
+    zfs.enable = false;
+    power.enable = false;
+  };
 
   environment.systemPackages = with pkgs; [
     vim
@@ -19,7 +29,6 @@
     enable = true;
     wslConf.automount.root = "/mnt";
     defaultUser = "${user}";
-    nativeSystemd = true;
 
     startMenuLaunchers = true;
   };

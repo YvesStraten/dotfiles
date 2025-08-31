@@ -147,15 +147,22 @@
       style = "dark";
     };
 
-    treesitter.context.enable = true;
+    treesitter.context = {
+      enable = true;
+      setupOpts.max_lines = 10;
+    };
+
+    lsp.enable = true;
 
     languages = {
-      enableLSP = true;
       enableFormat = true;
       enableExtraDiagnostics = true;
       enableTreesitter = true;
 
-      nix.enable = true;
+      nix = {
+        enable = true;
+        format.type = "nixfmt";
+      };
       typst.enable = true;
       # TODO: Add when latex support is merged https://github.com/NotAShelf/nvf/pull/569
       # tex = {
@@ -233,21 +240,23 @@
       };
     };
 
-    filetree.neo-tree.enable = true;
-    filetree.neo-tree.setupOpts = {
-      enable_cursor_hijack = true;
-      reveal = true;
-      window.width = 25;
-      filesystem = {
-        filtered_items = {
-          hide_dotfiles = false;
-          hide_gitignored = false;
-          hide_hidden = false;
-        };
+    filetree.neo-tree = {
+      enable = true;
+      setupOpts = {
+        enable_cursor_hijack = true;
+        reveal = true;
+        window.width = 25;
+        filesystem = {
+          filtered_items = {
+            hide_dotfiles = false;
+            hide_gitignored = false;
+            hide_hidden = false;
+          };
 
-        follow_current_file = {
-          enabled = true;
-          leave_dirs_open = true;
+          follow_current_file = {
+            enabled = true;
+            leave_dirs_open = true;
+          };
         };
       };
     };

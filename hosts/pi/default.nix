@@ -1,15 +1,18 @@
-{
-  pkgs,
-  user,
-  shell,
-  lib,
-  config,
-  ...
-}:
-{
+{ pkgs
+, user
+, shell
+, lib
+, config
+, ...
+}: {
   imports = [
-    ./nixos/time.nix
   ];
+
+  custom = {
+    boot.enable = false;
+    zfs.enable = false;
+    power.enable = false;
+  };
 
   boot.supportedFilesystems = lib.mkForce [
     "btrfs"
@@ -31,10 +34,6 @@
 
   hardware = {
     enableRedistributableFirmware = true;
-    pulseaudio = {
-      enable = true;
-      support32Bit = true;
-    };
   };
 
   networking.hostName = "PinixOS";
@@ -82,9 +81,9 @@
 
   services.samba = {
     enable = true;
-    securityType = "user";
     openFirewall = true;
     settings = {
+      global.security = "user";
       jellyfin = {
         path = "/data";
         browseable = "yes";
@@ -143,11 +142,6 @@
     "8.8.8.8"
     "8.8.4.4"
   ];
-  hardware.bluetooth = {
-    enable = true;
-    package = pkgs.bluez;
-    powerOnBoot = true;
-  };
 
   networking.defaultGateway = {
     address = "192.168.1.1";

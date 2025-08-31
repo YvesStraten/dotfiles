@@ -26,13 +26,13 @@
     hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
 
     # Follows unstable
-    nixpkgs-stable.url = "github:/NixOS/nixpkgs/nixos-23.11";
+    nixpkgs-stable.url = "github:/NixOS/nixpkgs/nixos-25.05";
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
     home-manager-stable = {
-      url = "github:nix-community/home-manager/release-23.11";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
 
@@ -186,9 +186,10 @@
                 inherit inputs user shell;
               };
               modules = [
+                ./config
                 "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-new-kernel.nix"
                 "${nixos-hardware}/raspberry-pi/4"
-                ./hosts/pi.nix
+                ./hosts/pi
 
                 (
                   nixpkgs.lib.mkAliasOptionModule
@@ -216,7 +217,10 @@
                     useGlobalPkgs = true;
                     useUserPackages = true;
                     users.${user} = { ... }: {
-                      nixpkgs.config.allowUnfree = true;
+                      imports = [
+                        ./home-manager
+                        ./hosts/pi/home.nix
+                      ];
                     };
                   };
                 }
@@ -287,7 +291,44 @@
               specialArgs = {
                 inherit inputs user shell;
               };
-              modules = [ ./modules/server.nix ];
+
+              modules = [
+                ./config
+                ./hosts/server
+
+                (
+                  nixpkgs.lib.mkAliasOptionModule
+                    [ "hm" ]
+                    [
+                      "home-manager"
+                      "users"
+                      user
+                    ]
+                )
+
+                home-manager.nixosModules.home-manager
+                {
+                  home-manager = {
+                    extraSpecialArgs = {
+                      inherit
+                        inputs
+                        gitUser
+                        email
+                        user
+                        shell
+                        self
+                        ;
+                    };
+                    useGlobalPkgs = true;
+                    users.${user} = { ... }: {
+                      imports = [
+                        ./hosts/server/home.nix
+                        ./home-manager
+                      ];
+                    };
+                  };
+                }
+              ];
             };
 
           deck =
@@ -353,8 +394,20 @@
                 inherit inputs user shell;
               };
               modules = [
-                ./hosts/wsl/wsl.nix
+                ./config
+                ./hosts/wsl
+
                 home-manager-stable.nixosModules.home-manager
+                (
+                  nixpkgs.lib.mkAliasOptionModule
+                    [ "hm" ]
+                    [
+                      "home-manager"
+                      "users"
+                      user
+                    ]
+                )
+
                 nixos-wsl.nixosModules.wsl
                 {
                   home-manager = {
@@ -371,7 +424,7 @@
                     useGlobalPkgs = true;
                     useUserPackages = true;
                     users.${user} = { ... }: {
-                      imports = [ ./hosts/wsl/home.nix ];
+                      imports = [ ./home-manager ./hosts/wsl/home.nix ];
                     };
                   };
                 }
