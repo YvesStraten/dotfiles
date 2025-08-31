@@ -1,13 +1,13 @@
-{
-  config,
-  options,
-  pkgs,
-  lib,
-  ...
+{ config
+, options
+, pkgs
+, lib
+, ...
 }:
 let
   cfg = config.custom.kanshi;
-  inherit (lib)
+  inherit
+    (lib)
     mkMerge
     mkEnableOption
     mkIf
@@ -27,7 +27,7 @@ in
     };
 
     hdmiScreen = mkOption {
-      type = types.string;
+      type = types.str;
       default = "HDMI-A-1";
       description = ''
         Your external display monitor name, if any
@@ -38,46 +38,42 @@ in
   config = mkIf cfg.enable {
     services.kanshi = {
       enable = true;
-      profiles = {
-        "machine_docked_home" = {
-          outputs = [
-            {
-              criteria = cfg.laptopScreen;
-              status = "disable";
-            }
+      settings = [
+        {
+          output.criteria = cfg.laptopScreen;
+        }
 
-            {
-              criteria = "BNQ BenQ EX2510 M8L08374019";
-              status = "enable";
-            }
-          ];
-        };
+        {
+          profile = {
+            name = "machine_docked_home";
 
-        "machine_docker_other" = {
-          outputs = [
-            {
-              criteria = cfg.laptopScreen;
-              status = "enable";
-            }
+            exec = [ "${pkgs.hyprland}/bin/hyprctl keyword monitor ${cfg.hdmiScreen},highres,auto,1,mirror,${cfg.laptopScreen}" ];
+            outputs = [
+              {
+                criteria = cfg.laptopScreen;
+                status = "disable";
+              }
 
-            {
-              criteria = cfg.hdmiScreen;
-              status = "enable";
-            }
-          ];
+              {
+                criteria = "BNQ BenQ EX2510 M8L08374019";
+                status = "enable";
+              }
+            ];
+          };
+        }
 
-          exec = ["${pkgs.hyprland}/bin/hyprctl keyword monitor ${cfg.hdmiScreen},highres,auto,1,mirror,${cfg.laptopScreen}"];
-        };
-
-        "machine_undocked" = {
-          outputs = [
-            {
-              criteria = cfg.laptopScreen;
-              status = "enable";
-            }
-          ];
-        };
-      };
+        {
+          profile = {
+            name = "machine_docked_other";
+            outputs = [
+              {
+                criteria = cfg.laptopScreen;
+                status = "enable";
+              }
+            ];
+          };
+        }
+      ];
     };
   };
 }

@@ -58,6 +58,7 @@
     };
 
   networking.hostId = "14b2792a";
+  networking.hostName = "nixos";
   services.printing = {
     enable = true;
     drivers = [

@@ -1,8 +1,7 @@
-{
-  config,
-  options,
-  lib,
-  ...
+{ config
+, options
+, lib
+, ...
 }:
 let
   cfg = config.custom.syncthing;
@@ -15,11 +14,11 @@ in
     (mkIf cfg.enable {
       services.syncthing = {
         enable = true;
-        tray = true;
+        tray.enable = true;
       };
 
       systemd.user.services.syncthingtray = {
-        Unit.After = mkForce ["graphical-session.target" "tray.target" ];
+        Unit.After = mkForce [ "graphical-session.target" "tray.target" ];
       };
     })
   ];

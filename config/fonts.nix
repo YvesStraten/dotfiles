@@ -14,7 +14,7 @@ in
   config = mkIf cfg.enable (mkMerge [
     {
       fonts = {
-        fonts = with pkgs; [
+        packages = with pkgs; [
           corefonts # Microsoft free fonts
           dejavu_fonts
           source-code-pro
