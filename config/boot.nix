@@ -66,7 +66,6 @@ in
         };
         extraModulePackages = with config.boot.kernelPackages; [
           v4l2loopback
-          xpadneo
         ];
         extraModprobeConfig = ''
           options v4l2loopback nr_devices=2 exclusive_caps=1,1 video_nr=0,1 card_label=v4l2lo0,v4l2lo1

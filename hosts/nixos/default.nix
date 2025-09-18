@@ -19,6 +19,7 @@
   };
 
   hardware = {
+    xpadneo.enable = true;
     nvidia.prime = {
       offload = {
         enable = true;
