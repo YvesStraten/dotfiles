@@ -11,8 +11,12 @@ in
 {
   options.custom.theming = {
     enable = mkEnableOption "Enable theming";
-    gtk.enable = mkEnableOption "gtk" // { default = cfg.enable; };
-    qt.enable = mkEnableOption "qt" // { default = cfg.enable; };
+    gtk.enable = mkEnableOption "gtk" // {
+      default = cfg.enable;
+    };
+    qt.enable = mkEnableOption "qt" // {
+      default = cfg.enable;
+    };
   };
 
   config = mkIf cfg.enable {
@@ -32,7 +36,9 @@ in
           inherit (lib.attrsets) filterAttrs;
           xdg-dirs = config.xdg.userDirs;
           xdg-dirs-filtered = filterAttrs (k: v: k != "publishShare") xdg-dirs;
-          xdg-entries = builtins.filter (elem: builtins.isString elem) (builtins.attrValues xdg-dirs-filtered);
+          xdg-entries = builtins.filter (elem: builtins.isString elem) (
+            builtins.attrValues xdg-dirs-filtered
+          );
           toBookmark = name: "file://${name}";
         in
         [
@@ -57,6 +63,7 @@ in
       };
     };
 
+    fonts.fontconfig.enable = true;
     home.packages = with pkgs; [
       #fonts
       nerd-fonts.jetbrains-mono
