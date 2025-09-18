@@ -2,7 +2,8 @@
 , lib
 , config
 , ...
-}: {
+}:
+{
   imports = [
     ../../overlays/default.nix
     ./hardware.nix
@@ -17,18 +18,16 @@
     kde.enable = true;
   };
 
-  services.xserver.videoDrivers = [
-    "modesetting"
-  ];
+  hardware = {
+    nvidia.prime = {
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
 
-  hardware.nvidia.prime = {
-    offload = {
-      enable = true;
-      enableOffloadCmd = true;
+      intelBusId = "PCI:0:2:0";
+      nvidiaBusId = "PCI:1:0:0";
     };
-
-    intelBusId = "PCI:0:2:0";
-    nvidiaBusId = "PCI:1:0:0";
   };
 
   i18n =
@@ -59,14 +58,23 @@
 
   networking.hostId = "14b2792a";
   networking.hostName = "nixos";
-  services.printing = {
-    enable = true;
-    drivers = [
-      pkgs.gutenprintBin
-      pkgs.gutenprint
-      pkgs.canon-cups-ufr2
-      pkgs.cnijfilter2
+
+  services = {
+    xserver.videoDrivers = [
+      "modesetting"
     ];
+
+    printing = {
+      enable = true;
+      drivers = [
+        pkgs.gutenprintBin
+        pkgs.gutenprint
+        pkgs.canon-cups-ufr2
+        pkgs.cnijfilter2
+      ];
+    };
+
+    flatpak.enable = true;
   };
 
   fileSystems = {
@@ -77,18 +85,24 @@
     };
   };
 
-  programs.nix-ld.enable = true;
-  programs.fuse.userAllowOther = true;
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    localNetworkGameTransfers.openFirewall = true;
+  programs = {
+    nix-ld.enable = true;
+    fuse.userAllowOther = true;
+    gamemode.enable = true;
+    steam = {
+      enable = true;
+      remotePlay.openFirewall = true;
+      localNetworkGameTransfers.openFirewall = true;
+    };
+
+    gamescope.enable = true;
   };
 
-  programs.gamescope.enable = true;
-  environment.systemPackages = [ pkgs.mangohud pkgs.prismlauncher ];
+  environment.systemPackages = [
+    pkgs.mangohud
+    pkgs.prismlauncher
+  ];
 
-  services.flatpak.enable = true;
   xdg.portal.enable = true;
 
   specialisation = {
