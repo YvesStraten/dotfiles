@@ -14,6 +14,8 @@ in
   config = mkIf cfg.enable (mkMerge [
     {
       fonts = {
+        enableDefaultPackages = true;
+        enableGhostscriptFonts = true;
         packages = with pkgs; [
           corefonts # Microsoft free fonts
           dejavu_fonts
