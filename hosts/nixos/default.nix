@@ -41,7 +41,11 @@
         let
           genLocale = locale: "${locale}.UTF-8/UTF-8";
         in
-        map genLocale [ "en_US" "de_DE" "sv_SE" ];
+        map genLocale [
+          "en_US"
+          "de_DE"
+          "sv_SE"
+        ];
 
       extraLocaleSettings = {
         LC_ADDRESS = defaultLocale;
