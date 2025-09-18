@@ -17,6 +17,10 @@ in
       videoDrivers = [ "nvidia" ];
     };
 
+    environment.variables = {
+      "__GL_SHADER_DISK_CACHE_SKIP_CLEANUP" = 1;
+    };
+
     hardware = {
       graphics.enable = true;
 
