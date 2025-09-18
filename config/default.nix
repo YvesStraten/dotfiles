@@ -34,6 +34,7 @@ in
   config = mkMerge [
     {
       environment.systemPackages = with pkgs; [
+        unrar
         vim
       ];
     }
