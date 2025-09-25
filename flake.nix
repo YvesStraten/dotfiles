@@ -57,6 +57,10 @@
     };
 
     pre-commit-hooks.url = "github:cachix/git-hooks.nix";
+    quickshell = {
+      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   # Add cachix to rebuilds faster
@@ -90,7 +94,7 @@
     , pre-commit-hooks
     , self
     , ...
-    } @ inputs:
+    }@inputs:
     let
       email = "yves.straten@gmail.com";
       gitUser = "YvesStraten";
@@ -105,7 +109,8 @@
         "aarch64-darwin"
       ];
 
-      perSystem = { system, ... }:
+      perSystem =
+        { system, ... }:
         let
           pkgs = import nixpkgs {
             inherit system;
@@ -142,6 +147,26 @@
                 inherit (checks) shellHook;
                 buildInputs = checks.enabledPackages;
               };
+
+            quickshell =
+              let
+                quickshell =
+                  inputs.quickshell.packages.${pkgs.system}.default;
+                checks = self.checks.${system}.pre-commit-check;
+                shellHook = checks.shellHook ++ ''
+                  export QMLLS_BUILD_DIRS=${pkgs.kdePackages.qtdeclarative}/lib/qt-6/qml/:${quickshell}/lib/qt-6/qml/
+                  export QML_IMPORT_PATH=$PWD/src
+                '';
+              in
+              pkgs.mkShell
+                {
+
+                  packages = [
+                    quickshell
+                    pkgs.kdePackages.qtdeclarative
+                  ];
+                  inherit shellHook;
+                };
           };
         };
 
@@ -191,14 +216,13 @@
                 "${nixos-hardware}/raspberry-pi/4"
                 ./hosts/pi
 
-                (
-                  nixpkgs.lib.mkAliasOptionModule
-                    [ "hm" ]
-                    [
-                      "home-manager"
-                      "users"
-                      user
-                    ]
+                (nixpkgs.lib.mkAliasOptionModule
+                  [ "hm" ]
+                  [
+                    "home-manager"
+                    "users"
+                    user
+                  ]
                 )
 
                 home-manager.nixosModules.home-manager
@@ -216,12 +240,14 @@
                     };
                     useGlobalPkgs = true;
                     useUserPackages = true;
-                    users.${user} = { ... }: {
-                      imports = [
-                        ./home-manager
-                        ./hosts/pi/home.nix
-                      ];
-                    };
+                    users.${user} =
+                      { ... }:
+                      {
+                        imports = [
+                          ./home-manager
+                          ./hosts/pi/home.nix
+                        ];
+                      };
                   };
                 }
               ];
@@ -245,14 +271,13 @@
                 nur.modules.nixos.default
                 ./hosts/nixos
                 ./config/default.nix
-                (
-                  nixpkgs.lib.mkAliasOptionModule
-                    [ "hm" ]
-                    [
-                      "home-manager"
-                      "users"
-                      user
-                    ]
+                (nixpkgs.lib.mkAliasOptionModule
+                  [ "hm" ]
+                  [
+                    "home-manager"
+                    "users"
+                    user
+                  ]
                 )
 
                 home-manager.nixosModules.home-manager
@@ -270,12 +295,14 @@
                     };
                     backupFileExtension = "backup";
                     useGlobalPkgs = true;
-                    users.${user} = { ... }: {
-                      imports = [
-                        ./hosts/nixos/home.nix
-                        ./home-manager
-                      ];
-                    };
+                    users.${user} =
+                      { ... }:
+                      {
+                        imports = [
+                          ./hosts/nixos/home.nix
+                          ./home-manager
+                        ];
+                      };
                   };
                 }
               ];
@@ -296,14 +323,13 @@
                 ./config
                 ./hosts/server
 
-                (
-                  nixpkgs.lib.mkAliasOptionModule
-                    [ "hm" ]
-                    [
-                      "home-manager"
-                      "users"
-                      user
-                    ]
+                (nixpkgs.lib.mkAliasOptionModule
+                  [ "hm" ]
+                  [
+                    "home-manager"
+                    "users"
+                    user
+                  ]
                 )
 
                 home-manager.nixosModules.home-manager
@@ -320,12 +346,14 @@
                         ;
                     };
                     useGlobalPkgs = true;
-                    users.${user} = { ... }: {
-                      imports = [
-                        ./hosts/server/home.nix
-                        ./home-manager
-                      ];
-                    };
+                    users.${user} =
+                      { ... }:
+                      {
+                        imports = [
+                          ./hosts/server/home.nix
+                          ./home-manager
+                        ];
+                      };
                   };
                 }
               ];
@@ -348,14 +376,13 @@
                 nur.modules.nixos.default
                 ./config
 
-                (
-                  nixpkgs.lib.mkAliasOptionModule
-                    [ "hm" ]
-                    [
-                      "home-manager"
-                      "users"
-                      user
-                    ]
+                (nixpkgs.lib.mkAliasOptionModule
+                  [ "hm" ]
+                  [
+                    "home-manager"
+                    "users"
+                    user
+                  ]
                 )
 
                 home-manager.nixosModules.home-manager
@@ -372,12 +399,14 @@
                         ;
                     };
                     useGlobalPkgs = true;
-                    users.${user} = { ... }: {
-                      imports = [
-                        ./hosts/deck/home.nix
-                        ./home-manager
-                      ];
-                    };
+                    users.${user} =
+                      { ... }:
+                      {
+                        imports = [
+                          ./hosts/deck/home.nix
+                          ./home-manager
+                        ];
+                      };
                   };
                 }
               ];
@@ -398,14 +427,13 @@
                 ./hosts/wsl
 
                 home-manager-stable.nixosModules.home-manager
-                (
-                  nixpkgs.lib.mkAliasOptionModule
-                    [ "hm" ]
-                    [
-                      "home-manager"
-                      "users"
-                      user
-                    ]
+                (nixpkgs.lib.mkAliasOptionModule
+                  [ "hm" ]
+                  [
+                    "home-manager"
+                    "users"
+                    user
+                  ]
                 )
 
                 nixos-wsl.nixosModules.wsl
@@ -423,9 +451,14 @@
                     };
                     useGlobalPkgs = true;
                     useUserPackages = true;
-                    users.${user} = { ... }: {
-                      imports = [ ./home-manager ./hosts/wsl/home.nix ];
-                    };
+                    users.${user} =
+                      { ... }:
+                      {
+                        imports = [
+                          ./home-manager
+                          ./hosts/wsl/home.nix
+                        ];
+                      };
                   };
                 }
               ];

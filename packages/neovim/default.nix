@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   imports = [
   ];
 
@@ -203,6 +204,7 @@
     };
 
     lsp = {
+      servers.qmlls.enable = true;
       formatOnSave = true;
       lspsaga.enable = true;
       lspkind.enable = true;
