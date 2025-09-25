@@ -21,6 +21,7 @@
       btop
       nautilus
       teams-for-linux
+      zoom-us
 
       ani-cli-rofi
 
