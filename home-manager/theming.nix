@@ -53,8 +53,8 @@ in
       };
 
       iconTheme = {
-        name = "WhiteSur-dark";
-        package = pkgs.whitesur-icon-theme;
+        name = "Tela";
+        package = pkgs.tela-icon-theme;
       };
 
       cursorTheme = {
