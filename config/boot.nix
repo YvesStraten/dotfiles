@@ -1,19 +1,23 @@
-{ config
-, options
-, pkgs
-, lib
-, ...
+{
+  config,
+  options,
+  pkgs,
+  lib,
+  ...
 }:
 let
   cfg = config.custom.boot;
   inherit (lib) mkMerge mkIf mkEnableOption;
 in
 {
-  options.custom.boot.enable = mkEnableOption "Enable bootloader" // { default = true; };
+  options.custom.boot.enable = mkEnableOption "Enable bootloader" // {
+    default = true;
+  };
 
   config = mkIf cfg.enable (mkMerge [
     {
       boot = {
+        kernel.sysctl."vm.swappiness" = 30;
         plymouth = {
           enable = true;
           theme = "bgrt";
