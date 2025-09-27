@@ -1,9 +1,10 @@
-{ config
-, options
-, inputs
-, pkgs
-, lib
-, ...
+{
+  config,
+  options,
+  inputs,
+  pkgs,
+  lib,
+  ...
 }:
 let
   cfg = config.custom.hyprpanel;
@@ -22,8 +23,14 @@ in
       programs.hyprpanel = {
         enable = true;
 
-
         settings = {
+          theme.font = {
+            name = "Sans Regular";
+            size = "1rem";
+          };
+
+          scalingPriority = "both";
+
           bar = {
             launcher.autoDetectIcon = true;
             workspaces.show_icons = true;
