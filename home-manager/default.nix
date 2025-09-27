@@ -1,9 +1,10 @@
-{ config
-, options
-, inputs
-, user
-, lib
-, ...
+{
+  config,
+  options,
+  inputs,
+  user,
+  lib,
+  ...
 }:
 let
   inherit (lib) mkMerge mkIf;
@@ -15,6 +16,7 @@ in
     ./nwg-dock.nix
     ./swappy.nix
     ./waybar/waybar.nix
+    ./quickshell.nix
     ./udisks.nix
     ./dev
     ./rofi.nix
