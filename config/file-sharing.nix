@@ -20,6 +20,20 @@ in
       samba = {
         enable = true;
         openFirewall = true;
+        settings = {
+          global = {
+            "workgroup" = "WORKGROUP";
+            "server string" = "Yvess laptop";
+            "security" = "user";
+            "guest account" = "nobody";
+            "map to guest" = "bad user";
+          };
+          "home_share" = {
+            "path" = "/home/yvess";
+            "valid users" = "yvess";
+            writeable = "yes";
+          };
+        };
       };
       avahi = {
         enable = true;
