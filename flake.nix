@@ -80,20 +80,21 @@
   };
 
   outputs =
-    { nixpkgs
-    , nixpkgs-stable
-    , nur
-    , nvf
-    , nixos-wsl
-    , home-manager
-    , home-manager-stable
-    , nixos-hardware
-    , flake-parts
-    , nix-darwin
-    , mac-app-util
-    , pre-commit-hooks
-    , self
-    , ...
+    {
+      nixpkgs,
+      nixpkgs-stable,
+      nur,
+      nvf,
+      nixos-wsl,
+      home-manager,
+      home-manager-stable,
+      nixos-hardware,
+      flake-parts,
+      nix-darwin,
+      mac-app-util,
+      pre-commit-hooks,
+      self,
+      ...
     }@inputs:
     let
       email = "yves.straten@gmail.com";
@@ -128,7 +129,7 @@
             pre-commit-check = pre-commit-hooks.lib.${system}.run {
               src = ./.;
               hooks = {
-                nixpkgs-fmt.enable = true;
+                nixfmt-rfc-style.enable = true;
               };
             };
           };
@@ -150,23 +151,23 @@
 
             quickshell =
               let
-                quickshell =
-                  inputs.quickshell.packages.${pkgs.system}.default;
+                quickshell = inputs.quickshell.packages.${pkgs.system}.default;
                 checks = self.checks.${system}.pre-commit-check;
-                shellHook = checks.shellHook ++ ''
-                  export QMLLS_BUILD_DIRS=${pkgs.kdePackages.qtdeclarative}/lib/qt-6/qml/:${quickshell}/lib/qt-6/qml/
-                  export QML_IMPORT_PATH=$PWD/src
-                '';
+                shellHook =
+                  checks.shellHook
+                  + ''
+                    export QMLLS_BUILD_DIRS=${pkgs.kdePackages.qtdeclarative}/lib/qt-6/qml/:${quickshell}/lib/qt-6/qml/
+                    export QML_IMPORT_PATH=$PWD/src
+                  '';
               in
-              pkgs.mkShell
-                {
+              pkgs.mkShell {
 
-                  packages = [
-                    quickshell
-                    pkgs.kdePackages.qtdeclarative
-                  ];
-                  inherit shellHook;
-                };
+                packages = [
+                  quickshell
+                  pkgs.kdePackages.qtdeclarative
+                ];
+                inherit shellHook;
+              };
           };
         };
 
@@ -216,14 +217,11 @@
                 "${nixos-hardware}/raspberry-pi/4"
                 ./hosts/pi
 
-                (nixpkgs.lib.mkAliasOptionModule
-                  [ "hm" ]
-                  [
-                    "home-manager"
-                    "users"
-                    user
-                  ]
-                )
+                (nixpkgs.lib.mkAliasOptionModule [ "hm" ] [
+                  "home-manager"
+                  "users"
+                  user
+                ])
 
                 home-manager.nixosModules.home-manager
                 {
@@ -271,14 +269,11 @@
                 nur.modules.nixos.default
                 ./hosts/nixos
                 ./config/default.nix
-                (nixpkgs.lib.mkAliasOptionModule
-                  [ "hm" ]
-                  [
-                    "home-manager"
-                    "users"
-                    user
-                  ]
-                )
+                (nixpkgs.lib.mkAliasOptionModule [ "hm" ] [
+                  "home-manager"
+                  "users"
+                  user
+                ])
 
                 home-manager.nixosModules.home-manager
                 {
@@ -323,14 +318,11 @@
                 ./config
                 ./hosts/server
 
-                (nixpkgs.lib.mkAliasOptionModule
-                  [ "hm" ]
-                  [
-                    "home-manager"
-                    "users"
-                    user
-                  ]
-                )
+                (nixpkgs.lib.mkAliasOptionModule [ "hm" ] [
+                  "home-manager"
+                  "users"
+                  user
+                ])
 
                 home-manager.nixosModules.home-manager
                 {
@@ -376,14 +368,11 @@
                 nur.modules.nixos.default
                 ./config
 
-                (nixpkgs.lib.mkAliasOptionModule
-                  [ "hm" ]
-                  [
-                    "home-manager"
-                    "users"
-                    user
-                  ]
-                )
+                (nixpkgs.lib.mkAliasOptionModule [ "hm" ] [
+                  "home-manager"
+                  "users"
+                  user
+                ])
 
                 home-manager.nixosModules.home-manager
                 {
@@ -427,14 +416,11 @@
                 ./hosts/wsl
 
                 home-manager-stable.nixosModules.home-manager
-                (nixpkgs.lib.mkAliasOptionModule
-                  [ "hm" ]
-                  [
-                    "home-manager"
-                    "users"
-                    user
-                  ]
-                )
+                (nixpkgs.lib.mkAliasOptionModule [ "hm" ] [
+                  "home-manager"
+                  "users"
+                  user
+                ])
 
                 nixos-wsl.nixosModules.wsl
                 {
