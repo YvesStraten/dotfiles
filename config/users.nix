@@ -7,7 +7,7 @@
   ...
 }:
 let
-  inherit (lib) mkMerge;
+  inherit (lib) mkMerge mkIf;
 in
 {
   config = mkMerge [
@@ -27,6 +27,7 @@ in
             "audio"
             "libvirtd"
             "docker"
+            "gamemode"
             "dialout"
             "fuse"
           ];
