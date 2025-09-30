@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   custom = {
     fish.enable = true;
     # hyprland.enable = true;
@@ -19,7 +20,6 @@
 
       filezilla
       btop
-      nautilus
       teams-for-linux
       zoom-us
 
@@ -28,4 +28,5 @@
       qpwgraph
     ];
   };
+
 }

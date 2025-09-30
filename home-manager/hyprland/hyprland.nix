@@ -19,18 +19,29 @@ in
           NIXOS_OZONE_WL = "1";
         };
 
-        packages = with pkgs; [
-          blueman
-          yvess.wall-switch
-          wl-clipboard
-          swww
-          hypridle
-          kdePackages.gwenview
-          swappy
-          nautilus
-          pavucontrol
-          selectdefaultapplication
-        ];
+        packages =
+          with pkgs;
+          let
+            nautilus = pkgs.nautilus.overrideAttrs (o: {
+              postInstall = ''
+                ${o.postInstall or ""}
+
+                ${pkgs.gnused}/bin/sed -i 's/^DBusActivatable=true/DBusActivatable=false/' "$out/share/applications/org.gnome.Nautilus.desktop"
+              '';
+            });
+          in
+          [
+            blueman
+            yvess.wall-switch
+            wl-clipboard
+            swww
+            hypridle
+            kdePackages.gwenview
+            swappy
+            nautilus
+            pavucontrol
+            selectdefaultapplication
+          ];
       };
 
       custom = {
@@ -171,7 +182,7 @@ in
                 "$mod, Return, exec, uwsm app -- ${ghostty}/bin/ghostty"
                 "$mod, E, exec, uwsm app -- emacsclient -c"
                 "$mod, N, exec, uwsm app -- yazi.desktop"
-                "$mod, R, exec, uwsm app -- rofi -show drun -run-command 'uwsm app -- {cmd}'"
+                "$mod, R, exec, rofi -show drun -run-command 'uwsm app -- {cmd}'"
                 "$mod, Q, killactive,"
                 "$mod, F, fullscreen,"
                 "$mod SHIFT, Space, togglefloating,"
