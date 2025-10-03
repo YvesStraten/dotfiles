@@ -35,7 +35,7 @@ in
       enable = true;
       package = cfg.package;
       nativeMessagingHosts = mkIf cfg.enablePwas [
-        pkgs.firefoxpwa  
+        pkgs.firefoxpwa
       ];
 
       policies = {
@@ -45,18 +45,17 @@ in
       };
       profiles.yvess = {
         isDefault = true;
-        extensions.packages = with pkgs.nur.repos.rycee.firefox-addons;
+        extensions.packages =
+          with pkgs.nur.repos.rycee.firefox-addons;
           [
             react-devtools
+            browserpass
+            redirector
             darkreader
             ublock-origin
             zotero-connector
           ]
-          ++ (
-            if cfg.enablePwas
-            then [pwas-for-firefox]
-            else []
-          );
+          ++ (if cfg.enablePwas then [ pwas-for-firefox ] else [ ]);
         settings = {
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
           "layers.acceleration.force-enabled" = true;
