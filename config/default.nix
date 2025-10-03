@@ -1,7 +1,8 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 let
   inherit (lib) mkMerge;
@@ -16,7 +17,6 @@ in
     ./auth.nix
     ./boot.nix
     ./bluetooth.nix
-    ./i3.nix
     ./networking.nix
     ./users.nix
     ./power.nix
