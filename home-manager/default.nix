@@ -25,9 +25,6 @@ in
     ./kanshi.nix
     ./utils
     ./wlogout/wlogout.nix
-    ./i3/i3.nix
-    ./picom/picom.nix
-    ./polybar/polybar.nix
     ./xdg-dirs.nix
     ./theming.nix
     ./gnome.nix

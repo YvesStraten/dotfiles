@@ -1394,22 +1394,6 @@
         "type": "github"
       }
     },
-    "polybar-scripts": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1747765870,
-        "narHash": "sha256-mGVJxDg9fsqDQVajhVQ/6IHh6BlzmEat3W11tmrb/Ts=",
-        "owner": "polybar",
-        "repo": "polybar-scripts",
-        "rev": "9722c2b65548ae314b809a2d28b4a70bea0c4d55",
-        "type": "github"
-      },
-      "original": {
-        "owner": "polybar",
-        "repo": "polybar-scripts",
-        "type": "github"
-      }
-    },
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": "flake-compat_2",
@@ -1495,7 +1479,6 @@
         "nixpkgs-stable": "nixpkgs-stable_2",
         "nur": "nur",
         "nvf": "nvf",
-        "polybar-scripts": "polybar-scripts",
         "pre-commit-hooks": "pre-commit-hooks_2",
         "quickshell": "quickshell",
         "zathura-dracula": "zathura-dracula"
