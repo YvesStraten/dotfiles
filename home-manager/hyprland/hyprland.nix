@@ -103,7 +103,6 @@ in
             general = {
               lock_cmd = "pidof hyprlock || hyprlock";
             };
-
             listener =
               let
                 brightnessctl = lib.getExe pkgs.brightnessctl;
@@ -161,7 +160,11 @@ in
           in
           {
             "$mod" = "super";
-            # bindl = ",switch:Lid Switch, exec, pidof hyprlock || hyprlock";
+
+            exec-once = [
+              "${pkgs.systemd}/bin/systemctl --user restart gamemoded.service"
+            ];
+
             bind =
               with pkgs;
               let
@@ -172,7 +175,6 @@ in
               in
               [
                 "$mod, B, exec, uwsm app -- firefox"
-                "$mod, F1, exec, uwsm app -- ~/.config/hypr/scripts/keybind"
                 ", XF86AudioRaiseVolume, exec, uwsm app -- ${pamixer}/bin/pamixer -i 5"
                 ", XF86AudioLowerVolume, exec, uwsm app -- ${pamixer}/bin/pamixer -d 5"
                 ", XF86MonBrightnessUp, exec, uwsm app -- ${brightnessctl}/bin/brightnessctl s +5%"
@@ -236,6 +238,15 @@ in
               "idleinhibit focus, class:^(mpv|.+exe)$"
               "idleinhibit focus, class:^(firefox)$, title:^(.*YouTube.*)$"
               "idleinhibit fullscreen, class:^(firefox)$"
+            ];
+
+            windowrule = [
+              "opacity 0.0 override, class:^(xwaylandvideobridge)$"
+              "noanim, class:^(xwaylandvideobridge)$"
+              "noinitialfocus, class:^(xwaylandvideobridge)$"
+              "maxsize 1 1, class:^(xwaylandvideobridge)$"
+              "noblur, class:^(xwaylandvideobridge)$"
+              "nofocus, class:^(xwaylandvideobridge)$"
             ];
           };
 
