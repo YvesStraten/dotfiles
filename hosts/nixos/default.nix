@@ -1,13 +1,16 @@
-{ pkgs
-, lib
-, config
-, ...
+{
+  pkgs,
+  lib,
+  config,
+  ...
 }:
 {
   imports = [
     ../../overlays/default.nix
     ./hardware.nix
   ];
+
+  boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
   custom = {
     nvidia.enable = true;
