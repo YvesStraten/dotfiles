@@ -1,19 +1,29 @@
-{ config
-, options
-, pkgs
-, lib
-, ...
+{
+  config,
+  options,
+  pkgs,
+  lib,
+  ...
 }:
 let
   cfg = config.custom.virtualisation;
-  inherit (lib) mkMerge mkEnableOption mkIf mkForce;
+  inherit (lib)
+    mkMerge
+    mkEnableOption
+    mkIf
+    mkForce
+    ;
 in
 {
   options = {
     custom.virtualisation = {
       enable = mkEnableOption "Enable virtualisation";
-      libvirt.enable = mkEnableOption "Enable libvirt" // { default = cfg.enable; };
-      docker.enable = mkEnableOption "Enable libvirt" // { default = cfg.enable; };
+      libvirt.enable = mkEnableOption "Enable libvirt" // {
+        default = cfg.enable;
+      };
+      docker.enable = mkEnableOption "Enable libvirt" // {
+        default = cfg.enable;
+      };
     };
   };
 
@@ -28,16 +38,6 @@ in
             swtpm.enable = true;
 
             vhostUserPackages = [ pkgs.virtiofsd ];
-
-            ovmf = {
-              enable = true;
-              packages = [
-                (pkgs.OVMF.override {
-                  secureBoot = true;
-                  tpmSupport = true;
-                }).fd
-              ];
-            };
           };
         };
       };

@@ -1,8 +1,9 @@
-{ config
-, options
-, pkgs
-, lib
-, ...
+{
+  config,
+  options,
+  pkgs,
+  lib,
+  ...
 }:
 let
   cfg = config.custom.languages;
@@ -31,14 +32,12 @@ in
         };
       in
       [
-        ((python311.override { inherit packageOverrides; }).withPackages (
+        ((python312.override { inherit packageOverrides; }).withPackages (
           ps: with ps; [
             openai-whisper
             yt-dlp
             spotdl
             pygments
-            tkinter
-            # jupyter
             pillow
           ]
         ))
