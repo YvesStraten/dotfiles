@@ -53,9 +53,24 @@
     };
 
     pre-commit-hooks.url = "github:cachix/git-hooks.nix";
-    quickshell = {
-      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
+
+    dgop = {
+      url = "github:AvengeMedia/dgop";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    dms-cli = {
+      url = "github:AvengeMedia/danklinux";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    dankMaterialShell = {
+      url = "github:AvengeMedia/DankMaterialShell";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        dgop.follows = "dgop";
+        dms-cli.follows = "dms-cli";
+      };
     };
   };
 
@@ -149,14 +164,12 @@
 
             quickshell =
               let
-                quickshell = inputs.quickshell.packages.${pkgs.system}.default;
+                quickshell = inputs.dankMaterialShell.packages.${pkgs.system}.default;
                 checks = self.checks.${system}.pre-commit-check;
-                shellHook =
-                  checks.shellHook
-                  + ''
-                    export QMLLS_BUILD_DIRS=${pkgs.kdePackages.qtdeclarative}/lib/qt-6/qml/:${quickshell}/lib/qt-6/qml/
-                    export QML_IMPORT_PATH=$PWD/src
-                  '';
+                shellHook = checks.shellHook + ''
+                  export QMLLS_BUILD_DIRS=${pkgs.kdePackages.qtdeclarative}/lib/qt-6/qml/:${quickshell}/lib/qt-6/qml/
+                  export QML_IMPORT_PATH=$PWD/src
+                '';
               in
               pkgs.mkShell {
 
@@ -215,11 +228,14 @@
                 "${nixos-hardware}/raspberry-pi/4"
                 ./hosts/pi
 
-                (nixpkgs.lib.mkAliasOptionModule [ "hm" ] [
-                  "home-manager"
-                  "users"
-                  user
-                ])
+                (nixpkgs.lib.mkAliasOptionModule
+                  [ "hm" ]
+                  [
+                    "home-manager"
+                    "users"
+                    user
+                  ]
+                )
 
                 home-manager.nixosModules.home-manager
                 {
@@ -267,11 +283,14 @@
                 nur.modules.nixos.default
                 ./hosts/nixos
                 ./config/default.nix
-                (nixpkgs.lib.mkAliasOptionModule [ "hm" ] [
-                  "home-manager"
-                  "users"
-                  user
-                ])
+                (nixpkgs.lib.mkAliasOptionModule
+                  [ "hm" ]
+                  [
+                    "home-manager"
+                    "users"
+                    user
+                  ]
+                )
 
                 home-manager.nixosModules.home-manager
                 {
@@ -316,11 +335,14 @@
                 ./config
                 ./hosts/server
 
-                (nixpkgs.lib.mkAliasOptionModule [ "hm" ] [
-                  "home-manager"
-                  "users"
-                  user
-                ])
+                (nixpkgs.lib.mkAliasOptionModule
+                  [ "hm" ]
+                  [
+                    "home-manager"
+                    "users"
+                    user
+                  ]
+                )
 
                 home-manager.nixosModules.home-manager
                 {
@@ -366,11 +388,14 @@
                 nur.modules.nixos.default
                 ./config
 
-                (nixpkgs.lib.mkAliasOptionModule [ "hm" ] [
-                  "home-manager"
-                  "users"
-                  user
-                ])
+                (nixpkgs.lib.mkAliasOptionModule
+                  [ "hm" ]
+                  [
+                    "home-manager"
+                    "users"
+                    user
+                  ]
+                )
 
                 home-manager.nixosModules.home-manager
                 {
@@ -414,11 +439,14 @@
                 ./hosts/wsl
 
                 home-manager-stable.nixosModules.home-manager
-                (nixpkgs.lib.mkAliasOptionModule [ "hm" ] [
-                  "home-manager"
-                  "users"
-                  user
-                ])
+                (nixpkgs.lib.mkAliasOptionModule
+                  [ "hm" ]
+                  [
+                    "home-manager"
+                    "users"
+                    user
+                  ]
+                )
 
                 nixos-wsl.nixosModules.wsl
                 {

@@ -9,7 +9,6 @@
     tmux.enable = true;
     languages.enable = true;
     office.enable = true;
-    theming.enable = false;
     pass.wayland = true;
 
     general.extraPackages = with pkgs; [

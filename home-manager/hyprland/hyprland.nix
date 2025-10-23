@@ -47,16 +47,19 @@ in
       custom = {
         swappy.enable = true;
         udisks.enable = true;
-        hyprpanel.enable = true;
         rofi.enable = true;
         wlogout.enable = true;
         kanshi.enable = true;
-        quickshell.enable = true;
         # nwg-dock.enable = true;
       };
 
-      programs.hyprlock = {
+      programs.dankMaterialShell = {
         enable = true;
+        enableSystemd = true;
+      };
+
+      programs.hyprlock = {
+        enable = false;
         settings = {
           general = {
             disable_loading_bar = true;
@@ -100,9 +103,6 @@ in
         hypridle = {
           enable = true;
           settings = {
-            general = {
-              lock_cmd = "pidof hyprlock || hyprlock";
-            };
             listener =
               let
                 brightnessctl = lib.getExe pkgs.brightnessctl;
