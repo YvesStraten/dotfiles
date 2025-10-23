@@ -55,6 +55,7 @@ in
         # nwg-dock.enable = true;
       };
 
+      programs.dankMaterialShell.enable = true;
       programs.hyprlock = {
         enable = true;
         settings = {

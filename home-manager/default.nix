@@ -28,6 +28,8 @@ in
     ./xdg-dirs.nix
     ./theming.nix
     ./gnome.nix
+
+    inputs.dankMaterialShell.homeModules.dankMaterialShell.default
   ];
 
   config = mkMerge [
