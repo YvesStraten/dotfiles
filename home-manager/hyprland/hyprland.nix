@@ -230,23 +230,16 @@ in
                 ]) keys_directions
               ));
 
-            windowrulev2 = [
-              "float, class:^(org.gnome.Nautilus)$"
-              # make Firefox/Zen PiP window floating and sticky
-              "float, title:^(Picture-in-Picture)$"
-              "pin, title:^(Picture-in-Picture)$"
-              "idleinhibit focus, class:^(mpv|.+exe)$"
-              "idleinhibit focus, class:^(firefox)$, title:^(.*YouTube.*)$"
-              "idleinhibit fullscreen, class:^(firefox)$"
-            ];
-
             windowrule = [
-              "opacity 0.0 override, class:^(xwaylandvideobridge)$"
-              "noanim, class:^(xwaylandvideobridge)$"
-              "noinitialfocus, class:^(xwaylandvideobridge)$"
-              "maxsize 1 1, class:^(xwaylandvideobridge)$"
-              "noblur, class:^(xwaylandvideobridge)$"
-              "nofocus, class:^(xwaylandvideobridge)$"
+              "match:class ^(xwaylandvideobridge)$, opacity 0, no_anim 1, no_initial_focus 1, max_size 1 1, no_blur 1, no_focus 1"
+              "match:class ^(org.gnome.Nautilus)$, float 1"
+              "match:class thunar, float 1"
+              # make Firefox/Zen PiP window floating and sticky
+              "match:title ^(Picture-in-Picture)$, float 1, pin 1"
+              "match:class ^(firefox|mpv|.+exe)$, idle_inhibit fullscreen"
+              "match:class .*, suppress_event maximize fullscreenoutput"
+              "match:class discord, workspace 6"
+              "match:class steam, workspace 1"
             ];
           };
 
@@ -280,8 +273,6 @@ in
           general {
                   gaps_in=5
                   gaps_out=5
-                  no_border_on_floating = true
-                  # allow_tearing = true
                   layout = dwindle
 
           }
