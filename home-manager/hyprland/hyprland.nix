@@ -248,6 +248,10 @@ in
               "noblur, class:^(xwaylandvideobridge)$"
               "nofocus, class:^(xwaylandvideobridge)$"
             ];
+
+            gesture = [
+              "3, horizontal, workspace"
+            ];
           };
 
         extraConfig = with pkgs; ''
@@ -266,11 +270,6 @@ in
                    natural_scroll = true
                    clickfinger_behavior = true
           }
-          }
-
-          gestures {
-                   workspace_swipe = true
-                   workspace_swipe_fingers = 3
           }
 
           bind = $mod, V, exec, uwsm app -- ${cliphist}/bin/cliphist list | wofi --show dmenu | ${cliphist}/bin/cliphist decode | ${wl-clipboard}/bin/wl-copy

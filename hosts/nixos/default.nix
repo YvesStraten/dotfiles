@@ -10,7 +10,7 @@
     ./hardware.nix
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
+  boot.kernelPackages = pkgs.linuxPackages_xanmod;
 
   custom = {
     nvidia.enable = true;
@@ -118,19 +118,18 @@
       config.hm.custom = {
         theming = {
           enable = lib.mkForce true;
-          qt.enable = lib.mkForce true;
+          qt.enable = lib.mkForce false;
           gtk.enable = lib.mkForce true;
         };
         hyprland.enable = true;
         gnome.enable = lib.mkForce false;
       };
-    };
 
-    i3.configuration = {
-      config.hm.custom = {
-        i3.enable = true;
-        gnome.enable = lib.mkForce false;
+      config.hm.qt = {
+        enable = true;
+        platformTheme.name = "qt5ct";
       };
+
     };
   };
 

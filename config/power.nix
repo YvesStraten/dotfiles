@@ -22,9 +22,9 @@ in
         criticalPowerAction = "Hibernate";
       };
 
-      logind.extraConfig = ''
-        HandlePowerKey=ignore
-      '';
+      logind.settings.Login = {
+        HandlePowerKey = "ignore";
+      };
     };
   };
 
