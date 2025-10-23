@@ -47,15 +47,17 @@ in
       custom = {
         swappy.enable = true;
         udisks.enable = true;
-        hyprpanel.enable = true;
         rofi.enable = true;
         wlogout.enable = true;
         kanshi.enable = true;
-        quickshell.enable = true;
         # nwg-dock.enable = true;
       };
 
-      programs.dankMaterialShell.enable = true;
+      programs.dankMaterialShell = {
+        enable = true;
+        enableSystemd = true;
+      };
+
       programs.hyprlock = {
         enable = true;
         settings = {

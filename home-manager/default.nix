@@ -12,11 +12,9 @@ in
 {
   imports = [
     ./hyprland/hyprland.nix
-    ./hyprpanel.nix
     ./nwg-dock.nix
     ./swappy.nix
     ./waybar/waybar.nix
-    ./quickshell.nix
     ./udisks.nix
     ./dev
     ./rofi.nix

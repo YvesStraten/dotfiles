@@ -53,10 +53,6 @@
     };
 
     pre-commit-hooks.url = "github:cachix/git-hooks.nix";
-    quickshell = {
-      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     dgop = {
       url = "github:AvengeMedia/dgop";
@@ -166,7 +162,7 @@
 
             quickshell =
               let
-                quickshell = inputs.quickshell.packages.${pkgs.system}.default;
+                quickshell = inputs.dankMaterialShell.packages.${pkgs.system}.default;
                 checks = self.checks.${system}.pre-commit-check;
                 shellHook = checks.shellHook + ''
                   export QMLLS_BUILD_DIRS=${pkgs.kdePackages.qtdeclarative}/lib/qt-6/qml/:${quickshell}/lib/qt-6/qml/
