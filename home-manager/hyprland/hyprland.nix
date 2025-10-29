@@ -58,38 +58,6 @@ in
         enableSystemd = true;
       };
 
-      programs.hyprlock = {
-        enable = true;
-        settings = {
-          general = {
-            disable_loading_bar = true;
-            no_fade_in = false;
-          };
-
-          background = [
-            {
-              path = "~/.cache/lock-image";
-            }
-          ];
-
-          input-field = [
-            {
-              size = "200, 50";
-              position = "0, -80";
-              monitor = "";
-              dots_center = true;
-              fade_on_empty = false;
-              font_color = "rgb(202, 211, 245)";
-              inner_color = "rgb(91, 96, 120)";
-              outer_color = "rgb(24, 25, 38)";
-              outline_thickness = 5;
-              placeholder_text = "<span foreground=\"##cad3f5\">Password...</span>";
-              shadow_passes = 2;
-            }
-          ];
-        };
-      };
-
       systemd.user.services.poweralertd.Unit.After = lib.mkForce [ "graphical-session.target" ];
 
       services = {
@@ -251,6 +219,10 @@ in
               "noblur, class:^(xwaylandvideobridge)$"
               "nofocus, class:^(xwaylandvideobridge)$"
             ];
+
+            gesture = [
+              "3, horizontal, workspace"
+            ];
           };
 
         extraConfig = with pkgs; ''
@@ -269,11 +241,6 @@ in
                    natural_scroll = true
                    clickfinger_behavior = true
           }
-          }
-
-          gestures {
-                   workspace_swipe = true
-                   workspace_swipe_fingers = 3
           }
 
           bind = $mod, V, exec, uwsm app -- ${cliphist}/bin/cliphist list | wofi --show dmenu | ${cliphist}/bin/cliphist decode | ${wl-clipboard}/bin/wl-copy
