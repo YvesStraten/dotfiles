@@ -1,11 +1,10 @@
-{ ... }:
+{ pkgs, lib, ... }:
 {
   imports = [
   ];
 
   vim = {
     luaConfigPre = ''
-      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled(), { bufnr })
       vim.opt.undodir = os.getenv('HOME') .. '/.vim/undodir';
       vim.opt.backupdir = os.getenv('HOME') .. '/.vim/backup';
     '';
@@ -150,10 +149,30 @@
 
     treesitter.context = {
       enable = true;
-      setupOpts.max_lines = 10;
+      setupOpts.max_lines = 5;
     };
 
-    lsp.enable = true;
+    lsp = {
+      enable = true;
+      inlayHints.enable = true;
+      formatOnSave = true;
+      lspsaga.enable = true;
+      lspkind.enable = true;
+      trouble.enable = true;
+      lightbulb.enable = true;
+      nvim-docs-view.enable = true;
+      otter-nvim.enable = true;
+    };
+
+    diagnostics.nvim-lint = {
+      enable = true;
+      linters.flake8.cmd = "${pkgs.python3Packages.flake8}/bin/flake8";
+      linters_by_ft = {
+        python = [
+          "flake8"
+        ];
+      };
+    };
 
     languages = {
       enableFormat = true;
@@ -162,7 +181,9 @@
 
       nix = {
         enable = true;
+        extraDiagnostics.enable = true;
         format.type = "nixfmt";
+        format.package = pkgs.nixfmt-rfc-style;
       };
       typst.enable = true;
       # TODO: Add when latex support is merged https://github.com/NotAShelf/nvf/pull/569
@@ -195,23 +216,15 @@
 
       java.enable = true;
       haskell.enable = true;
-      python.enable = true;
+      python = {
+        enable = true;
+        format.enable = false;
+      };
       sql.enable = true;
       svelte.enable = true;
       ts.enable = true;
       bash.enable = true;
       clang.enable = true;
-    };
-
-    lsp = {
-      servers.qmlls.enable = true;
-      formatOnSave = true;
-      lspsaga.enable = true;
-      lspkind.enable = true;
-      trouble.enable = true;
-      lightbulb.enable = true;
-      nvim-docs-view.enable = true;
-      otter-nvim.enable = true;
     };
 
     autopairs.nvim-autopairs.enable = true;
@@ -264,6 +277,7 @@
     };
 
     git.gitsigns.enable = true;
+    git.git-conflict.enable = true;
 
     options = {
       tabstop = 2;
