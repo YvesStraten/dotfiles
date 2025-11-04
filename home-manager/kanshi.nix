@@ -1,13 +1,13 @@
-{ config
-, options
-, pkgs
-, lib
-, ...
+{
+  config,
+  options,
+  pkgs,
+  lib,
+  ...
 }:
 let
   cfg = config.custom.kanshi;
-  inherit
-    (lib)
+  inherit (lib)
     mkMerge
     mkEnableOption
     mkIf
@@ -47,16 +47,18 @@ in
           profile = {
             name = "machine_docked_home";
 
-            exec = [ "${pkgs.hyprland}/bin/hyprctl keyword monitor ${cfg.hdmiScreen},highres,auto,1,mirror,${cfg.laptopScreen}" ];
             outputs = [
               {
                 criteria = cfg.laptopScreen;
-                status = "disable";
+                status = "enable";
+                position = "1600,0";
               }
 
               {
                 criteria = "BNQ BenQ EX2510 M8L08374019";
                 status = "enable";
+                mode = "1920x1080@144";
+                position = "0,0";
               }
             ];
           };
@@ -68,6 +70,11 @@ in
             outputs = [
               {
                 criteria = cfg.laptopScreen;
+                status = "enable";
+              }
+
+              {
+                criteria = cfg.hdmiScreen;
                 status = "enable";
               }
             ];
