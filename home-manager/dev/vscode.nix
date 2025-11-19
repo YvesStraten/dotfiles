@@ -20,6 +20,7 @@ in
         [
           vscodevim.vim
           dracula-theme.theme-dracula
+          ms-python.python
           jebbs.plantuml
           ban.spellright
           ms-dotnettools.csdevkit
