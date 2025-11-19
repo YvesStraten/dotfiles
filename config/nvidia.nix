@@ -1,7 +1,8 @@
-{ config
-, options
-, lib
-, ...
+{
+  config,
+  options,
+  lib,
+  ...
 }:
 let
   cfg = config.custom.nvidia;
@@ -19,6 +20,8 @@ in
 
     environment.variables = {
       "__GL_SHADER_DISK_CACHE_SKIP_CLEANUP" = 1;
+      "__GL_SHADER_DISK_CACHE_SIZE" = 100000000000;
+      "GL_SHADER_DISK_CACHE" = 1;
     };
 
     hardware = {
