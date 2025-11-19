@@ -149,7 +149,7 @@
 
     treesitter.context = {
       enable = true;
-      setupOpts.max_lines = 5;
+      setupOpts.max_lines = 8;
     };
 
     lsp = {
@@ -228,8 +228,10 @@
     };
 
     autopairs.nvim-autopairs.enable = true;
-
-    autocomplete.nvim-cmp.enable = true;
+    autocomplete.blink-cmp = {
+      enable = true;
+      friendly-snippets.enable = true;
+    };
 
     snippets.luasnip.enable = true;
 
