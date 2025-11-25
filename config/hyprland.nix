@@ -12,6 +12,7 @@ let
   hyprpkgs = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
 in
 mkIf cfg.enable {
+  custom.thunar.enable = true;
   programs.uwsm.enable = true;
   programs.hyprland = {
     enable = true;
@@ -67,7 +68,7 @@ mkIf cfg.enable {
   };
 
   security.pam = {
-    services.hyprlock = { };
+    # services.hyprlock = { };
     services.greetd.enableGnomeKeyring = true;
   };
 }

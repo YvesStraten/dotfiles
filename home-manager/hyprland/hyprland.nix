@@ -19,29 +19,17 @@ in
           NIXOS_OZONE_WL = "1";
         };
 
-        packages =
-          with pkgs;
-          let
-            nautilus = pkgs.nautilus.overrideAttrs (o: {
-              postInstall = ''
-                ${o.postInstall or ""}
-
-                ${pkgs.gnused}/bin/sed -i 's/^DBusActivatable=true/DBusActivatable=false/' "$out/share/applications/org.gnome.Nautilus.desktop"
-              '';
-            });
-          in
-          [
-            blueman
-            yvess.wall-switch
-            wl-clipboard
-            swww
-            hypridle
-            kdePackages.gwenview
-            swappy
-            nautilus
-            pavucontrol
-            selectdefaultapplication
-          ];
+        packages = with pkgs; [
+          blueman
+          yvess.wall-switch
+          wl-clipboard
+          swww
+          hypridle
+          kdePackages.gwenview
+          swappy
+          pavucontrol
+          selectdefaultapplication
+        ];
       };
 
       custom = {
@@ -233,7 +221,7 @@ in
             windowrule = [
               "match:class ^(xwaylandvideobridge)$, opacity 0, no_anim 1, no_initial_focus 1, max_size 1 1, no_blur 1, no_focus 1"
               "match:class ^(org.gnome.Nautilus)$, float 1"
-              "match:class thunar, float 1"
+              "match:class ^(Thunar|thunar)$, float 1"
               # make Firefox/Zen PiP window floating and sticky
               "match:title ^(Picture-in-Picture)$, float 1, pin 1"
               "match:class ^(firefox|mpv|.+exe)$, idle_inhibit fullscreen"

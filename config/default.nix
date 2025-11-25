@@ -10,6 +10,7 @@ in
 {
   imports = [
     ./hyprland.nix
+    ./thunar.nix
     ./gnome.nix
     ./nvidia.nix
     ./zfs.nix
