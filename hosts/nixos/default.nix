@@ -10,7 +10,7 @@
     ./hardware.nix
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_xanmod;
+  boot.kernelParams = [ "zfs.zfs_arc_max=12884901888" ];
 
   custom = {
     nvidia.enable = true;
