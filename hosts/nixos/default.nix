@@ -18,7 +18,6 @@
     fonts.enable = true;
     tailscale.enable = true;
     design.enable = true;
-    kde.enable = true;
   };
 
   hardware = {
@@ -114,22 +113,18 @@
   xdg.portal.enable = true;
 
   specialisation = {
-    hypr.configuration = {
-      config.hm.custom = {
-        theming = {
-          enable = lib.mkForce true;
-          qt.enable = lib.mkForce false;
-          gtk.enable = lib.mkForce true;
+    kde.configuration = {
+      config = {
+        custom.kde.enable = true;
+        hm.custom = {
+          theming = {
+            enable = lib.mkForce true;
+            qt.enable = lib.mkForce false;
+            gtk.enable = lib.mkForce true;
+          };
+          gnome.enable = lib.mkForce false;
         };
-        hyprland.enable = true;
-        gnome.enable = lib.mkForce false;
       };
-
-      config.hm.qt = {
-        enable = true;
-        platformTheme.name = "qt5ct";
-      };
-
     };
   };
 

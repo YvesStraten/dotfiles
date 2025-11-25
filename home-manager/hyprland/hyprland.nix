@@ -39,6 +39,7 @@ in
         wlogout.enable = true;
         kanshi.enable = true;
         # nwg-dock.enable = true;
+        theming.enable = true;
       };
 
       programs.dankMaterialShell = {

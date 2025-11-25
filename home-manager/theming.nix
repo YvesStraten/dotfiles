@@ -1,8 +1,9 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
 }:
 let
   cfg = config.custom.theming;
@@ -22,10 +23,10 @@ in
   config = mkIf cfg.enable {
     qt = mkIf cfg.qt.enable {
       enable = true;
-      platformTheme.name = "gtk";
+      platformTheme.name = "breeze-dark";
       style = {
-        name = "gtk2";
-        package = pkgs.libsForQt5.breeze-qt5;
+        name = "qt5ct";
+        package = pkgs.kdePackages.breeze;
       };
     };
 

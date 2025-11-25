@@ -2,7 +2,7 @@
 {
   custom = {
     fish.enable = true;
-    # hyprland.enable = true;
+    hyprland.enable = true;
     # gnome.enable = true;
     ghostty.enable = true;
     nvim.enable = true;
