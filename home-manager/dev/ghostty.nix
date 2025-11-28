@@ -1,7 +1,8 @@
-{ config
-, options
-, lib
-, ...
+{
+  config,
+  options,
+  lib,
+  ...
 }:
 let
   inherit (lib) mkIf mkEnableOption;
@@ -11,6 +12,11 @@ in
   options.custom.ghostty.enable = mkEnableOption "Enable ghostty";
 
   config = mkIf cfg.enable {
-    programs.ghostty.enable = true;
+    programs.ghostty = {
+      enable = true;
+      settings = {
+        window-inherit-working-directory = false;
+      };
+    };
   };
 }
