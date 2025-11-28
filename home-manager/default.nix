@@ -38,6 +38,11 @@ in
         stateVersion = "22.11"; # Please read the comment before changing.
 
         sessionPath = [ "$HOME/.local/bin" ];
+        shell = {
+          enableBashIntegration = true;
+          enableZshIntegration = true;
+          enableFishIntegration = true;
+        };
       };
     }
 
