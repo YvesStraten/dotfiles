@@ -23,7 +23,7 @@ in
           source-code-pro
           source-sans-pro
           noto-fonts
-          noto-fonts-emoji
+          noto-fonts-color-emoji
           source-serif-pro
           unifont # some international languages
         ];

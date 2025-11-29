@@ -69,7 +69,7 @@ in
       #fonts
       nerd-fonts.jetbrains-mono
       nerd-fonts.fira-code
-      ubuntu_font_family
+      ubuntu-classic
       emacs-all-the-icons-fonts
     ];
   };
