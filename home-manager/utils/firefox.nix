@@ -54,6 +54,8 @@ in
             darkreader
             ublock-origin
             zotero-connector
+            yomitan
+            adaptive-tab-bar-colour
           ]
           ++ (if cfg.enablePwas then [ pwas-for-firefox ] else [ ]);
         settings = {
