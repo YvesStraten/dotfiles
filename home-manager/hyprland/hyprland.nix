@@ -246,7 +246,7 @@ in
               "match:title ^(Picture-in-Picture)$, float 1, pin 1"
               "match:class ^(firefox|mpv|.+exe)$, idle_inhibit fullscreen"
               "match:class .*, suppress_event maximize fullscreenoutput"
-              "match:class discord, workspace 6"
+              "match:class ^(discord|Slack)$, workspace 6"
               "match:class steam, workspace 1"
             ];
 
