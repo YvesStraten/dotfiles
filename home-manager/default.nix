@@ -36,6 +36,7 @@ in
         username = user;
         homeDirectory = "/home/${user}";
         stateVersion = "22.11"; # Please read the comment before changing.
+        preferXdgDirectories = true;
 
         sessionPath = [ "$HOME/.local/bin" ];
         shell = {
