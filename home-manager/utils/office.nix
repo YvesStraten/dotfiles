@@ -1,8 +1,9 @@
-{ config
-, options
-, pkgs
-, lib
-, ...
+{
+  config,
+  options,
+  pkgs,
+  lib,
+  ...
 }:
 let
   cfg = config.custom.office;

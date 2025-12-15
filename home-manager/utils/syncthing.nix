@@ -1,11 +1,17 @@
-{ config
-, options
-, lib
-, ...
+{
+  config,
+  options,
+  lib,
+  ...
 }:
 let
   cfg = config.custom.syncthing;
-  inherit (lib) mkMerge mkEnableOption mkIf mkForce;
+  inherit (lib)
+    mkMerge
+    mkEnableOption
+    mkIf
+    mkForce
+    ;
 in
 {
   options.custom.syncthing.enable = mkEnableOption "Enable syncthing";
@@ -18,7 +24,10 @@ in
       };
 
       systemd.user.services.syncthingtray = {
-        Unit.After = mkForce [ "graphical-session.target" "tray.target" ];
+        Unit.After = mkForce [
+          "graphical-session.target"
+          "tray.target"
+        ];
       };
     })
   ];

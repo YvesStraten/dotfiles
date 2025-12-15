@@ -129,7 +129,8 @@ let
             "bisync"
             "${remotePath}"
             "${localPath}"
-          ] ++ args;
+          ]
+          ++ args;
           WorkingDirectory = "${homeDirectory}";
           Label = "org.rclone.${name}";
           RunAtLoad = true;
@@ -170,7 +171,8 @@ in
             "bisync"
             "${bisync.localPath}"
             "${bisync.remotePath}"
-          ] ++ bisync.extraArgs;
+          ]
+          ++ bisync.extraArgs;
         in
 
         mkBisyncService {
@@ -180,13 +182,17 @@ in
         }
       ) cfg.bisyncs;
 
-      systemd.user.timers = (mkIf cfg.enableTimers (lib.attrsets.concatMapAttrs (
-        name: bisync:
-        mkBisyncTimer {
-          name = "${name}";
-          timeOut = bisync.timeDelay;
-        }
-      ) cfg.bisyncs));
+      systemd.user.timers = (
+        mkIf cfg.enableTimers (
+          lib.attrsets.concatMapAttrs (
+            name: bisync:
+            mkBisyncTimer {
+              name = "${name}";
+              timeOut = bisync.timeDelay;
+            }
+          ) cfg.bisyncs
+        )
+      );
 
       launchd.agents = builtins.mapAttrs (
         name: bisync:

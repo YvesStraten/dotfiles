@@ -6,7 +6,12 @@
 }:
 let
   cfg = config.custom.kde-connect;
-  inherit (lib) mkMerge mkEnableOption mkIf mkForce;
+  inherit (lib)
+    mkMerge
+    mkEnableOption
+    mkIf
+    mkForce
+    ;
 in
 {
   options.custom.kde-connect.enable = mkEnableOption "Enable kde-connect";

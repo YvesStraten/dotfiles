@@ -1,10 +1,12 @@
-{ pkgs
-, user
-, shell
-, lib
-, config
-, ...
-}: {
+{
+  pkgs,
+  user,
+  shell,
+  lib,
+  config,
+  ...
+}:
+{
   imports = [
   ];
 

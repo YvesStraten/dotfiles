@@ -1,8 +1,10 @@
-{ pkgs
-, user
-, shell
-, ...
-}: {
+{
+  pkgs,
+  user,
+  shell,
+  ...
+}:
+{
   imports = [
     ../../overlays/default.nix
   ];

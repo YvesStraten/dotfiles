@@ -52,7 +52,8 @@
             };
           }
         )
-      ] ++ extraModules;
+      ]
+      ++ extraModules;
     };
 
   mkDarwinHost =
@@ -100,6 +101,7 @@
           };
         }
 
-      ] ++ extraModules;
+      ]
+      ++ extraModules;
     };
 }

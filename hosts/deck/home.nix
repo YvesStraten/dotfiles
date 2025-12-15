@@ -1,7 +1,9 @@
-{ pkgs
-, lib
-, ...
-}: {
+{
+  pkgs,
+  lib,
+  ...
+}:
+{
   custom = {
     fish.enable = true;
     tmux.enable = true;

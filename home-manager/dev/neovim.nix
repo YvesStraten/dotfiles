@@ -1,9 +1,10 @@
-{ options
-, config
-, lib
-, self
-, pkgs
-, ...
+{
+  options,
+  config,
+  lib,
+  self,
+  pkgs,
+  ...
 }:
 let
   cfg = config.custom.nvim;

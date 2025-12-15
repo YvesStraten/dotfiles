@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   custom = {
     fish.enable = true;
     theming.enable = true;

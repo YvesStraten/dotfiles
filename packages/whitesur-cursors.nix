@@ -2,8 +2,7 @@
   stdenv,
   fetchFromGitHub,
 }:
-stdenv.mkDerivation
-{
+stdenv.mkDerivation {
   name = "whitesur-cursors";
   src = fetchFromGitHub {
     owner = "vinceliuice";

@@ -1,9 +1,8 @@
-
 {
   picom,
   lib,
   fetchFromGitHub,
-  pcre
+  pcre,
 }:
 picom.overrideAttrs (previousAttrs: {
   pname = "picom-pijulius";

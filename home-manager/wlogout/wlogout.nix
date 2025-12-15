@@ -52,55 +52,57 @@ in
         }
       ];
 
-      style = let
-        icon-location = "${pkgs.wlogout}/share/wlogout/icons";
-        in ''
-        window {
-            font-family: monospace;
-            font-size: 14pt;
-            color: #cdd6f4; /* text */
-            background-color: rgba(30, 30, 46, 0.5);
-        }
+      style =
+        let
+          icon-location = "${pkgs.wlogout}/share/wlogout/icons";
+        in
+        ''
+          window {
+              font-family: monospace;
+              font-size: 14pt;
+              color: #cdd6f4; /* text */
+              background-color: rgba(30, 30, 46, 0.5);
+          }
 
-        button {
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: 25%;
-            border: none;
-            background-color: rgba(30, 30, 46, 0);
-            margin: 5px;
-            transition: box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
-        }
+          button {
+              background-repeat: no-repeat;
+              background-position: center;
+              background-size: 25%;
+              border: none;
+              background-color: rgba(30, 30, 46, 0);
+              margin: 5px;
+              transition: box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
+          }
 
-        button:hover {
-            background-color: rgba(49, 50, 68, 0.1);
-        }
+          button:hover {
+              background-color: rgba(49, 50, 68, 0.1);
+          }
 
-        button:focus {
-            background-color: #cba6f7;
-            color: #1e1e2e;
-        }
+          button:focus {
+              background-color: #cba6f7;
+              color: #1e1e2e;
+          }
 
-        #lock {
-            background-image: image(url("${icon-location}/lock.png"));
-        }
+          #lock {
+              background-image: image(url("${icon-location}/lock.png"));
+          }
 
-        #logout {
-            background-image: image(url("${icon-location}/logout.png"));
-        }
+          #logout {
+              background-image: image(url("${icon-location}/logout.png"));
+          }
 
-        #suspend {
-            background-image: image(url("${icon-location}/suspend.png"));
-        }
+          #suspend {
+              background-image: image(url("${icon-location}/suspend.png"));
+          }
 
-        #shutdown {
-            background-image: image(url("${icon-location}/shutdown.png"));
-        }
+          #shutdown {
+              background-image: image(url("${icon-location}/shutdown.png"));
+          }
 
-        #reboot {
-            background-image: image(url("${icon-location}/reboot.png"));
-        }
-      '';
+          #reboot {
+              background-image: image(url("${icon-location}/reboot.png"));
+          }
+        '';
     };
   };
 }
