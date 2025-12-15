@@ -21,6 +21,10 @@ in
     typst.enable = mkEnableOption "Enable typst" // {
       default = cfg.enable;
     };
+
+    epub.enable = mkEnableOption "Enable epub" // {
+      default = cfg.enable;
+    };
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -69,6 +73,12 @@ in
     (mkIf cfg.typst.enable {
       home.packages = [
         pkgs.typst
+      ];
+    })
+
+    (mkIf cfg.epub.enable {
+      home.packages = [
+        pkgs.sigil
       ];
     })
   ]);

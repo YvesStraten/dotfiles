@@ -27,6 +27,12 @@
         });
       };
 
+      sigil = prev.sigil.overrideAttrs (oldAttrs: {
+        buildInputs = oldAttrs.buildInputs or [ ] ++ [
+          final.python3Packages.dulwich
+        ];
+      });
+
       ani-cli-rofi = prev.ani-cli.overrideAttrs (
         oldAttrs:
         let
