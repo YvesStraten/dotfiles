@@ -23,10 +23,9 @@ in
   config = mkIf cfg.enable {
     qt = mkIf cfg.qt.enable {
       enable = true;
-      platformTheme.name = "breeze-dark";
+      platformTheme.name = "qtct";
       style = {
-        name = "qt5ct";
-        package = pkgs.kdePackages.breeze;
+        name = "breeze";
       };
     };
 
