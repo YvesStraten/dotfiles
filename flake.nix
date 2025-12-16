@@ -13,13 +13,16 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     nix-darwin = {
       url = "github:LnL7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    mac-app-util.url = "github:hraban/mac-app-util";
-    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
+    mac-app-util = {
+      url = "github:hraban/mac-app-util";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Follows unstable
     nixpkgs-stable.url = "github:/NixOS/nixpkgs/nixos-25.05";
@@ -37,9 +40,11 @@
     hyprland.url = "github:hyprwm/hyprland";
     hyprpicker.url = "github:hyprwm/hyprpicker";
     hypr-contrib.url = "github:hyprwm/contrib";
-    nur.url = "github:nix-community/NUR";
-    nix-colors.url = "github:misterio77/nix-colors";
-    devenv.url = "github:cachix/devenv";
+
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     zathura-dracula = {
       url = "github:dracula/zathura";
@@ -47,12 +52,16 @@
     };
 
     nvf.url = "github:NotAShelf/nvf";
+
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    pre-commit-hooks.url = "github:cachix/git-hooks.nix";
+    pre-commit-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     dankMaterialShell = {
       url = "github:AvengeMedia/DankMaterialShell";
@@ -92,7 +101,6 @@
       nixos-hardware,
       flake-parts,
       nix-darwin,
-      mac-app-util,
       pre-commit-hooks,
       self,
       ...
