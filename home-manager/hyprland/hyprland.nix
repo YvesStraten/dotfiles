@@ -256,13 +256,11 @@ in
           };
 
         extraConfig = with pkgs; ''
-          env = HYPRCURSOR_THEME,Bibata-Modern-Ice
-          env = HYPRCURSOR_SIZE,26
-          monitor = ,highrr,auto,1.2
+          monitor = ,highrr,auto,auto
 
           input {
           kb_layout = us,se,de,it
-          kb_options=grp:win_space_toggle
+          kb_options=grp:alt_shift_toggle
           repeat_rate = 40
           repeat_delay = 400
           follow_mouse = 1
