@@ -6,7 +6,6 @@
 }:
 {
   nixpkgs.overlays = [
-    inputs.nur.overlays.default
     inputs.firefox-darwin.overlay
     inputs.emacs-overlay.overlay
     inputs.hyprland.overlays.default

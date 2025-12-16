@@ -1,6 +1,7 @@
 {
   config,
   options,
+  inputs,
   lib,
   pkgs,
   ...
@@ -46,7 +47,7 @@ in
       profiles.yvess = {
         isDefault = true;
         extensions.packages =
-          with pkgs.nur.repos.rycee.firefox-addons;
+          with inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system};
           [
             react-devtools
             browserpass

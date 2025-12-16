@@ -14,6 +14,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    systems = {
+      url = "path:./systems.nix";
+      flake = false;
+    };
+
     nix-darwin = {
       url = "github:LnL7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,28 +26,51 @@
 
     mac-app-util = {
       url = "github:hraban/mac-app-util";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems";
+        flake-compat.follows = "";
+        treefmt-nix.follows = "";
+      };
     };
 
-    # Follows unstable
     nixpkgs-stable.url = "github:/NixOS/nixpkgs/nixos-25.05";
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
+      inputs = {
+        nixpkgs.follows = "nixpkgs-stable";
+        flake-compat.follows = "";
+      };
     };
     home-manager-stable = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
 
-    firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
+    firefox-darwin = {
+      url = "github:bandithedoge/nixpkgs-firefox-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    hyprland.url = "github:hyprwm/hyprland";
-    hyprpicker.url = "github:hyprwm/hyprpicker";
+
+    hyprland = {
+      url = "github:hyprwm/hyprland";
+      inputs = {
+        systems.follows = "systems";
+        pre-commit-hooks.follows = "";
+      };
+    };
+
+    hyprpicker = {
+      url = "github:hyprwm/hyprpicker";
+      inputs.systems.follows = "systems";
+    };
+
     hypr-contrib.url = "github:hyprwm/contrib";
 
-    nur = {
-      url = "github:nix-community/NUR";
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -51,16 +79,33 @@
       flake = false;
     };
 
-    nvf.url = "github:NotAShelf/nvf";
+    nvf = {
+      url = "github:NotAShelf/nvf";
+      inputs = {
+        flake-compat.follows = "";
+        flake-parts.follows = "flake-parts";
+        systems.follows = "systems";
+      };
+    };
 
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    gitignore = {
+      url = "github:hercules-ci/gitignore.nix";
+      # Use the same nixpkgs
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     pre-commit-hooks = {
       url = "github:cachix/git-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        gitignore.follows = "gitignore";
+        flake-compat.follows = "";
+      };
     };
 
     dankMaterialShell = {
@@ -93,7 +138,6 @@
     {
       nixpkgs,
       nixpkgs-stable,
-      nur,
       nvf,
       nixos-wsl,
       home-manager,
@@ -276,7 +320,6 @@
                   ;
               };
               modules = [
-                nur.modules.nixos.default
                 ./hosts/nixos
                 ./config/default.nix
                 (nixpkgs.lib.mkAliasOptionModule
@@ -381,7 +424,6 @@
               modules = [
                 ./hosts/deck
                 inputs.jovian.nixosModules.default
-                nur.modules.nixos.default
                 ./config
 
                 (nixpkgs.lib.mkAliasOptionModule
