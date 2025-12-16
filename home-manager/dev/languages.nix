@@ -54,7 +54,6 @@ in
         sshfs
         ffmpeg
         neofetch
-        (hiPrio gcc)
         clang
         gnumake
         drawio
