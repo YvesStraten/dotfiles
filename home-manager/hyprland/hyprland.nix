@@ -241,6 +241,7 @@ in
             windowrule = [
               "match:class ^(xwaylandvideobridge)$, opacity 0, no_anim 1, no_initial_focus 1, max_size 1 1, no_blur 1, no_focus 1"
               "match:class ^(org.gnome.Nautilus)$, float 1"
+              "match:class ^(Zotero|zotero)$, float 1"
               "match:class ^(Thunar|thunar)$, float 1"
               # make Firefox/Zen PiP window floating and sticky
               "match:title ^(Picture-in-Picture)$, float 1, pin 1"
