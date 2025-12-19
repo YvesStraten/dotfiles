@@ -21,7 +21,6 @@
       filezilla
       btop
       teams-for-linux
-      zoom-us
 
       ani-cli-rofi
 
