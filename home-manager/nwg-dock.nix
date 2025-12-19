@@ -1,8 +1,15 @@
-{ config, options, lib, pkgs, ... }:
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.custom.nwg-dock;
   inherit (lib) mkMerge mkEnableOption mkIf;
-in {
+in
+{
   options.custom.nwg-dock = {
     enable = mkEnableOption "Enable nwg-dock";
   };
@@ -12,8 +19,8 @@ in {
       Install.WantedBy = [ "graphical-session.target" ];
       Unit = {
         Description = "Start nwg-dock";
-        After = [ "graphical-session.target" ]; 
-        PartOf = [ "graphical-session.target" ]; 
+        After = [ "graphical-session.target" ];
+        PartOf = [ "graphical-session.target" ];
       };
 
       Service = {

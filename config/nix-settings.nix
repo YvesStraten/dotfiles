@@ -2,6 +2,7 @@
   config,
   options,
   lib,
+  pkgs,
   user,
   inputs,
   ...
@@ -13,6 +14,7 @@ in
   config = mkMerge [
     {
       nix = {
+        package = pkgs.lixPackageSets.stable.lix;
         settings.experimental-features = [
           "nix-command"
           "flakes"

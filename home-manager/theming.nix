@@ -1,8 +1,9 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
 }:
 let
   cfg = config.custom.theming;
@@ -22,10 +23,9 @@ in
   config = mkIf cfg.enable {
     qt = mkIf cfg.qt.enable {
       enable = true;
-      platformTheme.name = "gtk";
+      platformTheme.name = "qtct";
       style = {
-        name = "gtk2";
-        package = pkgs.libsForQt5.breeze-qt5;
+        name = "breeze";
       };
     };
 
@@ -56,19 +56,26 @@ in
         name = "Tela";
         package = pkgs.tela-icon-theme;
       };
-
-      cursorTheme = {
-        package = pkgs.bibata-cursors;
-        name = "Bibata-Modern-Ice";
-      };
     };
 
     fonts.fontconfig.enable = true;
+    home.pointerCursor = {
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Ice";
+      size = 16;
+
+      gtk.enable = true;
+      x11.enable = true;
+      hyprcursor = {
+        enable = true;
+        size = config.home.pointerCursor.size;
+      };
+    };
     home.packages = with pkgs; [
       #fonts
       nerd-fonts.jetbrains-mono
       nerd-fonts.fira-code
-      ubuntu_font_family
+      ubuntu-classic
       emacs-all-the-icons-fonts
     ];
   };

@@ -1,8 +1,9 @@
-{ config
-, options
-, pkgs
-, lib
-, ...
+{
+  config,
+  options,
+  pkgs,
+  lib,
+  ...
 }:
 let
   cfg = config.custom.design;
@@ -15,6 +16,11 @@ in
     programs.obs-studio = {
       enable = true;
       enableVirtualCamera = true;
+      package =
+        if config.custom.nvidia.enable then
+          (pkgs.obs-studio.override { cudaSupport = true; })
+        else
+          pkgs.obs-studio;
       plugins = with pkgs.obs-studio-plugins; [
         wlrobs
         obs-backgroundremoval

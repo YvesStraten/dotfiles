@@ -1,13 +1,13 @@
-{ config
-, options
-, pkgs
-, lib
-, ...
+{
+  config,
+  options,
+  pkgs,
+  lib,
+  ...
 }:
 let
   cfg = config.custom.emacs;
-  inherit
-    (lib)
+  inherit (lib)
     mkIf
     mkEnableOption
     mkOption
@@ -35,15 +35,16 @@ in
     emacs = {
       enable = mkEnableOption "Enable emacs";
       package = mkOption {
-        default = with pkgs; ((emacsPackagesFor pkgs.emacs30-pgtk).emacsWithPackages (
-          epkgs:
-            with epkgs; [
+        default =
+          with pkgs;
+          ((emacsPackagesFor pkgs.emacs30-pgtk).emacsWithPackages (
+            epkgs: with epkgs; [
               vterm
               all-the-icons
               nerd-icons
               treesit-grammars.with-all-grammars
             ]
-        ));
+          ));
         type = types.package;
         description = ''
           Emacs package to use

@@ -10,7 +10,8 @@ let
       options = [
         "compress=zstd"
         "subvol=${subVol}"
-      ] ++ extraOpts;
+      ]
+      ++ extraOpts;
       label = label;
       fsType = "btrfs";
     };

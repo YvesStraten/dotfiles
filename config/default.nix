@@ -1,7 +1,8 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 let
   inherit (lib) mkMerge;
@@ -9,6 +10,7 @@ in
 {
   imports = [
     ./hyprland.nix
+    ./thunar.nix
     ./gnome.nix
     ./nvidia.nix
     ./zfs.nix
@@ -16,7 +18,6 @@ in
     ./auth.nix
     ./boot.nix
     ./bluetooth.nix
-    ./i3.nix
     ./networking.nix
     ./users.nix
     ./power.nix
@@ -36,6 +37,8 @@ in
       environment.systemPackages = with pkgs; [
         unrar
         vim
+        zip
+        unzip
       ];
     }
   ];

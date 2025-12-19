@@ -15,11 +15,12 @@ in
   config = mkIf cfg.enable {
     programs.vscode = {
       enable = true;
-      extensions =
+      profiles.default.extensions =
         with pkgs.vscode-extensions;
         [
           vscodevim.vim
           dracula-theme.theme-dracula
+          ms-python.python
           jebbs.plantuml
           ban.spellright
           ms-dotnettools.csdevkit

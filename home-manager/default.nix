@@ -12,11 +12,9 @@ in
 {
   imports = [
     ./hyprland/hyprland.nix
-    ./hyprpanel.nix
     ./nwg-dock.nix
     ./swappy.nix
     ./waybar/waybar.nix
-    ./quickshell.nix
     ./udisks.nix
     ./dev
     ./rofi.nix
@@ -25,12 +23,11 @@ in
     ./kanshi.nix
     ./utils
     ./wlogout/wlogout.nix
-    ./i3/i3.nix
-    ./picom/picom.nix
-    ./polybar/polybar.nix
     ./xdg-dirs.nix
     ./theming.nix
     ./gnome.nix
+
+    inputs.dankMaterialShell.homeModules.dankMaterialShell.default
   ];
 
   config = mkMerge [
@@ -39,8 +36,14 @@ in
         username = user;
         homeDirectory = "/home/${user}";
         stateVersion = "22.11"; # Please read the comment before changing.
+        preferXdgDirectories = true;
 
         sessionPath = [ "$HOME/.local/bin" ];
+        shell = {
+          enableBashIntegration = true;
+          enableZshIntegration = true;
+          enableFishIntegration = true;
+        };
       };
     }
 

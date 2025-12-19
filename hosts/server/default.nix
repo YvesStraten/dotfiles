@@ -1,8 +1,10 @@
-{ shell
-, pkgs
-, user
-, ...
-}: {
+{
+  shell,
+  pkgs,
+  user,
+  ...
+}:
+{
   custom = {
     zfs.enable = false;
     power.enable = false;

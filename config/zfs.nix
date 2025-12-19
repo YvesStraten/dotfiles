@@ -1,7 +1,7 @@
 {
   config,
   options,
-  pkgs, 
+  pkgs,
   lib,
   ...
 }:
@@ -10,7 +10,9 @@ let
   inherit (lib) mkEnableOption mkIf;
 in
 {
-  options.custom.zfs.enable = mkEnableOption "Use zfs for this system" // { default = true; };
+  options.custom.zfs.enable = mkEnableOption "Use zfs for this system" // {
+    default = true;
+  };
 
   config = mkIf cfg.enable {
     services.sanoid = {

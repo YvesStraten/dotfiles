@@ -9,57 +9,110 @@
 
     # Follow unstable
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    polybar-scripts = {
-      url = "github:polybar/polybar-scripts";
-      flake = false;
-    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    systems = {
+      url = "path:./systems.nix";
+      flake = false;
+    };
+
     nix-darwin = {
       url = "github:LnL7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    mac-app-util.url = "github:hraban/mac-app-util";
-    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
+    mac-app-util = {
+      url = "github:hraban/mac-app-util";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems";
+        flake-compat.follows = "";
+        treefmt-nix.follows = "";
+      };
+    };
 
-    # Follows unstable
     nixpkgs-stable.url = "github:/NixOS/nixpkgs/nixos-25.05";
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
+      inputs = {
+        nixpkgs.follows = "nixpkgs-stable";
+        flake-compat.follows = "";
+      };
     };
     home-manager-stable = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
 
-    firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
+    firefox-darwin = {
+      url = "github:bandithedoge/nixpkgs-firefox-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    hyprland.url = "github:hyprwm/hyprland";
-    hyprpicker.url = "github:hyprwm/hyprpicker";
+
+    hyprland = {
+      url = "github:hyprwm/hyprland";
+      inputs = {
+        systems.follows = "systems";
+        pre-commit-hooks.follows = "";
+      };
+    };
+
+    hyprpicker = {
+      url = "github:hyprwm/hyprpicker";
+      inputs.systems.follows = "systems";
+    };
+
     hypr-contrib.url = "github:hyprwm/contrib";
-    nur.url = "github:nix-community/NUR";
-    nix-colors.url = "github:misterio77/nix-colors";
-    devenv.url = "github:cachix/devenv";
+
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     zathura-dracula = {
       url = "github:dracula/zathura";
       flake = false;
     };
 
-    nvf.url = "github:NotAShelf/nvf";
+    nvf = {
+      url = "github:NotAShelf/nvf";
+      inputs = {
+        flake-compat.follows = "";
+        flake-parts.follows = "flake-parts";
+        systems.follows = "systems";
+      };
+    };
+
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    pre-commit-hooks.url = "github:cachix/git-hooks.nix";
-    quickshell = {
-      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
+    gitignore = {
+      url = "github:hercules-ci/gitignore.nix";
+      # Use the same nixpkgs
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    pre-commit-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        gitignore.follows = "gitignore";
+        flake-compat.follows = "";
+      };
+    };
+
+    dankMaterialShell = {
+      url = "github:AvengeMedia/DankMaterialShell";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
     };
   };
 
@@ -72,28 +125,29 @@
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
+      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
     ];
     extra-substituters = [
+      "https://hyprland.cachix.org"
       "https://devenv.cachix.org"
       "https://nix-community.cachix.org"
     ];
   };
 
   outputs =
-    { nixpkgs
-    , nixpkgs-stable
-    , nur
-    , nvf
-    , nixos-wsl
-    , home-manager
-    , home-manager-stable
-    , nixos-hardware
-    , flake-parts
-    , nix-darwin
-    , mac-app-util
-    , pre-commit-hooks
-    , self
-    , ...
+    {
+      nixpkgs,
+      nixpkgs-stable,
+      nvf,
+      nixos-wsl,
+      home-manager,
+      home-manager-stable,
+      nixos-hardware,
+      flake-parts,
+      nix-darwin,
+      pre-commit-hooks,
+      self,
+      ...
     }@inputs:
     let
       email = "yves.straten@gmail.com";
@@ -128,7 +182,7 @@
             pre-commit-check = pre-commit-hooks.lib.${system}.run {
               src = ./.;
               hooks = {
-                nixpkgs-fmt.enable = true;
+                nixfmt-rfc-style.enable = true;
               };
             };
           };
@@ -150,23 +204,21 @@
 
             quickshell =
               let
-                quickshell =
-                  inputs.quickshell.packages.${pkgs.system}.default;
+                quickshell = inputs.dankMaterialShell.packages.${system}.default;
                 checks = self.checks.${system}.pre-commit-check;
-                shellHook = checks.shellHook ++ ''
+                shellHook = checks.shellHook + ''
                   export QMLLS_BUILD_DIRS=${pkgs.kdePackages.qtdeclarative}/lib/qt-6/qml/:${quickshell}/lib/qt-6/qml/
                   export QML_IMPORT_PATH=$PWD/src
                 '';
               in
-              pkgs.mkShell
-                {
+              pkgs.mkShell {
 
-                  packages = [
-                    quickshell
-                    pkgs.kdePackages.qtdeclarative
-                  ];
-                  inherit shellHook;
-                };
+                packages = [
+                  quickshell
+                  pkgs.kdePackages.qtdeclarative
+                ];
+                inherit shellHook;
+              };
           };
         };
 
@@ -268,7 +320,6 @@
                   ;
               };
               modules = [
-                nur.modules.nixos.default
                 ./hosts/nixos
                 ./config/default.nix
                 (nixpkgs.lib.mkAliasOptionModule
@@ -373,7 +424,6 @@
               modules = [
                 ./hosts/deck
                 inputs.jovian.nixosModules.default
-                nur.modules.nixos.default
                 ./config
 
                 (nixpkgs.lib.mkAliasOptionModule

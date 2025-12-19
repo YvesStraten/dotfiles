@@ -1,8 +1,9 @@
-{ config
-, options
-, pkgs
-, lib
-, ...
+{
+  config,
+  options,
+  pkgs,
+  lib,
+  ...
 }:
 let
   cfg = config.custom.pass;
@@ -30,6 +31,7 @@ in
         );
       };
       gpg.enable = true;
+      browserpass.enable = true;
     };
 
     services = {

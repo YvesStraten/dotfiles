@@ -23,8 +23,12 @@ in
 
     programs.git = {
       enable = true;
-      userName = gitUser;
-      userEmail = email;
+      settings = {
+        user = {
+          name = gitUser;
+          email = email;
+        };
+      };
 
       lfs.enable = true;
     };

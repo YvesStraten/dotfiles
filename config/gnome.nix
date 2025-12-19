@@ -22,19 +22,18 @@ in
       };
 
       environment.systemPackages = cfg.extensions;
-      environment.gnome.excludePackages =
-        with pkgs; [
-          gnome-terminal
-          gnome-photos
-          gnome-tour
-          gnome-music
-          epiphany
-          geary
-          tali
-          iagno
-          hitori
-          atomix
-        ];
+      environment.gnome.excludePackages = with pkgs; [
+        gnome-terminal
+        gnome-photos
+        gnome-tour
+        gnome-music
+        epiphany
+        geary
+        tali
+        iagno
+        hitori
+        atomix
+      ];
     }
   ]);
 }

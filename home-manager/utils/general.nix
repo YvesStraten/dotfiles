@@ -1,13 +1,13 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
 }:
 let
   cfg = config.custom.general;
-  inherit
-    (lib)
+  inherit (lib)
     mkEnableOption
     mkIf
     mkOption

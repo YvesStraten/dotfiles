@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   sugar-dark = pkgs.callPackage ./sugar-dark.nix { };
   sekiro = pkgs.callPackage ./sekiro.nix { };
   wall-switch = pkgs.callPackage ./wall-switch.nix { };

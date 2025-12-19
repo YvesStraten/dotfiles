@@ -1,9 +1,10 @@
-{ options
-, config
-, lib
-, self
-, pkgs
-, ...
+{
+  options,
+  config,
+  lib,
+  self,
+  pkgs,
+  ...
 }:
 let
   cfg = config.custom.nvim;
@@ -14,7 +15,7 @@ in
 
   config = mkIf cfg.enable {
     home = {
-      packages = [ self.packages.${pkgs.system}.nvim ];
+      packages = [ self.packages.${pkgs.stdenv.hostPlatform.system}.nvim ];
       sessionVariables = {
         EDITOR = "nvim";
       };

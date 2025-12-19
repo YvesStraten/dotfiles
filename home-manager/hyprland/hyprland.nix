@@ -27,7 +27,6 @@ in
           hypridle
           kdePackages.gwenview
           swappy
-          nautilus
           pavucontrol
           selectdefaultapplication
         ];
@@ -36,16 +35,20 @@ in
       custom = {
         swappy.enable = true;
         udisks.enable = true;
-        hyprpanel.enable = true;
         rofi.enable = true;
         wlogout.enable = true;
         kanshi.enable = true;
-        quickshell.enable = true;
         # nwg-dock.enable = true;
+        theming.enable = true;
+      };
+
+      programs.dankMaterialShell = {
+        enable = true;
+        systemd.enable = true;
       };
 
       programs.hyprlock = {
-        enable = true;
+        enable = false;
         settings = {
           general = {
             disable_loading_bar = true;
@@ -76,7 +79,26 @@ in
         };
       };
 
-      systemd.user.services.poweralertd.Unit.After = lib.mkForce [ "graphical-session.target" ];
+      systemd.user.services = {
+        poweralertd.Unit.After = lib.mkForce [ "graphical-session.target" ];
+        polkit-gnome-authentication-agent-1 = {
+          Unit = {
+            Description = "polkit-gnome-authentication-agent-1";
+            Wants = [ "graphical-session.target" ];
+            After = [ "graphical-session.target" ];
+          };
+          Install = {
+            WantedBy = [ "graphical-session.target" ];
+          };
+          Service = {
+            Type = "simple";
+            ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+            Restart = "on-failure";
+            RestartSec = 1;
+            TimeoutStopSec = 10;
+          };
+        };
+      };
 
       services = {
         cliphist = {
@@ -89,10 +111,6 @@ in
         hypridle = {
           enable = true;
           settings = {
-            general = {
-              lock_cmd = "pidof hyprlock || hyprlock";
-            };
-
             listener =
               let
                 brightnessctl = lib.getExe pkgs.brightnessctl;
@@ -150,7 +168,11 @@ in
           in
           {
             "$mod" = "super";
-            # bindl = ",switch:Lid Switch, exec, pidof hyprlock || hyprlock";
+
+            exec-once = [
+              "${pkgs.systemd}/bin/systemctl --user restart gamemoded.service"
+            ];
+
             bind =
               with pkgs;
               let
@@ -161,7 +183,6 @@ in
               in
               [
                 "$mod, B, exec, uwsm app -- firefox"
-                "$mod, F1, exec, uwsm app -- ~/.config/hypr/scripts/keybind"
                 ", XF86AudioRaiseVolume, exec, uwsm app -- ${pamixer}/bin/pamixer -i 5"
                 ", XF86AudioLowerVolume, exec, uwsm app -- ${pamixer}/bin/pamixer -d 5"
                 ", XF86MonBrightnessUp, exec, uwsm app -- ${brightnessctl}/bin/brightnessctl s +5%"
@@ -171,7 +192,7 @@ in
                 "$mod, Return, exec, uwsm app -- ${ghostty}/bin/ghostty"
                 "$mod, E, exec, uwsm app -- emacsclient -c"
                 "$mod, N, exec, uwsm app -- yazi.desktop"
-                "$mod, R, exec, uwsm app -- rofi -show drun -run-command 'uwsm app -- {cmd}'"
+                "$mod, R, exec, rofi -show drun -run-command 'uwsm app -- {cmd}'"
                 "$mod, Q, killactive,"
                 "$mod, F, fullscreen,"
                 "$mod SHIFT, Space, togglefloating,"
@@ -217,25 +238,30 @@ in
                 ]) keys_directions
               ));
 
-            windowrulev2 = [
-              "float, class:^(org.gnome.Nautilus)$"
+            windowrule = [
+              "match:class ^(xwaylandvideobridge)$, opacity 0, no_anim 1, no_initial_focus 1, max_size 1 1, no_blur 1, no_focus 1"
+              "match:class ^(org.gnome.Nautilus)$, float 1"
+              "match:class ^(Zotero|zotero)$, float 1"
+              "match:class ^(Thunar|thunar)$, float 1"
               # make Firefox/Zen PiP window floating and sticky
-              "float, title:^(Picture-in-Picture)$"
-              "pin, title:^(Picture-in-Picture)$"
-              "idleinhibit focus, class:^(mpv|.+exe)$"
-              "idleinhibit focus, class:^(firefox)$, title:^(.*YouTube.*)$"
-              "idleinhibit fullscreen, class:^(firefox)$"
+              "match:title ^(Picture-in-Picture)$, float 1, pin 1"
+              "match:class ^(firefox|mpv|.+exe)$, idle_inhibit fullscreen"
+              "match:class .*, suppress_event maximize fullscreenoutput"
+              "match:class ^(discord|Slack)$, workspace 6"
+              "match:class steam, workspace 1"
+            ];
+
+            gesture = [
+              "3, horizontal, workspace"
             ];
           };
 
         extraConfig = with pkgs; ''
-          env = HYPRCURSOR_THEME,Bibata-Modern-Ice
-          env = HYPRCURSOR_SIZE,26
-          monitor = ,highrr,auto,1.2
+          monitor = ,highrr,auto,auto
 
           input {
           kb_layout = us,se,de,it
-          kb_options=grp:win_space_toggle
+          kb_options=grp:alt_shift_toggle
           repeat_rate = 40
           repeat_delay = 400
           follow_mouse = 1
@@ -246,11 +272,6 @@ in
           }
           }
 
-          gestures {
-                   workspace_swipe = true
-                   workspace_swipe_fingers = 3
-          }
-
           bind = $mod, V, exec, uwsm app -- ${cliphist}/bin/cliphist list | wofi --show dmenu | ${cliphist}/bin/cliphist decode | ${wl-clipboard}/bin/wl-copy
           bind = $mod, escape, exec, uwsm app -- ${wlogout}/bin/wlogout --protocol layer-shell -b 5 -T 400 -B 400
           bind = $mod, period, exec, uwsm app -- rofi -modi emoji -show emoji
@@ -258,8 +279,6 @@ in
           general {
                   gaps_in=5
                   gaps_out=5
-                  no_border_on_floating = true
-                  # allow_tearing = true
                   layout = dwindle
 
           }

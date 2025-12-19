@@ -1,7 +1,8 @@
-{ pkgs
-, lib
-, config
-, ...
+{
+  pkgs,
+  lib,
+  config,
+  ...
 }:
 {
   imports = [
@@ -9,13 +10,14 @@
     ./hardware.nix
   ];
 
+  boot.kernelParams = [ "zfs.zfs_arc_max=12884901888" ];
+
   custom = {
     nvidia.enable = true;
     virtualisation.enable = true;
     fonts.enable = true;
     tailscale.enable = true;
     design.enable = true;
-    kde.enable = true;
   };
 
   hardware = {
@@ -111,22 +113,17 @@
   xdg.portal.enable = true;
 
   specialisation = {
-    hypr.configuration = {
-      config.hm.custom = {
-        theming = {
-          enable = lib.mkForce true;
-          qt.enable = lib.mkForce true;
-          gtk.enable = lib.mkForce true;
+    kde.configuration = {
+      config = {
+        custom.kde.enable = true;
+        hm.custom = {
+          theming = {
+            enable = lib.mkForce true;
+            qt.enable = lib.mkForce false;
+            gtk.enable = lib.mkForce true;
+          };
+          gnome.enable = lib.mkForce false;
         };
-        hyprland.enable = true;
-        gnome.enable = lib.mkForce false;
-      };
-    };
-
-    i3.configuration = {
-      config.hm.custom = {
-        i3.enable = true;
-        gnome.enable = lib.mkForce false;
       };
     };
   };
