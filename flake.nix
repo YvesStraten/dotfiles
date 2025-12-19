@@ -204,7 +204,7 @@
 
             quickshell =
               let
-                quickshell = inputs.dankMaterialShell.packages.${pkgs.system}.default;
+                quickshell = inputs.dankMaterialShell.packages.${system}.default;
                 checks = self.checks.${system}.pre-commit-check;
                 shellHook = checks.shellHook + ''
                   export QMLLS_BUILD_DIRS=${pkgs.kdePackages.qtdeclarative}/lib/qt-6/qml/:${quickshell}/lib/qt-6/qml/

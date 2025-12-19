@@ -15,7 +15,7 @@ in
   config = mkIf cfg.enable {
     programs.vscode = {
       enable = true;
-      extensions =
+      profiles.default.extensions =
         with pkgs.vscode-extensions;
         [
           vscodevim.vim

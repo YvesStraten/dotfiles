@@ -15,7 +15,7 @@ in
 
   config = mkIf cfg.enable {
     home = {
-      packages = [ self.packages.${pkgs.system}.nvim ];
+      packages = [ self.packages.${pkgs.stdenv.hostPlatform.system}.nvim ];
       sessionVariables = {
         EDITOR = "nvim";
       };
