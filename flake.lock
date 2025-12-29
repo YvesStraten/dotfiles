@@ -642,11 +642,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1763735912,
-        "narHash": "sha256-qJZsbXJlcqnwguLkIecTbh8JctfnOI7LORygVeNniuI=",
+        "lastModified": 1766486431,
+        "narHash": "sha256-zveZkAaOvGMPMD9DOIl+KfRnpdckBRcbptW7ux5oMW8=",
         "owner": "YvesStraten",
         "repo": "Jovian-NixOS",
-        "rev": "60107e092ea21ec0ccd4f590c48b1937876e7b75",
+        "rev": "165e1e78a81c2a82095039da1e71d24723f108db",
         "type": "github"
       },
       "original": {
@@ -875,11 +875,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1764242076,
-        "narHash": "sha256-sKoIWfnijJ0+9e4wRvIgm/HgE27bzwQxcEmo2J/gNpI=",
+        "lastModified": 1766309749,
+        "narHash": "sha256-3xY8CZ4rSnQ0NqGhMKAy5vgC+2IVK0NoVEzDoOh4DA4=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "2fad6eac6077f03fe109c4d4eb171cf96791faa4",
+        "rev": "a6531044f6d0bef691ea18d4d4ce44d0daa6e816",
         "type": "github"
       },
       "original": {
@@ -984,15 +984,14 @@
     "systems": {
       "flake": false,
       "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-MTMdnsU+twu80iizX7JJJf5DQpUqqxAcKS9Dqyap3Ew=",
         "path": "./systems.nix",
         "type": "path"
       },
       "original": {
         "path": "./systems.nix",
         "type": "path"
-      }
+      },
+      "parent": []
     },
     "xdph": {
       "inputs": {

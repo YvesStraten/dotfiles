@@ -11,7 +11,7 @@ in
 {
   options.custom.yazi.enable = mkEnableOption "Enable yazi";
 
-  config = mkIf (cfg.enable || config.custom.hyprland.enable || config.custom.i3.enable) {
+  config = mkIf (cfg.enable || config.custom.hyprland.enable) {
     programs.yazi = {
       enable = true;
       enableZshIntegration = true;
