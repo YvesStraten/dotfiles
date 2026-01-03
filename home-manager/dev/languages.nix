@@ -19,28 +19,8 @@ in
 
     home.packages =
       with pkgs;
-      let
-        # CUDA
-        packageOverrides = self: super: {
-          # This is needed as triton in torch has a different version than whisper
-          torch = super.torch-bin.override (o: {
-            triton = super.triton;
-          });
-          openai-whisper = super.openai-whisper.override (o: {
-            triton = super.triton;
-          });
-        };
-      in
       [
-        ((python312.override { inherit packageOverrides; }).withPackages (
-          ps: with ps; [
-            openai-whisper
-            yt-dlp
-            spotdl
-            pygments
-            pillow
-          ]
-        ))
+      openai-whisper
 
         maven
         nodejs
