@@ -17,27 +17,26 @@ in
       DOTNET_ROOT = "${pkgs.dotnet-sdk}";
     };
 
-    home.packages =
-      with pkgs;
-      [
+    home.packages = with pkgs; [
+      maven
       openai-whisper
+      yt-dlp
+      spotdl
+      nodejs
+      rustup
+      yarn
+      openjdk
+      dotnet-sdk
+      typescript
 
-        maven
-        nodejs
-        rustup
-        yarn
-        openjdk
-        dotnet-sdk
-        typescript
-
-        unzip
-        sshfs
-        ffmpeg
-        neofetch
-        clang
-        gnumake
-        drawio
-      ];
+      unzip
+      sshfs
+      ffmpeg
+      neofetch
+      clang
+      gnumake
+      drawio
+    ];
 
     programs.direnv = {
       enable = true;
