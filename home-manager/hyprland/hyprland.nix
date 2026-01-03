@@ -36,7 +36,7 @@ in
         swappy.enable = true;
         udisks.enable = true;
         rofi.enable = true;
-        wlogout.enable = true;
+        # wlogout.enable = true;
         kanshi.enable = true;
         # nwg-dock.enable = true;
         theming.enable = true;
@@ -144,6 +144,8 @@ in
         portalPackage = null;
         settings =
           let
+            launcher = "${pkgs.app2unit}/bin/app2unit";
+            uwsm-launch = program: "${launcher} -- ${program}";
             keys_directions = [
               {
                 key = "h";
@@ -182,17 +184,15 @@ in
                 '';
               in
               [
-                "$mod, B, exec, uwsm app -- firefox"
-                ", XF86AudioRaiseVolume, exec, uwsm app -- ${pamixer}/bin/pamixer -i 5"
-                ", XF86AudioLowerVolume, exec, uwsm app -- ${pamixer}/bin/pamixer -d 5"
-                ", XF86MonBrightnessUp, exec, uwsm app -- ${brightnessctl}/bin/brightnessctl s +5%"
-                ", XF86MonBrightnessDown, exec, uwsm app -- ${brightnessctl}/bin/brightnessctl s 5%-"
-                "SUPER SHIFT, x, exec, uwsm app -- ${hyprpicker}/bin/hyprpicker | ${wl-clipboard}/bin/wl-copy"
-                "$mod, C, exec, ${pamixer}/bin/pamixer -m && uwsm app -- pidof hyprlock || hyprlock && ${pamixer}/bin/pamixer -u"
-                "$mod, Return, exec, uwsm app -- ${ghostty}/bin/ghostty"
-                "$mod, E, exec, uwsm app -- emacsclient -c"
-                "$mod, N, exec, uwsm app -- yazi.desktop"
-                "$mod, R, exec, rofi -show drun -run-command 'uwsm app -- {cmd}'"
+                "$mod, B, exec, ${uwsm-launch "firefox"}"
+                ", XF86AudioRaiseVolume, exec, ${pamixer}/bin/pamixer -i 5"
+                ", XF86AudioLowerVolume, exec, ${pamixer}/bin/pamixer -d 5"
+                ", XF86MonBrightnessUp, exec, ${brightnessctl}/bin/brightnessctl s +5%"
+                ", XF86MonBrightnessDown, exec, ${brightnessctl}/bin/brightnessctl s 5%-"
+                "SUPER SHIFT, x, exec, ${uwsm-launch "${hyprpicker}/bin/hyprpicker | ${wl-clipboard}/bin/wl-copy"}"
+                "$mod, Return, exec, ${uwsm-launch "${ghostty}/bin/ghostty"}"
+                "$mod, N, exec, ${uwsm-launch "yazi.desktop"}"
+                "$mod, R, exec, rofi -show drun -run-command '${launcher} -- {cmd}'"
                 "$mod, Q, killactive,"
                 "$mod, F, fullscreen,"
                 "$mod SHIFT, Space, togglefloating,"
@@ -208,8 +208,8 @@ in
                 "$mod, tab, changegroupactive"
                 "$mod, grave, togglespecialworkspace"
                 "$mod SHIFT, grave, movetoworkspace, special"
-                "$mod, v, exec, uwsm app -- cliphist list | ${rofi}/bin/rofi -dmenu | cliphist decode | wl-copy"
-                "$mod SHIFT, s, exec, uwsm app -- ${screenshot}/bin/screenshot"
+                "$mod, v, exec, ${uwsm-launch "cliphist list | ${rofi}/bin/rofi -dmenu | cliphist decode | wl-copy"}"
+                "$mod SHIFT, s, exec, ${uwsm-launch "${screenshot}/bin/screenshot"}"
               ]
               ++ (
                 # workspaces
@@ -272,9 +272,7 @@ in
           }
           }
 
-          bind = $mod, V, exec, uwsm app -- ${cliphist}/bin/cliphist list | wofi --show dmenu | ${cliphist}/bin/cliphist decode | ${wl-clipboard}/bin/wl-copy
-          bind = $mod, escape, exec, uwsm app -- ${wlogout}/bin/wlogout --protocol layer-shell -b 5 -T 400 -B 400
-          bind = $mod, period, exec, uwsm app -- rofi -modi emoji -show emoji
+          bind = $mod, period, exec, rofi -modi emoji -show emoji
 
           general {
                   gaps_in=5

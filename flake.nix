@@ -123,6 +123,7 @@
       "flakes"
     ];
     extra-trusted-public-keys = [
+      "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
@@ -131,6 +132,7 @@
       "https://hyprland.cachix.org"
       "https://devenv.cachix.org"
       "https://nix-community.cachix.org"
+      "https://cache.nixos-cuda.org"
     ];
   };
 

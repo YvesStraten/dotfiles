@@ -17,47 +17,26 @@ in
       DOTNET_ROOT = "${pkgs.dotnet-sdk}";
     };
 
-    home.packages =
-      with pkgs;
-      let
-        # CUDA
-        packageOverrides = self: super: {
-          # This is needed as triton in torch has a different version than whisper
-          torch = super.torch-bin.override (o: {
-            triton = super.triton;
-          });
-          openai-whisper = super.openai-whisper.override (o: {
-            triton = super.triton;
-          });
-        };
-      in
-      [
-        ((python312.override { inherit packageOverrides; }).withPackages (
-          ps: with ps; [
-            openai-whisper
-            yt-dlp
-            spotdl
-            pygments
-            pillow
-          ]
-        ))
+    home.packages = with pkgs; [
+      maven
+      openai-whisper
+      yt-dlp
+      spotdl
+      nodejs
+      rustup
+      yarn
+      openjdk
+      dotnet-sdk
+      typescript
 
-        maven
-        nodejs
-        rustup
-        yarn
-        openjdk
-        dotnet-sdk
-        typescript
-
-        unzip
-        sshfs
-        ffmpeg
-        neofetch
-        clang
-        gnumake
-        drawio
-      ];
+      unzip
+      sshfs
+      ffmpeg
+      neofetch
+      clang
+      gnumake
+      drawio
+    ];
 
     programs.direnv = {
       enable = true;
