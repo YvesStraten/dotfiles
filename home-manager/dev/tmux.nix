@@ -37,6 +37,7 @@ in
 
         bind '"' split-window -v -c "#{pane_current_path}"
         bind % split-window -h -c "#{pane_current_path}"
+        bind g popup -E -w 90% -h 90% -d "#{pane_current_path}" -T lazygit lazygit
       '';
 
       tmuxinator.enable = true;

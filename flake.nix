@@ -15,7 +15,7 @@
     };
 
     systems = {
-      url = "path:./systems.nix";
+      url = "github:nix-systems/default";
       flake = false;
     };
 
