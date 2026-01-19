@@ -23,6 +23,7 @@ let
     inkscape
     btop
     spotify
+    qalculate-qt
     kdePackages.elisa
   ];
 in
