@@ -19,7 +19,19 @@ in
 
     home.packages = with pkgs; [
       maven
-      openai-whisper
+      (openai-whisper.override (
+        _:
+        let
+          triton = python313Packages.triton-cuda;
+        in
+        {
+          inherit triton;
+          torch = python313Packages.torch.override {
+            inherit triton;
+            cudaSupport = true;
+          };
+        }
+      ))
       yt-dlp
       spotdl
       nodejs
