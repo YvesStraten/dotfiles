@@ -49,7 +49,10 @@ in
 
     (mkIf cfg.docker.enable {
       systemd.services.docker.wantedBy = mkForce [ ];
-      virtualisation.docker.enable = true;
+      virtualisation = {
+        docker.enable = true;
+        docker.storageDriver = mkIf config.custom.zfs.enable "zfs";
+      };
       environment.systemPackages = with pkgs; [
         distrobox
         virt-manager
