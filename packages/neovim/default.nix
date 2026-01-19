@@ -4,6 +4,10 @@
   ];
 
   vim = {
+    extraPackages = [
+      pkgs.checkstyle
+    ];
+
     luaConfigPre = ''
       vim.opt.undodir = os.getenv('HOME') .. '/.vim/undodir';
       vim.opt.backupdir = os.getenv('HOME') .. '/.vim/backup';
@@ -143,8 +147,8 @@
 
     theme = {
       enable = true;
-      name = "gruvbox";
-      style = "dark";
+      name = "tokyonight";
+      style = "night";
     };
 
     treesitter.context = {
@@ -170,6 +174,10 @@
       linters_by_ft = {
         python = [
           "flake8"
+        ];
+
+        java = [
+          "checkstyle"
         ];
       };
     };
@@ -241,6 +249,7 @@
     binds = {
       whichKey.enable = true;
       cheatsheet.enable = true;
+      hardtime-nvim.enable = true;
     };
 
     statusline.lualine = {

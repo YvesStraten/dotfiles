@@ -19,6 +19,7 @@ in
 
     home.packages = with pkgs; [
       maven
+      gradle
       (openai-whisper.override (
         _:
         let
