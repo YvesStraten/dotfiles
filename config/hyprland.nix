@@ -13,6 +13,7 @@ let
 in
 mkIf cfg.enable {
   custom.thunar.enable = true;
+  xdg.portal.xdgOpenUsePortal = true;
   programs.uwsm.enable = true;
   programs.hyprland = {
     enable = true;
