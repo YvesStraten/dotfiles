@@ -76,8 +76,6 @@
       drivers = [
         pkgs.gutenprintBin
         pkgs.gutenprint
-        pkgs.canon-cups-ufr2
-        pkgs.cnijfilter2
       ];
     };
 
@@ -109,24 +107,6 @@
     pkgs.mangohud
     pkgs.prismlauncher
   ];
-
-  xdg.portal.enable = true;
-
-  specialisation = {
-    kde.configuration = {
-      config = {
-        custom.kde.enable = true;
-        hm.custom = {
-          theming = {
-            enable = lib.mkForce true;
-            qt.enable = lib.mkForce false;
-            gtk.enable = lib.mkForce true;
-          };
-          gnome.enable = lib.mkForce false;
-        };
-      };
-    };
-  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

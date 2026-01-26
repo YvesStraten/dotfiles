@@ -191,7 +191,6 @@
         enable = true;
         extraDiagnostics.enable = true;
         format.type = "nixfmt";
-        format.package = pkgs.nixfmt-rfc-style;
       };
       typst.enable = true;
       # TODO: Add when latex support is merged https://github.com/NotAShelf/nvf/pull/569

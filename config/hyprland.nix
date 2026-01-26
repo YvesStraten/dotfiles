@@ -57,7 +57,7 @@ mkIf cfg.enable {
       settings =
         let
           default = {
-            command = "${lib.getExe pkgs.uwsm} start hyprland-uwsm.desktop";
+            command = "${lib.getExe pkgs.uwsm} start -eD Hyprland hyprland.desktop";
             user = "yvess";
           };
         in
