@@ -7,7 +7,7 @@
     ghostty.enable = true;
     nvim.enable = true;
     vscode.enable = true;
-    zellij.enable = true;
+    tmux.enable = true;
     languages.enable = true;
     office.enable = true;
     pass.wayland = true;
