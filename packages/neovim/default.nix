@@ -6,6 +6,7 @@
   vim = {
     extraPackages = [
       pkgs.checkstyle
+      pkgs.imagemagick
     ];
 
     luaConfigPre = ''
@@ -321,5 +322,18 @@
     comments.comment-nvim.enable = true;
 
     presence.neocord.enable = true;
+    utility.snacks-nvim = {
+      enable = true;
+      setupOpts = {
+        image = {
+          doc = {
+            enabled = true;
+            inline = true;
+            max_width = 80;
+            max_height = 30;
+          };
+        };
+      };
+    };
   };
 }
