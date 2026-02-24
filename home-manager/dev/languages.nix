@@ -19,7 +19,6 @@ in
 
     home.packages = with pkgs; [
       maven
-      gradle
       (openai-whisper.override (
         _:
         let
@@ -38,7 +37,7 @@ in
       nodejs
       rustup
       yarn
-      openjdk
+      gradle-packages.gradle_9
       dotnet-sdk
       typescript
 
@@ -54,6 +53,11 @@ in
     programs.direnv = {
       enable = true;
       nix-direnv.enable = true;
+    };
+
+    programs.java = {
+      enable = true;
+      package = pkgs.openjdk25;
     };
   };
 }
