@@ -21,6 +21,10 @@
   };
 
   hardware = {
+    logitech.wireless = {
+      enable = true;
+      enableGraphical = true;
+    };
     xpadneo.enable = true;
     nvidia.prime = {
       offload = {
