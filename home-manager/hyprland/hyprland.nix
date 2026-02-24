@@ -25,7 +25,7 @@ in
           wl-clipboard
           swww
           hypridle
-          kdePackages.gwenview
+          eog
           swappy
           pavucontrol
           selectdefaultapplication
