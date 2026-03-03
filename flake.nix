@@ -200,8 +200,14 @@
                 checks = self.checks.${system}.pre-commit-check;
               in
               pkgs.mkShell {
-                inherit (checks) shellHook;
-                buildInputs = checks.enabledPackages;
+                shellHook = checks.shellHook + ''
+                  export JAVA_HOME="${pkgs.openjdk25.home}"
+
+                '';
+                buildInputs = checks.enabledPackages ++ [
+                  pkgs.openjdk25
+                  pkgs.gradle-packages.gradle_9
+                ];
               };
 
             quickshell =
