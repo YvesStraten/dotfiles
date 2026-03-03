@@ -14,6 +14,19 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixpkgs-droid.url = "github:NixOS/nixpkgs/nixos-24.05";
+
+    home-manager-droid = {
+      url = "github:nix-community/home-manager/release-24.05";
+      inputs.nixpkgs.follows = "nixpkgs-droid";
+    };
+
+    nix-on-droid = {
+      url = "github:nix-community/nix-on-droid/release-24.05";
+      inputs.nixpkgs.follows = "nixpkgs-droid";
+      inputs.home-manager.follows = "home-manager-droid";
+    };
+
     systems = {
       url = "github:nix-systems/default";
       flake = false;
@@ -143,6 +156,7 @@
       nvf,
       nixos-wsl,
       home-manager,
+      nix-on-droid,
       home-manager-stable,
       nixos-hardware,
       flake-parts,
@@ -515,6 +529,12 @@
                 }
               ];
             };
+        };
+
+        nixOnDroidConfigurations.default = nix-on-droid.lib.nixOnDroidConfiguration {
+          modules = [
+            ./hosts/droid/default.nix
+          ];
         };
 
         homeConfigurations =
