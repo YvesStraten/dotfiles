@@ -16,6 +16,7 @@ in
       enable = true;
       settings = {
         window-inherit-working-directory = false;
+        quit-after-last-window-closed = mkIf config.programs.ghostty.systemd.enable true;
       };
     };
   };

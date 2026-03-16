@@ -190,7 +190,7 @@ in
                 ", XF86MonBrightnessUp, exec, ${brightnessctl}/bin/brightnessctl s +5%"
                 ", XF86MonBrightnessDown, exec, ${brightnessctl}/bin/brightnessctl s 5%-"
                 "SUPER SHIFT, x, exec, ${uwsm-launch "${hyprpicker}/bin/hyprpicker | ${wl-clipboard}/bin/wl-copy"}"
-                "$mod, Return, exec, ${uwsm-launch "${ghostty}/bin/ghostty"}"
+                "$mod, Return, exec, ${lib.getExe ghostty} +new-window"
                 "$mod, N, exec, ${uwsm-launch "yazi.desktop"}"
                 "$mod, R, exec, rofi -show drun -run-command '${launcher} -- {cmd}'"
                 "$mod, Q, killactive,"
