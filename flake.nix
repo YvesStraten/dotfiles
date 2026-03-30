@@ -114,6 +114,11 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
+
+    dolphin-overlay = {
+      url = "github:rumboon/dolphin-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   # Add cachix to rebuilds faster

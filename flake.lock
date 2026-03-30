@@ -90,6 +90,26 @@
         "type": "github"
       }
     },
+    "dolphin-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1743892246,
+        "narHash": "sha256-AHeavUWjnDPT/hffE5hM8RIew+mZJSSr9tUEiSvZW30=",
+        "owner": "rumboon",
+        "repo": "dolphin-overlay",
+        "rev": "55fec3268972876890d6081d3d76a701c37c01d7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rumboon",
+        "repo": "dolphin-overlay",
+        "type": "github"
+      }
+    },
     "emacs-overlay": {
       "inputs": {
         "nixpkgs": [
@@ -672,11 +692,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1766486431,
-        "narHash": "sha256-zveZkAaOvGMPMD9DOIl+KfRnpdckBRcbptW7ux5oMW8=",
+        "lastModified": 1774713921,
+        "narHash": "sha256-WF8A+gat/9K6RNqWXn2YlE2Xi/99UVnQAyDWDmhGNlQ=",
         "owner": "YvesStraten",
         "repo": "Jovian-NixOS",
-        "rev": "165e1e78a81c2a82095039da1e71d24723f108db",
+        "rev": "74fc49ffc9f848b3e965b6ed66274df8402c2e3a",
         "type": "github"
       },
       "original": {
@@ -1011,6 +1031,7 @@
     "root": {
       "inputs": {
         "dankMaterialShell": "dankMaterialShell",
+        "dolphin-overlay": "dolphin-overlay",
         "emacs-overlay": "emacs-overlay",
         "firefox-addons": "firefox-addons",
         "firefox-darwin": "firefox-darwin",

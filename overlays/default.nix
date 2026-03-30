@@ -4,11 +4,20 @@
   lib,
   ...
 }:
+let
+  inherit (inputs)
+    firefox-darwin
+    emacs-overlay
+    hyprland
+    dolphin-overlay
+    ;
+in
 {
   nixpkgs.overlays = [
-    inputs.firefox-darwin.overlay
-    inputs.emacs-overlay.overlay
-    inputs.hyprland.overlays.default
+    firefox-darwin.overlay
+    emacs-overlay.overlay
+    hyprland.overlays.default
+    dolphin-overlay.overlays.default
 
     (final: prev: {
       yvess = (prev.yvess or { }) // (import ../packages/default.nix { inherit (prev) pkgs; });

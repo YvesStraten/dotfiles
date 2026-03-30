@@ -110,6 +110,11 @@
   environment.systemPackages = [
     pkgs.mangohud
     pkgs.prismlauncher
+    pkgs.kdePackages.kio # needed since 25.11
+    pkgs.kdePackages.kio-fuse # to mount remote filesystems via FUSE
+    pkgs.kdePackages.kio-extras # extra protocols support (sftp, fish and more)
+    pkgs.kdePackages.dolphin
+    pkgs.kdePackages.kdegraphics-thumbnailers
   ];
 
   # This value determines the NixOS release from which the default
