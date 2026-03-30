@@ -40,7 +40,6 @@ in
         thunderbird.enable = true;
         syncthing.enable = true;
         general.enable = true;
-        kde-connect.enable = true;
       };
 
       programs.nh.enable = true;
