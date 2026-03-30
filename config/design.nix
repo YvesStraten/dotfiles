@@ -33,6 +33,7 @@ in
       gimp3-with-plugins
       audacity
       darktable
+      digikam
       krita
     ];
   };

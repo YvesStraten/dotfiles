@@ -4,6 +4,11 @@
   ];
 
   vim = {
+    extraPackages = [
+      pkgs.checkstyle
+      pkgs.imagemagick
+    ];
+
     luaConfigPre = ''
       vim.opt.undodir = os.getenv('HOME') .. '/.vim/undodir';
       vim.opt.backupdir = os.getenv('HOME') .. '/.vim/backup';
@@ -143,8 +148,8 @@
 
     theme = {
       enable = true;
-      name = "gruvbox";
-      style = "dark";
+      name = "tokyonight";
+      style = "night";
     };
 
     treesitter.context = {
@@ -171,6 +176,10 @@
         python = [
           "flake8"
         ];
+
+        java = [
+          "checkstyle"
+        ];
       };
     };
 
@@ -183,7 +192,6 @@
         enable = true;
         extraDiagnostics.enable = true;
         format.type = "nixfmt";
-        format.package = pkgs.nixfmt-rfc-style;
       };
       typst.enable = true;
       # TODO: Add when latex support is merged https://github.com/NotAShelf/nvf/pull/569
@@ -241,6 +249,7 @@
     binds = {
       whichKey.enable = true;
       cheatsheet.enable = true;
+      hardtime-nvim.enable = true;
     };
 
     statusline.lualine = {
@@ -313,5 +322,18 @@
     comments.comment-nvim.enable = true;
 
     presence.neocord.enable = true;
+    utility.snacks-nvim = {
+      enable = true;
+      setupOpts = {
+        image = {
+          doc = {
+            enabled = true;
+            inline = true;
+            max_width = 80;
+            max_height = 30;
+          };
+        };
+      };
+    };
   };
 }

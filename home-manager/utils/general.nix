@@ -23,7 +23,11 @@ let
     inkscape
     btop
     spotify
+    qalculate-qt
     kdePackages.elisa
+    kdePackages.okular
+    gnome-sound-recorder
+    vlc
   ];
 in
 {

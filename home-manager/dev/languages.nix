@@ -19,13 +19,25 @@ in
 
     home.packages = with pkgs; [
       maven
-      openai-whisper
+      (openai-whisper.override (
+        _:
+        let
+          triton = python313Packages.triton-cuda;
+        in
+        {
+          inherit triton;
+          torch = python313Packages.torch.override {
+            inherit triton;
+            cudaSupport = true;
+          };
+        }
+      ))
       yt-dlp
       spotdl
       nodejs
       rustup
       yarn
-      openjdk
+      gradle-packages.gradle_9
       dotnet-sdk
       typescript
 
@@ -41,6 +53,11 @@ in
     programs.direnv = {
       enable = true;
       nix-direnv.enable = true;
+    };
+
+    programs.java = {
+      enable = true;
+      package = pkgs.openjdk25;
     };
   };
 }

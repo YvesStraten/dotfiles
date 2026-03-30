@@ -10,7 +10,10 @@
     ./hardware.nix
   ];
 
-  boot.kernelParams = [ "zfs.zfs_arc_max=12884901888" ];
+  boot.kernelParams = [
+    "zfs.zfs_arc_max=12884901888"
+    "preempt=full"
+  ];
 
   custom = {
     nvidia.enable = true;
@@ -21,6 +24,10 @@
   };
 
   hardware = {
+    logitech.wireless = {
+      enable = true;
+      enableGraphical = true;
+    };
     xpadneo.enable = true;
     nvidia.prime = {
       offload = {
@@ -76,8 +83,6 @@
       drivers = [
         pkgs.gutenprintBin
         pkgs.gutenprint
-        pkgs.canon-cups-ufr2
-        pkgs.cnijfilter2
       ];
     };
 
@@ -93,6 +98,7 @@
   };
 
   programs = {
+    localsend.enable = true;
     nix-ld.enable = true;
     fuse.userAllowOther = true;
     gamemode.enable = true;
@@ -108,25 +114,12 @@
   environment.systemPackages = [
     pkgs.mangohud
     pkgs.prismlauncher
+    pkgs.kdePackages.kio # needed since 25.11
+    pkgs.kdePackages.kio-fuse # to mount remote filesystems via FUSE
+    pkgs.kdePackages.kio-extras # extra protocols support (sftp, fish and more)
+    pkgs.kdePackages.dolphin
+    pkgs.kdePackages.kdegraphics-thumbnailers
   ];
-
-  xdg.portal.enable = true;
-
-  specialisation = {
-    kde.configuration = {
-      config = {
-        custom.kde.enable = true;
-        hm.custom = {
-          theming = {
-            enable = lib.mkForce true;
-            qt.enable = lib.mkForce false;
-            gtk.enable = lib.mkForce true;
-          };
-          gnome.enable = lib.mkForce false;
-        };
-      };
-    };
-  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

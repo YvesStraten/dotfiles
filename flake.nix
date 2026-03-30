@@ -114,6 +114,11 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
+
+    dolphin-overlay = {
+      url = "github:rumboon/dolphin-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   # Add cachix to rebuilds faster
@@ -200,8 +205,14 @@
                 checks = self.checks.${system}.pre-commit-check;
               in
               pkgs.mkShell {
-                inherit (checks) shellHook;
-                buildInputs = checks.enabledPackages;
+                shellHook = checks.shellHook + ''
+                  export JAVA_HOME="${pkgs.openjdk25.home}"
+
+                '';
+                buildInputs = checks.enabledPackages ++ [
+                  pkgs.openjdk25
+                  pkgs.gradle-packages.gradle_9
+                ];
               };
 
             quickshell =
@@ -367,7 +378,7 @@
               shell = "fish";
             in
             nixpkgs.lib.nixosSystem {
-              system = "aarch64-linux";
+              system = "x86_64-linux";
               specialArgs = {
                 inherit inputs user shell;
               };

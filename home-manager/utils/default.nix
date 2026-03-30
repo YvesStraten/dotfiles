@@ -36,11 +36,10 @@ in
           enablePwas = true;
         };
         zathura.enable = true;
-        mpv.enable = true;
+        # mpv.enable = true;
         thunderbird.enable = true;
         syncthing.enable = true;
         general.enable = true;
-        kde-connect.enable = true;
       };
 
       programs.nh.enable = true;

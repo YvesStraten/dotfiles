@@ -25,7 +25,7 @@ in
           wl-clipboard
           swww
           hypridle
-          kdePackages.gwenview
+          eog
           swappy
           pavucontrol
           selectdefaultapplication
@@ -190,7 +190,7 @@ in
                 ", XF86MonBrightnessUp, exec, ${brightnessctl}/bin/brightnessctl s +5%"
                 ", XF86MonBrightnessDown, exec, ${brightnessctl}/bin/brightnessctl s 5%-"
                 "SUPER SHIFT, x, exec, ${uwsm-launch "${hyprpicker}/bin/hyprpicker | ${wl-clipboard}/bin/wl-copy"}"
-                "$mod, Return, exec, ${uwsm-launch "${ghostty}/bin/ghostty"}"
+                "$mod, Return, exec, ${lib.getExe ghostty} +new-window"
                 "$mod, N, exec, ${uwsm-launch "yazi.desktop"}"
                 "$mod, R, exec, rofi -show drun -run-command '${launcher} -- {cmd}'"
                 "$mod, Q, killactive,"
@@ -240,9 +240,8 @@ in
 
             windowrule = [
               "match:class ^(xwaylandvideobridge)$, opacity 0, no_anim 1, no_initial_focus 1, max_size 1 1, no_blur 1, no_focus 1"
-              "match:class ^(org.gnome.Nautilus)$, float 1"
               "match:class ^(Zotero|zotero)$, float 1"
-              "match:class ^(Thunar|thunar)$, float 1"
+              "match:class ^(Thunar|thunar|nautilus|Nautilus|org.kde.dolphin)$, float 1"
               # make Firefox/Zen PiP window floating and sticky
               "match:title ^(Picture-in-Picture)$, float 1, pin 1"
               "match:class ^(firefox|mpv|.+exe)$, idle_inhibit fullscreen"

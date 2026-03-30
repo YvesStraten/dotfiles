@@ -12,7 +12,7 @@ let
   hyprpkgs = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
 in
 mkIf cfg.enable {
-  custom.thunar.enable = true;
+  xdg.portal.xdgOpenUsePortal = true;
   programs.uwsm.enable = true;
   programs.hyprland = {
     enable = true;
@@ -56,7 +56,7 @@ mkIf cfg.enable {
       settings =
         let
           default = {
-            command = "${lib.getExe pkgs.uwsm} start hyprland-uwsm.desktop";
+            command = "${lib.getExe pkgs.uwsm} start -eD Hyprland hyprland.desktop";
             user = "yvess";
           };
         in

@@ -5,6 +5,7 @@
     ./kitty.nix
     ./ghostty.nix
     ./tmux.nix
+    ./zellij.nix
     ./neovim.nix
     ./vscode.nix
     ./zsh.nix
