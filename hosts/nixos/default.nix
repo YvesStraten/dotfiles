@@ -95,6 +95,7 @@
   };
 
   programs = {
+    localsend.enable = true;
     nix-ld.enable = true;
     fuse.userAllowOther = true;
     gamemode.enable = true;
