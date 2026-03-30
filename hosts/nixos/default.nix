@@ -10,7 +10,10 @@
     ./hardware.nix
   ];
 
-  boot.kernelParams = [ "zfs.zfs_arc_max=12884901888" ];
+  boot.kernelParams = [
+    "zfs.zfs_arc_max=12884901888"
+    "preempt=full"
+  ];
 
   custom = {
     nvidia.enable = true;
