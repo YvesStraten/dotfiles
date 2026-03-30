@@ -6,7 +6,6 @@
 }:
 let
   inherit (inputs)
-    firefox-darwin
     emacs-overlay
     hyprland
     dolphin-overlay
@@ -14,7 +13,6 @@ let
 in
 {
   nixpkgs.overlays = [
-    firefox-darwin.overlay
     emacs-overlay.overlay
     hyprland.overlays.default
     dolphin-overlay.overlays.default

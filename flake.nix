@@ -19,21 +19,6 @@
       flake = false;
     };
 
-    nix-darwin = {
-      url = "github:LnL7/nix-darwin/master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    mac-app-util = {
-      url = "github:hraban/mac-app-util";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        systems.follows = "systems";
-        flake-compat.follows = "";
-        treefmt-nix.follows = "";
-      };
-    };
-
     nixpkgs-stable.url = "github:/NixOS/nixpkgs/nixos-25.05";
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL";
@@ -45,11 +30,6 @@
     home-manager-stable = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs-stable";
-    };
-
-    firefox-darwin = {
-      url = "github:bandithedoge/nixpkgs-firefox-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
@@ -151,7 +131,6 @@
       home-manager-stable,
       nixos-hardware,
       flake-parts,
-      nix-darwin,
       pre-commit-hooks,
       self,
       ...
@@ -237,11 +216,6 @@
 
       flake = {
         packages = {
-          "aarch64-darwin" =
-            let
-              pkgs = nixpkgs.legacyPackages."aarch64-darwin";
-            in
-            { } // (import ./packages/packages-darwin.nix { inherit pkgs; });
           "x86_64-linux" =
             let
               pkgs = nixpkgs.legacyPackages."x86_64-linux";
@@ -251,73 +225,7 @@
 
         lib = import ./lib/lib.nix;
 
-        darwinConfigurations = {
-          "shaco" = self.lib.mkDarwinHost {
-            inherit
-              user
-              shell
-              email
-              gitUser
-              nix-darwin
-              inputs
-              self
-              ;
-          };
-        };
-
         nixosConfigurations = {
-          pi =
-            let
-              user = "xayah";
-            in
-            nixpkgs.lib.nixosSystem {
-              system = "aarch64-linux";
-              specialArgs = {
-                inherit inputs user shell;
-              };
-              modules = [
-                ./config
-                "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-new-kernel.nix"
-                "${nixos-hardware}/raspberry-pi/4"
-                ./hosts/pi
-
-                (nixpkgs.lib.mkAliasOptionModule
-                  [ "hm" ]
-                  [
-                    "home-manager"
-                    "users"
-                    user
-                  ]
-                )
-
-                home-manager.nixosModules.home-manager
-                {
-                  home-manager = {
-                    extraSpecialArgs = {
-                      inherit
-                        inputs
-                        gitUser
-                        email
-                        user
-                        shell
-                        self
-                        ;
-                    };
-                    useGlobalPkgs = true;
-                    useUserPackages = true;
-                    users.${user} =
-                      { ... }:
-                      {
-                        imports = [
-                          ./home-manager
-                          ./hosts/pi/home.nix
-                        ];
-                      };
-                  };
-                }
-              ];
-            };
-
           vivobook =
             let
               shell = "fish";
@@ -364,57 +272,6 @@
                       {
                         imports = [
                           ./hosts/nixos/home.nix
-                          ./home-manager
-                        ];
-                      };
-                  };
-                }
-              ];
-            };
-
-          server =
-            let
-              user = "utm";
-              shell = "fish";
-            in
-            nixpkgs.lib.nixosSystem {
-              system = "x86_64-linux";
-              specialArgs = {
-                inherit inputs user shell;
-              };
-
-              modules = [
-                ./config
-                ./hosts/server
-
-                (nixpkgs.lib.mkAliasOptionModule
-                  [ "hm" ]
-                  [
-                    "home-manager"
-                    "users"
-                    user
-                  ]
-                )
-
-                home-manager.nixosModules.home-manager
-                {
-                  home-manager = {
-                    extraSpecialArgs = {
-                      inherit
-                        inputs
-                        gitUser
-                        email
-                        user
-                        shell
-                        self
-                        ;
-                    };
-                    useGlobalPkgs = true;
-                    users.${user} =
-                      { ... }:
-                      {
-                        imports = [
-                          ./hosts/server/home.nix
                           ./home-manager
                         ];
                       };
