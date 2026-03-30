@@ -7,14 +7,12 @@
 let
   inherit (inputs)
     emacs-overlay
-    hyprland
     dolphin-overlay
     ;
 in
 {
   nixpkgs.overlays = [
     emacs-overlay.overlay
-    hyprland.overlays.default
     dolphin-overlay.overlays.default
 
     (final: prev: {

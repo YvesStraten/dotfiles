@@ -34,21 +34,6 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
-    hyprland = {
-      url = "github:hyprwm/hyprland";
-      inputs = {
-        systems.follows = "systems";
-        pre-commit-hooks.follows = "";
-      };
-    };
-
-    hyprpicker = {
-      url = "github:hyprwm/hyprpicker";
-      inputs.systems.follows = "systems";
-    };
-
-    hypr-contrib.url = "github:hyprwm/contrib";
-
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -95,6 +80,8 @@
       };
     };
 
+    import-tree.url = "github:vic/import-tree";
+
     dolphin-overlay = {
       url = "github:rumboon/dolphin-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -124,24 +111,19 @@
   outputs =
     {
       nixpkgs,
-      nixpkgs-stable,
       nvf,
-      nixos-wsl,
-      home-manager,
-      home-manager-stable,
-      nixos-hardware,
       flake-parts,
       pre-commit-hooks,
       self,
       ...
     }@inputs:
-    let
-      email = "yves.straten@gmail.com";
-      gitUser = "YvesStraten";
-      user = "yvess";
-      shell = "zsh";
-    in
     flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [
+        inputs.flake-parts.flakeModules.modules
+        inputs.home-manager.flakeModules.home-manager
+        (inputs.import-tree ./modules)
+      ];
+
       systems = [
         "x86_64-linux"
         "aarch64-linux"
@@ -222,196 +204,6 @@
             in
             { } // (import ./packages { inherit pkgs; });
         };
-
-        lib = import ./lib/lib.nix;
-
-        nixosConfigurations = {
-          vivobook =
-            let
-              shell = "fish";
-            in
-            nixpkgs.lib.nixosSystem {
-              system = "x86_64-linux";
-              specialArgs = {
-                inherit
-                  inputs
-                  user
-                  shell
-                  self
-                  ;
-              };
-              modules = [
-                ./hosts/nixos
-                ./config/default.nix
-                (nixpkgs.lib.mkAliasOptionModule
-                  [ "hm" ]
-                  [
-                    "home-manager"
-                    "users"
-                    user
-                  ]
-                )
-
-                home-manager.nixosModules.home-manager
-                {
-                  home-manager = {
-                    extraSpecialArgs = {
-                      inherit
-                        inputs
-                        gitUser
-                        email
-                        user
-                        shell
-                        self
-                        ;
-                    };
-                    backupFileExtension = "backup";
-                    useGlobalPkgs = true;
-                    users.${user} =
-                      { ... }:
-                      {
-                        imports = [
-                          ./hosts/nixos/home.nix
-                          ./home-manager
-                        ];
-                      };
-                  };
-                }
-              ];
-            };
-
-          deck =
-            let
-              user = "bazzite";
-              shell = "fish";
-            in
-            nixpkgs.lib.nixosSystem {
-              system = "x86_64-linux";
-              specialArgs = {
-                inherit inputs user shell;
-              };
-
-              modules = [
-                ./hosts/deck
-                inputs.jovian.nixosModules.default
-                ./config
-
-                (nixpkgs.lib.mkAliasOptionModule
-                  [ "hm" ]
-                  [
-                    "home-manager"
-                    "users"
-                    user
-                  ]
-                )
-
-                home-manager.nixosModules.home-manager
-                {
-                  home-manager = {
-                    extraSpecialArgs = {
-                      inherit
-                        inputs
-                        gitUser
-                        email
-                        user
-                        shell
-                        self
-                        ;
-                    };
-                    useGlobalPkgs = true;
-                    users.${user} =
-                      { ... }:
-                      {
-                        imports = [
-                          ./hosts/deck/home.nix
-                          ./home-manager
-                        ];
-                      };
-                  };
-                }
-              ];
-            };
-
-          wsl =
-            let
-              user = "akali";
-              shell = "fish";
-            in
-            nixpkgs-stable.lib.nixosSystem {
-              system = "x86_64-linux";
-              specialArgs = {
-                inherit inputs user shell;
-              };
-              modules = [
-                ./config
-                ./hosts/wsl
-
-                home-manager-stable.nixosModules.home-manager
-                (nixpkgs.lib.mkAliasOptionModule
-                  [ "hm" ]
-                  [
-                    "home-manager"
-                    "users"
-                    user
-                  ]
-                )
-
-                nixos-wsl.nixosModules.wsl
-                {
-                  home-manager = {
-                    extraSpecialArgs = {
-                      inherit
-                        inputs
-                        self
-                        gitUser
-                        email
-                        user
-                        shell
-                        ;
-                    };
-                    useGlobalPkgs = true;
-                    useUserPackages = true;
-                    users.${user} =
-                      { ... }:
-                      {
-                        imports = [
-                          ./home-manager
-                          ./hosts/wsl/home.nix
-                        ];
-                      };
-                  };
-                }
-              ];
-            };
-        };
-
-        homeConfigurations =
-          let
-            pkgs = nixpkgs.legacyPackages."x86_64-linux";
-            user = "bazzite";
-            shell = "fish";
-          in
-          {
-            bazzite = home-manager.lib.homeManagerConfiguration {
-              extraSpecialArgs = {
-                inherit
-                  inputs
-                  shell
-                  gitUser
-                  email
-                  user
-                  self
-                  ;
-              };
-              inherit pkgs;
-              modules = [
-                ./home/home.nix
-                ./overlays/default.nix
-              ];
-            };
-          };
-
-        homeManagerModules = import ./config;
       };
     };
 }
