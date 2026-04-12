@@ -21,6 +21,7 @@
         [
           kanshi
           theming
+          vicinae
         ]
         ++ [ inputs.dankMaterialShell.homeModules.dankMaterialShell.default ];
 
@@ -150,6 +151,7 @@
 
                 exec-once = [
                   "${pkgs.systemd}/bin/systemctl --user restart gamemoded.service"
+                  "vicinae server"
                 ];
 
                 bind =
@@ -169,7 +171,7 @@
                     "SUPER SHIFT, x, exec, ${uwsm-launch "${hyprpicker}/bin/hyprpicker | ${wl-clipboard}/bin/wl-copy"}"
                     "$mod, Return, exec, ${lib.getExe ghostty} +new-window"
                     "$mod, N, exec, ${uwsm-launch "yazi.desktop"}"
-                    "$mod, R, exec, rofi -show drun -run-command '${launcher} -- {cmd}'"
+                    "$mod, Space, exec, vicinae toggle"
                     "$mod, Q, killactive,"
                     "$mod, F, fullscreen,"
                     "$mod SHIFT, Space, togglefloating,"
