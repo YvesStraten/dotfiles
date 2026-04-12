@@ -16,18 +16,25 @@
       };
 
       config = mkIf cfg.enable {
-        services.sanoid = {
-          enable = true;
-          datasets = {
-            "zroot/home" = {
-              hourly = 50;
-              daily = 15;
-              weekly = 3;
-              monthly = 1;
-            };
+        services = {
+          zfs = {
+            autoScrub.enable = true;
+            trim.enable = true;
+          };
 
-            "zroot/libvirt/WIN" = {
-              hourly = 4;
+          sanoid = {
+            enable = true;
+            datasets = {
+              "zroot/home" = {
+                hourly = 50;
+                daily = 15;
+                weekly = 3;
+                monthly = 1;
+              };
+
+              "zroot/libvirt/WIN" = {
+                hourly = 4;
+              };
             };
           };
         };
