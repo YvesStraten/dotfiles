@@ -16,6 +16,7 @@
       config = mkIf cfg.enable {
         home.packages = with pkgs; [
           maven
+          python313
           (openai-whisper.override (
             _:
             let
