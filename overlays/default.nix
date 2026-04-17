@@ -6,13 +6,11 @@
 }:
 let
   inherit (inputs)
-    emacs-overlay
     dolphin-overlay
     ;
 in
 {
   nixpkgs.overlays = [
-    emacs-overlay.overlay
     dolphin-overlay.overlays.default
 
     (final: prev: {
