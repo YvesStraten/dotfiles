@@ -23,7 +23,7 @@
           theming
           vicinae
         ]
-        ++ [ inputs.dankMaterialShell.homeModules.dankMaterialShell.default ];
+        ++ [ inputs.noctalia.homeModules.default ];
 
       options.custom.hyprland.enable = mkEnableOption "Enable hyprland";
 
@@ -52,7 +52,7 @@
             theming.enable = true;
           };
 
-          programs.dankMaterialShell = {
+          programs.noctalia-shell = {
             enable = true;
             systemd.enable = true;
           };
@@ -151,7 +151,6 @@
 
                 exec-once = [
                   "${pkgs.systemd}/bin/systemctl --user restart gamemoded.service"
-                  "vicinae server"
                 ];
 
                 bind =
