@@ -146,6 +146,14 @@
           device = "zroot/home/emulation";
           fsType = "zfs";
           options = [ "x-gvfs-hide" ];
+          neededForBoot = false;
+        };
+
+        "/home/yvess/Games" = {
+          device = "zroot/home/games";
+          fsType = "zfs";
+          options = [ "x-gvfs-hide" ];
+          neededForBoot = false;
         };
       };
 
