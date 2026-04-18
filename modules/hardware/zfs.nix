@@ -65,6 +65,12 @@
             device = "zroot/var";
             fsType = "zfs";
           };
+
+          "/home/${config.custom.constants.user}/.cache" = {
+            device = "zroot/cache";
+            fsType = "zfs";
+            neededForBoot = false;
+          };
         };
 
         swapDevices = [
