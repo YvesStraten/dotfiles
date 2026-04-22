@@ -4,7 +4,7 @@
     {
       services = {
         thermald.enable = true;
-        tlp.enable = true;
+        power-profiles-daemon.enable = true;
         upower = {
           enable = true;
           criticalPowerAction = "Hibernate";
