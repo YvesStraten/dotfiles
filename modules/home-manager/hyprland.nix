@@ -19,7 +19,6 @@
       imports =
         with self.homeModules;
         [
-          kanshi
           theming
           vicinae
         ]
@@ -48,7 +47,6 @@
           };
 
           custom = {
-            kanshi.enable = true;
             theming.enable = true;
           };
 

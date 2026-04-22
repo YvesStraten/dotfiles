@@ -10,6 +10,10 @@
       inherit (lib) mkIf;
     in
     {
+      imports = [
+        self.nixosModules.shikane
+      ];
+
       xdg.portal.xdgOpenUsePortal = true;
       programs = {
         uwsm.enable = true;
