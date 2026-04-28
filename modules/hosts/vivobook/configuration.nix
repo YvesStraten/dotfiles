@@ -60,7 +60,7 @@
       };
 
       boot = {
-        kernel.sysctl."vm.swappiness" = 30;
+        kernel.sysctl."vm.swappiness" = 10;
         plymouth = {
           enable = true;
           theme = "bgrt";
