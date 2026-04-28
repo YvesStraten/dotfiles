@@ -24,7 +24,7 @@ _: {
       config = mkIf cfg.enable {
         qt = mkIf cfg.qt.enable {
           enable = true;
-          platformTheme.name = "qtct";
+          platformTheme.name = "gtk3";
           style = {
             name = "breeze";
           };
