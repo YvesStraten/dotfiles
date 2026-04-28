@@ -21,36 +21,7 @@
           enable = true;
           xwayland.enable = true;
           withUWSM = true;
-          package = pkgs.hyprland;
-          portalPackage = pkgs.xdg-desktop-portal-hyprland;
         };
-
-        gamemode.settings.custom =
-          let
-            hyprctl = "${pkgs.hyprland}/bin/hyprctl";
-            start = pkgs.writeShellScriptBin "start_gamemode" ''
-                        ${hyprctl} --batch "\
-                        keyword animations:enabled 0;\
-                        keyword animation borderangle,0; \
-                        keyword decoration:shadow:enabled 0;\
-                        keyword decoration:blur:enabled 0;\
-              	        keyword decoration:fullscreen_opacity 1;\
-                        keyword general:gaps_in 0;\
-                        keyword general:gaps_out 0;\
-                        keyword general:border_size 1;\
-                        keyword decoration:rounding 0"
-                      ${lib.getExe pkgs.libnotify} "Enabled gamemode"
-            '';
-
-            end = pkgs.writeShellScriptBin "end_gamemode" ''
-              ${hyprctl} reload
-              ${lib.getExe pkgs.libnotify} "Disabled gamemode"
-            '';
-          in
-          mkIf config.programs.gamemode.enable {
-            start = "${lib.getExe start}";
-            end = "${lib.getExe end}";
-          };
       };
 
       services = {
