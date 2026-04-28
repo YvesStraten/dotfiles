@@ -22,6 +22,7 @@
         pandoc
         nix-prefetch-scripts
         inkscape
+        gnome-clocks
         btop
         spotify
         qalculate-qt
