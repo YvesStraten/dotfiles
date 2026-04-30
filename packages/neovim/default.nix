@@ -1,6 +1,7 @@
 { pkgs, lib, ... }:
 {
   imports = [
+    ./jdtls.nix
   ];
 
   vim = {
@@ -214,9 +215,9 @@
         enable = true;
         lsp.opts = ''
           ['rust-analyzer'] = {
-            cargo = { allFeature = true },
+            cargo = { allFeatures = true, buildScripts = { enable = true } },
             checkOnSave = true,
-            procMacro = { enable = true },
+            procMacro = { enable = true, attributes = { enable = true } },
           },
         '';
         crates.enable = true;
@@ -228,7 +229,6 @@
         enable = true;
         format.enable = false;
       };
-      sql.enable = true;
       svelte.enable = true;
       ts.enable = true;
       bash.enable = true;
