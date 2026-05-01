@@ -11,7 +11,10 @@
     in
     {
       imports = [
-        self.nixosModules.shikane
+      ];
+
+      environment.systemPackages = with pkgs; [
+        nwg-displays
       ];
 
       xdg.portal.xdgOpenUsePortal = true;

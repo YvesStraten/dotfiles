@@ -232,7 +232,7 @@
               };
 
             extraConfig = with pkgs; ''
-              monitor = ,highrr,auto,auto
+              source = ~/.config/hypr/monitors.conf
 
               input {
               kb_layout = us,se,de,it
