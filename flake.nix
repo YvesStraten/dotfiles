@@ -75,11 +75,6 @@
 
     import-tree.url = "github:vic/import-tree";
 
-    dolphin-overlay = {
-      url = "github:rumboon/dolphin-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     vicinae.url = "github:vicinaehq/vicinae";
   };
 

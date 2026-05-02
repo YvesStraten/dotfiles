@@ -6,12 +6,10 @@
       imports = with self.homeModules; [
         utils
         dev
-        hyprland
       ];
 
       custom = {
         fish.enable = true;
-        hyprland.enable = true;
         git.enable = true;
         ghostty.enable = true;
         nvim.enable = true;

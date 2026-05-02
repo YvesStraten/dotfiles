@@ -11,8 +11,6 @@ let
 in
 {
   nixpkgs.overlays = [
-    dolphin-overlay.overlays.default
-
     (final: prev: {
       yvess = (prev.yvess or { }) // (import ../packages/default.nix { inherit (prev) pkgs; });
 

@@ -1,25 +1,5 @@
 {
   "nodes": {
-    "dolphin-overlay": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1775943689,
-        "narHash": "sha256-0XBCoR1L5gYmh8VqZu0HcHsL4GeGXQMC0f3ARshf/rk=",
-        "owner": "rumboon",
-        "repo": "dolphin-overlay",
-        "rev": "c32758737a0cb02d0bf380753d11df1b8537a944",
-        "type": "github"
-      },
-      "original": {
-        "owner": "rumboon",
-        "repo": "dolphin-overlay",
-        "type": "github"
-      }
-    },
     "firefox-addons": {
       "inputs": {
         "nixpkgs": [
@@ -430,7 +410,6 @@
     },
     "root": {
       "inputs": {
-        "dolphin-overlay": "dolphin-overlay",
         "firefox-addons": "firefox-addons",
         "flake-parts": "flake-parts",
         "gitignore": "gitignore",
