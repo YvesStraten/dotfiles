@@ -51,10 +51,23 @@
         })
 
         (mkIf cfg.docker.enable {
-          systemd.services.docker.wantedBy = mkForce [ ];
           virtualisation = {
-            docker.enable = true;
-            docker.storageDriver = mkIf config.custom.zfs.enable "zfs";
+            docker = {
+              enable = true;
+              enableOnBoot = false;
+              storageDriver = mkIf config.custom.zfs.enable "zfs";
+
+              # This is to prevent conflicts with eduroam
+              daemon.settings = {
+                bip = "10.0.64.1/24";
+                default-address-pools = [
+                  {
+                    base = "10.0.64.0/18";
+                    size = 24;
+                  }
+                ];
+              };
+            };
           };
           environment.systemPackages = with pkgs; [
             distrobox
