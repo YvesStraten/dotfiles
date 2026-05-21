@@ -45,7 +45,10 @@ let
 
   settings = {
     java = {
-      completion.enabled = true;
+      completion = {
+        enabled = true;
+        importOrder = [ "#" ];
+      };
       # configuration.runtimes = [
       #   {
       #     name = "JavaSE-1.8";
