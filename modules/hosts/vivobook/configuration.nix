@@ -11,8 +11,9 @@
       imports = [
         ../../../overlays/default.nix
         self.nixosModules.vivobookHardware
-        self.nixosModules.gui
+        self.nixosModules.design
         self.nixosModules.kde
+        self.nixosModules.fonts
         self.nixosModules.hardware_laptop
         self.nixosModules.virtualisation
         self.nixosModules.zfs
