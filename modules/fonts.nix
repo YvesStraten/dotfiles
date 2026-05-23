@@ -1,48 +1,36 @@
-{
-  lib,
-  ...
-}:
-{
+_: {
   flake.nixosModules.fonts =
-    { pkgs, config, ... }:
-    let
-      cfg = config.custom.fonts;
-      inherit (lib) mkMerge mkEnableOption mkIf;
-    in
+    { pkgs, ... }:
     {
-      options.custom.fonts.enable = mkEnableOption "Enable fonts";
+      fonts = {
+        enableDefaultPackages = true;
+        enableGhostscriptFonts = true;
+        packages = with pkgs; [
+          corefonts # Microsoft free fonts
+          inter
+          dejavu_fonts
+          source-code-pro
+          nerd-fonts.fira-code
+          source-sans-pro
+          noto-fonts
+          noto-fonts-color-emoji
+          source-serif-pro
+          unifont # some international languages
+        ];
 
-      config = mkIf cfg.enable (mkMerge [
-        {
-          fonts = {
-            enableDefaultPackages = true;
-            enableGhostscriptFonts = true;
-            packages = with pkgs; [
-              corefonts # Microsoft free fonts
-              dejavu_fonts
-              source-code-pro
-              source-sans-pro
-              noto-fonts
-              noto-fonts-color-emoji
-              source-serif-pro
-              unifont # some international languages
-            ];
-
-            fontconfig = {
-              antialias = true;
-              hinting = {
-                enable = true;
-                autohint = true;
-                style = "full";
-              };
-
-              subpixel = {
-                rgba = "rgb";
-                lcdfilter = "default";
-              };
-            };
+        fontconfig = {
+          antialias = true;
+          hinting = {
+            enable = true;
+            autohint = true;
+            style = "full";
           };
-        }
-      ]);
+
+          subpixel = {
+            rgba = "rgb";
+            lcdfilter = "default";
+          };
+        };
+      };
     };
 }
