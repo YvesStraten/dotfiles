@@ -224,6 +224,7 @@
       };
 
       java.enable = true;
+      java.lsp.enable = false;
       haskell.enable = true;
       python = {
         enable = true;
