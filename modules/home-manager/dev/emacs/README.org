@@ -1,0 +1,1531 @@
+#+Title: My Emacs configuration 
+#+Property: header-args :tangle init.el 
+#+auto_tangle: t
+#+startup: overview 
+* Bootstrap
+** Early-init 
+#+begin_src elisp :tangle early-init.el
+  (setq gc-cons-threshold most-positive-fixnum
+          gc-cons-percentage 0.6)
+
+  (add-hook 'emacs-startup-hook
+              (lambda ()
+                (setq gc-cons-threshold 16777216
+                      gc-cons-percentage 0.1)))
+
+  (defun doom-defer-garbage-collection-h ()
+    "Defer gc."
+    (setq gc-cons-threshold most-positive-fixnum))
+
+  (defun doom-restore-garbage-collection-h ()
+    "Restore gc."
+    (run-at-time
+     1 nil (lambda () (setq gc-cons-threshold 16777216))))
+
+  (add-hook 'minibuffer-setup-hook #'doom-defer-garbage-collection-h)
+  (add-hook 'minibuffer-exit-hook #'doom-restore-garbage-collection-h)
+
+  (setq package-enable-at-startup nil)
+
+  ;; Inhibit resizing frame
+  (setq frame-inhibit-implied-resize t)
+
+  ;; Disable startup message
+  (defun display-startup-echo-area-message ()
+    (message nil))
+
+  ;; Disable before actual init
+  (push '(tool-bar-lines . 0) default-frame-alist)
+  (push '(menu-bar-lines . 0) default-frame-alist)
+  (push '(vertical-scroll-bars) default-frame-alist)
+  (when (featurep 'ns)
+    (push '(ns-transparent-titlebar . t) default-frame-alist))
+  (push '(width . 0.5) default-frame-alist)
+  (push '(height . 0.5) default-frame-alist)
+  (setq site-run-file nil)
+#+end_src
+
+* Elpaca
+#+begin_src elisp 
+  (defvar elpaca-installer-version 0.9)
+  (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
+  (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
+  (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
+  (defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
+                                :ref nil :depth 1
+                                :files (:defaults "elpaca-test.el" (:exclude "extensions"))
+                                :build (:not elpaca--activate-package)))
+  (let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
+         (build (expand-file-name "elpaca/" elpaca-builds-directory))
+         (order (cdr elpaca-order))
+         (default-directory repo))
+    (add-to-list 'load-path (if (file-exists-p build) build repo))
+    (unless (file-exists-p repo)
+      (make-directory repo t)
+      (when (< emacs-major-version 28) (require 'subr-x))
+      (condition-case-unless-debug err
+          (if-let* ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
+                    ((zerop (apply #'call-process `("git" nil ,buffer t "clone"
+                                                    ,@(when-let* ((depth (plist-get order :depth)))
+                                                        (list (format "--depth=%d" depth) "--no-single-branch"))
+                                                    ,(plist-get order :repo) ,repo))))
+                    ((zerop (call-process "git" nil buffer t "checkout"
+                                          (or (plist-get order :ref) "--"))))
+                    (emacs (concat invocation-directory invocation-name))
+                    ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
+                                          "--eval" "(byte-recompile-directory \".\" 0 'force)")))
+                    ((require 'elpaca))
+                    ((elpaca-generate-autoloads "elpaca" repo)))
+              (progn (message "%s" (buffer-string)) (kill-buffer buffer))
+            (error "%s" (with-current-buffer buffer (buffer-string))))
+        ((error) (warn "%s" err) (delete-directory repo 'recursive))))
+    (unless (require 'elpaca-autoloads nil t)
+      (require 'elpaca)
+      (elpaca-generate-autoloads "elpaca" repo)
+      (load "./elpaca-autoloads")))
+  (add-hook 'after-init-hook #'elpaca-process-queues)
+  (elpaca `(,@elpaca-order))
+#+end_src
+
+** Use package 
+#+begin_src elisp
+  (elpaca elpaca-use-package 
+  (elpaca-use-package-mode))
+(setq use-package-always-ensure t)
+  (setq use-package-always-defer t)
+#+end_src
+
+** Early deps
+#+begin_src elisp
+    (use-package transient
+      :ensure (:wait t))
+
+    (use-package seq
+      :ensure (:wait t))
+
+    (use-package compat
+      :ensure (:wait t))
+#+end_src
+
+** Ability to reload configuration
+#+begin_src elisp
+  (defun reload-init-file ()
+    "Reload the `init.el` configuration file."
+    (interactive)
+    (load-file (expand-file-name user-init-file)))
+#+end_src
+
+#+RESULTS:
+: reload-init-file
+
+** Bug hunting
+#+begin_src elisp
+  (use-package bug-hunter)
+#+end_src 
+
+** Performance check
+#+begin_src elisp
+  (use-package esup)
+#+end_src
+
+** ~Exec-path~ from shell
+#+begin_src elisp
+  (use-package exec-path-from-shell
+    :demand t
+    :ensure (:wait t)
+    :config
+    (dolist (var '("PYTHONPATH"         ; Python modules
+                   "INFOPATH"           ; Info directories
+                   "JAVA_OPTS"          ; Options for java processes
+                   "SBT_OPTS"           ; Options for SBT
+                   "RUST_SRC_PATH"      ; Rust sources, for racer
+                   "CARGO_HOME"         ; Cargo home, for racer
+                   "EMAIL"              ; My personal email
+                   "GPG_TTY"
+                   "GPG_AGENT_INFO"
+                   "SSH_AUTH_SOCK"
+                   "SSH_AGENT_PID"
+                   "JDTLS_PATH"
+                   "HOME"
+                   ))
+
+      (add-to-list 'exec-path-from-shell-variables var)
+      ))
+
+    (exec-path-from-shell-initialize)
+#+end_src
+
+* Indentation
+#+begin_src emacs-lisp
+  (setq-default indent-tabs-mode nil)
+  (electric-pair-mode 1)
+  ;; Fixes switch statements
+  (c-set-offset 'case-label '+)
+#+end_src
+
+* Evil
+#+begin_src elisp
+  (use-package evil
+    :demand
+    :init
+    (setq evil-want-C-u-scroll t
+          evil-want-keybinding nil
+          scroll-margin 8
+          ) ;; Enable C-u for scrolling
+    :config
+    (evil-mode 1)
+    (evil-set-undo-system 'undo-redo))
+#+end_src
+
+** Evil collection
+#+begin_src elisp
+  (use-package evil-collection
+    :demand
+    :after evil
+    :config
+    (evil-collection-init))
+#+end_src
+
+** Evil commenter
+#+begin_src elisp
+  (use-package evil-nerd-commenter
+    :after evil)
+#+end_src
+
+** Copy and pasting
+#+begin_src emacs-lisp
+  (use-package simpleclip
+    :init (simpleclip-mode 1))
+#+end_src
+
+* Keybinds
+** General
+#+begin_src elisp
+  (use-package general
+  :ensure (:wait t)
+    :demand t
+    :config
+    (general-evil-setup)
+    (general-create-definer ys/leader-keys
+      :states '(normal insert visual emacs)
+      :keymaps 'override
+      :prefix "SPC"
+      :global-prefix "M-SPC")
+
+    (ys/leader-keys
+      "x" '(kill-this-buffer :wk "Kill buffer"))
+
+    (ys/leader-keys
+      "j" '(avy-goto-char-2 :wk "Search buffer"))
+
+    (ys/leader-keys
+      "s" '(:ignore t :wk "window")
+      "sh" '(evil-window-split :wk "Horizontal split")
+      "sv" '(evil-window-vsplit :wk "Vertical split")
+      "sp" '(langtool-check :wk "Check with langtool")
+      "sk" '(flyspell-correct-wrapper :wk "Flyspell correct")
+      "sc" '(:ignore t :wk "Correct")
+      "scp" '(langtool-correct-at-point :wk "Correct at point")
+      "scb" '(langtool-correct-buffer :wk "Correct buffer"))
+
+    (ys/leader-keys
+      "p" '(:ignore t :wk "Project"))
+
+    (ys/leader-keys
+      "c" '(:ignore t :wk "Code")
+      "cc" '(compile :wk "Compile")
+      "cC" '(recompile :wk "Recompile"))
+
+    (ys/leader-keys
+      "b" '(:ignore t :wk "Buffers")
+      "bx" '(kill-buffer :wk "Kill Buffer")
+      "bi" '(ibuffer :wk "Ibuffer"))
+
+    (ys/leader-keys
+      "l" '(:ignore t :wk "Lsp"))
+
+    (ys/leader-keys
+      "o" '(:ignore t :wk "Org")
+      "ob" '(org-mark-ring-goto :wk "Travel to origin link")
+      "oa" '(org-agenda :wk "Org agenda")
+      "oe" '(org-export-dispatch :wk "Org export")
+      "oi" '(org-toggle-item :wk "Org toggle Item")
+      "ot" '(org-todo :wk "Org Todo")
+      "oT" '(org-todo-list :wk "Org Todo List")
+      "op" '(org-tree-slide-mode :wk "Present"))
+
+    (ys/leader-keys
+      "y" '(simpleclip-copy :wk "Yank to clipboard"))
+
+    (ys/leader-keys
+      "P" '(simpleclip-paste :wk "Paste from clipboard"))
+    )
+#+end_src
+
+** Hydra
+#+begin_src elisp :tangle no
+  (use-package hydra
+    :general-config (ys/leader-keys "=" '(hydra-text-scale/body :wk "Scale text")
+					"on" '(hydra-org-nav/body :wk "Navigate org"))
+    :defer 1)
+
+  (defhydra hydra-text-scale (:timeout 4)
+    "Scale Text"
+    ("j" text-scale-increase "in")
+    ("k" text-scale-decrease "out")
+    ("q" nil "finished" :exit t))
+
+  (defhydra hydra-org-nav (:timeout 4)
+    "Navigate org headings"
+    ("j" org-next-visible-heading "next")
+    ("k" org-previous-visible-heading "previous")
+    ("q" nil "Stop" :exit t))
+#+end_src
+
+#+RESULTS:
+: hydra-org-nav/body
+
+* UI
+** Workspaces
+#+begin_src elisp
+  (defun my/persp-switch (name)
+    (interactive "s")
+    (persp-switch name)
+    (switch-to-buffer "*dashboard*")
+    )
+
+  (use-package perspective
+    :config
+    (add-hook 'ibuffer-hook
+              (lambda ()
+                (persp-ibuffer-set-filter-groups)
+                (unless (eq ibuffer-sorting-mode 'alphabetic)
+                  (ibuffer-do-sort-by-alphabetic)))) 
+    :hook (dashboard-mode . persp-mode)
+    :general (ys/leader-keys
+               "TAB" '(:ignore t :wk "Workspaces")
+               "TAB n" '(my/persp-switch :wk "New Workspace")
+               "TAB d" '(persp-kill :wk "Kill workspace")
+               "TAB 1" '(lambda () (interactive) (persp-switch-by-number 1) :wk "Switch to workspace 1")
+               "TAB 2" '(lambda () (interactive) (persp-switch-by-number 2) :wk "Switch to workspace 2")
+               "TAB 3" '(lambda () (interactive) (persp-switch-by-number 3) :wk "Switch to workspace 3")
+               "TAB 4" '(lambda () (interactive) (persp-switch-by-number 4) :wk "Switch to workspace 4")
+               "TAB 5" '(lambda () (interactive) (persp-switch-by-number 5) :wk "Switch to workspace 5")
+               ))
+#+end_src
+
+#+RESULTS:
+
+** Icons and status bar
+#+begin_src elisp
+  (use-package all-the-icons
+    :if (display-graphic-p))
+
+  (use-package doom-modeline
+    :ensure t
+    :hook (after-init . doom-modeline-mode)
+    :config
+    (setq doom-modeline-persp-name t
+  		doom-modeline-display-default-persp-name t
+  		doom-modeline-buffer-encoding nil
+  		)
+    )
+#+end_src
+
+
+** Dashboard
+#+begin_src elisp
+  (defun ys/new-persp-switch (dir)
+    (persp-new (ys/get-dir-name dir))
+    (persp-switch (ys/get-dir-name dir))
+    (cd dir)
+    (project-find-file)
+    )
+#+end_src
+
+#+begin_src elisp
+  (use-package dashboard
+    :demand
+    :config
+    (dashboard-setup-startup-hook)
+    (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*"))
+          dashboard-banner-logo-title "Welcome to Emacs"
+          dashboard-startup-banner (concat (file-name-directory user-init-file) "banner.png")
+
+          dashboard-center-content t)
+
+    ;; Sets which dashboard items should show
+    (setq dashboard-set-file-icons t)
+    (setq dashboard-set-heading-icons t)
+    (setq dashboard-display-icons-p t)
+    (setq dashboard-heading-icons '((recents   . "history")
+                                    (bookmarks . "bookmark")
+                                    (agenda    . "calendar")
+                                    (projects  . "rocket")
+                                    (registers . "database")))
+    (setq dashboard-projects-switch-function 'ys/new-persp-switch
+          dashboard-items '(
+                            (recents . 5)
+                            (projects . 10)
+                            )
+          dashboard-set-navigator t))
+#+end_src
+
+** Theme
+#+begin_src elisp
+  (use-package doom-themes
+    :demand
+    :config
+    (setq doom-themes-enable-bold t
+          doom-themes-enable-italic t
+        doom-modeline-enable-word-count t
+        )
+    (load-theme 'doom-nord t)
+    (doom-themes-visual-bell-config)
+    (doom-themes-neotree-config)
+    (doom-themes-org-config))
+#+end_src
+
+#+RESULTS:
+: t
+
+** Font & relative line numbering
+#+begin_src elisp
+  (if (eq system-type 'windows-nt)
+  	(add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font-16"))
+    (add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font-16"))
+    )
+  (setq display-line-numbers-type 'relative
+        display-line-numbers-current-absolute t)
+#+end_src
+
+#+RESULTS:
+: t
+
+#+begin_src elisp
+  (use-package display-line-numbers-mode
+    :ensure nil
+    :defer
+    :hook (prog-mode . display-line-numbers-mode)
+    :config
+    (setq display-line-numbers-type 'relative
+          display-line-numbers-current-absolute t))
+#+end_src
+
+*** Remove line numbers in some modes
+#+begin_src elisp :tangle no
+  (dolist (mode '(org-mode-hook
+  		  term-mode-hook
+  		  vterm-mode-hook
+  		  shell-mode-hook
+  		  neotree-mode-hook
+  		  eshell-mode-hook))
+    (add-hook mode (lambda() (display-line-numbers-mode 0))))
+#+end_src
+
+** Ligatures
+#+begin_src elisp
+  (use-package ligature
+    :hook (prog-mode . ligature-mode)
+    (org-mode . ligature-mode)
+    :config
+    ;; Enable the "www" ligature in every possible major mode
+    (ligature-set-ligatures 't '("www"))
+    ;; Enable all Cascadia Code ligatures in programming modes
+    (ligature-set-ligatures 't '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+                                         ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+                                         "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+                                         "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+                                         "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+                                         "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+                                         "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+                                         "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+                                         ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+                                         "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+                                         "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+                                         "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
+                                         "\\\\" "://")))
+#+end_src
+
+#+RESULTS:
+
+** Discord 
+#+begin_src elisp :tangle no
+  (use-package elcord
+    :defer 2
+    :config
+    (if (not (daemonp))
+      (progn
+        (elcord-mode)))
+    ;; (setq elcord-editor-icon 'emacs_icon)
+    )
+#+end_src
+
+** Cursor highlight
+#+begin_src elisp
+  (use-package beacon
+    :defer 2
+    :config
+    (setq beacon-blink-when-window-scrolls t)
+    (add-to-list 'beacon-dont-blink-major-modes 'dashboard-mode )
+    (beacon-mode 1))
+#+end_src
+
+#+RESULTS:
+
+** Current line highlight
+#+begin_src elisp
+  (use-package hl-line
+    :ensure nil
+    :hook (prog-mode . hl-line-mode)
+    (org-mode . hl-line-mode)
+    )
+#+end_src
+
+#+RESULTS:
+
+** Transparent emacs
+#+begin_src elisp :tangle no
+  (set-frame-parameter nil 'alpha-background 70) ; For current frame
+  (add-to-list 'default-frame-alist '(alpha-background . 70)) ; For all new frames henceforth
+#+end_src
+
+** Text
+*** Centered
+#+begin_src elisp :tangle no
+  (use-package centered-window
+    :defer
+    :hook (org-mode . centered-window-mode)
+    (LaTeX-mode . centered-window-mode))
+#+end_src
+
+*** Wrapped
+#+begin_src elisp
+  (use-package visual-line-mode
+    :ensure nil
+    :init (visual-line-mode))
+#+end_src
+
+* Org-mode
+** Table of contents 
+#+begin_src elisp
+  (use-package toc-org
+    :defer
+    :commands toc-org-enable
+    :hook (org-mode . toc-org-enable))
+#+end_src
+
+** Bullets & Todos
+#+begin_src elisp
+  (use-package org-superstar
+    :defer
+    :hook
+    (org-mode . (lambda () (org-superstar-mode 1)))
+    :init
+    (setq org-ellipsis "⤵"
+          org-superstar-special-todo-items t
+          org-superstar-todo-bullet-alist
+          '(("TODO" . ?☐)
+            ("DONE" . ?✔))))
+#+end_src
+
+** Presentations
+#+begin_src elisp
+  (use-package org-tree-slide
+    :defer
+    :commands (org-tree-slide-mode)
+    :bind
+    ("<f8>" . org-tree-slide-move-previous-tree)
+    ("<f9>" . org-tree-slide-move-next-tree)
+    )
+#+end_src
+
+** Babel
+*** Code blocks
+#+begin_src elisp
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((js . t)
+     (plantuml . t)
+     (C . t)
+     (java . t)
+     (python . t)))
+#+end_src
+
+**** Java settings
+#+begin_src elisp
+  (nconc org-babel-default-header-args:java
+	 '((:dir . "/tmp/")))
+#+end_src
+
+**** JS settings
+#+begin_src elisp
+  (setq org-babel-default-header-args:js
+               '((:exports . "both") (:results . "output")))
+#+end_src
+
+#+RESULTS:
+: ((:exports . both) (:results . output))
+
+**** Syntax highlight in export
+#+begin_src elisp
+  (setq org-latex-listings 'minted
+	org-latex-packages-alist '(("" "minted"))
+	org-latex-pdf-process
+	'("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+	  "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+#+end_src
+
+**** No confirm
+#+begin_src elisp
+  (setq org-confirm-babel-evaluate nil)
+#+end_src
+
+*** Automatic tangle
+#+begin_src elisp
+  (use-package org-auto-tangle
+    :defer
+    :hook (org-mode . org-auto-tangle-mode))
+#+end_src
+
+** Agenda 
+*** Discover files
+#+begin_src elisp
+  (setq org-directory "~/org")
+  (setq org-agenda-files '("Todos.org"))
+#+end_src
+
+*** Custom view
+Credit to Derek Taylor
+#+begin_src elisp
+(setq
+ ;; org-fancy-priorities-list '("[A]" "[B]" "[C]")
+ ;; org-fancy-priorities-list '("❗" "[B]" "[C]")
+ org-fancy-priorities-list '("🟥" "🟧" "🟨")
+ org-priority-faces
+ '((?A :foreground "#ff6c6b" :weight bold)
+   (?B :foreground "#98be65" :weight bold)
+   (?C :foreground "#c678dd" :weight bold))
+ org-agenda-block-separator 8411)
+
+(setq org-agenda-custom-commands
+      '(("v" "A better agenda view"
+         ((tags "PRIORITY=\"A\""
+                ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                 (org-agenda-overriding-header "High-priority unfinished tasks:")))
+          (tags "PRIORITY=\"B\""
+                ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                 (org-agenda-overriding-header "Medium-priority unfinished tasks:")))
+          (tags "PRIORITY=\"C\""
+                ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                 (org-agenda-overriding-header "Low-priority unfinished tasks:")))
+          (tags "customtag"
+                ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                 (org-agenda-overriding-header "Tasks marked with customtag:")))
+
+          (agenda "")
+          (alltodo "")))))
+#+end_src
+
+*** Show 12 hr clock
+#+begin_src elisp
+  (setq org-agenda-timegrid-use-ampm 1)
+#+end_src
+
+** Image drag-drop
+#+begin_src elisp
+  (use-package org-download)
+#+end_src
+
+** Hide marks
+#+begin_src elisp
+  (setq org-hide-emphasis-markers t)
+#+end_src
+
+*** Show emphasis markers interactively
+#+begin_src elisp
+  (use-package org-appear
+    :hook (org-mode . org-appear-mode)
+    :config (setq org-appear-autolinks t
+                  org-appear-autosubmarkers t
+                  org-appear-autoentities t
+                  org-appear-inside-latex t))
+#+end_src
+
+** Tweaks
+*** Follow link
+#+begin_src elisp
+  (setq org-return-follows-link t)
+#+end_src
+
+*** Further tweaks
+#+begin_src elisp
+  (setq org-startup-indented t
+        org-startup-with-inline-images t
+        org-pretty-entities t
+        org-use-sub-superscripts "{}"
+        org-image-actual-width '(300))
+#+end_src
+
+* Latex
+#+begin_src elisp
+  (use-package latex
+    :hook (LaTeX-mode . (lambda ()
+                          (setq TeX-command-extra-options "-shell-escape")
+                          (electric-indent-local-mode -1)
+                          (turn-on-reftex)
+                          (prettify-symbols-mode)
+                          (lsp-deferred)
+                          ))
+    :demand
+    :ensure
+    (auctex :build (:not elpaca--compile-info)
+            :pre-build (("./autogen.sh")
+                        ("./configure"
+                         "--without-texmf-dir"
+                         "--with-packagelispdir=./"
+                         "--with-packagedatadir=./")
+                        ("make"))
+            :files ("*.el" "doc/*.info*" "etc" "images" "latex" "style")
+            :version (lambda (_) (require 'tex-site) AUCTeX-version))
+    :config
+    (setq TeX-show-compilation t)
+    (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
+    (add-to-list
+     'TeX-view-program-selection
+     '(output-pdf "PDF Tools"))
+    )
+
+  ;; (use-package evil-tex
+  ;;   :hook
+  ;;   (LaTeX-mode . evil-tex-mode))
+
+  (use-package pdf-tools
+    :mode ("\\.pdf\\'" . pdf-view-mode)
+    :hook
+    (pdf-view-mode . pdf-view-midnight-minor-mode))
+#+end_src
+
+#+RESULTS:
+: [nil 26456 54991 969347 nil elpaca-process-queues nil nil 0 nil]
+
+Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-in-latex-auctex-itemize-environments][Emacs StackExchange]]
+
+#+begin_src elisp
+  (defun LaTeX-indent-item ()
+    "Provide proper indentation for LaTeX \"itemize\",\"enumerate\", and
+  \"description\" environments.
+
+    \"\\item\" is indented `LaTeX-indent-level' spaces relative to
+    the the beginning of the environment.
+
+    Continuation lines are indented either twice
+    `LaTeX-indent-level', or `LaTeX-indent-level-item-continuation'
+    if the latter is bound."
+    (save-match-data
+      (let* ((offset LaTeX-indent-level)
+             (contin (or (and (boundp 'LaTeX-indent-level-item-continuation)
+                              LaTeX-indent-level-item-continuation)
+                         (* 2 LaTeX-indent-level)))
+             (re-beg "\\\\begin{")
+             (re-end "\\\\end{")
+             (re-env "\\(itemize\\|\\enumerate\\|description\\)")
+             (indent (save-excursion
+                       (when (looking-at (concat re-beg re-env "}"))
+                         (end-of-line))
+                       (LaTeX-find-matching-begin)
+                       (current-column))))
+        (cond ((looking-at (concat re-beg re-env "}"))
+               (or (save-excursion
+                     (beginning-of-line)
+                     (ignore-errors
+                       (LaTeX-find-matching-begin)
+                       (+ (current-column)
+                          (if (looking-at (concat re-beg re-env "}"))
+                              contin
+                            offset))))
+                   indent))
+               ((looking-at (concat re-end re-env "}"))
+                indent)
+              ((looking-at "\\\\item")
+               (+ offset indent))
+              (t
+               (+ contin indent))))))
+
+  (defcustom LaTeX-indent-level-item-continuation 4
+    "*Indentation of continuation lines for items in itemize-like
+  environments."
+    :group 'LaTeX-indentation
+    :type 'integer)
+
+  (eval-after-load "latex"
+    '(setq
+      LaTeX-indent-level-item-continuation 2
+      LaTeX-indent-environment-list
+           (nconc '(("itemize" LaTeX-indent-item)
+                    ("enumerate" LaTeX-indent-item)
+                    ("description" LaTeX-indent-item))
+                  LaTeX-indent-environment-list)))
+#+end_src
+
+* Project management
+** Mini buffer completion 
+#+begin_src elisp
+  (use-package counsel
+    :demand
+    :config (setq ivy-use-virtual-buffers t
+                  ivy-count-format "(%d/%d) ")
+    (ivy-mode)
+    :bind
+    ("M-x" . counsel-M-x)
+    ("C-x C-f" . counsel-find-file)
+    ("C-h v" . counsel-describe-variable)
+    ("C-h f" . counsel-describe-function)
+    ("C-c t" . counsel-load-theme)
+    )
+#+end_src
+
+#+RESULTS:
+: [nil 26454 56870 713420 nil elpaca-process-queues nil nil 164000 nil]
+
+** ~Project.el~
+*** Persp integration
+#+begin_src elisp
+  (defun ys/get-dir-name (path)
+    (file-name-nondirectory (directory-file-name (file-name-directory path)))
+    )
+
+  (defun ys/project-new-persp ()
+    (interactive)
+    (let ((selected (project-prompt-project-dir)))
+      (ys/new-persp-switch selected)
+      )
+    )
+
+  (defun ys/project-find-or-switch ()
+    (interactive)
+    (if (project-current)
+        (project-find-file)
+      (call-interactively 'ys/project-new-persp)))
+
+  (defun ys/project-rg ()
+    (interactive)
+    (counsel-rg nil nil nil "What to search for: ")
+    )
+#+end_src
+
+#+RESULTS:
+: ys/project-rg
+
+#+begin_src elisp
+  (use-package project
+    :ensure nil
+    :config
+    (setq project-prompter
+          #'ivy-read)
+    :general
+    (ys/leader-keys
+      "pc" '(project-compile :wk "Compile project")
+      "ff" '(ys/project-find-or-switch :wk "Find file")
+      "pp" '(ys/project-new-persp :wk "Switch project")
+      "fg" '(ys/project-rg :wk "Ripgrep")
+      ))
+#+end_src
+
+** Git
+Needed because for some reason transient is outdated
+#+begin_src elisp
+  (use-package magit
+    :ensure (:wait t)
+    :general (ys/leader-keys
+               "g" '(:ignore t :wk "Magit")
+               "gg" '(magit :wk "Open magit")
+               "gp" '(magit-push :wk "Push commits"))
+    :commands magit
+    :config
+    (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell)
+    (add-hook 'git-commit-mode-hook 'evil-insert-state)
+    )
+#+end_src
+
+#+RESULTS:
+
+*** Git todos
+Provides nice todos inside of [[Git][Magit]]
+#+begin_src elisp
+  (use-package hl-todo
+    :init
+    (global-hl-todo-mode))
+
+  (use-package magit-todos
+    :after magit
+    :hook (magit-mode . magit-todos-mode))
+#+end_src
+
+*** Git gutter
+#+begin_src elisp
+  (use-package git-gutter
+    :init (global-git-gutter-mode +1) 
+    )
+#+end_src
+
+** File explorer
+#+begin_src elisp
+  (use-package neotree
+    :defer
+    :commands neotree-toggle
+    :general (ys/leader-keys
+               "n" '(neotree-toggle :wk "Neotree"))
+    :config
+    (setq neo-theme (if (display-graphic-p) 'icons 'arrow)
+        neo-window-width 25
+        neo-smart-open t
+        neo-show-hidden-files t))
+#+end_src
+
+#+begin_src elisp :tangle no
+  (use-package dirvish
+    :init (dirvish-override-dired-mode)
+    :hook (dirvish-side . dirvish-side-follow-mode)
+    :custom
+    (dirvish-quick-access-entries
+     '(("h" "~/" "Home")
+  	 ("d" "~/Downloads" "Downloads")
+  	 ))
+    :bind
+    (:map evil-normal-state-map
+  		("C-n" . dirvish-side))
+    (:map dirvish-mode-map
+  	("q" . dirvish-quit)
+  	("a" . dirvish-quick-access)
+  	("TAB" . dirvish-subtree-toggle)
+  	)
+    :config (setq dirvish-attributes
+  				'(vc-state subtree-state all-the-icons collapse git-msg file-time file-size)))
+#+end_src
+
+#+RESULTS:
+: dirvish-subtree-toggle
+
+* Buffers management
+** Tabs
+#+begin_src elisp :tangle no
+  (use-package centaur-tabs
+    :hook (dashboard-mode . centaur-tabs-local-mode) 
+    (calendar-mode . centaur-tabs-local-mode)
+    (eshell-mode . centaur-tabs-local-mode)
+    (vterm-mode . centaur-tabs-local-mode)
+    (pdf-view-mode . centaur-tabs-local-mode)
+    (magit-mode . centaur-tabs-local-mode)
+    (org-mode . centaur-tabs-local-mode)
+    :config
+    (centaur-tabs-mode t)
+    (centaur-tabs-headline-match)
+    (setq centaur-tabs-height 40
+          centaur-tabs-style "wave"
+          centaur-tabs-set-icons t
+          centaur-tabs-gray-out-icons 'buffer
+          centaur-tabs-set-bar 'under
+          x-underline-at-descent-line t
+          centaur-tabs-set-modified-marker t))
+#+end_src
+
+#+RESULTS:
+
+** Harpoon
+#+begin_src emacs-lisp
+  (use-package harpoon
+    :general (ys/leader-keys
+               "h" '(:ignore t :wk "Harpoon")
+               "hh" '(harpoon-quick-menu-hydra :wk "Quick menu")
+               "h1" '(harpoon-go-to-1 :wk "Go to 1")
+               )
+    )
+#+end_src
+
+* LSP stuff
+** Yasnippet
+#+begin_src elisp
+  (use-package doom-snippets 
+    :after yasnippet
+    :ensure (doom-snippets :type git :host github
+    			 :repo "doomemacs/snippets"
+    			 :files ("*.el" "*")))
+
+  (use-package yasnippet
+    :hook (snippet-mode . (lambda ()
+                            (setq mode-require-final-newline nil)))
+    :defer 1
+    :config
+    (setq yas-snippet-dirs (cons
+                            (concat (file-name-directory user-init-file) "snippets")
+                            yas-snippet-dirs))
+    (setq yas-verbosity 2)
+    (yas-global-mode 1)
+    )
+#+end_src
+
+#+RESULTS:
+: [nil 26555 56761 263553 nil elpaca-process-queues nil nil 6000 nil]
+
+*** Ivy Integration
+#+begin_src elisp :tangle no
+  (use-package ivy-yasnippet
+    :defer
+    :commands (ivy-yasnippet)
+    :bind (:map evil-insert-state-map 
+    ("C-c y" . ivy-yasnippet)))
+#+end_src
+
+#+RESULTS:
+: ivy-yasnippet
+
+** Programming language modes
+*** Typescript
+#+begin_src elisp
+  (use-package web-mode
+    :custom
+    (web-mode-markup-indent-offset 2)
+    (web-mode-css-indent-offset 2)
+    (web-mode-code-indent-offset 2) 
+    :hook
+    (web-mode . lsp-mode)
+    :mode (("\\.tsx\\'" . web-mode)
+           ("\\.jsx\\'" . web-mode)
+           ("\\.html\\'". web-mode)
+           ("\\.js\\'". web-mode)
+           ("\\.svelte\\'" . web-mode)
+           ("\\.ts\\'" . web-mode))
+    )
+#+end_src
+
+#+RESULTS:
+: [nil 26559 45355 879518 nil elpaca-process-queues nil nil 229000 nil]
+
+*** Rust
+#+begin_src elisp
+  (use-package rustic
+    :config (setq rustic-rustfmt-args "--edition 2021"))
+#+end_src
+
+#+name: apheleia-settings
+#+begin_src elisp :tangle no
+  (setf (alist-get 'rustfmt apheleia-formatters)
+        '("rustfmt" "--quiet" "--emit" "stdout" "--edition" "2021" ))
+#+end_src
+
+*** Python
+#+begin_src elisp
+    (use-package pyvenv)
+#+end_src
+
+#+RESULTS:
+
+*** Nix
+#+begin_src elisp
+(use-package nix-mode
+  :mode "\\.nix\\'")
+#+end_src
+
+*** Prisma
+#+begin_src elisp :tangle no
+  (use-package prisma-mode
+    :mode "\\.prisma\\'"
+    :ensure (:host github :repo "pimeys/emacs-prisma-mode" :branch "main"))
+#+end_src
+
+*** Markdown
+#+begin_src elisp
+  (use-package markdown-mode
+    :mode ("README\\.md\\'" . gfm-mode)
+    :config (setq markdown-command "pandoc")
+    )
+#+end_src
+
+*** Arduino
+#+begin_src elisp
+  (use-package arduino-mode
+    :mode ("\\.ino\\'" . arduino-mode)
+    )
+#+end_src
+
+*** Plantuml
+#+begin_src elisp
+  (use-package plantuml-mode
+    :mode ("\\.plantuml\\'" . plantuml-mode)
+    :config (setq org-plantuml-executable-path (executable-find "plantuml")
+                  plantuml-executable-path (executable-find "plantuml")
+                  org-plantuml-exec-mode 'plantuml
+                  plantuml-default-exec-mode 'executable)
+    )
+#+end_src
+
+#+RESULTS:
+
+*** Docker
+#+begin_src lisp
+  (use-package docker
+      :commands docker)
+
+  (use-package dockerfile-mode)
+#+end_src
+
+*** Yaml
+#+begin_src elisp
+  (use-package yaml-mode
+    :mode
+    ("\\yml\\'" . yaml-mode))
+#+end_src
+
+*** Treesitter
+#+begin_src elisp :tangle no
+  (use-package treesit
+    :elpaca nil
+    :init
+    (setq major-mode-remap-alist
+          '((rustic-mode . rust-ts-mode)
+            (dockerfile-mode . dockerfile-ts-mode)
+            (cmake-mode . cmake-ts-mode)
+            (yaml-mode . yaml-ts-mode)
+            )))
+#+end_src
+
+*** Haskell
+#+begin_src elisp
+  (use-package haskell-mode)
+  (use-package lsp-haskell)
+#+end_src
+*** Typst
+#+begin_src emacs-lisp
+  (use-package typst-ts-mode
+    :ensure (:type git :host codeberg :repo "meow_king/typst-ts-mode"))
+#+end_src
+
+** Lsp-mode
+#+begin_src elisp
+  (use-package lsp-mode
+    :general
+    (ys/leader-keys
+      "ca" '(lsp-execute-code-action :wk "Code actions")
+      "lr" '(lsp-rename :wk "Rename reference"))
+    :ensure (:wait t)
+    :hook (prog-mode . lsp-deferred)
+    (lsp-mode . lsp-enable-which-key-integration)
+    :config
+    (setq lsp-inlay-hint-enable t
+          lsp-enable-folding t
+          lsp-ui-sideline-show-hover t
+          lsp-enable-snippet t))
+
+  (use-package lsp-ui :commands lsp-ui-mode)
+
+  (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+
+  (use-package lsp-java
+    :config
+    (setq c-basic-offset 2)
+    (eldoc-mode -1)
+    :hook (java-mode . (lambda ()
+                         (require 'lsp-java) 
+                         (defun lsp-java--ls-command ()
+                           (list "jdtls"
+                                 "-configuration" (concat (getenv "HOME") "/.cache/jdtls/")
+                                 "-data" (concat (getenv "HOME") "/.jdtls")))
+                         (setq lsp-java-server-install-dir (concat (getenv "JDTLS_PATH") "/"))
+                         (lsp-deferred))))
+
+  (use-package lsp-pyright
+    :hook (python-mode . (lambda ()
+                           (require 'lsp-pyright)
+                           (lsp-deferred))))  ; or lsp-deferred
+#+end_src
+
+#+RESULTS:
+: [nil 26457 1059 232235 nil elpaca-process-queues nil nil 0 nil]
+
+#+begin_src elisp :tangle no
+  (use-package eglot
+    :hook (prog-mode . eglot-ensure))
+#+end_src
+
+** Dap-mode
+#+begin_src elisp
+  (use-package dap-mode
+    :config
+    (setq dap-auto-configure-mode t))
+#+end_src
+
+
+** Company mode
+#+begin_src elisp :tangle no
+  (use-package company
+    :config
+    (global-set-key (kbd "C-c y") 'company-yasnippet)
+    :init
+    (setq company-auto-commit nil
+        company-minimum-prefix-length 2
+        company-tooltip-limit 14
+        company-tooltip-align-annotations t
+        company-require-match 'never
+        company-frontends '(company-pseudo-tooltip-frontend
+                            company-echo-metadata-frontend)
+        )
+    (global-company-mode))
+
+  (use-package company-box
+    :config
+    (setq company-box-show-single-candidate t
+        company-box-backends-colors nil)
+    :hook (company-mode . company-box-mode))
+
+#+end_src
+
+#+RESULTS:
+: [nil 26278 58791 792446 nil elpaca-process-queues nil nil 0 nil]
+
+*** Extra Backends
+#+begin_src elisp :tangle no
+  (use-package company-math
+    :after company
+    :config
+    (defun my-latex-mode-setup ()
+  	(setq-local company-backends
+  				(append '((company-math-symbols-latex company-latex-commands))
+  						company-backends)))
+    (add-hook 'TeX-mode-hook 'my-latex-mode-setup)
+    )
+
+  (use-package company-auctex
+    :after company
+    :config (company-auctex-init))
+#+end_src
+
+#+RESULTS:
+
+
+** Corfu
+#+begin_src elisp
+  (use-package corfu
+    :demand
+    :init
+    (global-corfu-mode)
+    (corfu-popupinfo-mode)
+    :config
+    (setq corfu-cycle t
+          corfu-auto t
+          corfu-auto-prefix 1
+          corfu-auto-delay 0.5
+          corfu-preview-current t
+          corfu-min-width 50
+          corfu-max-width corfu-min-width
+          corfu-count 10
+          corfu-scroll-margin 2
+          )
+    :bind (:map corfu-map ("C-n" . corfu-next)
+                ("C-p" . corfu-previous)
+                ("RET" . corfu-insert)
+                )
+    )
+
+  (use-package emacs
+    :ensure nil
+    :custom
+    (tab-always-indent 'complete)
+    (text-mode-ispell-word-completion nil)
+    (read-extended-command-predicate #'command-completion-default-include-p)
+    )
+
+  (use-package nerd-icons-corfu
+    :demand
+    :after corfu
+    :config
+    (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter)
+    )
+#+end_src
+
+*** Icons
+#+begin_src elisp :tangle no
+  (use-package kind-icon
+    :demand
+    :after corfu
+    :custom
+    (kind-icon-default-face 'corfu-default)
+    (kind-icon-blend-background nil)
+    (kind-icon-blend-frac 0.08)
+    (kind-icon-use-icons t)
+    :config
+    (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+#+end_src
+
+#+RESULTS:
+
+*** Other useful backends 
+#+begin_src elisp :tangle no
+  (use-package cape
+    :demand
+    :init
+    (add-hook 'completion-at-point-functions #'cape-file))
+
+  (use-package yasnippet-capf
+    :after cape
+    :init
+    (add-hook 'completion-at-point-functions #'yasnippet-capf))
+#+end_src
+
+** Formatter
+#+begin_src elisp :noweb yes
+  (use-package apheleia
+    :demand
+    :config
+    <<apheleia-settings>>
+    :general (ys/leader-keys
+               "cf" '(apheleia-format-buffer
+                      :wk "Format buffer")))
+#+end_src
+
+#+RESULTS:
+: [nil 26528 32680 656208 nil elpaca-process-queues nil nil 827000 nil]
+
+** Indentation and parenthesis
+*** Indent blank-line
+#+begin_src elisp
+  ;; Indent blankline
+  (use-package highlight-indent-guides
+    :defer
+    :hook (prog-mode . highlight-indent-guides-mode)
+    :config
+    (setq highlight-indent-guides-method 'character
+        highlight-indent-guides-responsive 'top)
+    )
+#+end_src
+
+*** Colors for brackets and hex values 
+#+begin_src elisp
+  (use-package rainbow-delimiters
+    :defer
+    :hook (prog-mode . rainbow-delimiters-mode))
+
+  (use-package rainbow-mode
+    :defer
+    :hook (prog-mode . rainbow-mode))
+#+end_src
+
+** Direnv support
+#+begin_src elisp
+  (if (not (eq system-type 'windows-nt))
+      (use-package envrc
+        :demand
+        :init (envrc-global-mode))
+  )
+#+end_src
+
+
+** Compilation buffer
+#+begin_src elisp
+  (use-package emacs
+    :ensure nil
+    :config
+    (setq compilation-scroll-output t
+          compilation-always-kill t
+          )
+    (local-set-key (kbd "q") 'kill-buffer-and-window)
+    )
+#+end_src
+
+* Terminal
+#+begin_src elisp
+  (if (not (eq system-type 'windows-nt))
+      (progn
+        (message "unix")
+        (use-package vterm
+  	:defer 1)
+        (use-package vterm-toggle
+  	:after vterm
+  	:general (ys/leader-keys
+  		   "t" '(vterm-toggle :wk "Vterm"))
+    	:config
+    	(setq vterm-toggle-fullscreen-p nil)
+    	(setq vterm-toggle-scope 'project)
+    	(add-to-list 'display-buffer-alist
+    		     '((lambda (buffer-or-name _)
+    			 (let ((buffer (get-buffer buffer-or-name)))
+    			   (with-current-buffer buffer
+    			     (or (equal major-mode 'vterm-mode)
+    				 (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
+    		       (display-buffer-reuse-window display-buffer-at-bottom)
+    		       ;;(display-buffer-reuse-window display-buffer-in-direction)
+    		       ;;display-buffer-in-direction/direction/dedicated is added in emacs27
+    		       ;;(direction . bottom)
+    		       (dedicated . t) ;dedicated is supported in emacs27
+    		       (reusable-frames . visible)
+    		       (window-height . 0.3)))))
+
+    (progn
+      (message "eshell")
+      (use-package eshell
+        :ensure nil
+        :defer 1)
+      (use-package eshell-toggle
+        :custom
+        (eshell-toggle-size-fraction 3)
+        :after eshell
+        :config
+        :general (ys/leader-keys
+  		 "t" '(eshell-toggle :wk "Eshell"))
+        )))
+#+end_src
+
+#+RESULTS:
+: [nil 26551 55236 624206 nil elpaca-process-queues nil nil 713000 nil]
+
+* Keybind management
+** Which key
+#+begin_src elisp
+  (use-package which-key
+    :defer 1
+    :config
+    (which-key-mode 1)
+    (setq which-key-side-window-location 'bottom
+          which-key-sort-order #'which-key-key-order-alpha
+          which-key-sort-uppercase-first nil
+          which-key-add-column-padding 1
+          which-key-max-display-columns nil
+          which-key-min-display-lines 6
+          which-key-side-window-slot -10
+          which-key-side-window-max-height 0.25
+          which-key-idle-delay 0.1
+          which-key-max-description-length 25
+          which-key-allow-imprecise-window-fit t))
+
+#+end_src
+
+* Grammar
+** Language tool
+Credit to doom-emacs devs
+#+begin_src elisp
+  (use-package langtool
+    :commands (langtool-check
+	       langtool-check-done
+	       langtool-show-message-at-point
+	       langtool-correct-buffer)
+    :init (setq langtool-default-language "en-US")
+    :config
+    (unless (or langtool-bin
+		langtool-language-tool-jar
+		langtool-java-classpath)
+      (cond ((setq langtool-bin
+		   (or (executable-find "languagetool-commandline")
+		       (executable-find "languagetool")))))))  ; for nixpkgs.languagetool
+#+end_src
+
+** Fly-spell
+#+begin_src elisp
+  (use-package flyspell-mode
+    :ensure nil
+    :hook (org-mode . flyspell-mode)
+    )
+
+  (use-package flyspell-correct-ivy
+    :after flyspell-mode
+    :commands flyspell-correct-wrapper
+  )
+#+end_src
+
+#+RESULTS:
+
+
+* Useful extra settings
+** Sudo edit
+#+begin_src emacs-lisp 
+  (use-package sudo-edit)
+#+end_src
+
+#+RESULTS:
+: [nil 26455 41349 133617 nil elpaca-process-queues nil nil 0 nil]
+
+** Macos stuff
+Credits to [[https://github.com/doomemacs/doomemacs/blob/ba1dca322f9a07bc2b7bec6a98f2c3c55c0bbd77/modules/os/macos/autoload.el][Doom emacs]] for the insanely good macro
+#+begin_src elisp
+  (use-package emacs
+    :ensure nil
+    :general (ys/leader-keys
+               "of" '(+macos/reveal-in-finder :wk "Open in finder")
+               "op" '(+macos/reveal-project-in-finder :wk "Open in finder")
+               )
+    :if (eq system-type 'darwin)
+    :config
+    (setq ns-use-native-fullscreen nil
+          mac-control-modifier 'control
+          mac-command-modifier 'meta
+          mac-right-option-modifier 'control)
+
+    (defun +macos-open-with (&optional app-name path)
+      "Send PATH to APP-NAME on OSX."
+      (interactive)
+      (let* ((path (expand-file-name
+                    (replace-regexp-in-string
+                     "'" "\\'"
+                     (or path (if (derived-mode-p 'dired-mode)
+                                  (dired-get-file-for-visit)
+                                (buffer-file-name)))
+                     nil t)))
+             (command (format "open %s"
+                              (if app-name
+                                  (format "-a %s '%s'" (shell-quote-argument app-name) path)
+                                (format "'%s'" path)))))
+        (message "Running: %s" command)
+        (shell-command command)))
+
+    (defmacro +macos--open-with (id &optional app dir)
+      `(defun ,(intern (format "+macos/%s" id)) ()
+         (interactive)
+         (+macos-open-with ,app ,dir)))
+
+    (+macos--open-with reveal-in-finder "Finder" default-directory)
+    (+macos--open-with reveal-project-in-finder "Finder" (or (project-root) default-directory))
+    (+macos--open-with open-file nil buffer-file-name)
+
+    )
+
+#+end_src
+
+** Automatic revert of buffers
+#+begin_src elisp
+;; Automatically reverts buffers for changed files
+(global-auto-revert-mode 1)
+
+;; Reverts dired as well
+(setq global-auto-revert-non-file-buffers t)
+
+;; Remembers the last place you visited in a file
+(save-place-mode 1)
+#+end_src
+
+** Automatic restore of sessions
+#+begin_src emacs-lisp :tangle no
+  (use-package emacs
+    :ensure nil
+    :config
+    (add-to-list 'desktop-modes-not-to-save 'dired-mode)
+    (desktop-save-mode 1)
+  )
+#+end_src
+
+** Disables annoying features
+#+begin_src elisp
+  ;; Disable unrelated warnings
+  (setq warning-minimum-level :error)
+
+  ;; Disable lock file creation
+  (setq create-lockfiles nil)
+
+  (setq backup-directory-alist
+        `((".*" . ,temporary-file-directory)))
+  (setq auto-save-file-name-transforms
+        `((".*" ,temporary-file-directory t)))
+
+  ;; Removes annoying prompts
+  (setq use-short-answers t)
+#+end_src
+
+
