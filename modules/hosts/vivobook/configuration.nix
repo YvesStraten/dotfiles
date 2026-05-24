@@ -174,6 +174,12 @@
 
       environment.systemPackages = [
         pkgs.mangohud
+        pkgs.lutris
+        pkgs.heroic
+        pkgs.steam-rom-manager
+        pkgs.mangohud
+        pkgs.mangojuice
+        pkgs.r2modman
         pkgs.prismlauncher
         pkgs.kdePackages.kio # needed since 25.11
         pkgs.cifs-utils
