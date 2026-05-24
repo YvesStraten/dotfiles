@@ -41,7 +41,7 @@
           unzip
           sshfs
           ffmpeg
-          neofetch
+          fastfetch
           clang
           gnumake
           drawio
