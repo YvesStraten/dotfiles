@@ -48,11 +48,8 @@
         (mkIf cfg.libreoffice.enable {
           home.packages =
             with pkgs;
-            let
-              libreOfficePkg = if config.custom.theming.qt.enable then libreoffice-qt6 else libreoffice;
-            in
             [
-              libreOfficePkg
+              libreoffice-qt6
               zotero
               hunspell
             ]
@@ -67,7 +64,7 @@
 
         (mkIf cfg.latex.enable {
           home.packages = with pkgs; [
-            texlive.combined.scheme-medium
+            # texlive.combined.scheme-medium
           ];
         })
 
