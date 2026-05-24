@@ -95,6 +95,18 @@
   (setq use-package-always-defer t)
 #+end_src
 
+** Early deps
+#+begin_src elisp
+    (use-package transient
+      :ensure (:wait t))
+
+    (use-package seq
+      :ensure (:wait t))
+
+    (use-package compat
+      :ensure (:wait t))
+#+end_src
+
 ** Ability to reload configuration
 #+begin_src elisp
   (defun reload-init-file ()
@@ -380,8 +392,8 @@
 ** Font & relative line numbering
 #+begin_src elisp
   (if (eq system-type 'windows-nt)
-  	(add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-19"))
-    (add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-17"))
+  	(add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font-16"))
+    (add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font-16"))
     )
   (setq display-line-numbers-type 'relative
         display-line-numbers-current-absolute t)
@@ -823,9 +835,6 @@ Credits to [[https://emacs.stackexchange.com/questions/3083/how-to-indent-items-
 ** Git
 Needed because for some reason transient is outdated
 #+begin_src elisp
-  (use-package transient)
-  (use-package seq)
-
   (use-package magit
     :ensure (:wait t)
     :general (ys/leader-keys
@@ -1069,7 +1078,7 @@ Provides nice todos inside of [[Git][Magit]]
 #+end_src
 
 *** Treesitter
-#+begin_src elisp
+#+begin_src elisp :tangle no
   (use-package treesit
     :elpaca nil
     :init
@@ -1218,6 +1227,14 @@ Provides nice todos inside of [[Git][Magit]]
                 )
     )
 
+  (use-package emacs
+    :ensure nil
+    :custom
+    (tab-always-indent 'complete)
+    (text-mode-ispell-word-completion nil)
+    (read-extended-command-predicate #'command-completion-default-include-p)
+    )
+
   (use-package nerd-icons-corfu
     :demand
     :after corfu
@@ -1243,7 +1260,7 @@ Provides nice todos inside of [[Git][Magit]]
 #+RESULTS:
 
 *** Other useful backends 
-#+begin_src elisp
+#+begin_src elisp :tangle no
   (use-package cape
     :demand
     :init

@@ -42,6 +42,15 @@
 (setq use-package-always-ensure t)
   (setq use-package-always-defer t)
 
+(use-package transient
+  :ensure (:wait t))
+
+(use-package seq
+  :ensure (:wait t))
+
+(use-package compat
+  :ensure (:wait t))
+
 (defun reload-init-file ()
   "Reload the `init.el` configuration file."
   (interactive)
@@ -247,8 +256,8 @@
   (doom-themes-org-config))
 
 (if (eq system-type 'windows-nt)
-	(add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-19"))
-  (add-to-list 'default-frame-alist '(font . "JetBrainsMono NF-17"))
+	(add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font-16"))
+  (add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font-16"))
   )
 (setq display-line-numbers-type 'relative
       display-line-numbers-current-absolute t)
@@ -540,9 +549,6 @@ environments."
     "fg" '(ys/project-rg :wk "Ripgrep")
     ))
 
-(use-package transient)
-(use-package seq)
-
 (use-package magit
   :ensure (:wait t)
   :general (ys/leader-keys
@@ -653,16 +659,6 @@ environments."
   :mode
   ("\\yml\\'" . yaml-mode))
 
-(use-package treesit
-  :elpaca nil
-  :init
-  (setq major-mode-remap-alist
-        '((rustic-mode . rust-ts-mode)
-          (dockerfile-mode . dockerfile-ts-mode)
-          (cmake-mode . cmake-ts-mode)
-          (yaml-mode . yaml-ts-mode)
-          )))
-
 (use-package haskell-mode)
 (use-package lsp-haskell)
 
@@ -731,22 +727,20 @@ environments."
               )
   )
 
+(use-package emacs
+  :ensure nil
+  :custom
+  (tab-always-indent 'complete)
+  (text-mode-ispell-word-completion nil)
+  (read-extended-command-predicate #'command-completion-default-include-p)
+  )
+
 (use-package nerd-icons-corfu
   :demand
   :after corfu
   :config
   (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter)
   )
-
-(use-package cape
-  :demand
-  :init
-  (add-hook 'completion-at-point-functions #'cape-file))
-
-(use-package yasnippet-capf
-  :after cape
-  :init
-  (add-hook 'completion-at-point-functions #'yasnippet-capf))
 
 (use-package apheleia
   :demand

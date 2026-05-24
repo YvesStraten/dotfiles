@@ -1,6 +1,6 @@
 { lib, ... }:
 {
-  flake.homeModules.emacs =
+  flake.homeModules.dev =
     {
       config,
       pkgs,
@@ -66,7 +66,7 @@
           enable = true;
           inherit (cfg) package;
           client.enable = true;
-          defaultEditor = true;
+          # defaultEditor = true;
         };
 
         home = {
@@ -82,14 +82,7 @@
             ispell
             nil
             texlab
-            sumneko-lua-language-server
             jdt-language-server
-            stylua
-            nodePackages_latest.prettier
-            nodePackages_latest.typescript-language-server
-            nodePackages_latest.eslint
-            nodePackages_latest.svelte-language-server
-
             html-tidy
             shellcheck
             pyright
