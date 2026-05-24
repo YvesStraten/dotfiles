@@ -14,6 +14,7 @@
 
       custom = {
         fish.enable = true;
+        syncthing.enable = true;
         tmux.enable = true;
         ghostty.enable = true;
         firefox.enable = true;

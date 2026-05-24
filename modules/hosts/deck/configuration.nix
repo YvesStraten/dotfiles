@@ -10,6 +10,7 @@
     }:
     {
       imports = [
+        ../../../overlays/default.nix
         self.nixosModules.deckHardware
         inputs.jovian.nixosModules.default
       ];
@@ -17,7 +18,6 @@
       nixpkgs.config.allowUnfree = true;
 
       jovian = {
-        steamos.useSteamOSConfig = true;
         steam = {
           enable = true;
           autoStart = true;
