@@ -62,7 +62,7 @@ let
 in
 {
   flake.nixosConfigurations = {
-    deck = mkNixos "deck" { };
+    deck = mkNixos "deck" { user = "bazzite"; };
     vivobook = mkNixos "vivobook" { };
     wsl = mkNixos "wsl" { nixpkgs = inputs.nixpkgs-stable; };
   };

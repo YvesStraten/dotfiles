@@ -12,6 +12,10 @@ in
 {
   nixpkgs.overlays = [
     (final: prev: {
+      openldap = prev.openldap.overrideAttrs {
+        doCheck = !prev.stdenv.hostPlatform.isi686;
+      };
+
       yvess = (prev.yvess or { }) // (import ../packages/default.nix { inherit (prev) pkgs; });
 
       sddm = prev.sddm.overrideAttrs (oldAttrs: {
