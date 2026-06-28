@@ -17,5 +17,13 @@
         # Optionally enable xserver
         xserver.enable = true;
       };
+
+      environment.systemPackages = [
+        (pkgs.kdePackages.spectacle.override {
+          tesseractLanguages = [
+            "all"
+          ];
+        })
+      ];
     };
 }
