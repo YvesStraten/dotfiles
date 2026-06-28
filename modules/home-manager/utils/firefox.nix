@@ -43,6 +43,7 @@
             DisableAppUpdate = true;
             DisablePocket = true;
             DisableTelemetry = true;
+            SearchEngines.Default = "DuckDuckGo";
           };
           profiles.yvess = {
             isDefault = true;
