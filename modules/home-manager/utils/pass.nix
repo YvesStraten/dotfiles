@@ -35,13 +35,6 @@
           browserpass.enable = true;
         };
 
-        services = {
-          gpg-agent = {
-            enable = true;
-            pinentry.package = pkgs.pinentry-gnome3;
-          };
-        };
-
         home.packages = with pkgs; [
           qtpass
           (mkIf cfg.wayland wl-clipboard)
