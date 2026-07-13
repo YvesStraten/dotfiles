@@ -17,6 +17,7 @@
         syncthing.enable = true;
         tmux.enable = true;
         ghostty.enable = true;
+        nvim.enable = true;
         firefox.enable = true;
         utils.enable = lib.mkForce false;
       };
