@@ -153,6 +153,7 @@
       style = "night";
     };
 
+    treesitter.autotagHtml = true;
     treesitter.context = {
       enable = true;
       setupOpts.max_lines = 8;
@@ -193,6 +194,15 @@
         enable = true;
         extraDiagnostics.enable = true;
         format.type = "nixfmt";
+      };
+      typescript = {
+        enable = true;
+        extraDiagnostics.enable = true;
+      };
+      html.enable = true;
+      tsx = {
+        enable = true;
+        extraDiagnostics.enable = true;
       };
       typst.enable = true;
       # TODO: Add when latex support is merged https://github.com/NotAShelf/nvf/pull/569
