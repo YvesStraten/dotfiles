@@ -1,5 +1,5 @@
 _: {
-  flake.nixosModules.security =
+  flake.nixosModules.core =
     { pkgs, ... }:
     {
       environment.systemPackages = [

@@ -173,6 +173,7 @@
       };
 
       environment.systemPackages = [
+        pkgs.wireguard-tools
         pkgs.mangohud
         pkgs.lutris
         pkgs.heroic
