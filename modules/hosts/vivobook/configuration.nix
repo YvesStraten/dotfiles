@@ -93,10 +93,6 @@
       };
 
       hardware = {
-        logitech.wireless = {
-          enable = true;
-          enableGraphical = true;
-        };
         xpadneo.enable = true;
         nvidia.prime = {
           offload = {
@@ -159,6 +155,7 @@
       };
 
       programs = {
+        solaar.enable = true;
         localsend.enable = true;
         nix-ld.enable = true;
         fuse.userAllowOther = true;

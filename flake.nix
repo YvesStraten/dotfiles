@@ -48,8 +48,6 @@
       url = "github:NotAShelf/nvf";
       inputs = {
         flake-compat.follows = "";
-        flake-parts.follows = "flake-parts";
-        systems.follows = "systems";
       };
     };
 
@@ -63,7 +61,6 @@
       url = "github:cachix/git-hooks.nix";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        gitignore.follows = "gitignore";
         flake-compat.follows = "";
       };
     };

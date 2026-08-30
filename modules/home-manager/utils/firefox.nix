@@ -21,7 +21,7 @@
         enable = mkEnableOption "Enable firefox";
         package = mkOption {
           type = types.package;
-          default = (if pkgs.stdenv.isDarwin then null else pkgs.firefox);
+          default = (if pkgs.stdenv.hostPlatform.isDarwin then null else pkgs.firefox);
           description = ''
             Packaged firefox to use
           '';
@@ -35,6 +35,7 @@
         programs.firefox = {
           enable = true;
           package = cfg.package;
+          configPath = "${config.xdg.configHome}/mozilla/firefox";
           nativeMessagingHosts = mkIf cfg.enablePwas [
             pkgs.firefoxpwa
           ];
@@ -51,8 +52,8 @@
               with inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system};
               [
                 react-devtools
-                browserpass
                 redirector
+                keepassxc-browser
                 darkreader
                 ublock-origin
                 zotero-connector

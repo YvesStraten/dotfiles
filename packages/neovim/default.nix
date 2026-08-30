@@ -193,17 +193,19 @@
       nix = {
         enable = true;
         extraDiagnostics.enable = true;
-        format.type = "nixfmt";
+        format.type = [ "nixfmt" ];
       };
       typescript = {
         enable = true;
         extraDiagnostics.enable = true;
+        extensions.ts-error-translator.enable = true;
       };
       html.enable = true;
       tsx = {
         enable = true;
         extraDiagnostics.enable = true;
       };
+      glsl.enable = true;
       typst.enable = true;
       # TODO: Add when latex support is merged https://github.com/NotAShelf/nvf/pull/569
       # tex = {
@@ -223,14 +225,7 @@
 
       rust = {
         enable = true;
-        lsp.opts = ''
-          ['rust-analyzer'] = {
-            cargo = { allFeatures = true, buildScripts = { enable = true } },
-            checkOnSave = true,
-            procMacro = { enable = true, attributes = { enable = true } },
-          },
-        '';
-        crates.enable = true;
+        extensions.crates-nvim.enable = true;
       };
 
       java.enable = true;
@@ -241,7 +236,6 @@
         format.enable = false;
       };
       svelte.enable = true;
-      ts.enable = true;
       bash.enable = true;
       clang.enable = true;
     };

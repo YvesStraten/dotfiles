@@ -80,7 +80,6 @@
         ];
 
         boot = {
-          zfs.allowHibernation = true;
           zfs.forceImportRoot = false;
           supportedFilesystems = [
             "zfs"
