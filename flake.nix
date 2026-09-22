@@ -161,6 +161,23 @@
                 ];
               };
 
+            pico = pkgs.mkShell {
+              buildInputs = with pkgs; [
+                gcc-arm-embedded
+                pico-sdk
+                picotool
+
+                cmake
+                python3 # build requirements for pico-sdk
+                udisks # Interact with bootloader filesystem
+                tio # terminal program to interface with serial
+              ];
+
+              shellHook = ''
+                export PICO_SDK_PATH=${pkgs.pico-sdk}/lib/pico-sdk
+              '';
+            };
+
             quickshell =
               let
                 quickshell = inputs.dankMaterialShell.packages.${system}.default;
