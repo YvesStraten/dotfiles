@@ -238,6 +238,14 @@
       svelte.enable = true;
       bash.enable = true;
       clang.enable = true;
+      markdown = {
+        enable = true;
+        extraDiagnostics.enable = false;
+        format.enable = false;
+        extensions = {
+          markview-nvim.enable = true;
+        };
+      };
     };
 
     autopairs.nvim-autopairs.enable = true;
@@ -320,6 +328,7 @@
 
     utility = {
       surround.enable = true;
+      preview.markdownPreview.enable = true;
     };
 
     navigation.harpoon.enable = true;
