@@ -21,6 +21,7 @@
         rclone
         pandoc
         nix-prefetch-scripts
+        logisim
         inkscape
         gnome-clocks
         btop
