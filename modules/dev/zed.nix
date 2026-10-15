@@ -7,6 +7,6 @@
 {
   flake.nixosModules.zed = { pkgs, ... }: {
     environment.systemPackages = with pkgs; [ zed-editor ];
-    environment.sessionVariables.EDITOR = "zeditor";
+    environment.sessionVariables.EDITOR = "zeditor --wait";
   };
 }
