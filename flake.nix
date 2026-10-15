@@ -153,9 +153,9 @@
               pkgs.mkShell {
                 shellHook = checks.shellHook + ''
                   export JAVA_HOME="${pkgs.openjdk25.home}"
-
                 '';
                 buildInputs = checks.enabledPackages ++ [
+                  pkgs.nil
                   pkgs.openjdk25
                   pkgs.gradle-packages.gradle_9
                 ];
