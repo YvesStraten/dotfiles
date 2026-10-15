@@ -12,7 +12,6 @@
         fish.enable = true;
         git.enable = true;
         ghostty.enable = true;
-        nvim.enable = true;
         tmux.enable = true;
         languages.enable = true;
         office.enable = true;

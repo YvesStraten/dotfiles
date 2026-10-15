@@ -19,6 +19,8 @@
         self.nixosModules.zfs
         self.nixosModules.tailscale
         self.nixosModules.hardware_nvidia
+
+        self.nixosModules.zed
       ];
 
       services = {
