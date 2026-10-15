@@ -17,14 +17,11 @@
 
       packages = with pkgs; [
         tesseract
-        rsync
         rclone
         pandoc
-        nix-prefetch-scripts
         logisim
         inkscape
         gnome-clocks
-        btop
         spotify
         qalculate-qt
         kdePackages.elisa
