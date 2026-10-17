@@ -1,5 +1,6 @@
 {
   self,
+  lib,
 
   config,
   ...
@@ -63,7 +64,10 @@
       };
 
       boot = {
-        kernel.sysctl."vm.swappiness" = 10;
+        zswap = {
+          enable = true;
+          maxPoolPercent = 25;
+        };
         plymouth = {
           enable = true;
           theme = "bgrt";
@@ -74,11 +78,6 @@
             })
           ];
         };
-
-        kernelParams = [
-          "zfs.zfs_arc_max=12884901888"
-          "preempt=full"
-        ];
 
         supportedFilesystems = [
           "ntfs"
