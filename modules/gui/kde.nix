@@ -18,12 +18,20 @@
         xserver.enable = true;
       };
 
-      environment.systemPackages = [
-        (pkgs.kdePackages.spectacle.override {
-          tesseractLanguages = [
-            "all"
-          ];
-        })
-      ];
+      environment.systemPackages =
+        with pkgs.kdePackages;
+        [
+          kdePackages.kio # needed since 25.11
+          kdePackages.kio-fuse # to mount remote filesystems via FUSE
+          kdePackages.kio-extras # extra protocols support (sftp, fish and more)
+          kdePackages.dolphin
+          kdePackages.kdegraphics-thumbnailers
+          (kdePackages.spectacle.override {
+            tesseractLanguages = [
+              "all"
+            ];
+          })
+        ]
+        ++ [ pkgs.cifs-utils ];
     };
 }
