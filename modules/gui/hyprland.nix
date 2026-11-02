@@ -1,6 +1,7 @@
 {
   self,
   lib,
+  inputs,
   ...
 }:
 {
@@ -11,11 +12,22 @@
     in
     {
       imports = [
+        self.nixosModules.shikane
       ];
 
-      environment.systemPackages = with pkgs; [
-        nwg-displays
-      ];
+      environment.systemPackages =
+        with pkgs;
+        [
+          nwg-displays
+          kdePackages.dolphin
+          grim
+          slurp
+          satty
+        ]
+        ++ [
+          inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
+          inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.default
+        ];
 
       xdg.portal.xdgOpenUsePortal = true;
       programs = {
@@ -46,9 +58,10 @@
         };
       };
 
-      security.pam = {
+      security.pam.services = {
         # services.hyprlock = { };
-        services.greetd.enableGnomeKeyring = true;
+        greetd.enableGnomeKeyring = true;
+        login.enableGnomeKeyring = true;
       };
     };
 }
