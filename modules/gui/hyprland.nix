@@ -13,6 +13,7 @@
     {
       imports = [
         self.nixosModules.shikane
+        self.nixosModules.kvantum
       ];
 
       environment.systemPackages =
