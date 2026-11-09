@@ -43,25 +43,14 @@
       services = {
         udisks2.enable = true;
         gnome.gnome-keyring.enable = true;
-        greetd = {
+
+        displayManager.sddm = {
           enable = true;
-          settings =
-            let
-              default = {
-                command = "${lib.getExe pkgs.uwsm} start -eD Hyprland hyprland.desktop";
-                user = "yvess";
-              };
-            in
-            {
-              initial_session = default;
-              default_session = default;
-            };
+          wayland.enable = true;
         };
       };
 
       security.pam.services = {
-        # services.hyprlock = { };
-        greetd.enableGnomeKeyring = true;
         login.enableGnomeKeyring = true;
       };
     };
