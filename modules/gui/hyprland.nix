@@ -44,9 +44,8 @@
         udisks2.enable = true;
         gnome.gnome-keyring.enable = true;
 
-        displayManager.sddm = {
+        displayManager.gdm = {
           enable = true;
-          wayland.enable = true;
         };
       };
 
