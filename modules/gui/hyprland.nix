@@ -12,7 +12,7 @@
     in
     {
       imports = [
-        self.nixosModules.shikane
+        self.nixosModules.hyprmoncfg
         self.nixosModules.kvantum
       ];
 
